@@ -1,0 +1,40 @@
+Wiki:
+
+The Wiki part of the Github website should be used to keep track of everything developed for the
+Northern Realms Project.  Every overworld area, dungeon, monster, item, art asset, function, and
+gameplay mechanic should be detailed.  This will allow easy understanding of all elements of the
+project by everyone, contributor or observor.
+
+Party:
+
+The party, or group of controllable characters should start with only one character.  Others can be added
+and removed from the party as the story progresses.  Any character other than the main character
+should be able to be dismissed at an inn, and any dismissed character should be able to rejoin your
+party at said inn.  Created characters that were removed at the start of the game should be able to rejoin
+the party from an inn.  Story-wise they can be passed off as old friends.  These mechanics will make
+players feel more attached to the main character, and will allow better story-telling in other characters.
+It also will allow for players to change their party based on the situation at hand.
+
+Beginning Gameplay:
+
+The player should start off with a solitary character in an isolated area with only one way to get to the
+more expansive area that will make up the majority of the game.  Before taking this way, however, the
+player will have to complete multiple quests.  These quests should be in separate dungeons and should
+be accomplish-able in any order.  This would be a suitable introduction to the open-world concept that
+is entirely foreign to Legend of Grimrock.
+
+Game World:
+
+The game world needs to large enough to be varied in terrain and culture, but it should be small
+enough to not be overwhelming from a creation standpoint.  The Isle of Nex could be used for the entire game, 
+but I think that it would feel a little cramped from a developer standpoint.  Looking at our map
+(http://i47.tinypic.com/spkswy.jpg) I think that the Kingdom of Tharaen would be the better option. 
+From the pass between the Red Hills and the Thraelin Mountains in the west to the Serpentine River in
+the East, we would have varied terrain with large enough space as to have 20+ dungeons without
+feeling cramped.  https://f.cloud.github.com/assets/3145708/35308/206b4e30-51cf-11e2-8fb5-97b0bdaa969e.jpg
+is a better way to show you the area.  By looking at that image you will see that I
+propose that the players start in the blue box area, go over (or under or through) the mountains to get to
+the mainland on the other side.  The mainland has a huge variety of terrain and is wide and open, and
+by having the starting area be that little area east of the serpentine river, we can have the Isle of Nex be
+an end-game area.  Also to be noted: we don't need to cover every square foot of the map; there could
+be gaps between levels of the overworld.
