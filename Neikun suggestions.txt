@@ -1,0 +1,17 @@
+Wiki Suggestions:
+The Legends of the Northern Realms wiki can be used to describe areas on the map.
+Cities and towns can have a page created for them describing daily life as well as climate, lore notable figures/ religious deities, and other key features.
+
+Party suggestions:
+This mod should allow party members to be added and removed.
+The player should be allowed to choose how many characters they start with.
+When the player meets a character that can join the party, the player should be able to choose which character to drop.
+The character leaving the party should leave behind all their equipment. On the ground would likely be the easiest option.
+
+If you remove a character that was added during gameplay, you should be able to relocate and re-enlist their services. They should be found either where they were originally found or in the main town.
+
+If you remove a character that was created during character creation, you should be able to find and re-enlist them in the main town. This may be difficult when deciding a model to use for that character.
+
+|_Note on models for playable characters found later in game. You would probably be alright to give them stationary models for the time being. When making animations is easier, defining them as monsters with full animations would be wonderful.
+
+Note on NPCS: Next time Almost Human is taking requests for features, request AIState: friendly.
