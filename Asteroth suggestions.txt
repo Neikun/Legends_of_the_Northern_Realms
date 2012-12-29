@@ -1,6 +1,6 @@
 Setting/rule suggestions
 I would like a system of corruption that can accrue.Possibly similiar to JohnWordsworth's thirst(but much slower, and
-depending on situation.) Possibly only in some areas.
+depending on situation.) Probably only in some areas.(note this was just off the top of my head I don't want to force a whole new major mechanic)
 
 Equipment suggestions
 I would like some pieces of equipment that can be upgraded.
