@@ -15,3 +15,10 @@ If you remove a character that was created during character creation, you should
 |_Note on models for playable characters found later in game. You would probably be alright to give them stationary models for the time being. When making animations is easier, defining them as monsters with full animations would be wonderful.
 
 Note on NPCS: Next time Almost Human is taking requests for features, request AIState: friendly.
+
+Original Lore theory
+When The Goromorgs were normally living, Grimrock was a temple. They worshipped the cube. Eventually the Cube broke, it became violent and destructive. They then built the prison under the temple. They captured and dismantled the cube. 
+Over time the cube was able to poison their minds and they built the dungeon levels above so that hapless adventurers who make it inside would go hungry and become weak to the power of the cube. Eventually lured to it and convinced to fix it and set it free.
+
+Goromorg idea: 
+If the Cube was the reason the Goromorgs were evil, would they return to a normal state now that the cube is destroyed?
