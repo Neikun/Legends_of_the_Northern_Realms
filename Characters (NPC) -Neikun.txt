@@ -1,0 +1,8 @@
+This document will hold various characters I have created for use in populating the game world of this mod.
+
+Name: Harold Straus
+Sex: Male
+Race: Human
+Age: 49
+Occupation: Barman (Owner of the Late Dawn pub in  Ranwyn)
+Description: WIP
