@@ -1,0 +1,16 @@
+Rough Draft:
+
+After reading some of the suggestions...
+I really liked McSkivv's idea about starting with a single character.
+This sparked idea of a non-linear party progression. Being able to choose
+different characters based on various decisions and actions would be very
+immersive. Also having the possiblity for characters to die in the story line
+might be worth looking into for added party/player connection.
+
+Replayability:
+This is usually the make or break of buying a game for me. I love games like Morrowind
+and Skyrim that allow for virtually infinite posiibilities on each time through. I propose
+that we implement random and procedural generation of content whenever it is expedient to and
+aligns with the mod creation goals.
+
+Adding more later...
