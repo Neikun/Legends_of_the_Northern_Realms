@@ -14,5 +14,5 @@ import "mod_assets/scripts/materials.lua"
 import "mod_assets/scripts/sounds.lua"
 
 --all the mod's custom assets
-import "mod_assets/scripts/gui.lua"
+import "mod_assets/scripts/party.lua"
 import "mod_assets/scripts/npcs.lua"

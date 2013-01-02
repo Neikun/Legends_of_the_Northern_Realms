@@ -24,7 +24,8 @@ defineObject{
 	},
 	--attackAnimSpeed = 1.7,
 	--moveAnimSpeed = 1.2,
-	--turnAnimSpeed = 1.3,
+	--turnAnimSpeed = 1.3,	
+	shopType = "Armor",
 	moveSound = "goromorg_walk",
 	footstepSound = "goromorg_footstep",
 	attackSound = "empty",
@@ -52,5 +53,5 @@ defineObject{
 	lightBrightness = 5,
 	lightRange = 4.5,
 	healthIncrement = 50,
-	brain = "Melee",
+	brain = "Melee",	
 }
