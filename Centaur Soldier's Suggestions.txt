@@ -7,10 +7,16 @@ different characters based on various decisions and actions would be very
 immersive. Also having the possiblity for characters to die in the story line
 might be worth looking into for added party/player connection.
 
-Replayability:
+[Replayability]
 This is usually the make or break of buying a game for me. I love games like Morrowind
 and Skyrim that allow for virtually infinite posiibilities on each time through. I propose
 that we implement random and procedural generation of content whenever it is expedient to and
 aligns with the mod creation goals.
+
+[Shops]
+What about expanding on Asteroth's idea of upgradeable armor by adding shops and even inns.
+We could create a GUI for those kinds of interactions. Even give a bonus to rest when in an inn
+and disallow monster attacks when resting there.
+
 
 Adding more later...
