@@ -23,4 +23,11 @@ need to get the fountains and other assets into this, statues ?
 Need to change the floor for something more town like
 Needs town ambience
 
+---Comments---
+
+--McSkivv
+Beautiful town.  Textures look nice, and it doesn't feel like underground so much as night-time town.
+Unfortunately, I have no idea how it will look in daylight.  That is going to be tough, though, I presume
+that it is possible given time.
+
 
