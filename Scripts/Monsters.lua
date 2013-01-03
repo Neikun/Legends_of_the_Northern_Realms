@@ -456,7 +456,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 					--spawn the beast!
 					spawn(sMonsterClass, nLevel, nX, nY, nFacing, sMonsterID);
 					--get the monsters ID
-					hMonster = findEntity(tostring(sMonsterID));					
+					local hMonster = findEntity(tostring(sMonsterID));					
 					--set the monster's AI state (as discussed above)
 					hMonster:setAIState(tAI[math.random(1, #tAI)]);
 					--calculate the monster's level based in the mean party level as well as the dungeon level and adjusted for a little variety in difficulty

@@ -2,8 +2,9 @@ tGUI = {
 	ActiveState = "",
 	States = {
 		["Shop"] = {
-			Active = false,		
+			
 		},
+		["None"] = {},
 	},
 };
 
@@ -33,8 +34,39 @@ end
 --onDrawGui: a hook which is called after the dungeon view has been rendered.
 function OnDraw(hGUI)
 
-	if GUI.GetState() == "Shop" then
+	if GUI.GetState() == "Shop" then	
+	local tPadding = {
+		Hor = 20,
+		Ver = 20,
+	};
+	local tSize = {
+		Width = (hGUI.width * 0.80) - tPadding.Hor * 2,
+		Height = (hGUI.height * 0.50) - tPadding.Ver * 2,
+	};		
+	local tPos = {
+		X = ((hGUI.width - tSize.Width) / 2) + tPadding.Hor,
+		Y = ((hGUI.height - tSize.Height) / 4) + tPadding.Ver,
+	};
 	
+	--[[
+	if tSize.Width < hGUI.width * 0.50 then
+	tSize.Width = hGUI.width;
+	end
+	
+	if tSize.Height < hGUI.height * 0.40 then
+	tSize.Height = hGUI.height;
+	end
+	
+	if tPos.X < tPadding.Hor then
+	tPos.X = tPadding.Hor;
+	end
+	
+	if tPos.Y < tPadding.Ver then
+	tPos.Y = tPadding.Ver;
+	end
+	]]
+	--hGUI.drawRect(tPos.X, tPos.Y, tSize.Width, tSize.Height);
+	hGUI.drawRect(tPos.X, tPos.Y, tSize.Width, tSize.Height);
 	end
 
 end
@@ -56,9 +88,20 @@ end
 
 
 function SetState(sState)
-
-	if tGUI.States[sState] then
-	tGUI.ActiveState = sState;
+	
+	if type(sState) == "string" then
+	
+		if tGUI.States[sState] then	
+		tGUI.ActiveState = sState;
+	
+		else
+		tGUI.ActiveState = "";
+		
+		end
+	
+	else
+	tGUI.ActiveState = "";
+	
 	end
 
 end

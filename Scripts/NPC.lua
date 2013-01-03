@@ -16,9 +16,14 @@ tNPCBaseAttributes = {
 	IsAlive = true,
 	IsRecruitable = false,
 	Name = "",
-	Origin = "",	
+	Origin = "",
 	Skills = {},
 };
+
+
+function Get.DataTable()
+return tNPC
+end
 
 
 --[[
