@@ -31,3 +31,5 @@ Should mainly be located in the mid-west. Quenfar and Qegandoc.
 Sunken strait:
 Sunken earth that used to connect the Isle of Nex to the mainland. It is full of drowned cities.
 Possible tilesets to use: Skugg's flooded dungeon
+
+Organisation: having your own model folder, texture folder, animation folder... err resource folders essentially will be good. Then when the dungeon designers get to work, they will all have their own series of .luas
