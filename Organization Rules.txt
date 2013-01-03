@@ -1,0 +1,17 @@
+Every contributor is to have their own designated folder in the github to house their assets, suggestions, anything made specifically for this project.
+Example:
+In Skuggasveinn's folder you would find Skuggasveinn's Suggestions.txt as well as a models folder and textures folder.
+
+For dungeon designers each designer will need to make their own set of .luas and have them imported in the init.lua
+Example: 
+Mcskivv would have
+mcskivv_materials.lua
+mcskivv_objects.lua
+mcskivv_items.lua
+mcskivv_sounds.lua
+mc_skivv_monsters.lua
+ect. ect.
+
+This way anything you need to edit for personal use is right there for you.
+If an asset is desired by more than one designer, and will be used in exaclty the same way, it will be moved to something like
+global_materials.lua
