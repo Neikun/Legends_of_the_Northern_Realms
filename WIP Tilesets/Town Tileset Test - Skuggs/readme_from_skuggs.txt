@@ -31,3 +31,10 @@ Unfortunately, I have no idea how it will look in daylight.  That is going to be
 that it is possible given time.
 
 
+--Neikun
+Part of the underground feeling comes from the floor and the lack of light. 
+Ambient lighting should have more blueness to it.
+This will likely need a new ambient track. One for day time and one for night time.
+Is the wood of the doors too bumpy?
+
+Wall/pillar decorations might include sconces or tapestries
