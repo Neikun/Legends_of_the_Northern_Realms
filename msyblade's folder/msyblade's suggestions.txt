@@ -1,0 +1,21 @@
+ 
+
+  I may have the downer viewpoint if you have super lofty aspirations. I would like to see a base build using our current resources, 
+and build/work on that base once we have our feet established. I mean, get 3 dungeons, connect them through skuggs WIP tileset, and start
+debugging/troubleshooting until we have a solid foundation to build off of. Of course, to do that means we have to have a concept fleshed out
+to build on in the first place.
+
+   If we are going one .dat, which with the current build of LoG, we have to, we are going to have severe equipment overload and exp problems.
+I feel we can get around this immediately by making it a "Test" world. Where the players party is being put through a series of "Challenges" (Dungeons), when upon completion, we can reset the equipment and exp, and the DM says "Well done, brave one! But there is more to being a Knight of the Shadow
+than killing skeletons, and pushing buttons!" "Let's see how well you do without your friends! Can you surviver on your own?" Cue the wine merchant's basement. After each dungeon the player gets to keep the "quest key" (obtained near end to progress in overworld) and possibly one fairly powerful piece of equipment to encourage replay ("Damn, I should have got the staff from "Master key" first, this would be so much easier!") This would allow changing of party members, adding/dropping, etc. Wanna switch from 2 fighters and 2 rogues to 3 rogues and a mage? Done! Then, as we become comfortable with our roles, and more people become interested, we can build on that to create a second town, linking 3 other dungeons, without the work of combining assets, changing scripts/teleporters. We would be adding to an already existing dungeon. The possibilities grow as our ability/knowledge and the games engine grows.
+
+Incidentally, Do Centauri Soldier, Skuggs, or Diarmuid know how to use the gui functions yet? That is a whoooole new can of worms i havent even started on.
+
+
+Pro's:
+
+Doable right now, with current resources. I can make a passable town with the skybox in skuggs WIP town tileset. We can upgrade that as assets become available, or even overhaul later if he finds new tricks.
+
+Con's: 
+
+Small scope, not a very lofty goal. Certainly different than the initial idea proposed to start this journey off. Unforeseen problems, when i say doable now, that is with the knowledge that if anything can go wrong, it will go wrong.I'm confident that we have a strong, knowledgeable group that can overcome. 

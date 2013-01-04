@@ -38,3 +38,6 @@ This will likely need a new ambient track. One for day time and one for night ti
 Is the wood of the doors too bumpy?
 
 Wall/pillar decorations might include sconces or tapestries
+
+--Msyblade
+With a couple of assets (2 different signs, 1 big, 1 small, maybe a broken down hay/clay pot cart, and phitts Tables, beds, and bookcases) and some standard dungeon objects, I could make this feel like a town after stepping out of a dungeon, right now. Of course, it will be an Ogre town until we get npc's. It has that skybox/open air feel that this game needs so badly.
