@@ -5,4 +5,6 @@ Sex: Male
 Race: Human
 Age: 49
 Occupation: Barman (Owner of the Late Dawn pub in  Ranwyn)
-Description: WIP
+Description: A chubby man with graying hair and a patchy beard. He dresses plainly, never having exhuberant wealth. Loves a good tale or piece of folklore, and tells stories of his own with great enthusiasm. He is of average height. He has green eyes. His tanned skin is rugged, like he worked hard in his younger years.
+Motivation:
+Story: How he came to own the Late Dawn: Twenty years ago he left his father's farm near Congam to move to the city of Ranwyn to live with his uncle Duncan Straus and learn a trade so he could raise a family of his own in a city. 
