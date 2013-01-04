@@ -21,10 +21,18 @@ tNPCBaseAttributes = {
 };
 
 
-function Get.DataTable()
+function GetDataTable()
 return tNPC
 end
 
+
+function SetDataTable(tData)
+	
+	--if type(tData) == "table" then
+	tNPC = tData;
+	--end
+	
+end
 
 --[[
 -----------------------------

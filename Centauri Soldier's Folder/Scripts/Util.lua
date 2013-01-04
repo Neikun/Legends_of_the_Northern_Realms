@@ -42,7 +42,7 @@ tEscapeChars = {
 		RelacementChar = "\\'",
 	},
 	--This version is for use with
-		 pure lua as oppossed to AMS lua.
+	--	 pure lua as oppossed to AMS lua.
 	[10] = {
 		Char = "%[",
 		RelacementChar = "%%[",
@@ -137,14 +137,15 @@ nCount = nCount + 1;
 			elseif sItemType == "nil" then
 			sRet = sRet..sIndex.."nil,\r\n"
 			
+			--Can't use this, don't have access to the getfenv function in LoG
 			elseif sItemType == "function" then				
-			--sRet = sRet..sIndex..",\r\n"; --Can't do this now, don't have access to the getfenv function
+			--sRet = sRet..sIndex..",\r\n";
 									
 			elseif sItemType == "userdata" then
 			--do the userdata stuff here...
 			
 			elseif sItemType == "table" then
-			sRet = sRet..sIndex..table.tostring(vItem, nCount)..",\r\n";			
+			sRet = sRet..sIndex..Util.TableToString(vItem, nCount)..",\r\n";			
 			
 			end
 			
@@ -155,4 +156,60 @@ nCount = nCount + 1;
 sRet = sRet..sTab.."}"
 
 return sRet
+end
+
+
+--[[
+{
+	Classes = {
+		"Healer",
+		"Kiosk",
+		"Shop Keeper",
+	},
+	NPCs = {
+		[1] = {},
+		[1] = {},
+	},
+}
+
+]]
+
+
+--will handle indices of only types string and number
+--will handle values of only types string, number, boolean and table
+function StringToTable(sString)
+local tRet = {};
+local nAttempts = 0;	
+local nMaxAttempts = 1000;
+---------------------------------------------
+local function GetIndexType(vIndex)
+	
+	if string.find(vIndex, "\"") then
+	return "string"
+	else
+	return "number"
+	end
+
+end
+---------------------------------------------
+local function GetValueType(vValue)
+
+end
+---------------------------------------------
+local tStart = string.find(sString, "{");
+local tEnd = string.find(string.reverse(sString), "}");
+local tInidces = {};
+
+	if tStart and tEnd then
+	local tIndex_S = string.find(sString, "[", tStart[1]);
+	local tIndex_E = string.find(sString, "]", tIndex_S[1]);
+	local sIndex = string.sub(sString, tIndex_S[1] + 1, tIndex_E[1] - 1);
+	
+		if GetIndexType(sIndex) == "number" then
+	
+		end
+	
+	end
+
+return tRet
 end
