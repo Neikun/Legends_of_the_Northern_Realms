@@ -1,0 +1,41 @@
+Starting Area Proposition
+=========================
+After looking at the proposal from Arkos and McSkivv I tend to lean towards Arkos' suggestion.
+Mainly because it also has a snowy/cold part, which we have wonderfull assets for. It would be a shame not to use those.
+There's also talk about hermits and witches of the north, which better fit in the northen part of the map (see below).
+
+Is anything decided on this already?
+
+
+Lore
+====
+I took a quick look at lore I could extract from the "item"-assets file and came up with the following things:
+
+ - "Priestesess of Nex": A bunch of priests that forged the "Sword of Nex", a weapon with incomparable sharpness
+ - "Tirin": The name (of the leader?) of the cult of Tirin. The tribe has an initiation rite that yields a "Bracelet of Tirin" for everyone who passes it
+ - "Hermits of Basabua": It is unclear what Basabua is (a town? goddess? name of the leader?), but these hermits write books about their way of life (tome of health)
+ - "Keepers of the sunken library": No reference to where it is, but this can be used to incorporate the "flooded dungeon" assets that are already produced
+ - "Master Chef of Nothampton Palace": Is looking for grim caps to use in his finest soups. So there is a palace and a chef, but his name is not told in the lore
+ - "Witches of the north": Use blooddrop blossom in dark rituals. One sentence, enough for a whole dungeon :)
+
+
+Questions:
+==========
+Basic questions that need to be answered before we fully start on making dungeons:
+
+ - Who are we making this mod for? Casual players, dungeon crawling experts, ...?
+   Making a dungeon for either group could result in severely different dungeons, possibly not liked by the other group.
+   Dungeons for casual players would contain more clues, less puzzles where you need that item you should have taken from the first floor etc.
+   Thinking about the amount of effort we're going to put in this whole project I suggest we aim for the casual player, to reach te largest possible audience.
+   (we could always include some 'hardcode' dungeons for the pro's, but this question is about the main audience).
+
+
+Requests for Almost Human:
+==========================
+
+From Neikun:
+  - AI State:friendly (for npc's)
+
+Additional requests:
+  - Please give us a way to save a game on demand (so we can save when you enter an inn, or before a hard part of the dungeon comes up). (to prevent abuse maybe only overwriting a quicksave)
+  - Please include the background of an empty character screen (either equipment, exp or skills, background is all the smae) so we can seemlessly blend in our extensions
