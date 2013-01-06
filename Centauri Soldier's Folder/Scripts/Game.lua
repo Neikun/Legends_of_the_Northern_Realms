@@ -30,7 +30,7 @@ local tMethods = Game.CheckDataModules();
 	--get the table that needs to be converted to string
 	local tData = tClass.GetDataTable();
 	--convert the table to a string
-	local sData = Util.TableToString(tData, 1);
+	local sData = Util.TableToString(tData);
 	--create the funciton to return the data
 	--local sFunction = "function ReturnData()\nlocal tRet = "..sData..";\nreturn tRet\nend";
 	--store the new function in the data module object
