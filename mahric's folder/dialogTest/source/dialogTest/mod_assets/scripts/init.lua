@@ -16,8 +16,28 @@ import "mod_assets/scripts/sounds.lua"
 cloneObject{
 	name = "party",
 	baseObject = "party",
-
+	
+	onMove = function()		
+		return DIALOG.isMovingAllowed()
+	end,
+	
 	onDrawGui = function(ctx)
 		DIALOG.OnDraw(ctx)
+		CHARSHEET.OnDraw(ctx)
+	end,
+	
+	onDrawInventory = function(ctx)
+		CHARSHEET.OnDrawTab(ctx, 1)
+		return false
+	end,
+
+	onDrawStats = function(ctx)
+		CHARSHEET.OnDrawTab(ctx, 2)
+		return false
+	end,
+	
+	onDrawSkills = function(ctx)
+		CHARSHEET.OnDrawTab(ctx, 3)
+		return false
 	end,
 }

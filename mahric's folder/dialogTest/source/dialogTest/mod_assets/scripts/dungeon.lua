@@ -19,11 +19,11 @@ mapDesc([[
 ################################
 ################################
 ################################
-################################
+###############.################
 ##############...###############
+#############.....##############
 ##############...###############
-##############...###############
-################################
+###############.################
 ################################
 ################################
 ################################
@@ -39,12 +39,12 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("script_entity", 15,13,1, "script1")
+spawn("script_entity", 13,13,1, "script1")
 	:setSource("--\
 -- Example of how to call the DIALOG script\
 --\
 \
-function pressedIt()\
+function startDialog()\
 \9DIALOG.DefineDialog([[\
 Hello, world!\
 \
@@ -74,11 +74,12 @@ function done(response)\
 \9hudPrint(\"You chose: \"..response)\
 end\
 ")
-spawn("script_entity", 0,0,2, "DIALOG")
+spawn("script_entity", 13,12,2, "DIALOG")
 	:setSource("--\
 -- DIALOG Script\
 --\
 \
+_canMove = true\
 _dialog = nil\
 _show = false\
 \
@@ -118,38 +119,88 @@ function ShowDialog()\
 \9end\
 end\
 \
+function allowMoving(b)\
+\9_canMove = b\
+end\
+\
+function isMovingAllowed()\
+\9return _canMove\
+end\
 \
 -------------------\
 -- Draw function\
 -------------------\
 function OnDraw(ctx)\
-\9if _dialog ~= nil and _show then\
-\9\9-- For now the width and height are fixed\
-\9\9local windowWidth = 724\
-\9\9local windowHeight = 656\
+\9if _dialog == nil then\
+\9\9-- We are not in a dialog. Check if the user clicked on an npc to start a dialog\
 \
-\9\9-- Align window in the middle of the screen\
-\9\9-- Exception: small screens, because dialog should not overlap the list of heroes. Align those on the left\
-\9\9local x = (ctx.width - windowWidth) / 2\
-\9\9if ctx.width <= 1080 then x = 0 end\
-\9\9local y = (ctx.height - windowHeight) / 2\
+\9\9-- Determine area where the user can click to start interaction\
+\9\9local size = math.min(ctx.width, ctx.height) * 0.5\
+\9\9local x = (ctx.width - size) / 2\
+\9\9local y = (ctx.height - size) / 2\
 \
-\9\9-- Draw the window background\
-\9\9ctx.color(255, 255, 255, 255)\
-\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", x, y)\
+\9\9-- Is the mouse within the area? (doesn't have to be pressed yet)\
+\9\9if ctx.mouseX >= x and ctx.mouseX <= x+size and ctx.mouseY >= y and ctx.mouseY <= y+size then\
+\9\9\9-- The mouse is in the right area, but is there an npc there?\
+\9\9\9local dx, dy = getForward(party.facing)\
+\9\9\9local npc = getNPC(party.level, party.x+dx, party.y+dy)\
+\9\9\
+\9\9\9-- There might be an npc, but is he behind a closed door?\
+\9\9\9if checkBlockingDoor(party.level, party.x, party.y, dx, dy) then\
+\9\9\9\9npc = nil\
+\9\9\9end\
 \
-\9\9-- Draw the content\
-\9\9drawPortrait(ctx, x + 48, y + 64, windowWidth - 48*2, windowHeight - 132)\
-\9\9drawText(ctx, x + 48, y + 64, windowWidth - 48*2, windowHeight - 132)\
-\
-\9\9-- Draw the buttons and check if they're pressed\
-\9\9response = drawButtons(ctx, x + 40, y + windowHeight - 54, windowWidth - 40*2, 44)\
-\9\9if response ~= nil then\
-\9\9\9-- Call the callback function and make sure the dialog is disposed of\
-\9\9\9local callback = _dialog.callback\
-\9\9\9_show = false\
-\9\9\9_dialog = nil\
-\9\9\9callback(response)\
+\9\9\9-- If all is still well, we'll start the interaction\
+\9\9\9if npc ~= nil then\
+\9\9\9\9-- If the player is holding something, it throws it away. We don't want that, so we \
+\9\9\9\9-- capture the click event by using the ctx.button() function.\
+\9\9\9\9local x = ctx.button(\"captureClick\", x, y, size, size)\
+\9\9\9\9if x then\
+\9\9\9\9\9-- The actual interaction we're doing depends if the player is holding something on the mouse\
+\9\9\9\9\9-- If he has, he's giving something to the npc, else he's just starting basic interaction\
+\9\9\9\9\9local cursorItem = getMouseItem()\
+\9\9\9\9\9if cursorItem == nil then\
+\9\9\9\9\9\9hudPrint(\"Starting basic interaction with \"..npc.id)\
+\9\9\9\9\9\9script1:startDialog()\
+\9\9\9\9\9else\
+\9\9\9\9\9\9setMouseItem(nil)\
+\9\9\9\9\9\9hudPrint(\"Giving \"..npc.id..\" the \"..cursorItem.name)\
+\9\9\9\9\9end\
+\9\9\9\9end\
+\9\9\9end\
+\9\9end\
+\9else\
+\9\9-- A dialog is defined. Check if we can show it and if so, draw it\
+\9\9if _dialog ~= nil and _show then\
+\9\9\9_canMove = false\
+\9\9\9-- For now the width and height are fixed\
+\9\9\9local windowWidth = 724\
+\9\9\9local windowHeight = 656\
+\9\
+\9\9\9-- Align window in the middle of the screen\
+\9\9\9-- Exception: small screens, because dialog should not overlap the list of heroes. Align those on the left\
+\9\9\9local x = (ctx.width - windowWidth) / 2\
+\9\9\9if ctx.width <= 1080 then x = 0 end\
+\9\9\9local y = (ctx.height - windowHeight) / 2\
+\9\
+\9\9\9-- Draw the window background\
+\9\9\9ctx.color(255, 255, 255, 255)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", x, y)\
+\9\
+\9\9\9-- Draw the content\
+\9\9\9drawPortrait(ctx, x + 48, y + 64, windowWidth - 48*2, windowHeight - 132)\
+\9\9\9drawText(ctx, x + 48, y + 64, windowWidth - 48*2, windowHeight - 132)\
+\9\
+\9\9\9-- Draw the buttons and check if they're pressed\
+\9\9\9response = drawButtons(ctx, x + 40, y + windowHeight - 54, windowWidth - 40*2, 44)\
+\9\9\9if response ~= nil then\
+\9\9\9\9-- Call the callback function and make sure the dialog is disposed of\
+\9\9\9\9local callback = _dialog.callback\
+\9\9\9\9_show = false\
+\9\9\9\9_dialog = nil\
+\9\9\9\9_canMove = true\
+\9\9\9\9callback(response)\
+\9\9\9end\
 \9\9end\
 \9end\
 end\
@@ -214,10 +265,136 @@ function drawButtons(ctx, areaX, areaY, areaWidth, areaHeight)\
 \9end\
 \9return response\
 end\
+\
+\
+function getNPC(level, x, y)\
+\9-- See if there is an NPC on the given tile\
+\9-- NPCs are recognized by the name starting with \"npc_\" for now\
+\9local npc = nil\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if string.sub(i.id, 1, 4) == \"npc_\" then\
+\9\9\9npc = i\
+\9\9\9break\
+\9\9end\
+\9end\
+\9return npc\
+end\
+\
+function checkBlockingDoor(level, x, y, dx, dy)\
+\9local blocked = false\
+\
+\9-- see if there is a door on the party's tile facing the same way as the party\
+\9for i in entitiesAt(level, x, y) do\
+\9\9-- There is a bug in the .class property: it will return nil for doors!\
+\9\9if i.class == nil then\
+\9\9\9-- check if the door is between npc and the party and closed\
+\9\9\9if i.facing == party.facing and i:isClosed() then\
+\9\9\9\9blocked = true\
+\9\9\9end\
+\9\9end\
+\9end\
+\
+\9-- see if there is a door on the npc's tile facing the opposite way of the party\
+\9for i in entitiesAt(level, x+dx, y+dy) do\
+\9\9-- There is a bug in the .class property: it will return nil for doors!\
+\9\9if i.class == nil then\
+\9\9\9-- check if the door is between npc and the party and closed\
+\9\9\9if i.facing == (party.facing + 2) % 4 and i:isClosed() then\
+\9\9\9\9blocked = true\
+\9\9\9end\
+\9\9end\
+\9end\
+\9\
+\9return blocked\
+end")
+spawn("script_entity", 31,31,2, "CHARSHEET")
+	:setSource("--\
+-- PLEASE IGNORE THIS SCRIPT\
+--\
+-- It is part of something I was testing and it didn't work out.\
+-- I'm not deleting it yet because I don't give up that easily.\
+-- But for now just ignore it. Please...\
+--\
+_charSheetOpen = false\
+_currentTab = nil\
+\
+function OnDraw(ctx)\
+\9if _charSheetOpen then\
+\9\9if _currentTab ~= nil then\
+\9\9\9ctx.color(255, 255, 255, 255)\
+\9\9\9ctx.font(\"large\")\
+\9\9\9ctx.drawText(\"\".._currentTab, 100, 100)\
+\9\9end\
+\9else\
+\9\9_currentTab = nil\
+\9end\
+\
+\9--\
+\9-- reset _charSheetopen next frameDraw we can see if the window is still open\
+\9--\
+\9_charSheetOpen = false\
+end\
+\
+function OnDrawTab(ctx, tab)\
+\9_charSheetOpen = true\
+\9if _currentTab == nil then\
+\9\9_currentTab = tab\
+\9end\
+\
+\9-- if user clicked on any of the tabs\
+\9clickedOnTab = determineTabClick(ctx)\
+\9if clickedOnTab ~= nil then\
+--\9\9print(clickedOnTab)\
+\9\9_currentTab = clickedOnTab\
+\9end\
+\
+\9if _currentTab == 4 then\
+\9\9local x = ctx.width - 466\
+\9\9local y = 59\
+\9\9ctx.color(255, 255, 255, 255)\
+\9\9ctx.drawImage(\"mod_assets/textures/charsheet_background.tga\", x, y)\
+--\9\9print(\"x:\"..ctx.mouseX..\" y:\"..ctx.mouseY)\
+\9end\
+end\
+\
+function determineTabClick(ctx)\
+\9local result = nil\
+\9ctx.color(0, 255, 255, 32)\
+\
+\9local y = 81\
+\9for i = 1,5 do\
+\9\9ctx.drawRect(1398, y, 52, 59)\
+\9\9if ctx.mouseDown(0) and ctx.mouseX >= 1398 and ctx.mouseX <= 1450 and ctx.mouseY >= y and ctx.mouseY <= y + 59 then\
+\9\9ctx.button(\"\"..i, 0, 0, ctx.width, ctx.height)\
+--\9\9if ctx.button(\"\"..i, 1398, y, 52, 59) then\
+--\9\9\9print(i)\
+\9\9\9result = i\
+\9\9end\
+\9\9y = y + 62\
+\9end\
+\9return result\
+end\
 ")
-spawn("starting_location", 15,16,0, "starting_location")
-spawn("dungeon_pressure_plate", 15,15,2, "dungeon_pressure_plate_1")
-	:setTriggeredByParty(true)
-	:setTriggeredByMonster(true)
-	:setTriggeredByItem(true)
-	:addConnector("activate", "script1", "pressedIt")
+spawn("tome_wisdom", 15,14,2, "tome_wisdom_1")
+spawn("starting_location", 15,15,0, "starting_location")
+spawn("blocker", 14,15,3, "blocker_1")
+spawn("blocker", 15,14,3, "blocker_2")
+spawn("blocker", 16,15,3, "blocker_3")
+spawn("blocker", 15,16,1, "blocker_4")
+spawn("ogre", 15,13,2, "npc_ogre")
+	:setAIState("guard")
+spawn("ogre", 17,15,3, "npc_ogre2")
+	:setAIState("guard")
+spawn("ogre", 15,17,0, "npc_ogre3")
+	:setAIState("guard")
+spawn("ogre", 13,15,1, "npc_ogre4")
+	:setAIState("guard")
+spawn("dungeon_door_wooden", 16,15,1, "dungeon_door_wooden_1")
+spawn("dungeon_door_portcullis", 15,16,2, "dungeon_door_portcullis_1")
+spawn("prison_secret_door", 13,15,1, "prison_secret_door_1")
+spawn("lever", 14,16,3, "lever_1")
+	:addConnector("any", "prison_secret_door_1", "toggle")
+spawn("lever", 16,16,2, "lever_2")
+	:addConnector("any", "dungeon_door_portcullis_1", "toggle")
+spawn("lever", 16,14,1, "lever_3")
+	:addConnector("any", "dungeon_door_wooden_1", "toggle")
