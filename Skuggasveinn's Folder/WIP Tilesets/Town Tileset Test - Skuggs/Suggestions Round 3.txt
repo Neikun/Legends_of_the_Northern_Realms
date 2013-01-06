@@ -1,0 +1,15 @@
+--Neikun
+Thanks for giving me a torch to test the lighting further.
+Note on the fountain: Looks really good, particle system should likely be moved backa  little bit and changed color. I suggest:  color0 = {0.5, 0.6, 1},
+
+Note on  stairs: I love them, but the amount of black levels in their distance makes them seem a little less than approachable. I suggest putting a dim light source in front of them high up so they're not too well lit, but at least lit in some way.
+Perhaps you will need some sort of wall decoration that looks like the part of town below. Not totally necessary, but might be interesting.
+
+Notes on potholes: I'm so sorry to critique these as I know they took a lot of time and effort.
+They should likely be more round in shape to make them look less deliberate. (More like something fell on it or something)
+
+Since you mentioned sewers, might I get you you to work on a floor drainage for the next preview? You might even consider making on for the indoors as well. *Though a considerably small drain for indoors*
+
+Throwing my torch at the barrel decoration causes it to be under the barrel. Not a huge problem unless throwing tiny objects maybe?
+The half wall is nice, but I don't know about the full sized pillar attached to it.
+Aggggh I wanna get to the other siiiide
