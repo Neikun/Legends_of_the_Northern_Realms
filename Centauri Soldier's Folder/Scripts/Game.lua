@@ -13,7 +13,7 @@ Method Type: internal
 This ensures that all data
 modules exist. If they do not,
 they are created. This also
-return a table contianing a
+returns a table containing a
 list of methods.
 ]]
 function CheckDataModules()

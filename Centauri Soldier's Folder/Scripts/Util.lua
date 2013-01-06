@@ -50,6 +50,26 @@ tEscapeChars = {
 	},	
 };
 
+Math = {};
+Table = {};
+Position = {};
+
+function Position.GetOppositeFacing(nFacing)
+
+	if nFacing == 0 then
+	return 2
+	elseif nFacing == 1 then
+	return 3
+	elseif nFacing == 2 then
+	return 0	
+	elseif nFacing == 3 then
+	return 1
+	end
+
+return 0
+end
+
+
 --[[
 ----------------------------------
 Util.TableToString(table, integer)

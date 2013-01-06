@@ -1,0 +1,17 @@
+Widgets:
+I think that widgets would make creating dialogs much easier than without.
+The parts I would need to get started are buttons, backgrounds and transports
+controls (vertical and horizonatal scrollbar background, scrollers etc.)
+All images would idealy be named according to their function and have a sister image
+that was slightly different with the name having "_hover" tacked onto the end of it.
+
+Widget types I'll be testing.
+Listbox object
+Dropdown Combobox object
+Paragraph object
+Button object
+Image object
+
+If these basic widgets will work, then any and all others should follow quite simply.
+The GUI framework will be under construction soon and I'll have classes and objects
+as the intial focus.

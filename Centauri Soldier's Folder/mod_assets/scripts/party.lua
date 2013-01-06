@@ -26,13 +26,14 @@ cloneObject{
 		
 		end
 		
-		--check to ensure no NPCs are in front of the party
+		--check for NPCs in front of the party
 		for hEntity in entitiesAt(hParty.level, hParty.x + nXAdjust, hParty.y + nYAdjust) do
 			
 			for nObjectID, sObject in pairs(tNPCObjects) do
 				
-				if hEntity.name == sObject then
-				hudPrint("You cannot attack other characters.");
+				--if found, request a dialog
+				if hEntity.name == sObject then				
+				NPC.RequestDialog(hEntity.id);	
 				return false
 				end
 				

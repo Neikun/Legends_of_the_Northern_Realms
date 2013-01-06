@@ -8,4 +8,7 @@ NPCs may offer services without owning a physical shop.
 
 Create a help module
 
+Create gui and widgets
+
+auto-load framework on-start
 ]]

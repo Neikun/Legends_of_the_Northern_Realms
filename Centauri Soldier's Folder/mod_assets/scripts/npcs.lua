@@ -24,20 +24,19 @@ defineObject{
 	},
 	--attackAnimSpeed = 1.7,
 	--moveAnimSpeed = 1.2,
-	--turnAnimSpeed = 1.3,	
-	shopType = "Armor",
+	--turnAnimSpeed = 1.3,		
 	moveSound = "goromorg_walk",
 	footstepSound = "goromorg_footstep",
 	attackSound = "empty",
-	hitSound = "goromorg_hit",
-	dieSound = "goromorg_die",
-	hitEffect = "hit_dust",
+	hitSound = "empty",
+	dieSound = "empty",
+	hitEffect = "empty",
 	capsuleHeight = 0.8,
 	capsuleRadius = 0.25,
 	collisionRadius = 0.8,
-	health = 400,
+	health = 25000,
 	sight = 0,
-	seeInvisible = true,
+	seeInvisible = false,
 	allAroundSight = false,
 	attackPower = 0,
 	evasion = 25000,
@@ -53,5 +52,26 @@ defineObject{
 	lightBrightness = 5,
 	lightRange = 4.5,
 	healthIncrement = 50,
-	brain = "Melee",	
+	brain = "Melee",
+	onRangedAttack = function()
+	return false
+	end,
+	onDamage = function()
+	return false
+	end,
+	onDealDamage = function()
+	return false
+	end,	
+	onProjectileHit = function()
+	return false
+	end,
+	onDie = function()
+	return false
+	end,
+	onMove = function(hEntity, nDirection)
+	return NPC.AllowMovement(hEntity, nDirection)
+	end,
+	onTurn = function(hEntity, nDirection)
+	return NPC.AllowMovement(hEntity, nDirection)
+	end,
 }

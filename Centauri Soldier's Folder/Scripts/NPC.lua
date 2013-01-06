@@ -1,4 +1,8 @@
-tNPC = {
+tNPC = {	
+	Dialog = {
+		IsOpen = false,
+		ID = "",
+	},
 	Classes = {
 		"Healer",
 		"Kiosk",
@@ -21,6 +25,105 @@ tNPCBaseAttributes = {
 };
 
 
+
+--[[
+----------------------
+NPC.AllowDialogClose()
+Return Type: boolean
+Method Type: internal
+----------------------
+This is called everytime
+an NPC tries to turn or
+move. If the NPC has a
+dialog open, it cannot
+turn or move. Once the
+dialog is closed, then it
+will resume normal actions.
+This is identical to the
+Party.AllowMovement() method.
+]]
+function AllowMovement(hEntity, nDirection)
+local tDialog = NPC.GetDialogOpen();
+
+	if tDialog.IsOpen then
+		
+		if tDialog.ID == hEntity.id then
+		return false
+		end
+		
+	end
+
+return true
+end
+
+
+--[[
+------------------------------------------------
+NPC.SetDialogOpen(boolean or nil, string or nil)
+Return Type: table
+Method Type: external
+-------------------------------------------------
+Sets whether or not a dialog is open and, if so,
+to which NPC it belongs.
+Returns the table containing the information regarding
+any open dialog and to which NPC it belongs.
+Note: If either variable is nil, the ID is blank or
+the 'bOpen' variable is false, it will set the
+dialog as closed. This is intended for convenience.
+]]
+function SetDialogOpen(bOpen, sID)
+local bIsOpen = false;
+local sMyID = "";
+	
+	if type(bOpen) == "boolean" then
+		
+		if bOpen then
+		
+			if type(sID) == "string" then
+				
+				if string.gsub(sID, " ", "") ~= "" then
+				bIsOpen = bOpen;
+				sMyID = sID	;		
+				end
+				
+			
+			end
+			
+		end
+		
+	end
+		
+tNPC.Dialog.IsOpen = bIsOpen;
+tNPC.Dialog.ID = sMyID;
+return tNPC.Dialog
+end
+
+
+--[[
+-----------------------------
+NPC.GetDialogOpen()
+Return Type: table
+Method Type: internal
+-----------------------------
+Returns the table containing
+the information regarding
+any open dialog and to which
+NPC it belongs.
+]]
+function GetDialogOpen()
+return tNPC.Dialog
+end
+
+
+
+
+
+
+
+
+
+
+
 --[[
 -----------------------------
 NPC.Create(sID, table or nil)
@@ -35,9 +138,15 @@ intialization of an NPC may also
 be accompanied by a table of
 attributes that will be set upon
 its creation but is not required.
-If the NPX was created successfully,
+If the NPC was created successfully,
 its ID is returned otherwise a blank
 string is returned.
+Note: The ID should <always> be the
+entity ID to which the NPC as been
+or will be assigned and <not> the
+entity name (which is the general
+form of the entity from which this
+particular one is spawned).
 ]]
 function Create(sID, tProps)
 local sRet = "";
@@ -163,6 +272,66 @@ sName = string.lower(sName);
 	end
 
 return sRet
+end
+
+
+--[[
+-----------------------------
+NPC.HasDialog()
+Return Type: boolean
+Method Type: internal
+-----------------------------
+INCOMPLETE
+]]
+function HasDialog(sID)
+return true
+end
+
+
+--[[
+-----------------------------------------------
+NPC.SetAttr(sID)
+Return Type: nil
+Method Type: external
+-----------------------------------------------
+Attempts to open a dialog with an NPC. The NPC
+ID is the ID (not name) of the entity.
+]]
+function RequestDialog(sID)
+	
+	if NPC.Exists(sID) then
+		
+		--make sure no other dialog is open
+		if not GetDialogOpen().IsOpen then
+		local hEntity = findEntity(sID);
+			
+			--find outif the NPC has a dialog option
+			if NPC.HasDialog(sID) then
+			
+				--check to see if the entity is in the dungeon
+				if hEntity then			
+				--find the party's location
+				local hParty = findEntity("party");
+												
+					if hParty then
+					--THIS WILL BE UPDATED TO CALL THE DIALOG THROUGH THE GUI FRAMEWORK
+					hudPrint("Requesting Dialog with "..sID);
+					local nX, nY, nFacing, nlevel = hEntity.x, hEntity.y, Util.Position.GetOppositeFacing(hParty.facing), hEntity.level
+					--facing only cannot be set. There must be other and different variables incuded. So, the moves once to a random location and then back again.
+					hEntity:setPosition(math.random(0, 31), math.random(0, 31), math.random(0, 3), nlevel);
+					--set the monster's desired postion
+					hEntity:setPosition(nX, nY, nFacing, nlevel);
+					--request a dialog
+					NPC.SetDialogOpen(true, sID);
+					end
+					
+				end
+				
+			end
+			
+		end
+	end
+	
 end
 
 
