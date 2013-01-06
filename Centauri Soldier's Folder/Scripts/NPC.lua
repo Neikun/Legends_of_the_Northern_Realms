@@ -21,23 +21,11 @@ tNPCBaseAttributes = {
 };
 
 
-function GetDataTable()
-return tNPC
-end
-
-
-function SetDataTable(tData)
-	
-	--if type(tData) == "table" then
-	tNPC = tData;
-	--end
-	
-end
-
 --[[
 -----------------------------
 NPC.Create(sID, table or nil)
 Return Type: string
+Method Type: external
 -----------------------------
 Creates an NPC using the base
 attributes listed above. These
@@ -80,17 +68,18 @@ end
 
 
 --[[
---------------------
+---------------------
 NPC.Exists(string)
 Return Type: boolean
---------------------
+Method Type: external
+---------------------
 Checks to see whether or not
 an NPC exists in the tNPC.NPCs
 table.
 Note: This function does not check
 the validity of the entity, in fact,
 this function assumes that the
-entitity exists.
+entity exists (or will exist).
 ]]
 function Exists(sID)
 
@@ -106,6 +95,7 @@ end
 ---------------------------
 NPC.GetAttr(string, string)
 Return Type: string
+Method Type: external
 ---------------------------
 Gets an NPC's attribute value
 If the NPC or Attribute does
@@ -128,14 +118,36 @@ end
 
 
 --[[
+-----------------------------
+NPC.GetDataTable()
+Return Type: table
+Method Type: internal
+-----------------------------
+Used for getting the information
+that will be saved in the data
+module.
+]]
+function GetDataTable()
+return tNPC
+end
+
+
+--[[
 -----------------------
 NPC.GetIDByName(string)
 Return Type: string
+Method Type: external
 -----------------------
 Gets an NPC's ID by its
 name. If the NPC does
 not exist, a blank string
 is returned.
+Notes:
+1. This function is not
+reliable if more than one
+NPC share the same name.
+2. This function is NOT
+case-sensitive.
 ]]
 function GetIDByName(sName)
 local sRet = "";
@@ -155,19 +167,33 @@ end
 
 
 --[[
------------------------------------------
-NPC.GetIDByName(string, string, variable)
+-----------------------------------------------
+NPC.SetAttr(string, string or number, variable)
 Return Type: nil
------------------------------------------
-Sets an NPC's attribute
-value. If the attribute
-does not exist then it
-will be created.
+Method Type: external
+-----------------------------------------------
+Sets an NPC's attribute value. If the attribute
+does not exist then it is created.
 ]]
-function SetAttr(sID, sAtt, vValue)
+function SetAttr(sID, vAtt, vValue)
 	
 	if NPC.Exists(sID) then
-	tNPC.NPCs[sID][sAtt] = vValue;	
+	tNPC.NPCs[sID][vAtt] = vValue;	
 	end
 	
+end
+
+
+--[[
+-----------------------------
+NPC.SetDataTable(tables)
+Return Type: nil
+Method Type: internal
+-----------------------------
+Used for setting the information
+that was loaded from the data
+module.
+]]
+function SetDataTable(tData)
+tNPC = tData;
 end

@@ -54,27 +54,31 @@ tEscapeChars = {
 ----------------------------------
 Util.TableToString(table, integer)
 Return Type: string
+Method Type: internal
 ----------------------------------
 Does just what it says and more!
 Will return the entire table and
 all its contents, recursivley as
-a string value (including braces,
-indices etc).
+a string value (with tags).
 Note: In this version of the
-function (LoG versions)is cannot
-not store functions if they are
-values in the table. This is due
-to the fact that the 'getfenv'
-lua function is not accessable
-from inside LoG.
-This function will handle indices
-of types string and number and
-value types of string, number,
-boolean, table and nil.
-The number(argument #2) tells
-the function how many indents
-we want from the start. This
-is required but can be 0.
+function (LoG versions)it cannot
+store functions if they are values
+in the table. This is due to the
+fact that the 'getfenv' lua function
+is not accessable from inside LoG.
+A few Notes:
+1. This function creates tags for
+a mark-up system used with the
+Util.StringToTable() function. It
+is not intended to be used for any
+other purpose.
+2. This will handle indices
+of only types string and number.
+3. This will handle values of
+only types string, number, boolean,
+nil and table.
+4. The number(argument #2) MUST be
+exluded.
 ]]
 function TableToString(tInput, nCount)
 --the string to return
@@ -162,8 +166,8 @@ end
 --[[
 --------------------------
 Util.StringToTable(string)
---------------------------
 Return Type: table
+Method Type: internal
 --------------------------
 Converts a table, previously
 created by the above-listed
@@ -180,6 +184,8 @@ of only types string and number.
 3. This will handle values of
 only types string, number, boolean,
 nil and table.
+4. The number(argument #2) MUST be
+excluded when called.
 ]]
 function StringToTable(sInput, nCount)
 local nCount = nCount;
