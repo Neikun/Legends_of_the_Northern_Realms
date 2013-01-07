@@ -1,9 +1,9 @@
 <<Please refer to this document for all of your scripting questions. It will
 be updated regularly and should be considered the main info document for all
-scripting done by Centauri Soldier. Should you have scripting ideas or requests,
+scripting done by the scripting team. Should you have scripting ideas or requests,
 please post them in a text file within the 'Script Requests' folder inside
-'Centauri Soldier's Folder' using your name as the filename. Should you have a
-question that is not answered here, please feel free to contact Centauri Soldier.>>
+this folder using your name as the filename. Should you have a
+question that is not answered here, please feel free to contact Centauri Soldier or any other of the scripters detailed in the Official Thread.>>
 
 [Overview]
 This is a scripting reference intended for the level designers.
