@@ -19,4 +19,7 @@ We could create a GUI for those kinds of interactions. Even give a bonus to rest
 and disallow monster attacks when resting there.
 
 
-Adding more later...
+[Monsters]
+I think it would really cool if there were monsters about which players were genuinely concerned.
+Exp and/or level stealing monsters would be something from which anyone might run.
+

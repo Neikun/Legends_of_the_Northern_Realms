@@ -27,11 +27,11 @@ tNPCBaseAttributes = {
 
 
 --[[
-----------------------
-NPC.AllowDialogClose()
+---------------------
+NPC.AllowMovement()
 Return Type: boolean
 Method Type: internal
-----------------------
+---------------------
 This is called everytime
 an NPC tries to turn or
 move. If the NPC has a

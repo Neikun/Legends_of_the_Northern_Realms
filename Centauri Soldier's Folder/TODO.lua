@@ -11,4 +11,10 @@ Create a help module
 Create gui and widgets
 
 auto-load framework on-start
+
+Create a random treasure gen
+
+Attempt to alter a monster's drop during game using a method that returns a table
+
+attempt to create an inventory list that is transferrable between mods.
 ]]

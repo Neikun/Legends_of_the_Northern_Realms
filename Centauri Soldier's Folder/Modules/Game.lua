@@ -1,7 +1,22 @@
 tGame = {	
 	--DataModules = These are stored in the Game.GetDataMethods() method
 	DataModuleEntity = "dungeon_wall_text_long",
+	Initialized = false,
 };
+
+function GetInitialized()
+return tGame.Initialized
+end
+
+function SetInitialized(bInitialized)
+	
+	if type(bInitialized) == "boolean" then
+	tGame.Initialized = bInitialized;
+	else
+	tGame.Initialized = false;
+	end
+	
+end
 
 
 --[[
