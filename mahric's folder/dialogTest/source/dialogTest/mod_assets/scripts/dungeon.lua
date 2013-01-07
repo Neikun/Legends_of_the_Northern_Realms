@@ -9,6 +9,11 @@ mapDesc([[
 ################################
 ################################
 ################################
+####.######.####################
+###...####...###################
+##.....##.....##################
+###...####...###################
+####.######.####################
 ################################
 ################################
 ################################
@@ -19,11 +24,6 @@ mapDesc([[
 ################################
 ################################
 ################################
-###############.################
-##############...###############
-#############.....##############
-##############...###############
-###############.################
 ################################
 ################################
 ################################
@@ -39,7 +39,7 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("script_entity", 13,13,1, "script1")
+spawn("script_entity", 3,2,1, "script1")
 	:setSource("--\
 -- Example of how to call the DIALOG script\
 --\
@@ -74,7 +74,7 @@ function done(response)\
 \9hudPrint(\"You chose: \"..response)\
 end\
 ")
-spawn("script_entity", 13,12,2, "DIALOG")
+spawn("script_entity", 2,2,2, "DIALOG")
 	:setSource("--\
 -- DIALOG Script\
 --\
@@ -375,26 +375,307 @@ function determineTabClick(ctx)\
 \9return result\
 end\
 ")
-spawn("tome_wisdom", 15,14,2, "tome_wisdom_1")
-spawn("starting_location", 15,15,0, "starting_location")
-spawn("blocker", 14,15,3, "blocker_1")
-spawn("blocker", 15,14,3, "blocker_2")
-spawn("blocker", 16,15,3, "blocker_3")
-spawn("blocker", 15,16,1, "blocker_4")
-spawn("ogre", 15,13,2, "npc_ogre")
+spawn("tome_wisdom", 4,4,2, "tome_wisdom_1")
+spawn("blocker", 3,5,3, "blocker_1")
+spawn("blocker", 4,4,3, "blocker_2")
+spawn("blocker", 5,5,3, "blocker_3")
+spawn("blocker", 4,6,1, "blocker_4")
+spawn("ogre", 4,3,2, "npc_ogre")
 	:setAIState("guard")
-spawn("ogre", 17,15,3, "npc_ogre2")
+spawn("ogre", 6,5,3, "npc_ogre2")
 	:setAIState("guard")
-spawn("ogre", 15,17,0, "npc_ogre3")
+spawn("ogre", 4,7,0, "npc_ogre3")
 	:setAIState("guard")
-spawn("ogre", 13,15,1, "npc_ogre4")
+spawn("ogre", 2,5,1, "npc_ogre4")
 	:setAIState("guard")
-spawn("dungeon_door_wooden", 16,15,1, "dungeon_door_wooden_1")
-spawn("dungeon_door_portcullis", 15,16,2, "dungeon_door_portcullis_1")
-spawn("prison_secret_door", 13,15,1, "prison_secret_door_1")
-spawn("lever", 14,16,3, "lever_1")
+spawn("dungeon_door_wooden", 5,5,1, "dungeon_door_wooden_1")
+spawn("dungeon_door_portcullis", 4,6,2, "dungeon_door_portcullis_1")
+spawn("prison_secret_door", 2,5,1, "prison_secret_door_1")
+spawn("lever", 3,6,3, "lever_1")
 	:addConnector("any", "prison_secret_door_1", "toggle")
-spawn("lever", 16,16,2, "lever_2")
+spawn("lever", 5,6,2, "lever_2")
 	:addConnector("any", "dungeon_door_portcullis_1", "toggle")
-spawn("lever", 16,14,1, "lever_3")
+spawn("lever", 5,4,1, "lever_3")
 	:addConnector("any", "dungeon_door_wooden_1", "toggle")
+spawn("script_entity", 10,3,2, "WINDOW")
+	:setSource("_goForIt = false\
+\
+function start()\
+\9_goForIt = true\
+end\
+\
+function stop()\
+\9_goForIt = false\
+end\
+\
+function OnDraw(ctx)\
+\9if _goForIt then\
+\9\9-- Draw the window background\
+\9\9ctx.color(255, 255, 255, 255)\
+\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", 0, 0)\
+\9\9\
+\9\9---\
+\9\9--- Graphics\
+\9\9---\
+\9\9ctx.font(\"large\")\
+\9\9ctx.drawText(\"Graphics\", 50, 70)\
+\9\9\
+\9\9ctx.font(\"small\")\
+\9\9ctx.drawText(\"Resolution\", 70, 100)\
+\9\9ctx.drawText(\"Display Mode\", 70, 125)\
+\9\9ctx.drawText(\"Wait for Vertical Sync\", 70, 150)\
+\9\9ctx.drawText(\"Redering Quality\", 70, 175)\
+\9\9ctx.drawText(\"Texture Resolution\", 70, 200)\
+\9\9ctx.drawText(\"Texture Filtering\", 70, 225)\
+\9\9ctx.drawText(\"Shadow Quality\", 70, 250)\
+\9\9ctx.drawText(\"SSAO Quality\", 70, 275)\
+\
+\9\9y = 83;\9\9\
+\9\9drawOptionBox(ctx, \"1920 x 1080\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"Borderless\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"Enabled\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9\
+\9\9---\
+\9\9--- Audio options\
+\9\9---\
+\9\9ctx.font(\"large\")\
+\9\9ctx.drawText(\"Audio\", 50, 310)\
+\9\9\
+\9\9ctx.font(\"small\")\
+\9\9ctx.drawText(\"Music & Ambient\", 70, 340)\
+\9\9ctx.drawText(\"Sound Effect\", 70, 365)\
+\9\9\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_begin.tga\", 220, 328)\
+\9\9for i = 1, 12 do\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_middle.tga\", 220 + i*16, 328)\
+\9\9end\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_end.tga\", 220 + 13*16, 328)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", 370, 328)\
+\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_begin.tga\", 220, 353)\
+\9\9for i = 1, 12 do\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_middle.tga\", 220 + i*16, 353)\
+\9\9end\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_end.tga\", 220 + 13*16, 353)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", 370, 353)\
+\
+\9\9ctx.drawText(\"Mute\", 470, 340)\
+\9\9ctx.drawText(\"Mute\", 470, 365)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 445, 323)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 445, 348)\
+\
+\9\9\
+\9\9---\
+\9\9--- Game Options\
+\9\9---\
+\9\9ctx.font(\"large\")\
+\9\9ctx.drawText(\"Game\", 50, 410)\
+\
+\9\9ctx.font(\"small\")\
+\9\9ctx.drawText(\"Enable Arrow Icons\", 95, 440)\
+\9\9ctx.drawText(\"Disable Damage Texts\", 95, 465)\
+\9\9ctx.drawText(\"Hide Item Properties\", 95, 490)\
+\9\9ctx.drawText(\"Autosave\", 95, 515)\
+\9\9ctx.drawText(\"Mouse Look\", 395, 440)\
+\9\9ctx.drawText(\"Invert Horizontal\", 395, 465)\
+\9\9ctx.drawText(\"Invert Vertical\", 395, 490)\
+\9\9ctx.drawText(\"Tablet Mode\", 395, 515)\
+\9\9\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 70, 423)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 70, 448)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 70, 473)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_checked.tga\", 70, 498)\
+\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_checked.tga\", 370, 423)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 370, 448)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 370, 473)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 370, 498)\
+\9end\
+end\
+\
+\
+function drawOptionBox(ctx, t, x, y)\
+\9ctx.color(255, 255, 255, 255)\
+\9local w = 200\
+\9local h = 20\
+\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_left.tga\", x, y - 2)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_right.tga\", x + w, y - 2)\
+\9ctx.color(0, 0, 0, 96)\
+\9drawBox(ctx, t, x + 30, y + 2, w - 32, h)\
+end\
+\
+\
+function drawBox(ctx, t, x, y, w, h)\
+\9ctx.color(0, 0, 0, 96)\
+\9ctx.drawRect(x, y, w, h)\
+\9ctx.drawRect(x, y, w, 1)\
+\9ctx.drawRect(x, y, 1, h)\
+\9ctx.color(128, 128, 128, 128)\
+\9ctx.drawRect(x, y + h, w, 1)\
+\9ctx.drawRect(x + w, y, 1, h)\9\
+\9ctx.color(255, 255, 255, 255)\
+\9ctx.font(\"small\")\
+\9ctx.drawText(t, x + 5, y + 15)\
+end\
+")
+spawn("prison_pressure_plate", 11,3,2, "prison_pressure_plate_1")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(true)
+	:setTriggeredByItem(true)
+	:addConnector("activate", "WINDOW", "start")
+	:addConnector("deactivate", "WINDOW", "stop")
+spawn("prison_pressure_plate", 13,5,3, "prison_pressure_plate_2")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(true)
+	:setTriggeredByItem(true)
+	:addConnector("activate", "WINDOW2", "start")
+	:addConnector("deactivate", "WINDOW2", "stop")
+spawn("script_entity", 13,4,2, "WINDOW2")
+	:setSource("_goForIt = false\
+_expand = false\
+\
+function toggleExpand()\
+\9_expand = not _expand\
+end\
+\
+function start()\
+\9_goForIt = true\
+end\
+\
+function stop()\
+\9_goForIt = false\
+end\
+\
+function OnDraw(ctx)\
+\9if _goForIt then\
+\9\9local x = 0\
+\9\9local y = 0\
+\9\9local w = 0\
+\9\9local y = 0\
+\
+\9\9-- Draw the window background\
+\9\9ctx.color(255, 255, 255, 255)\
+\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", 0, 0)\
+\9\9\
+\9\9---\
+\9\9--- Graphics\
+\9\9---\
+\9\9ctx.font(\"large\")\
+\9\9ctx.drawText(\"Graphics\", 50, 70)\
+\9\
+\9\9ctx.font(\"small\")\
+\9\9ctx.drawText(\"Display Mode\", 70, 125)\
+\9\9ctx.drawText(\"Wait for Vertical Sync\", 70, 150)\
+\9\9ctx.drawText(\"Redering Quality\", 70, 175)\
+\9\9ctx.drawText(\"Texture Resolution\", 70, 200)\
+\9\9ctx.drawText(\"Texture Filtering\", 70, 225)\
+\9\9ctx.drawText(\"Shadow Quality\", 70, 250)\
+\9\9ctx.drawText(\"SSAO Quality\", 70, 275)\
+\
+\9\9y = 108;\
+\9\9drawOptionBox(ctx, \"Borderless\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"Enabled\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\
+\9\9--\
+\9\9--  Drop Down\
+\9\9--\9\9\
+\9\9x = 290\
+\9\9y = 80\
+\9\9w = 168\
+\9\9h = 85\
+\9\9ctx.font(\"small\")\
+\9\9ctx.drawText(\"Resolution\", 70, y + 20)\
+\9\9drawBox(ctx, \"1920 x 1080\", x, y+5, w, 20, 1)\
+\9\9if _expand == false then\
+\9\9\9-- Dropdown, not expanded\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_down.tga\", x + w - 18, y + 7)\
+\9\9else\
+\9\9\9-- Expanded dropdownf\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_up.tga\", x + w - 18, y + 7)\
+\9\9\9-- Expanded box\
+\9\9\9drawBox(ctx, \"1024 x 768\\n1280 x 1024\\n1496 x 1183\\n1920 x 1080\", x, y + 28, w + 20, h, 2)\
+\9\9\9-- Scroll area\
+\9\9\9drawBox(ctx, \"\", x + w, y + 29, 18, h-3, 3)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", x + w + 2, y + 50)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_up.tga\", x + w + 2, y + 28 + 5)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_down.tga\", x + w + 2, y + h + 8)\
+\9\9end\9\9\
+\
+\
+\9\
+\9\9\
+\9\9---\
+\9\9--- Audio options\
+\9\9---\
+\9\9ctx.font(\"large\")\
+\9\9ctx.drawText(\"Audio\", 50, 310)\
+\9\9\
+\9\9ctx.font(\"small\")\
+\9\9ctx.drawText(\"Select music track to play\", 70, 340)\
+\
+\9\9x = 70\
+\9\9y = 350\
+\9\9w = 400\
+\9\9h = 85\
+\9\9-- Expanded box\
+\9\9drawBox(ctx, \"Baz Luhrmann - Everybody's free to wear sunscreen\\nDarude - Sandstorm\\nWeird Al - Albuquerque\\nWithin Temptation - See Who I Am\", x, y, w + 20, h, 2)\
+\9\9-- Scroll area\
+\9\9drawBox(ctx, \"\", x + w, y + 1, 18, h-3, 3)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", x + w + 2, y + 22)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_up.tga\", x + w + 2, y + 5)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_down.tga\", x + w + 2, y + h - 20)\
+\9\9-- Selected item\
+\9\9ctx.color(255, 255, 255, 64)\
+\9\9ctx.drawRect(x + 1, y + 1 + 2 * 22, w - 2, 17)\
+\9\9\
+\9\9-- Reset color to normal value\
+\9\9ctx.color(255, 255, 255, 255)\
+\9end\
+end\
+\
+\
+function drawOptionBox(ctx, t, x, y)\
+\9ctx.color(255, 255, 255, 255)\
+\9local w = 200\
+\9local h = 20\
+\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_left.tga\", x, y - 2)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_right.tga\", x + w, y - 2)\
+\9ctx.color(0, 0, 0, 96)\
+\9drawBox(ctx, t, x + 30, y + 2, w - 32, h)\
+end\
+\
+\
+function drawBox(ctx, t, x, y, w, h, type)\
+\9if type == 1 then\
+\9\9ctx.color(0, 0, 0, 96)\
+\9end\
+\9if type == 2 then\
+\9\9ctx.color(16, 16, 16, 240)\
+\9end\
+\9if type == 3 then\
+\9\9ctx.color(255, 255, 255, 16)\
+\9end\
+\9ctx.drawRect(x, y, w, h)\
+\9ctx.drawRect(x, y, w, 1)\
+\9ctx.drawRect(x, y, 1, h)\
+\9ctx.color(128, 128, 128, 128)\
+\9ctx.drawRect(x, y + h, w, 1)\
+\9ctx.drawRect(x + w, y, 1, h)\9\
+\9ctx.color(255, 255, 255, 255)\
+\9ctx.font(\"small\")\
+\9ctx.drawText(t, x + 5, y + 15)\
+end\
+")
+spawn("wall_button", 13,5,1, "wall_button_1")
+	:addConnector("toggle", "WINDOW2", "toggleExpand")
+spawn("starting_location", 4,5,0, "starting_location")

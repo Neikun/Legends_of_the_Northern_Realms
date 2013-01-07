@@ -23,6 +23,8 @@ cloneObject{
 	
 	onDrawGui = function(ctx)
 		DIALOG.OnDraw(ctx)
+		WINDOW.OnDraw(ctx)
+		WINDOW2.OnDraw(ctx)
 		CHARSHEET.OnDraw(ctx)
 	end,
 	
