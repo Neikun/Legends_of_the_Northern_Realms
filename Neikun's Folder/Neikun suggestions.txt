@@ -36,3 +36,4 @@ Organisation: having your own model folder, texture folder, animation folder... 
 
 The base party characters should be famous for having escaped Grimrock. Their story would quickly become something of legend.
 We should reference people's attitudes to the destruction of Mount Grimrock as well.
+
