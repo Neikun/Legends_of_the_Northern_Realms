@@ -44,7 +44,7 @@ defineObject{
 	rangedAttack = {},
 	coolDown = {21600,21601},
 	movementCoolDown = 7,
-	exp = 0,	
+	exp = 0,
 	particleSystem = "goromorg_lantern",
 	particleSystemNode = "light1",
 	lightName = "light1",
@@ -53,25 +53,28 @@ defineObject{
 	lightRange = 4.5,
 	healthIncrement = 50,
 	brain = "Melee",
-	onRangedAttack = function()
-	return false
+	onAttack = function(hEntity, sAttack)
+	return NPC.OnAttack(hEntity, sAttack);
 	end,
-	onDamage = function()
-	return false
+	onDamage = function(hEntity, nDamage, sDamageType)
+	return NPC.OnDamage(hEntity, nDamage, sDamageType);
 	end,
-	onDealDamage = function()
-	return false
-	end,	
-	onProjectileHit = function()
-	return false
+	onDealDamage = function(hEntity, nChampionID, nDamage)
+	return NPC.OnDealDamage(hEntity, nChampionID, nDamage);
 	end,
-	onDie = function()
-	return false
+	onDie = function(hEntity)
+	return NPC.OnDie(hEntity);
 	end,
 	onMove = function(hEntity, nDirection)
-	return NPC.AllowMovement(hEntity, nDirection)
+	return NPC.OnMove(hEntity, nDirection);
+	end,
+	onProjectileHit = function(hEntity, hProjectile, nDamage, sDamageType)
+	return NPC.OnProjectileHit(hEntity, hProjectile, nDamage, sDamageType);
+	end,
+	onRangedAttack = function(hEntity)
+	return NPC.OnRangedAttack(hEntity);
 	end,
 	onTurn = function(hEntity, nDirection)
-	return NPC.AllowMovement(hEntity, nDirection)
-	end,
+	return NPC.OnTurn(hEntity, nDirection);
+	end,	
 }

@@ -20,7 +20,7 @@ function OnAttack(nChampionID, hWeapon)
 local nXAdjust = 0;
 local nYAdjust = 0;
 local hParty = findEntity("party");
-local tNPCObjects = {"npc_boatman"};
+local tNPCObjects = NPC.GetObjects();
 	
 	--get the tile in front of the party
 	if hParty.facing == 0 then

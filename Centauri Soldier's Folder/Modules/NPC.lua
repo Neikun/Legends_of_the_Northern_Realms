@@ -4,7 +4,7 @@ tNPC = {
 		ID = "",
 	},
 	Objects = {
-		"npc_boatman"
+		"npc_boatman",
 	},
 	Classes = {
 		"Healer",
@@ -28,6 +28,11 @@ tNPCBaseAttributes = {
 };
 
 
+
+
+function GetObjects()
+return tNPC.Objects
+end
 
 --[[
 ------------------------------------------------
