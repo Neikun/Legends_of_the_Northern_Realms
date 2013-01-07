@@ -1,0 +1,19 @@
+
+
+  The Designer's turn is coming up soon, and I wanted to get a some ideas/suggestions on how we are gonna start out. Here's my 2 cents:
+
+We need to start around floor 5 to allow 2 story inns/taverns/shops, and later, may want to do a 4-5 story tower or castle.
+
+If we start on floor 5, are we going one floor for the entire first town? I was thinking a West Side dingy, market/residential area
+where the player is introduced, sent on a couple of simple of "fetch" quests, meets a base npc or 2, and establish relationships.
+Eventually, unlocking the East Side of town (Floor 6?) which is upper scale/government/military style, where some action can begin.
+
+We could do Quadrants, and go 4 floors for the starting town, (Or keep 2 reserved) because  
+we could all be working on this in 6 months, adding, tweaking. . . .The First town may become Iconic of the mod also.
+
+On this note, Can we come up with a GUI "mask" over the floor number in the map. That is going to KILL immersion.
+
+Thinking of Item hooks that can change dialogue for "NPC"s, so they "Know" when you've beat a "Quest" More on this later.
+
+What about an npc model, With 6-8 alcoves on him, tune them right (Ahem, NEIKUN.) and add leather/plate armor in the torso alcove,
+and a diviner cap on the head alcove, etc. Multiple NPC's Immediately, and the world comes alive!
