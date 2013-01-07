@@ -12,16 +12,25 @@ Do you feel like you are in a outside town, or does this still feel "underground
 
 List of things that needs to be done.
 
---Skuggasveinn 
-Finish indoor assets, so the party can walk inside a shop/house
+--Skuggasveinn todo list
+
 Signs above the shops
-Stairs down need lower walls assets.
-change the decoration (hooks and chains) for something more town like (any suggestions ?)
-need to finsih over head assets.
-the walls need more varity , its all to simple at this point (any suggestions ?)
-need to get the fountains and other assets into this, statues ?
-Need to change the floor for something more town like
+Need to finish overhead assets.
 Needs town ambience
+Need to create half pillar
+Need to fine tune the fountain abit
+Need to create floor drainage and wall drainage
+Need new stars for sewer access
+
+
+--Done list
+
+DONE - Finish indoor assets, so the party can walk inside a shop/house
+DONE -Stairs down need lower walls assets.
+DONE -change the decoration (hooks and chains) for something more town like (any suggestions ?)
+DONE -the walls need more varity , its all to simple at this point (any suggestions ?)
+DONE -need to get the fountains and other assets into this, statues ?
+DONE Need to change the floor for something more town like
 
 ---Comments---
 
