@@ -50,10 +50,84 @@ tEscapeChars = {
 	},	
 };
 
+--the subclasses used in this module
+Dungeon = {};
 Math = {};
-Table = {};
 Position = {};
+String = {};
+Table = {};
 
+
+--================================================================================
+--									<<<DUNGEON>>>
+--================================================================================
+
+
+--[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Util.Dungeon.AdjacentCellIsWall(Integer, Integer, Integer, Integer)
+Used to determine if a cell adjacent to
+the input cell is a wall. This is, of course,
+relative to the input facing.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+function Dungeon.AdjacentCellIsWall(nLevel, nFacing, nX, nY)
+
+	if nFacing == 0 then
+	nY = nY - 1;
+	
+	elseif nFacing == 1 then
+	nX = nX + 1;
+	
+	elseif nFacing == 2 then
+	nY = nY + 1;
+	
+	elseif nFacing == 3 then
+	nX = nX - 1;
+	
+	end
+	
+	if nX > -1 and nX < 32 and nY > -1 and nY < 32 then
+	return isWall(nLevel, nX, nY)
+	end
+	
+return true
+end
+
+
+--================================================================================
+--									<<<MATH>>>
+--================================================================================
+
+
+--[[>>>>>>>>>>>>>>>>>>>>>>>>>>
+Util.Math.GetAlternator
+Gets a random number:
+either 1 or -1.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+function Math.GetAlternator()
+return (-1) ^ math.random(1,2)
+end
+
+
+--[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Util.Math.UpOrDown(Integer)
+A utility function that returns
+an integer value to the
+(randomly chosen) nearest high
+or low value.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+function Math.UpOrDown(nValue)
+		
+	if math.random() < 0.5 then
+	return math.floor(nValue)
+	else
+	return math.ceil(nValue)
+	end
+
+end
+
+--================================================================================
+--									<<<POSITION>>>
+--================================================================================
 function Position.GetOppositeFacing(nFacing)
 
 	if nFacing == 0 then
@@ -68,6 +142,62 @@ function Position.GetOppositeFacing(nFacing)
 
 return 0
 end
+
+
+--================================================================================
+--									<<<STRING>>>
+--================================================================================
+
+
+--[[>>>>>>>>>>>>>>>>>>>>>>>>>>
+Util.String.GenerateUUID(String)
+Creates a Universal Unique
+Identifier that may contain
+a prefix.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+function String.GenerateUUID(sPrefix)
+local tChars = {"x","3","y","1","b","2","p","e","8","f","v","t","g","9","h","7","u","4","i","z","a","j","0","c","k","l","5","m","n","w","o","q","r","s","d","6"};
+local tSequence = {1,4,4,4,12};
+local sUUID = "";
+local nMaxPrefixLength = 6; --range from 0 to 8
+local sDelimiter = "-";
+
+if type(sPrefix) == "string" then
+local nLength = string.len(sPrefix);
+	
+	if nLength > nMaxPrefixLength then
+	sPrefix = string.sub(sPrefix, 1, nMaxPrefixLength);
+	end
+	
+	if string.gsub(sPrefix, " ", "") ~= "" then
+	sUUID = sPrefix..sDelimiter;
+	end
+	
+	if nLength < nMaxPrefixLength then
+	tSequence[1] = tSequence[1] + (nMaxPrefixLength - nLength);
+	end
+	
+else
+tSequence[1] = 8;
+end
+
+--fix the - at the end...
+for nIndex, nSequence in pairs(tSequence) do
+	
+	for x = 1, nSequence do
+	sUUID = sUUID..tChars[math.random(1, 36)];
+	end
+
+sUUID = sUUID.."-";
+end
+
+return sUUID
+end
+
+
+--================================================================================
+--									<<<TABLE>>>
+--================================================================================
 
 
 --[[
@@ -100,7 +230,7 @@ nil and table.
 4. The number(argument #2) MUST be
 exluded.
 ]]
-function TableToString(tInput, nCount)
+function Table.ToString(tInput, nCount)
 --the string to return
 local sRet = "";
 local nCount = nCount;
@@ -180,12 +310,9 @@ return sRet
 end
 
 
-
-
-
 --[[
 --------------------------
-Util.StringToTable(string)
+Util.Table.FromString(string)
 Return Type: table
 Method Type: internal
 --------------------------
@@ -207,7 +334,7 @@ nil and table.
 4. The number(argument #2) MUST be
 excluded when called.
 ]]
-function StringToTable(sInput, nCount)
+function Table.FromString(sInput, nCount)
 local nCount = nCount;
 
 	--initialize the count variable if it's not

@@ -5,20 +5,12 @@ tParty = {
 	[4] = {},
 };
 
-
-
-
-
-
-
---=============================================================
---=============================================================
--- <<<						HOOKS					  	 >>> --
---=============================================================
---=============================================================
+--[[============================================================
+						#### HOOKS ####
+--============================================================]]
 --[[
 ---------------------
-Party.()
+Party.OnAttack()
 Return Type: boolean
 Method Type: internal
 ---------------------
@@ -63,9 +55,10 @@ local tNPCObjects = {"npc_boatman"};
 return true
 end
 
+
 --[[
 ---------------------
-Party.()
+Party.OnCastSpell()
 Return Type: boolean
 Method Type: internal
 ---------------------
@@ -81,10 +74,26 @@ return true
 end
 
 
+--[[
+---------------------
+Party.OnDie()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnDie(nChampionID)
 end
 
 
+--[[
+---------------------
+Party.OnDamage()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnDamage(nChampionID, nDamage, sDamageType)
 	
 	if NPC.GetDialogOpen().IsOpen then
@@ -95,10 +104,26 @@ return true
 end
 
 
+--[[
+---------------------
+Party.OnLevelUp()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnLevelUp(nChampionID)
 end
 
 
+--[[
+---------------------
+Party.OnMove()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnMove(hParty, nDirection)
 	
 	if NPC.GetDialogOpen().IsOpen then
@@ -108,6 +133,15 @@ function OnMove(hParty, nDirection)
 return true
 end
 
+
+--[[
+---------------------
+Party.OnPickUpItem()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnPickUpItem(hParty, hItem)
 	
 	if NPC.GetDialogOpen().IsOpen then
@@ -116,6 +150,16 @@ function OnPickUpItem(hParty, hItem)
 
 return true
 end
+
+
+--[[
+---------------------
+Party.OnProjectileHit()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnProjectileHit(nChampionID, hProjectile, nDamage, sDamageType)
 	
 	if NPC.GetDialogOpen().IsOpen then
@@ -126,14 +170,38 @@ return true
 end
 
 
+--[[
+---------------------
+Party.OnReceiveCondition()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnReceiveCondition(nChampionID, sCondition, nValue)
 end
 
 
+--[[
+---------------------
+Party.OnRest()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnRest(hParty)
 end
 
 
+--[[
+---------------------
+Party.OnTurn()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnTurn(hParty, nDirection)
 	
 	if NPC.GetDialogOpen().IsOpen then
@@ -144,6 +212,14 @@ return true
 end
 
 
+--[[
+---------------------
+Party.OnUseItem()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnUseItem(nChampionID, hItem, nSlot)
 	
 	if NPC.GetDialogOpen().IsOpen then
@@ -154,5 +230,13 @@ return true
 end
 
 
+--[[
+---------------------
+Party.OnWakeUp()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
 function OnWakeUp(hParty)
 end

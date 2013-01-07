@@ -17,4 +17,6 @@ Create a random treasure gen
 Attempt to alter a monster's drop during game using a method that returns a table
 
 attempt to create an inventory list that is transferrable between mods.
+
+update method comment in the Util module
 ]]

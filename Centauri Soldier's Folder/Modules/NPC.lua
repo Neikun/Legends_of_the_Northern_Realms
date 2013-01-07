@@ -3,6 +3,9 @@ tNPC = {
 		IsOpen = false,
 		ID = "",
 	},
+	Objects = {
+		"npc_boatman"
+	},
 	Classes = {
 		"Healer",
 		"Kiosk",
@@ -24,37 +27,6 @@ tNPCBaseAttributes = {
 	Skills = {},
 };
 
-
-
---[[
----------------------
-NPC.AllowMovement()
-Return Type: boolean
-Method Type: internal
----------------------
-This is called everytime
-an NPC tries to turn or
-move. If the NPC has a
-dialog open, it cannot
-turn or move. Once the
-dialog is closed, then it
-will resume normal actions.
-This is identical to the
-Party.AllowMovement() method.
-]]
-function AllowMovement(hEntity, nDirection)
-local tDialog = NPC.GetDialogOpen();
-
-	if tDialog.IsOpen then
-		
-		if tDialog.ID == hEntity.id then
-		return false
-		end
-		
-	end
-
-return true
-end
 
 
 --[[
@@ -365,4 +337,131 @@ module.
 ]]
 function SetDataTable(tData)
 tNPC = tData;
+end
+
+
+--[[============================================================
+						#### HOOKS ####
+--============================================================]]
+
+
+--[[
+---------------------
+NPC.OnAttack()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnAttack(hEntity, sAttack)
+return false
+end
+
+
+--[[
+---------------------
+NPC.OnDamage()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnDamage(hEntity, nDamage, sDamageType)
+return false
+end
+
+
+--[[
+---------------------
+NPC.OnDealDamage()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnDealDamage(hEntity, nChampionID, nDamage)
+return false
+end
+
+
+--[[
+---------------------
+NPC.OnDie()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnDie(hEntity)
+return false
+end
+
+
+--[[
+---------------------
+NPC.OnMove()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnMove(hEntity, nDirection)
+local tDialog = NPC.GetDialogOpen();
+
+	if tDialog.IsOpen then
+		
+		if tDialog.ID == hEntity.id then
+		return false
+		end
+		
+	end
+
+return true
+end
+
+
+--[[
+---------------------
+NPC.OnProjectileHit()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnProjectileHit(hEntity, hProjectile, nDamage, sDamageType)
+end
+
+
+--[[
+---------------------
+NPC.OnRangedAttack()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnRangedAttack(hEntity)
+end
+
+
+--[[
+---------------------
+NPC.OnTurn()
+Return Type: boolean
+Method Type: internal
+---------------------
+See Scripting Reference
+]]
+function OnTurn(hEntity, nDirection)
+local tDialog = NPC.GetDialogOpen();
+
+	if tDialog.IsOpen then
+		
+		if tDialog.ID == hEntity.id then
+		return false
+		end
+		
+	end
+
+return true
 end

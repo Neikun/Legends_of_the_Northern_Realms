@@ -1,56 +1,4 @@
 --[[
-By Centauri Soldier
-CentauriSoldier@MadGamerHideout.net
-
-<<<Current Version>>>
-1.0
-
-<<<Version History>>>
-1.0
-Added the ability to use party min and max levels for monster min and max spawn levels
-
-0.9
-Added monster minimum and maximum level limits
-Added the UpOrDown() function
-
-0.8
-Enhanced the facing subroutine to include random spawn facings
-
-0.7
-Added a subroutine that ensures monsters do not face walls when spawning
-
-0.6
-Fixed a bug that caused monsters to have invalid spawn locations
-Added a subroutine that prevents infinite looping, looping,...
-
-0.5
-Added a subroutine that checks for minimum distance from the party
-Renamed some variables
-
-0.4
-Added the AdjacentCellIsWall() function
-Fixed some logic erros in cell versus table index for tiles
-
-0.3
-Added the GetUUID() funciton
-Added the GetAlternator() function
-Fixed the some minor bugs
-
-0.2
-Fixed several bugs in the generator code
-
-0.1
-Made the basic generator code to create random monsters
-
-
-Licensed under Attribution 3.0 Unported
-Use, edit and distribute as you like.
-Please give credit if you do (the
-first two lines of this license comment).
-
-License Details
-http://creativecommons.org/licenses/by/3.0/
-
 Usage:
 Create a script entity
 called 'Monsters' and place
@@ -142,92 +90,7 @@ tMonsters = {
 
 
 
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Monsters.AdjacentCellIsWall(Integer, Integer, Integer, Integer)
-Used to determine if a cell adjacent to
-the input cell is a wall. This is, of course,
-relative to the input facing.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function AdjacentCellIsWall(nLevel, nFacing, nX, nY)
 
-	if nFacing == 0 then
-	nY = nY - 1;
-	
-	elseif nFacing == 1 then
-	nX = nX + 1;
-	
-	elseif nFacing == 2 then
-	nY = nY + 1;
-	
-	elseif nFacing == 3 then
-	nX = nX - 1;
-	
-	end
-	
-	if nX > -1 and nX < 32 and nY > -1 and nY < 32 then
-	return isWall(nLevel, nX, nY)
-	end
-	
-return true
-end
-
-
-
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-Monsters.GenerateUUID(String)
-Creates a Universal Unique
-Identifier that may contain
-a prefix.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function GenerateUUID(sPrefix)
-local tChars = {"x","3","y","1","b","2","p","e","8","f","v","t","g","9","h","7","u","4","i","z","a","j","0","c","k","l","5","m","n","w","o","q","r","s","d","6"};
-local tSequence = {1,4,4,4,12};
-local sUUID = "";
-local nMaxPrefixLength = 6; --range from 0 to 8
-local sDelimiter = "-";
-
-if type(sPrefix) == "string" then
-local nLength = string.len(sPrefix);
-	
-	if nLength > nMaxPrefixLength then
-	sPrefix = string.sub(sPrefix, 1, nMaxPrefixLength);
-	end
-	
-	if string.gsub(sPrefix, " ", "") ~= "" then
-	sUUID = sPrefix..sDelimiter;
-	end
-	
-	if nLength < nMaxPrefixLength then
-	tSequence[1] = tSequence[1] + (nMaxPrefixLength - nLength);
-	end
-	
-else
-tSequence[1] = 8;
-end
-
---fix the - at the end...
-for nIndex, nSequence in pairs(tSequence) do
-	
-	for x = 1, nSequence do
-	sUUID = sUUID..tChars[math.random(1, 36)];
-	end
-
-sUUID = sUUID.."-";
-end
-
-return sUUID
-end
-
-
-
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-Monsters.GetAlternator
-Gets a random number:
-either 1 or -1.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function GetAlternator()
-return (-1) ^ math.random(1,2)
-end
 
 
 
@@ -331,7 +194,7 @@ local nMinMonsterDist = tMonsters.MinMonsterDistance;
 	base number of spawned monsters . The number below stored in the 'nAlternator'
 	variable will determine whether that 'nAddative' modifier will add to the base
 	number or subtract from it.]]
-local nAlternator = GetAlternator();
+local nAlternator = Util.Math.GetAlternator();
 --this is the base number of monsters that will spawn in this level
 local nMonsters = tMonsters.BaseCount[nLevel];
 	
@@ -435,7 +298,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 				--get the monster's facing
 				for nFacingIndex, nFacingValue in pairs(tFacings) do
 										
-					if not AdjacentCellIsWall(nLevel, nFacingValue, nX, nY) then
+					if not Util.Dungeon.AdjacentCellIsWall(nLevel, nFacingValue, nX, nY) then
 					nFacing = nFacingValue;
 					break;
 					end
@@ -450,7 +313,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 					--get the random monster to spawn
 					local sMonsterClass = Monsters.GetRandom(nLevel);
 					--this prevents duplicate IDs
-					sMonsterID = "monster_"..sMonsterClass.."_"..tostring(nLevel).."_"..tostring(nX).."_"..tostring(nY)..Monsters.GenerateUUID(tostring(math.random(1, 100))..sMonsterClass);
+					sMonsterID = "monster_"..sMonsterClass.."_"..tostring(nLevel).."_"..tostring(nX).."_"..tostring(nY)..Util.String.GenerateUUID(tostring(math.random(1, 100))..sMonsterClass);
 					--add this monster to the list of monsters spawned in this level
 					tMonsters.Spawned[nLevel][#tMonsters.Spawned[nLevel] + 1] = sMonsterID;
 					--spawn the beast!
@@ -460,7 +323,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 					--set the monster's AI state (as discussed above)
 					hMonster:setAIState(tAI[math.random(1, #tAI)]);
 					--calculate the monster's level based in the mean party level as well as the dungeon level and adjusted for a little variety in difficulty
-					local nMonsterLevel = Monsters.UpOrDown(nMeanPartyLevel + (tMonsters.BaseLevelVar * math.random(1, nLevel)));
+					local nMonsterLevel = Util.Math.UpOrDown(nMeanPartyLevel + (tMonsters.BaseLevelVar * math.random(1, nLevel)));
 						
 						--make sure the monster's level does not exceed the allowed lower limits
 						if nMonsterLevel < nMinLevelAllowed then
@@ -488,22 +351,3 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 	until (nMonsters == 0 or nSpawnAttempts >= nAllowedSpawnAttempts)
 	
 end
-
-
-
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Monsters.UpOrDown(Integer)
-A utility function that returns
-an integer value to the
-(randomly chosen) nearest high
-or low value.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function UpOrDown(nValue)
-		
-		if math.random() < 0.5 then
-		return math.floor(nValue)
-		else
-		return math.ceil(nValue)
-		end
-	
-	end

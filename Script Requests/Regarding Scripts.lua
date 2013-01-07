@@ -18,8 +18,8 @@ scripts.
 
 [DSRS]*
 Data Storage and Retrieval System. This is the system that
-allows the saving and loading of data that is superficial.
-Any data that the game does not save by default, like party
+allows the saving and loading of data that is superficial:
+any data that the game does not save by default, like party
 gold, NPC behavior and so on.
 
 [Modules List]
