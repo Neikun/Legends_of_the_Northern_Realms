@@ -35,5 +35,9 @@ Possible tilesets to use: Skugg's flooded dungeon
 Organisation: having your own model folder, texture folder, animation folder... err resource folders essentially will be good. Then when the dungeon designers get to work, they will all have their own series of .luas
 
 The base party characters should be famous for having escaped Grimrock. Their story would quickly become something of legend.
+The base party should be npcs now. Because the base party is now roughly level 15-18 with any combination of items.
+So this mod will have to feature a new party. 
+It needs to check if custom characters have been created, and if not, use a default party of our own creation.
+
 We should reference people's attitudes to the destruction of Mount Grimrock as well.
 
