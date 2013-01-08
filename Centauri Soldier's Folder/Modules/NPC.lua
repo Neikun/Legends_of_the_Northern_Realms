@@ -31,6 +31,30 @@ tNPCBaseAttributes = {
 
 
 
+function AddObject(sObject)
+
+	if Util.VarIsValid({"s"}, sObject)
+		
+		if string.gsub(sObject, " ", "") ~= "" then
+			
+			if not tNPC.Objects[sObject] then
+			tNPC.Objects[sObject] = nil;
+			end
+		
+		end
+		
+	end	
+
+end
+
+function DeleteObject(sObject)
+	
+	if tNPC.Objects[sObject] then
+	tNPC.Objects[sObject] = nil;
+	end
+
+end
+
 function GetObjects()
 return tNPC.Objects
 end
@@ -49,11 +73,12 @@ Note: If either variable is nil, the ID is blank or
 the 'bOpen' variable is false, it will set the
 dialog as closed. This is intended for convenience.
 ]]
-function SetDialogOpen(bOpen, sID)
+function SetDialogOpen(sID, bOpen)
 local bIsOpen = false;
 local sMyID = "";
 	
-	if type(bOpen) == "boolean" then
+	if NPC.Exists(sID) and Util.VarIsValid({"b","l"}, bOpen) then
+	sID = string.lower(sID);
 		
 		if bOpen then
 		
@@ -63,8 +88,7 @@ local sMyID = "";
 				bIsOpen = bOpen;
 				sMyID = sID	;		
 				end
-				
-			
+						
 			end
 			
 		end
@@ -128,26 +152,31 @@ particular one is spawned).
 ]]
 function Create(sID, tProps)
 local sRet = "";
-
-	--create the base NPC if it does not exist
-	if not tNPC.NPCs[sID] then
-	tNPC.NPCs[sID] = {};
-	sRet = sID;
 	
-		--cycle through the Base Attributes
-		for sIndex, vValue in pairs(tNPCBaseAttributes) do
-		tNPC.NPCs[sID][sIndex] = vValue;
+	if type(sID) = "string" then
+	sID = string.lower(sID);
+	
+		--create the base NPC if it does not exist
+		if not tNPC.NPCs[sID] then
+		tNPC.NPCs[sID] = {};
+		sRet = sID;
+		
+			--cycle through the Base Attributes
+			for sIndex, vValue in pairs(tNPCBaseAttributes) do
+			tNPC.NPCs[sID][sIndex] = vValue;
+			end
+			
 		end
 		
-	end
-	
-	--if any properties were included, set them
-	if tProps then
+		--if any properties were included, set them
+		if type(tProps) == "table" then
+			
+			for sIndex, vValue in pairs(tProps) do
+			tNPC.NPCs[sID][sIndex] = vValue;
+			end
 		
-		for sIndex, vValue in pairs(tProps) do
-		tNPC.NPCs[sID][sIndex] = vValue;
 		end
-	
+		
 	end
 
 return sRet
@@ -169,11 +198,16 @@ this function assumes that the
 entity exists (or will exist).
 ]]
 function Exists(sID)
+	
+	if type(sID) = "string" then
+	sID = string.lower(sID);
 
-	if tNPC.NPCs[sID] then
-	return true
+		if tNPC.NPCs[sID] then
+		return true
+		end
+	
 	end
-
+	
 return false
 end
 
@@ -191,9 +225,10 @@ returned.
 ]]
 function GetAttr(sID, sAtt)
 local sRet = "";
-
-	if NPC.Exists(sID) then
 		
+	if NPC.Exists(sID) then	
+	sID = string.lower(sID);
+	
 		if tNPC.NPCs[sID][sAtt] then
 		return tNPC.NPCs[sID][sAtt]
 		end
@@ -262,7 +297,14 @@ Method Type: internal
 INCOMPLETE
 ]]
 function HasDialog(sID)
-return true
+
+	if type(sID) = "string" then
+	sID = string.lower(sID);
+	
+	return true
+	end
+	
+return false
 end
 
 

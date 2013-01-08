@@ -57,6 +57,43 @@ Position = {};
 String = {};
 Table = {};
 
+--================================================================================
+--								<<<All Util Methods>>>
+--================================================================================
+
+function VarIsValid(tTypes, vVar)
+local tValidTypes = {
+	b = "boolean",
+	f = "funciton",
+	l = "nil",
+	n = "number",
+	s = "string",
+	t = "table",
+};
+
+	if type(tTypes) == "table" then
+	local sVarType = type(vVar);
+	
+		for nTypeID, sTypeID in pairs(tTypes) do
+		sTypeID = string.lower(sTypeID);
+		
+			---check that the input type exists
+			if tValidTypes[sTypeID] then
+				
+				--check to see if the input variable meets one of the allowed types input
+				if sVarType == tValidTypes[sTypeID] then
+				return true
+				end
+		
+			end			
+			
+		end		
+			
+	end
+	
+return false
+end
+
 
 --================================================================================
 --									<<<DUNGEON>>>
