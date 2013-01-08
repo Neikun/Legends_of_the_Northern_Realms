@@ -16,6 +16,7 @@ tNPC = {
 
 --used for creating new NPCs
 tNPCBaseAttributes = {
+	Assciations = {},	
 	Effects = {},
 	Classes = {},
 	Enemies = {},
