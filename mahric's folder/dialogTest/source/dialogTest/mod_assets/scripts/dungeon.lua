@@ -399,6 +399,7 @@ spawn("lever", 5,4,1, "lever_3")
 	:addConnector("any", "dungeon_door_wooden_1", "toggle")
 spawn("script_entity", 10,3,2, "WINDOW")
 	:setSource("_goForIt = false\
+_hover = false\
 \
 function start()\
 \9_goForIt = true\
@@ -408,7 +409,15 @@ function stop()\
 \9_goForIt = false\
 end\
 \
+function toggleHover()\
+\9_hover = not _hover\
+end\
+\
 function OnDraw(ctx)\
+\9local s = \"\"\
+\9if _hover then\
+\9\9s = \"_hover\"\
+\9end\
 \9if _goForIt then\
 \9\9-- Draw the window background\
 \9\9ctx.color(255, 255, 255, 255)\
@@ -430,15 +439,15 @@ function OnDraw(ctx)\
 \9\9ctx.drawText(\"Shadow Quality\", 70, 250)\
 \9\9ctx.drawText(\"SSAO Quality\", 70, 275)\
 \
-\9\9y = 83;\9\9\
-\9\9drawOptionBox(ctx, \"1920 x 1080\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"Borderless\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"Enabled\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9y = 85;\9\9\
+\9\9drawOptionBox(ctx, \"1920 x 1080\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"Borderless\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"Enabled\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
 \9\9\
 \9\9---\
 \9\9--- Audio options\
@@ -450,24 +459,13 @@ function OnDraw(ctx)\
 \9\9ctx.drawText(\"Music & Ambient\", 70, 340)\
 \9\9ctx.drawText(\"Sound Effect\", 70, 365)\
 \9\9\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_begin.tga\", 220, 328)\
-\9\9for i = 1, 12 do\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_middle.tga\", 220 + i*16, 328)\
-\9\9end\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_end.tga\", 220 + 13*16, 328)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", 370, 328)\
-\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_begin.tga\", 220, 353)\
-\9\9for i = 1, 12 do\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_middle.tga\", 220 + i*16, 353)\
-\9\9end\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_end.tga\", 220 + 13*16, 353)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", 370, 353)\
+\9\9drawSlider(ctx, 220, 325, _hover)\
+\9\9drawSlider(ctx, 220, 350, _hover)\
 \
 \9\9ctx.drawText(\"Mute\", 470, 340)\
 \9\9ctx.drawText(\"Mute\", 470, 365)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 445, 323)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 445, 348)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 445, 323)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 445, 348)\
 \
 \9\9\
 \9\9---\
@@ -486,41 +484,133 @@ function OnDraw(ctx)\
 \9\9ctx.drawText(\"Invert Vertical\", 395, 490)\
 \9\9ctx.drawText(\"Tablet Mode\", 395, 515)\
 \9\9\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 70, 423)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 70, 448)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 70, 473)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_checked.tga\", 70, 498)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 70, 423)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 70, 448)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 70, 473)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_checked\"..s..\".tga\", 70, 498)\
 \
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_checked.tga\", 370, 423)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 370, 448)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 370, 473)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_unchecked.tga\", 370, 498)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_checked\"..s..\".tga\", 370, 423)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 370, 448)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 370, 473)\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 370, 498)\
 \9end\
 end\
 \
+function drawSlider(ctx, x, y, hover)\
+\9local s = \"\"\
+\9if hover \
+\9\9then s = \"_hover\" \
+\9end\
+\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_begin\"..s..\".tga\", x, y)\
+\9for i = 1, 9 do\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_middle\"..s..\".tga\", x + i*20, y)\
+\9end\
+\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_end\"..s..\".tga\", x + 9*20, y)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_button\"..s..\".tga\", x + 150, y)\
+end\
 \
-function drawOptionBox(ctx, t, x, y)\
+function drawOptionBox(ctx, t, x, y, hover)\
+\9local s = \"\"\
+\9if hover then\
+\9\9s = \"_hover\"\
+\9end\
 \9ctx.color(255, 255, 255, 255)\
 \9local w = 200\
 \9local h = 20\
-\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_left.tga\", x, y - 2)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_right.tga\", x + w, y - 2)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_20_left\"..s..\".tga\", x - 1, y)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_20_right\"..s..\".tga\", x + w, y)\
 \9ctx.color(0, 0, 0, 96)\
-\9drawBox(ctx, t, x + 30, y + 2, w - 32, h)\
+\9drawBox(ctx, t, x + 29, y, w - 32, h, 1, hover)\
 end\
 \
-\
-function drawBox(ctx, t, x, y, w, h)\
+function drawBox(ctx, text, x, y, width, height, mode, hover)\
+\9-- Mode is used to draw different parts like a scrollbox\
 \9ctx.color(0, 0, 0, 96)\
-\9ctx.drawRect(x, y, w, h)\
-\9ctx.drawRect(x, y, w, 1)\
-\9ctx.drawRect(x, y, 1, h)\
-\9ctx.color(128, 128, 128, 128)\
-\9ctx.drawRect(x, y + h, w, 1)\
-\9ctx.drawRect(x + w, y, 1, h)\9\
+\9if mode == 2 then\
+\9\9ctx.color(16, 16, 16, 240)\
+\9end\
+\9if mode == 3 then\
+\9\9ctx.color(255, 255, 255, 16)\
+\9end\
+\9-- Main box\
+\9ctx.drawRect(x, y, width, height)\
+\9-- Shadow line on top and left\
+\9ctx.drawRect(x, y, width, 1)\
+\9ctx.drawRect(x, y, 1, height)\
+\9-- lighter lines on bottom and right\
+\9ctx.color(128, 128, 160, 128)\
+\9ctx.drawRect(x, y + height, width, 1)\
+\9ctx.drawRect(x + width, y, 1, height)\
+\
+\9if hover then\
+\9\9drawHighlight(ctx, x, y, width, height)\
+\9end\
+\9\
+\9-- draw the given text\
+\9if text ~= nil then\
+\9\9ctx.font(\"small\")\
+\9\9ctx.color(255, 255, 255, 255)\
+\9\9ctx.drawText(text, x + 5, y + 15)\
+\9end\
+end\
+\
+function drawListbox(ctx, text, x, y, width, height, hover, mode)\
+\9local s = \"\"\
+\9if hover then\
+\9\9s = \"_hover\"\
+\9end\
+\9drawBox(ctx, text, x, y, width, height, mode, false)\
 \9ctx.color(255, 255, 255, 255)\
+\9ctx.drawText(text, x + 5, y + 14)\
+\9-- Scroll area\
+\9ctx.color(16, 16, 16, 240)\
+\9ctx.drawRect(x + width - 19, y + 1, 18, height - 2)\
+\9ctx.color(255, 255, 255, 255)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_button\"..s..\".tga\", x + width - 20, y + height * 0.5)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_up\"..s..\".tga\", x + width - 20, y + 0)\
+\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_down\"..s..\".tga\", x + width - 20, y + height - 20)\
+\9-- Selected item\
+\9ctx.color(222, 255, 255, 64)\
+\9ctx.drawRect(x + 1, y + 1 + 2 * 22, width - 21, 17)\
+\9-- Reset color to normal value\
+\9ctx.color(255, 255, 255, 255)\
+\9if hover then\
+\9\9drawHighlight(ctx, x, y, width, height)\
+\9end\
+end\
+\
+function drawDropDown(ctx, x, y, width, height, hover, collapsed)\
+\9-- Drop down box\
 \9ctx.font(\"small\")\
-\9ctx.drawText(t, x + 5, y + 15)\
+\9ctx.drawText(\"Resolution\", 70, y + 20)\
+\9drawBox(ctx, \"1920 x 1080\", x, y+5, width, 20, 1, hover)\
+\9\
+\9-- Arrow. which one depends if it's collapsed or not\
+\9if collapsed then\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_down.tga\", x + width - 19, y + 5)\
+\9else\
+\9\9-- Expanded dropdown\
+\9\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_up.tga\", x + width - 19, y + 5)\
+\9\9drawListbox(ctx, \"1024 x 768\\n1280 x 1280\\n960 x 900\\n1920 x 1080\", x, y + 28, width + 20, height, false, 2)\
+\9end\9\9\
+end\
+\
+function drawHighlight(ctx, x, y, width, height)\
+\9ctx.color(128, 160, 160, 128)\
+\9drawOutline(ctx, x+1, y+1, width-2, height-2)\
+\9ctx.color(128, 160, 160, 96)\
+\9drawOutline(ctx, x+2, y+2, width-4, height-4)\
+\9ctx.color(128, 160, 160, 64)\
+\9drawOutline(ctx, x+3, y+3, width-6, height-6)\
+\9ctx.color(128, 160, 160, 32)\
+\9drawOutline(ctx, x+4, y+4, width-8, height-8)\
+end\
+\
+function drawOutline(ctx, x, y, width, height)\
+\9ctx.drawRect(x, y, width, 1)\
+\9ctx.drawRect(x, y, 1, height)\
+\9ctx.drawRect(x + width, y, 1, height)\
+\9ctx.drawRect(x, y + height, width, 1)\
 end\
 ")
 spawn("prison_pressure_plate", 11,3,2, "prison_pressure_plate_1")
@@ -538,9 +628,11 @@ spawn("prison_pressure_plate", 13,5,3, "prison_pressure_plate_2")
 spawn("script_entity", 13,4,2, "WINDOW2")
 	:setSource("_goForIt = false\
 _expand = false\
+_hover = false\
 \
 function toggleExpand()\
 \9_expand = not _expand\
+\9_hover = not _hover\
 end\
 \
 function start()\
@@ -578,41 +670,23 @@ function OnDraw(ctx)\
 \9\9ctx.drawText(\"SSAO Quality\", 70, 275)\
 \
 \9\9y = 108;\
-\9\9drawOptionBox(ctx, \"Borderless\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"Enabled\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"Borderless\", 260, y, _hover); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"Enabled\", 260, y, _hover); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
+\
 \
 \9\9--\
 \9\9--  Drop Down\
-\9\9--\9\9\
+\9\9--\
 \9\9x = 290\
 \9\9y = 80\
 \9\9w = 168\
 \9\9h = 85\
-\9\9ctx.font(\"small\")\
-\9\9ctx.drawText(\"Resolution\", 70, y + 20)\
-\9\9drawBox(ctx, \"1920 x 1080\", x, y+5, w, 20, 1)\
-\9\9if _expand == false then\
-\9\9\9-- Dropdown, not expanded\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_down.tga\", x + w - 18, y + 7)\
-\9\9else\
-\9\9\9-- Expanded dropdownf\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_up.tga\", x + w - 18, y + 7)\
-\9\9\9-- Expanded box\
-\9\9\9drawBox(ctx, \"1024 x 768\\n1280 x 1024\\n1496 x 1183\\n1920 x 1080\", x, y + 28, w + 20, h, 2)\
-\9\9\9-- Scroll area\
-\9\9\9drawBox(ctx, \"\", x + w, y + 29, 18, h-3, 3)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", x + w + 2, y + 50)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_up.tga\", x + w + 2, y + 28 + 5)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_down.tga\", x + w + 2, y + h + 8)\
-\9\9end\9\9\
-\
-\
-\9\
+\9\9WINDOW.drawDropDown(ctx, x, y, w, h, _hover, not _expand)\
 \9\9\
 \9\9---\
 \9\9--- Audio options\
@@ -622,60 +696,19 @@ function OnDraw(ctx)\
 \9\9\
 \9\9ctx.font(\"small\")\
 \9\9ctx.drawText(\"Select music track to play\", 70, 340)\
+\9\9local text = \"Baz Luhrmann - Everybody's free to wear sunscreen\\nDarude - Sandstorm\\nWeird Al - Albuquerque\\nWithin Temptation - See Who I Am\"\
+\9\9WINDOW.drawListbox(ctx, text, 70, 350, 450, 85, _hover)\
 \
-\9\9x = 70\
-\9\9y = 350\
-\9\9w = 400\
-\9\9h = 85\
-\9\9-- Expanded box\
-\9\9drawBox(ctx, \"Baz Luhrmann - Everybody's free to wear sunscreen\\nDarude - Sandstorm\\nWeird Al - Albuquerque\\nWithin Temptation - See Who I Am\", x, y, w + 20, h, 2)\
-\9\9-- Scroll area\
-\9\9drawBox(ctx, \"\", x + w, y + 1, 18, h-3, 3)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_button.tga\", x + w + 2, y + 22)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_up.tga\", x + w + 2, y + 5)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_down.tga\", x + w + 2, y + h - 20)\
-\9\9-- Selected item\
-\9\9ctx.color(255, 255, 255, 64)\
-\9\9ctx.drawRect(x + 1, y + 1 + 2 * 22, w - 2, 17)\
-\9\9\
-\9\9-- Reset color to normal value\
-\9\9ctx.color(255, 255, 255, 255)\
 \9end\
-end\
-\
-\
-function drawOptionBox(ctx, t, x, y)\
-\9ctx.color(255, 255, 255, 255)\
-\9local w = 200\
-\9local h = 20\
-\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_left.tga\", x, y - 2)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_right.tga\", x + w, y - 2)\
-\9ctx.color(0, 0, 0, 96)\
-\9drawBox(ctx, t, x + 30, y + 2, w - 32, h)\
-end\
-\
-\
-function drawBox(ctx, t, x, y, w, h, type)\
-\9if type == 1 then\
-\9\9ctx.color(0, 0, 0, 96)\
-\9end\
-\9if type == 2 then\
-\9\9ctx.color(16, 16, 16, 240)\
-\9end\
-\9if type == 3 then\
-\9\9ctx.color(255, 255, 255, 16)\
-\9end\
-\9ctx.drawRect(x, y, w, h)\
-\9ctx.drawRect(x, y, w, 1)\
-\9ctx.drawRect(x, y, 1, h)\
-\9ctx.color(128, 128, 128, 128)\
-\9ctx.drawRect(x, y + h, w, 1)\
-\9ctx.drawRect(x + w, y, 1, h)\9\
-\9ctx.color(255, 255, 255, 255)\
-\9ctx.font(\"small\")\
-\9ctx.drawText(t, x + 5, y + 15)\
 end\
 ")
 spawn("wall_button", 13,5,1, "wall_button_1")
 	:addConnector("toggle", "WINDOW2", "toggleExpand")
+spawn("wall_button", 11,3,0, "wall_button_2")
+	:addConnector("toggle", "WINDOW", "toggleHover")
+spawn("teleporter", 3,4,0, "teleporter_1")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(true)
+	:setTriggeredByItem(true)
+	:setTeleportTarget(11,5,0,1)
 spawn("starting_location", 4,5,0, "starting_location")

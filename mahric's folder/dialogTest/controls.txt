@@ -1,0 +1,13 @@
+Warning: This is just a proof of concept!
+
+The pictures are printscreens from some custom 2d dialog fiddling in Grimrock.
+These controls do not react on user input. We still need to script that.
+
+If you want to see for yourself:
+ - Start the mod dialogTest.dat 
+ - Walk through the teleporter
+ - Stand on any of the pressureplates for a dialog to show
+ - Step off the pressure plate to get rid of the dialog
+ - Pressing the button will toggle between normal and "mouse hovers over control" layout
+
+Any and all remarks are welcome!
