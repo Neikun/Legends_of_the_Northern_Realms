@@ -16,7 +16,7 @@ tNPC = {
 
 --used for creating new NPCs
 tNPCBaseAttributes = {
-	Assciations = {},	
+	Associations = {},	
 	Effects = {},
 	Classes = {},
 	Enemies = {},
@@ -435,6 +435,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnProjectileHit(hEntity, hProjectile, nDamage, sDamageType)
+return false
 end
 
 
@@ -447,6 +448,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnRangedAttack(hEntity)
+return false
 end
 
 

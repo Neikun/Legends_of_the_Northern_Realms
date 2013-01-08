@@ -1,5 +1,5 @@
 tGame = {	
-	--DataModules = These are stored in the Game.GetDataMethods() method
+	--DataModules = These are stored in the Game.GetModuleClasses() method
 	DataModuleEntity = "dungeon_wall_text_long",
 	Initialized = false,
 };
@@ -32,7 +32,7 @@ returns a table containing a
 list of methods.
 ]]
 function CheckDataModules()
-local tMethods = GetDataMethods();
+local tMethods = GetModuleClasses();
 
 	for sClass, tClass in pairs(tMethods) do
 	sID = Game.GetDataModuleID(sClass);
@@ -48,24 +48,71 @@ end
 
 
 --[[
----------------------
-Game.GetDataMethods()
+-----------------------
+Game.GetModuleClasses()
 Return Type: table
 Method Type: internal
----------------------
+-----------------------
 This gets each class that
 stores the appropriate method
 for the required data module.
 Used for checking the data
+modules or gettting the class
+for some other use in other
 modules.
+Note: Excludes some modules
+intentionally as they may not
+be designed or suited for use
+with the methods that call this.
 ]]
-function GetDataMethods()
-local tMethods = {
+function GetModuleClasses()
+local tClasses = {
+	["Dialog"] = Dialog,
+	["Game"] = Game,
+	["GUI"] = GUI,
+	["Help	"] = Help,
 	["NPC"] = NPC,
+	["Party"] = Party,
+	["Quest	"] = Quest,	
 };
 
-return tMethods
+return tClasses
 end
+
+
+--[[
+----------------------
+Game.GetClassMethods()
+Return Type: table
+Method Type: internal
+----------------------
+This gets each method in
+a given class.
+Used for getting a list of
+methods as strings. This is
+good for allowing the input
+of functions as strings in a
+method's argument (that's a
+mouthful).
+Note: Excludes some modules
+intentionally as they may not
+be designed or suited for use
+with the methods that call this.
+]]
+function GetClassMethods(sClass)
+local tMethdods = {
+	["Dialog"] = {},
+	["Game"] = {},
+	["GUI"] = {},
+	["Help	"] = {},
+	["NPC"] = {},
+	["Party"] = {},
+	["Quest	"] = {},	
+};
+
+return tMethdods
+end
+
 
 
 --[[
