@@ -26,6 +26,7 @@ cloneObject{
 		WINDOW.OnDraw(ctx)
 		WINDOW2.OnDraw(ctx)
 		CHARSHEET.OnDraw(ctx)
+		TRAVEL.OnDraw(ctx)
 	end,
 	
 	onDrawInventory = function(ctx)

@@ -6,24 +6,24 @@ mapName("Unnamed")
 setWallSet("dungeon")
 playStream("assets/samples/music/dungeon_ambient.ogg")
 mapDesc([[
-################################
-################################
-################################
-####.######.####################
-###...####...###################
-##.....##.....##################
-###...####...###################
-####.######.####################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
+#####################.##########
+###.################...#########
+###....############.....########
+###...#####.#########.##########
+###....###...######.....########
+###...###.....#####.....########
+###...####...######.....########
+###....####.#######.....########
+###.#################.##########
+###.#################.##########
+###.############################
+###.############################
+###.############################
+###.############################
+###.############################
+###.############################
+###.############################
+###.############################
 ################################
 ################################
 ################################
@@ -39,7 +39,7 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("script_entity", 3,2,1, "script1")
+spawn("script_entity", 2,1,1, "script1")
 	:setSource("--\
 -- Example of how to call the DIALOG script\
 --\
@@ -74,7 +74,7 @@ function done(response)\
 \9hudPrint(\"You chose: \"..response)\
 end\
 ")
-spawn("script_entity", 2,2,2, "DIALOG")
+spawn("script_entity", 1,1,2, "DIALOG")
 	:setSource("--\
 -- DIALOG Script\
 --\
@@ -375,29 +375,29 @@ function determineTabClick(ctx)\
 \9return result\
 end\
 ")
-spawn("tome_wisdom", 4,4,2, "tome_wisdom_1")
-spawn("blocker", 3,5,3, "blocker_1")
-spawn("blocker", 4,4,3, "blocker_2")
-spawn("blocker", 5,5,3, "blocker_3")
-spawn("blocker", 4,6,1, "blocker_4")
-spawn("ogre", 4,3,2, "npc_ogre")
+spawn("tome_wisdom", 3,2,2, "tome_wisdom_1")
+spawn("blocker", 5,7,3, "blocker_1")
+spawn("blocker", 3,2,3, "blocker_2")
+spawn("blocker", 5,2,3, "blocker_3")
+spawn("blocker", 5,4,1, "blocker_4")
+spawn("ogre", 3,1,2, "npc_ogre")
 	:setAIState("guard")
-spawn("ogre", 6,5,3, "npc_ogre2")
+spawn("ogre", 6,2,3, "npc_ogre2")
 	:setAIState("guard")
-spawn("ogre", 4,7,0, "npc_ogre3")
+spawn("ogre", 6,4,3, "npc_ogre3")
 	:setAIState("guard")
-spawn("ogre", 2,5,1, "npc_ogre4")
+spawn("ogre", 6,7,3, "npc_ogre4")
 	:setAIState("guard")
-spawn("dungeon_door_wooden", 5,5,1, "dungeon_door_wooden_1")
-spawn("dungeon_door_portcullis", 4,6,2, "dungeon_door_portcullis_1")
-spawn("prison_secret_door", 2,5,1, "prison_secret_door_1")
-spawn("lever", 3,6,3, "lever_1")
+spawn("dungeon_door_wooden", 5,2,1, "dungeon_door_wooden_1")
+spawn("dungeon_door_portcullis", 6,4,3, "dungeon_door_portcullis_1")
+spawn("prison_secret_door", 5,7,1, "prison_secret_door_1")
+spawn("lever", 5,7,2, "lever_1")
 	:addConnector("any", "prison_secret_door_1", "toggle")
-spawn("lever", 5,6,2, "lever_2")
+spawn("lever", 5,5,1, "lever_2")
 	:addConnector("any", "dungeon_door_portcullis_1", "toggle")
-spawn("lever", 5,4,1, "lever_3")
+spawn("lever", 5,2,0, "lever_3")
 	:addConnector("any", "dungeon_door_wooden_1", "toggle")
-spawn("script_entity", 10,3,2, "WINDOW")
+spawn("script_entity", 20,0,2, "WINDOW")
 	:setSource("_goForIt = false\
 _hover = false\
 \
@@ -613,19 +613,19 @@ function drawOutline(ctx, x, y, width, height)\
 \9ctx.drawRect(x, y + height, width, 1)\
 end\
 ")
-spawn("prison_pressure_plate", 11,3,2, "prison_pressure_plate_1")
+spawn("prison_pressure_plate", 21,0,2, "prison_pressure_plate_1")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(true)
 	:setTriggeredByItem(true)
 	:addConnector("activate", "WINDOW", "start")
 	:addConnector("deactivate", "WINDOW", "stop")
-spawn("prison_pressure_plate", 13,5,3, "prison_pressure_plate_2")
+spawn("prison_pressure_plate", 23,2,3, "prison_pressure_plate_2")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(true)
 	:setTriggeredByItem(true)
 	:addConnector("activate", "WINDOW2", "start")
 	:addConnector("deactivate", "WINDOW2", "stop")
-spawn("script_entity", 13,4,2, "WINDOW2")
+spawn("script_entity", 23,1,2, "WINDOW2")
 	:setSource("_goForIt = false\
 _expand = false\
 _hover = false\
@@ -702,13 +702,106 @@ function OnDraw(ctx)\
 \9end\
 end\
 ")
-spawn("wall_button", 13,5,1, "wall_button_1")
+spawn("wall_button", 23,2,1, "wall_button_1")
 	:addConnector("toggle", "WINDOW2", "toggleExpand")
-spawn("wall_button", 11,3,0, "wall_button_2")
+spawn("wall_button", 21,0,0, "wall_button_2")
 	:addConnector("toggle", "WINDOW", "toggleHover")
-spawn("teleporter", 3,4,0, "teleporter_1")
+spawn("torch_holder", 20,4,0, "torch_holder_1")
+	:addTorch()
+spawn("torch_holder", 22,4,0, "torch_holder_2")
+	:addTorch()
+spawn("dungeon_door_wooden", 21,4,0, "dungeon_door_wooden_2")
+	:addPullChain()
+spawn("barrel_crate_block", 19,4,0, "barrel_crate_block_1")
+spawn("barrel_crate_block", 19,7,3, "barrel_crate_block_2")
+spawn("barrel_crate_block", 19,6,2, "barrel_crate_block_3")
+spawn("barrel_crate_block", 20,7,0, "barrel_crate_block_4")
+spawn("barrel_crate_block", 23,4,1, "barrel_crate_block_5")
+spawn("script_entity", 4,8,2, "TRAVEL")
+	:setSource("_start = 0\
+_stage = 0\
+\
+function startTravel()\
+\9DIALOG.allowMoving(false)\
+\9_start = getStatistic(\"play_time\")\
+\9_stage = 1\
+end\
+\
+function OnDraw(ctx)\
+\9if _stage == 1 then\
+\9\9local delta = getStatistic(\"play_time\") - _start\
+\9\9if _start ~= 0 then\9\9\
+\9\9\9local alpha = 255\
+\9\9\9if delta < 1 then\
+\9\9\9\9alpha = 255*delta\
+\9\9\9end\
+\9\9\9ctx.color(0, 0, 0, alpha)\
+\9\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
+\9\9\9ctx.color(255, 255, 255, alpha)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", 0, 0)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", 418, 15)\
+\9\9end\
+\9\9if delta > 2 then\
+\9\9\9party:setPosition(21, 6, 0, 1)\
+\9\9\9_start = getStatistic(\"play_time\")\
+\9\9\9_stage = 2\
+\9\9end\
+\9end\
+\9\
+\9if _stage == 2 then\
+\9\9local delta = getStatistic(\"play_time\") - _start\
+\9\9deltaX = 13\
+\9\9deltaY = 129\
+\9\9if delta < 5 then\
+\9\9\9deltaX = deltaX * delta / 5.0\
+\9\9\9deltaY = deltaY * delta / 5.0\
+\9\9end\
+\9\9ctx.color(0, 0, 0, 255)\
+\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
+\9\9ctx.color(255, 255, 255, 255)\
+\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", 0, 0)\
+\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", 418 + deltaX, 15 + deltaY)\
+\9\9if delta > 5 then\
+\9\9\9_start = getStatistic(\"play_time\")\
+\9\9\9_stage = 3\
+\9\9end\
+\9end\
+\9\
+\9if _stage == 3 then\
+\9\9local delta = getStatistic(\"play_time\") - _start\
+\9\9if _start ~= 0 then\9\9\
+\9\9\9local alpha = 0\
+\9\9\9if delta < 1 then\
+\9\9\9\9alpha = 255 - 255*delta\
+\9\9\9end\
+\9\9\9ctx.color(0, 0, 0, alpha)\
+\9\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
+\9\9\9ctx.color(255, 255, 255, alpha)\
+\9\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", 0, 0)\
+\9\9\9deltaX = 13\
+\9\9\9deltaY = 129\
+\9\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", 418 + deltaX, 15 + deltaY)\
+\9\9end\
+\9\9if delta > 2 then\
+\9\9\9DIALOG.allowMoving(true)\9\9\9\
+\9\9\9hudPrint(\"You arrived in Uttermost...\")\
+\9\9\9_stage = 0\
+\9\9end\
+\9end\
+\9\
+end\
+\
+\
+function noBack()\
+\9hudPrint(\"Sorry, you can't travel back yet...\")\
+end\
+")
+spawn("pressure_plate_hidden", 3,8,2, "pressure_plate_hidden_1")
 	:setTriggeredByParty(true)
-	:setTriggeredByMonster(true)
-	:setTriggeredByItem(true)
-	:setTeleportTarget(11,5,0,1)
-spawn("starting_location", 4,5,0, "starting_location")
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setSilent(true)
+	:addConnector("activate", "TRAVEL", "startTravel")
+spawn("dungeon_wall_text", 3,7,3, "dungeon_wall_text_1")
+	:setWallText("To Uttermost")
+spawn("starting_location", 3,3,0, "starting_location")
