@@ -10,4 +10,4 @@ If you want to see for yourself:
  - Step off the pressure plate to get rid of the dialog
  - Pressing the button will toggle between normal and "mouse hovers over control" layout
 
-Any and all remarks are welcome!
+Any and all remarks are welcome, but please put them in this document!
