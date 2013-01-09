@@ -7,39 +7,39 @@ setWallSet("dungeon")
 playStream("assets/samples/music/dungeon_ambient.ogg")
 mapDesc([[
 #####################.##########
-###.################...#########
+####################...#########
+###################.....########
+#####################.##########
+####.##############.....########
+##.....############.....########
+###...#############.....########
 ###....############.....########
-###...#####.#########.##########
-###....###...######.....########
-###...###.....#####.....########
-###...####...######.....########
-###....####.#######.....########
 ###.#################.##########
 ###.#################.##########
-###.############################
-###.############################
-###.############################
-###.############################
-###.############################
-###.############################
-###.############################
-###.############################
+###.#################.##########
+###.#################.##########
+###.#################.##########
+###.#################.##########
+###.#################.##########
+###.#################.##########
 ################################
 ################################
+##.#.#.#.#..##.#.###############
+...#..####.#.#..################
+.#.#.###.#.#.#.#.###############
+...#.###.#.#.#.#.###############
 ################################
+.###.##.##.#.#...###############
+..#..#.#.#..##..################
+.#.#.#.#.#.###.#################
+.###.##.##.###...###############
 ################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
-################################
+.###.##.##...#...#.#.###########
+.###.#.#.##.##..##..############
+.#.#.#...##.##.###.#############
+#.#.##.#.##.##...#.#############
 ]])
-spawn("script_entity", 2,1,1, "script1")
+spawn("script_entity", 2,1,2, "script1")
 	:setSource("--\
 -- Example of how to call the DIALOG script\
 --\
@@ -74,7 +74,7 @@ function done(response)\
 \9hudPrint(\"You chose: \"..response)\
 end\
 ")
-spawn("script_entity", 1,1,2, "DIALOG")
+spawn("script_entity", 2,2,2, "DIALOG")
 	:setSource("--\
 -- DIALOG Script\
 --\
@@ -193,6 +193,14 @@ function OnDraw(ctx)\
 \9\
 \9\9\9-- Draw the buttons and check if they're pressed\
 \9\9\9response = drawButtons(ctx, x + 40, y + windowHeight - 54, windowWidth - 40*2, 44)\
+\
+\9\9\9-- If the user clicks on a random spot on the dialog show all text at once\
+\9\9\9local pressed = ctx.button(\"_1_\", x, y, windowWidth, windowHeight - 55)\
+\9\9\9if pressed then\
+\9\9\9\9_dialog.start = -1000\
+\9\9\9end\
+\
+\9\9\9-- Close the dialog box if the user has clicked on a button\
 \9\9\9if response ~= nil then\
 \9\9\9\9-- Call the callback function and make sure the dialog is disposed of\
 \9\9\9\9local callback = _dialog.callback\
@@ -375,28 +383,25 @@ function determineTabClick(ctx)\
 \9return result\
 end\
 ")
-spawn("tome_wisdom", 3,2,2, "tome_wisdom_1")
-spawn("blocker", 5,7,3, "blocker_1")
-spawn("blocker", 3,2,3, "blocker_2")
-spawn("blocker", 5,2,3, "blocker_3")
-spawn("blocker", 5,4,1, "blocker_4")
-spawn("ogre", 3,1,2, "npc_ogre")
+spawn("blocker", 5,7,2, "blocker_1")
+spawn("blocker", 4,5,3, "blocker_2")
+spawn("blocker", 3,5,2, "blocker_3")
+spawn("blocker", 5,5,2, "blocker_4")
+spawn("ogre", 4,4,2, "npc_ogre")
 	:setAIState("guard")
-spawn("ogre", 6,2,3, "npc_ogre2")
+spawn("ogre", 2,5,1, "npc_ogre2")
 	:setAIState("guard")
-spawn("ogre", 6,4,3, "npc_ogre3")
+spawn("ogre", 6,5,3, "npc_ogre3")
 	:setAIState("guard")
 spawn("ogre", 6,7,3, "npc_ogre4")
 	:setAIState("guard")
-spawn("dungeon_door_wooden", 5,2,1, "dungeon_door_wooden_1")
-spawn("dungeon_door_portcullis", 6,4,3, "dungeon_door_portcullis_1")
+spawn("dungeon_door_wooden", 3,5,3, "dungeon_door_wooden_1")
+	:addPullChain()
+spawn("dungeon_door_portcullis", 6,5,3, "dungeon_door_portcullis_1")
+	:addPullChain()
 spawn("prison_secret_door", 5,7,1, "prison_secret_door_1")
 spawn("lever", 5,7,2, "lever_1")
 	:addConnector("any", "prison_secret_door_1", "toggle")
-spawn("lever", 5,5,1, "lever_2")
-	:addConnector("any", "dungeon_door_portcullis_1", "toggle")
-spawn("lever", 5,2,0, "lever_3")
-	:addConnector("any", "dungeon_door_wooden_1", "toggle")
 spawn("script_entity", 20,0,2, "WINDOW")
 	:setSource("_goForIt = false\
 _hover = false\
@@ -712,88 +717,96 @@ spawn("torch_holder", 22,4,0, "torch_holder_2")
 	:addTorch()
 spawn("dungeon_door_wooden", 21,4,0, "dungeon_door_wooden_2")
 	:addPullChain()
+	:setDoorState("open")
 spawn("barrel_crate_block", 19,4,0, "barrel_crate_block_1")
 spawn("barrel_crate_block", 19,7,3, "barrel_crate_block_2")
 spawn("barrel_crate_block", 19,6,2, "barrel_crate_block_3")
 spawn("barrel_crate_block", 20,7,0, "barrel_crate_block_4")
 spawn("barrel_crate_block", 23,4,1, "barrel_crate_block_5")
-spawn("script_entity", 4,8,2, "TRAVEL")
-	:setSource("_start = 0\
-_stage = 0\
+spawn("script_entity", 4,9,2, "TRAVEL")
+	:setSource("--\
+--  All points of interest on the map (and their corresponding location in the dungeon)\
+--\
+_pois = {\
+\9{ name = \"the Grotto of Xazarra\", x = 418, y = 15, dungeonLevel = 1, dungeonX = 3, dungeonY = 7, dungeonFacing = 0},\
+\9{ name = \"Uttermost\", x = 431, y = 144, dungeonLevel = 1, dungeonX = 21, dungeonY = 6, dungeonFacing = 0},\
+}\
 \
-function startTravel()\
-\9DIALOG.allowMoving(false)\
+--\
+-- Internal variables (you don't need them)\
+--\
+_start = 0\
+_stage = 0\
+_from = nil\
+_to = nil\
+_mapWidth = 600\
+_mapHeight = 500\
+\
+function start(fromPOI, toPOI)\
 \9_start = getStatistic(\"play_time\")\
 \9_stage = 1\
+\9_to = toPOI\
+\9_from = fromPOI\
+\9DIALOG.allowMoving(false)\
+\9hudPrint(\"You start your travel from \".._pois[_from].name..\" to \".._pois[_to].name..\"...\")\
 end\
 \
 function OnDraw(ctx)\
-\9if _stage == 1 then\
+\9if _stage ~= 0 then\
+\9\9local partyOffsetX = 0\
+\9\9local partyOffsetY = 0\
+\9\9local mapOffsetX = (ctx.width-_mapWidth) / 2 \
+\9\9local mapOffsetY = (ctx.height-_mapHeight) / 2\
+\9\
+\9\9local alpha = 255.0\
 \9\9local delta = getStatistic(\"play_time\") - _start\
-\9\9if _start ~= 0 then\9\9\
-\9\9\9local alpha = 255\
-\9\9\9if delta < 1 then\
+\9\
+\9\9if _stage == 1 then\
+\9\9\9if delta <= 1 then\
 \9\9\9\9alpha = 255*delta\
 \9\9\9end\
-\9\9\9ctx.color(0, 0, 0, alpha)\
-\9\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
-\9\9\9ctx.color(255, 255, 255, alpha)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", 0, 0)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", 418, 15)\
 \9\9end\
-\9\9if delta > 2 then\
+\
+\9\9if _stage == 2 then\
+\9\9\9partyOffsetX = (_pois[_to].x - _pois[_from].x) * delta / 5\
+\9\9\9partyOffsetY = (_pois[_to].y - _pois[_from].y) * delta / 5\
+\9\9end\
+\9\9\
+\9\9if _stage == 3 then\
+\9\9\9alpha = 0\
+\9\9\9partyOffsetX = _pois[_to].x - _pois[_from].x\
+\9\9\9partyOffsetY = _pois[_to].y - _pois[_from].y\
+\9\9\9if delta <= 1 then\
+\9\9\9\9alpha = 255 - 255*delta\
+\9\9\9end\
+\9\9end\
+\9\9\
+\9\9-- Draw the map\
+\9\9ctx.color(0, 0, 0, alpha)\
+\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
+\9\9ctx.color(255, 255, 255, alpha)\
+\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", mapOffsetX, mapOffsetY)\
+\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", mapOffsetX + _pois[_from].x + partyOffsetX, mapOffsetY + _pois[_from].y + partyOffsetY)\
+\
+\9\9-- Monitor for stage transitions\
+\9\9if _stage == 1 and delta > 2 then\
 \9\9\9party:setPosition(21, 6, 0, 1)\
 \9\9\9_start = getStatistic(\"play_time\")\
 \9\9\9_stage = 2\
-\9\9end\
-\9end\
-\9\
-\9if _stage == 2 then\
-\9\9local delta = getStatistic(\"play_time\") - _start\
-\9\9deltaX = 13\
-\9\9deltaY = 129\
-\9\9if delta < 5 then\
-\9\9\9deltaX = deltaX * delta / 5.0\
-\9\9\9deltaY = deltaY * delta / 5.0\
-\9\9end\
-\9\9ctx.color(0, 0, 0, 255)\
-\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
-\9\9ctx.color(255, 255, 255, 255)\
-\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", 0, 0)\
-\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", 418 + deltaX, 15 + deltaY)\
-\9\9if delta > 5 then\
-\9\9\9_start = getStatistic(\"play_time\")\
-\9\9\9_stage = 3\
-\9\9end\
-\9end\
-\9\
-\9if _stage == 3 then\
-\9\9local delta = getStatistic(\"play_time\") - _start\
-\9\9if _start ~= 0 then\9\9\
-\9\9\9local alpha = 0\
-\9\9\9if delta < 1 then\
-\9\9\9\9alpha = 255 - 255*delta\
+\9\9\9party:setPosition(_pois[_to].dungeonX, _pois[_to].dungeonY, _pois[_to].dungeonFacing, _pois[_to].dungeonLevel)\
+\9\9else\
+\9\9\9if _stage == 2 and delta >= 5 then\
+\9\9\9\9_start = getStatistic(\"play_time\")\
+\9\9\9\9_stage = 3\
+\9\9\9else\
+\9\9\9\9if _stage == 3 and delta >= 1 then\
+\9\9\9\9\9hudPrint(\"You arrive in \".._pois[_to].name..\"...\")\
+\9\9\9\9\9DIALOG.allowMoving(true)\
+\9\9\9\9\9_stage = 0\
+\9\9\9\9end\
 \9\9\9end\
-\9\9\9ctx.color(0, 0, 0, alpha)\
-\9\9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
-\9\9\9ctx.color(255, 255, 255, alpha)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/map.tga\", 0, 0)\
-\9\9\9deltaX = 13\
-\9\9\9deltaY = 129\
-\9\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", 418 + deltaX, 15 + deltaY)\
-\9\9end\
-\9\9if delta > 2 then\
-\9\9\9DIALOG.allowMoving(true)\9\9\9\
-\9\9\9hudPrint(\"You arrived in Uttermost...\")\
-\9\9\9_stage = 0\
 \9\9end\
 \9end\
-\9\
-end\
-\
-\
-function noBack()\
-\9hudPrint(\"Sorry, you can't travel back yet...\")\
 end\
 ")
 spawn("pressure_plate_hidden", 3,8,2, "pressure_plate_hidden_1")
@@ -801,7 +814,31 @@ spawn("pressure_plate_hidden", 3,8,2, "pressure_plate_hidden_1")
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
 	:setSilent(true)
-	:addConnector("activate", "TRAVEL", "startTravel")
+	:addConnector("activate", "scriptTravelDemo", "travelToUtterMost")
 spawn("dungeon_wall_text", 3,7,3, "dungeon_wall_text_1")
 	:setWallText("To Uttermost")
-spawn("starting_location", 3,3,0, "starting_location")
+spawn("script_entity", 4,8,2, "scriptTravelDemo")
+	:setSource("\
+function travelToUtterMost()\
+\9TRAVEL.start(1, 2)\
+end\
+\
+function travelToTheGrotto()\
+\9TRAVEL.start(2, 1)\
+end")
+spawn("pressure_plate_hidden", 21,8,2, "pressure_plate_hidden_2")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setSilent(true)
+	:addConnector("activate", "scriptTravelDemo", "travelToTheGrotto")
+spawn("tome_health", 4,5,3, "tome_health_1")
+spawn("tome_health", 3,6,1, "tome_health_2")
+spawn("tome_health", 4,6,2, "tome_health_3")
+spawn("tome_health", 4,5,1, "tome_health_4")
+spawn("tome_health", 4,6,0, "tome_health_5")
+spawn("tome_health", 4,7,3, "tome_health_6")
+spawn("tome_health", 4,7,1, "tome_health_7")
+spawn("tome_health", 5,6,3, "tome_health_8")
+spawn("tome_health", 5,6,1, "tome_health_9")
+spawn("starting_location", 4,6,0, "starting_location")

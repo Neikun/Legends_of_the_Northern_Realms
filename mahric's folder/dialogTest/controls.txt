@@ -1,3 +1,20 @@
+--- v0.2 ---------------------------------------------------------
+
+ - Travel looks better (centered in screen with hudPrints tell you from and to where you're traveling)
+ - You can travel from the Grotto to Uttermost and back as many times as you like (though you'd probably be dead before you reach the 400,000,000 times)
+ - Cleaned up the source, it's kind of cleanish now
+ - Source adjusted to easily add new POIs in the source
+
+
+@Arkos:
+I'm glad you like it, I like your concept of making trips longer while staying on one map.
+We'd have to see how many "lanes" we'll put between two towns though, because walking 270 spaces is getting boring fast. If we keep it down to like maybe 5 or 6 lanes, we also have more room to have a wider look. That IS something i'm worried about with that proposal: if i'm travelling over a grassy field, how to stop me going from lane 0 to lane 1, while still keeping the feeling of the grassy field? That might be easier when we have lanes of 8 high. (Just trying to think along)
+
+And starting a dialog can be done with anything that we program. At this moment you can start it by conventional scripting and just clicking on an npc, but Centauri Soldier was talking about expanding his NPC framework to make it possible that an NPC might even notice the party and start a conversation on it's own. Technically a lot is possible, just let us know what you want.
+
+
+--- v0.1 ---------------------------------------------------------
+
 Warning: This is just a proof of concept!
 
 The pictures are printscreens from some custom 2d dialog fiddling in Grimrock.
