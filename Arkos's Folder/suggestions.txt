@@ -1,0 +1,96 @@
+
+#### A TRIP TO THE ROYAL LIBRARY ############
+I have a question for Juho about where he said "There are notes in the Royal Library of such beeings seen elsewhere in the world."   
+Is the Royal library like the one in Minas Tirith in Lord of the Rings?  
+It could be cool to find an artifact in the story which we have to travel to this library to learn more of the Goromorgs of where else they may be.  
+Like Ganalf researching about the ring.
+undeaddemon's post here shows books on a shelf that he made  http://www.grimrock.net/forum/viewtopic.php?f=14&t=3338&start=40
+we could make some of the story have to go to Nothamton and find one of these books which has a map and more clues about the goromorgs
+I really like the going to the royal library to find more about the goromors, I'm thinking gandalf didn't know hid had to go to Minas Tirith until he saw the ring.  
+We could do something similar where something is found in the North which rumors lead us to Ranwyn where someone there points us to the library in Nothampton
+[3:53:38 PM] Neikun: What if in the great library, there is a secret entrance to a dustier, older part of the library that has tattered doccuments containing traces of information about the Goromorgs and Tetharion?
+I mean, what better way to find out than througha  secret door, right?
+[4:47:53 PM] Neikun: I was thinking more like somehting you're carrying reacting to something in the library, pointing you to the trigger with some kind of hint
+[4:48:11 PM] Neikun: "The relic tugs towards the west in your hands"
+
+
+##### DARK SCARY DUNGEON WITH BANSHEE'S ################################
+[12/30/2012 12:35:31 AM] Arkos: I like your last dungeon idea.  I have an idea for what is on that first level
+[12/30/2012 12:36:24 AM] Seth Borga: That should be intersting.
+[12/30/2012 12:37:11 AM] Seth Borga: (good interesting, not git intersting)
+[12/30/2012 12:38:38 AM] Arkos: the door opens like you suggested, the 1st level is almost completely open with a high ceiling so, it is hard to get your bearing since there are no walls and the ceiling is black.  
+light is only reflecting off of the floor in front of you, creatures will come out of the dark from all around you
+[12/30/2012 12:39:35 AM] Seth Borga: Awesome, I have great darkness creatures already made.
+[12/30/2012 12:40:09 AM] Seth Borga: Skeletons that emanate shadow, that took weeks to make.
+[12/30/2012 12:40:18 AM] Arkos: sweet!
+[12/30/2012 12:40:31 AM] Seth Borga: Black wyverns, Dark scavengers.
+[12/30/2012 12:42:08 AM] Arkos: imagine those in this gigantic room, like being in a football stadium in almost pitch black, so 32x32 of just a floor with black ceiling and dark slate tile floor, 
+your creatures would work perfect
+
+[12/31/2012 6:02:39 PM] Arkos: cool
+[12/31/2012 6:05:23 PM] Arkos: also, I would like to correct something I said yesterday about Grotto Xa...  please do what you please with it, I just wanted to mention some ideas I had for it like that dark level where you can't see anything around you or above you, just the light off of the floor, I also recommend doing some black texturing to the floor to make it even more dark.  My recommendation to you is make this the scariest, darkest level anyone has ever seen
+[12/31/2012 6:08:38 PM] Seth Borga: Can do, most definitely can do. The current dungeon I'm making.(and have just about finished with) has given me alot of experience with that.
+[12/31/2012 6:09:48 PM] Arkos: awesome!  What do you think about toxic gas coming out of the entrance that takes hit points off of you when entrance doors open?
+[12/31/2012 6:14:33 PM] Seth Borga: Sounds good. I know how to handle particle emission. We can have them spawned in front of the door. Rate of emission can be set thus is could be a slow forming clloud. Or a rapid gas release. Color can also be set.
+[12/31/2012 6:18:33 PM] Arkos: I'm looking forward to seeing what you come up with!  Black poison corruption gas?  What would you use?  Oh boy, what would be cool too is when the doors open you see a nasty looking ghost figure in the gas--not sure how hard that would be to do
+[12/31/2012 6:22:13 PM] Seth Borga: Well, although it may not be what we want here. I already made a 'ghost'. By setting an enemy model to decoration attacks pass through it. Then I simply had it disappear when aproached. Here we could do that, or have something ghost-like more proactive about killing...
+[12/31/2012 6:27:13 PM] Arkos: your thought sparked another idea about that.  You know when the ogre grunts he's about to run.  Well what about one of your ghosts or dark figures makes a sound (so you may here something in the dark and you know it coming for you) it gets louder and all of a sudden it's in front of you attacking and then moves on, so you have a short window to attack back.  Then you hear the sound again in the distance so you know the dark creature/ghost is coming back.  The sound gives you warning to get ready to attack in that short window when he shows up but dissappears into the darkness
+[12/31/2012 6:28:53 PM] Seth Borga: That could require some help to script, but could almost certaintly be done.
+[12/31/2012 6:30:14 PM] Arkos: maybe I could look into that, if that is something you think would be cool there
+[12/31/2012 6:30:53 PM] Seth Borga: It would be awesome.
+[12/31/2012 6:31:52 PM] Arkos: high screatching noise that starts softly and gets more obnoxious as it comes closer
+6:02:39 PM] Arkos: cool
+[6:05:23 PM] Arkos: also, I would like to correct something I said yesterday about Grotto Xa...  please do what you please with it, I just wanted to mention some ideas I had for it like that dark level where you can't see anything around you or above you, just the light off of the floor, I also recommend doing some black texturing to the floor to make it even more dark.  My recommendation to you is make this the scariest, darkest level anyone has ever seen
+[6:08:38 PM] Seth Borga: Can do, most definitely can do. The current dungeon I'm making.(and have just about finished with) has given me alot of experience with that.
+[6:09:48 PM] Arkos: awesome!  What do you think about toxic gas coming out of the entrance that takes hit points off of you when entrance doors open?
+[6:14:33 PM] Seth Borga: Sounds good. I know how to handle particle emission. We can have them spawned in front of the door. Rate of emission can be set thus is could be a slow forming clloud. Or a rapid gas release. Color can also be set.
+[6:18:33 PM] Arkos: I'm looking forward to seeing what you come up with!  Black poison corruption gas?  What would you use?  Oh boy, what would be cool too is when the doors open you see a nasty looking ghost figure in the gas--not sure how hard that would be to do
+[6:22:13 PM] Seth Borga: Well, although it may not be what we want here. I already made a 'ghost'. By setting an enemy model to decoration attacks pass through it. Then I simply had it disappear when aproached. Here we could do that, or have something ghost-like more proactive about killing...
+[6:27:13 PM] Arkos: your thought sparked another idea about that.  You know when the ogre grunts he's about to run.  Well what about one of your ghosts or dark figures makes a sound (so you may here something in the dark and you know it coming for you) it gets louder and all of a sudden it's in front of you attacking and then moves on, so you have a short window to attack back.  Then you hear the sound again in the distance so you know the dark creature/ghost is coming back.  The sound gives you warning to get ready to attack in that short window when he shows up but dissappears into the darkness
+[6:28:53 PM] Seth Borga: That could require some help to script, but could almost certaintly be done.
+[6:30:14 PM] Arkos: maybe I could look into that, if that is something you think would be cool there
+[6:30:53 PM] Seth Borga: It would be awesome.
+[6:31:52 PM] Arkos: high screatching noise that starts softly and gets more obnoxious as it comes closer
+[6:33:38 PM] Seth Borga: Thought I might say, just saw. First custom animated monster, the mummy just got a thread saying it's near completion: http://www.grimrock.net/forum/viewtopic.php?f=14&t=4701&sid=2131dfafdc3b2dc968a9653ab05e518b
+[6:33:53 PM] Seth Borga: Also yes screaming is good.
+[6:36:07 PM] Arkos: a huge open dark level full of those, that's creepy!   I take note of what we mentioned here and post on github when I get some time.
+
+
+
+###### ICEFALL BAY #################################################
+[12/30/2012 5:30:53 PM] Arkos: sure one sec... about Icefall bay, someone is working on a cave ice tileset, that bay could be frozen over and we could use that tile set
+
+##### SPECIAL TELEPORTER ######################
+[12/30/2012 7:01:49 PM] Arkos: we could use the teleporter that looks like a black hole is in it to move to other parts of the map
+
+##### SUNKEN STRAIGHT #########################
+[12/30/2012 6:55:58 PM] Arkos: Sunken Straight - 5- 10 feet deep full of sunken dead Greecian cities
+[12/30/2012 7:05:09 PM] Arkos: heck, maybe we can raise the sunken straight because someone lowered it
+[12/30/2012 7:05:17 PM] Neikun: http://warhammer40k.wikia.com/wiki/Machine_God
+[12/30/2012 7:05:25 PM] Neikun: That's another crazy good idea!
+[12/30/2012 7:05:48 PM] Neikun: Ancient Goromorgs and their mechanical tinkerings drowned themselves sinking the place :O
+
+#### SPECIAL SPICES IN THE SOUTHEAST  #############
+[12/30/2012 7:31:40 PM] Arkos: going with Neikun.. from eas to more east India to more oriental...
+[12/30/2012 7:32:31 PM] Arkos: special spices in the east for special potions...
+[12/30/2012 7:33:31 PM] Arkos: the spice may be needed for something up north
+
+
+#### GAS MASKS FOR TOXIC DUNGEON ###########
+[12/31/2012 6:46:20 PM] Arkos: just a concept, just because I mention this I'm not saying please include... just want to get your thoughts on it. Ok .. writing it out...
+[12/31/2012 6:48:46 PM] Arkos: imagine a dungeon that is full of poison gas (what ever the color is) in order to go in it, you have to put on a speciall helmet/mask -- a gas mask of sorts.  The gas masks could be found somewhere on the first level next to some bones.
+[12/31/2012 6:50:37 PM] Arkos: or you get the masks somewhere else in the world in order to play this toxic dungeon
+
+
+#### CORN FIELD MAZE AT CRAZY FARMER'S PROPERTY #######
+
+#### XAAE ######
+walking through the jungle and see a deep hole with stone and vines going into the earth - some vines are alive!
+
+### SPELLS ###
+freeze time spell - you can still walk around though
+friendly spell - monsters will fight for you
+
+
+
+
