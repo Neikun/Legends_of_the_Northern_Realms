@@ -11,3 +11,13 @@ If you want to see for yourself:
  - Pressing the button will toggle between normal and "mouse hovers over control" layout
 
 Any and all remarks are welcome, but please put them in this document!
+
+
+Arkos:
+Great work! Your teleporter sparked an idea on how to save space in one level for traveling outside. I have an 
+example of how it might work in my folder. I was talking with Neikun, I'm hoping we can have at least
+one outside level between major towns, dungeons etc. Your map opening up is great!  I was thinking we 
+may need a map like that when we are outside traveling to bring up like the dungeon map. 
+With your dialog test, is it possible to bring up dialog by just standing next to a npc or standing on a hidden pressure plate?
+The button on the wall affecting dialog example could also work when touching an item on a table in a store in a town?
+Good stuff!
