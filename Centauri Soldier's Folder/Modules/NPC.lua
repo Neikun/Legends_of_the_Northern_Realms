@@ -1,10 +1,6 @@
-tNPC = {	
-	Dialog = {
-		IsOpen = false,
-		ID = "",
-	},
+tNPC = {		
 	Objects = {
-		"npc_boatman",
+		"",
 	},
 	Classes = {
 		"Healer",
@@ -19,26 +15,35 @@ tNPCBaseAttributes = {
 	Associations = {},	
 	Effects = {},
 	Classes = {},
-	Enemies = {},
+	Enemies = {},	
 	Friends = {},
 	IsAlive = true,
 	IsRecruitable = false,
 	Name = "",
+	Object = "",
 	Origin = "",
 	Skills = {},
 };
 
 
-
-
+--[[
+-----------------------------
+NPC.AddObject(string)
+Return Type: nil
+Method Type: external
+-----------------------------
+This adds an NPC object to the
+framework so it may be accessed
+by other methods.
+]]
 function AddObject(sObject)
 
-	if Util.VarIsValid({"s"}, sObject)
+	if Util.VarIsValid({"s"}, sObject) then
 		
 		if string.gsub(sObject, " ", "") ~= "" then
 			
 			if not tNPC.Objects[sObject] then
-			tNPC.Objects[sObject] = nil;
+			tNPC.Objects[sObject] = sObject;
 			end
 		
 		end
@@ -47,6 +52,15 @@ function AddObject(sObject)
 
 end
 
+
+--[[
+-----------------------------
+NPC.DeleteObject(string)
+Return Type: nil
+Method Type: external
+-----------------------------
+
+]]
 function DeleteObject(sObject)
 	
 	if tNPC.Objects[sObject] then
@@ -55,71 +69,21 @@ function DeleteObject(sObject)
 
 end
 
+
+--[[
+-----------------------------
+NPC.GetObjects()
+Return Type: nil
+Method Type: external
+-----------------------------
+This gets a numerically-indexed
+table whose values are the NPC
+objects recognized by the frame-.
+]]
 function GetObjects()
 return tNPC.Objects
 end
 
---[[
-------------------------------------------------
-NPC.SetDialogOpen(boolean or nil, string or nil)
-Return Type: table
-Method Type: external
--------------------------------------------------
-Sets whether or not a dialog is open and, if so,
-to which NPC it belongs.
-Returns the table containing the information regarding
-any open dialog and to which NPC it belongs.
-Note: If either variable is nil, the ID is blank or
-the 'bOpen' variable is false, it will set the
-dialog as closed. This is intended for convenience.
-]]
-function SetDialogOpen(sID, bOpen)
-local bIsOpen = false;
-local sMyID = "";
-	
-	if NPC.Exists(sID) and Util.VarIsValid({"b","l"}, bOpen) then
-	sID = string.lower(sID);
-		
-		if bOpen then
-		
-			if type(sID) == "string" then
-				
-				if string.gsub(sID, " ", "") ~= "" then
-				bIsOpen = bOpen;
-				sMyID = sID	;		
-				end
-						
-			end
-			
-		end
-		
-	end
-		
-tNPC.Dialog.IsOpen = bIsOpen;
-tNPC.Dialog.ID = sMyID;
-return tNPC.Dialog
-end
-
-
---[[
------------------------------
-NPC.GetDialogOpen()
-Return Type: table
-Method Type: internal
------------------------------
-Returns the table containing
-the information regarding
-any open dialog and to which
-NPC it belongs.
-]]
-function GetDialogOpen()
-return tNPC.Dialog
-end
-
-
-
-
-
 
 
 
@@ -128,7 +92,7 @@ end
 
 --[[
 -----------------------------
-NPC.Create(sID, table or nil)
+NPC.Create(string, table or nil)
 Return Type: string
 Method Type: external
 -----------------------------
@@ -153,7 +117,7 @@ particular one is spawned).
 function Create(sID, tProps)
 local sRet = "";
 	
-	if type(sID) = "string" then
+	if type(sID) == "string" then
 	sID = string.lower(sID);
 	
 		--create the base NPC if it does not exist
@@ -199,7 +163,7 @@ entity exists (or will exist).
 ]]
 function Exists(sID)
 	
-	if type(sID) = "string" then
+	if type(sID) == "string" then
 	sID = string.lower(sID);
 
 		if tNPC.NPCs[sID] then
@@ -298,7 +262,7 @@ INCOMPLETE
 ]]
 function HasDialog(sID)
 
-	if type(sID) = "string" then
+	if type(sID) == "string" then
 	sID = string.lower(sID);
 	
 	return true
@@ -320,9 +284,10 @@ ID is the ID (not name) of the entity.
 function RequestDialog(sID)
 	
 	if NPC.Exists(sID) then
-		
+	sID = string.lower(sID);
+	
 		--make sure no other dialog is open
-		if not GetDialogOpen().IsOpen then
+		if not Dialog.GetOpen().IsOpen then
 		local hEntity = findEntity(sID);
 			
 			--find outif the NPC has a dialog option
@@ -334,15 +299,14 @@ function RequestDialog(sID)
 				local hParty = findEntity("party");
 												
 					if hParty then
-					--THIS WILL BE UPDATED TO CALL THE DIALOG THROUGH THE GUI FRAMEWORK
-					hudPrint("Requesting Dialog with "..sID);
+					--THIS WILL BE UPDATED TO CALL THE DIALOG THROUGH THE GUI FRAMEWORK					
 					local nX, nY, nFacing, nlevel = hEntity.x, hEntity.y, Util.Position.GetOppositeFacing(hParty.facing), hEntity.level
 					--facing only cannot be set. There must be other and different variables incuded. So, the moves once to a random location and then back again.
 					hEntity:setPosition(math.random(0, 31), math.random(0, 31), math.random(0, 3), nlevel);
 					--set the monster's desired postion
 					hEntity:setPosition(nX, nY, nFacing, nlevel);
-					--request a dialog
-					NPC.SetDialogOpen(true, sID);
+					--tell the NPC and player that they're interacting
+					Dialog.SetOpen(sID, true);					
 					end
 					
 				end
@@ -454,7 +418,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnMove(hEntity, nDirection)
-local tDialog = NPC.GetDialogOpen();
+local tDialog = Dialog.GetOpen();
 
 	if tDialog.IsOpen then
 		
@@ -503,7 +467,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnTurn(hEntity, nDirection)
-local tDialog = NPC.GetDialogOpen();
+local tDialog = Dialog.GetOpen();
 
 	if tDialog.IsOpen then
 		

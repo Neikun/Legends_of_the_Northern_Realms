@@ -23,3 +23,11 @@ and disallow monster attacks when resting there.
 I think it would really cool if there were monsters about which players were genuinely concerned.
 Exp and/or level stealing monsters would be something from which anyone might run.
 
+[Items]
+I think having a stash like in Diablo II/Torchlight Path of Exile would be most awesome.
+Have it located in a town or towns and let the player access it while in town but not in dungeons.
+
+Also, a portal scroll or spell (limited) to get back to town would be cool!
+
+[Travel]
+A travel service would also be good for navigating the world.

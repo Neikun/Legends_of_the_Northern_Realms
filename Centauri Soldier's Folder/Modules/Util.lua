@@ -81,7 +81,7 @@ local tValidTypes = {
 			if tValidTypes[sTypeID] then
 				
 				--check to see if the input variable meets one of the allowed types input
-				if sVarType == tValidTypes[sTypeID] then
+				if sVarType == tValidTypes[sTypeID] then				
 				return true
 				end
 		

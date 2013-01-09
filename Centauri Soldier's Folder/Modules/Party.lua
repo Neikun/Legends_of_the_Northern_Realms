@@ -96,7 +96,7 @@ See Scripting Reference
 ]]
 function OnDamage(nChampionID, nDamage, sDamageType)
 	
-	if NPC.GetDialogOpen().IsOpen then
+	if Dialog.GetOpen().IsOpen then
 	return false
 	end
 
@@ -126,7 +126,7 @@ See Scripting Reference
 ]]
 function OnMove(hParty, nDirection)
 	
-	if NPC.GetDialogOpen().IsOpen then
+	if Dialog.GetOpen().IsOpen then
 	return false
 	end
 
@@ -144,7 +144,7 @@ See Scripting Reference
 ]]
 function OnPickUpItem(hParty, hItem)
 	
-	if NPC.GetDialogOpen().IsOpen then
+	if Dialog.GetOpen().IsOpen then
 	return false
 	end
 
@@ -162,7 +162,7 @@ See Scripting Reference
 ]]
 function OnProjectileHit(nChampionID, hProjectile, nDamage, sDamageType)
 	
-	if NPC.GetDialogOpen().IsOpen then
+	if Dialog.GetOpen().IsOpen then
 	return false
 	end
 
@@ -204,7 +204,7 @@ See Scripting Reference
 ]]
 function OnTurn(hParty, nDirection)
 	
-	if NPC.GetDialogOpen().IsOpen then
+	if Dialog.GetOpen().IsOpen then
 	return false
 	end
 
@@ -222,7 +222,7 @@ See Scripting Reference
 ]]
 function OnUseItem(nChampionID, hItem, nSlot)
 	
-	if NPC.GetDialogOpen().IsOpen then
+	if Dialog.GetOpen().IsOpen then
 	return false
 	end
 

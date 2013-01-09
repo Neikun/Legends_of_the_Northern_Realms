@@ -73,7 +73,8 @@ local tClasses = {
 	["Help	"] = Help,
 	["NPC"] = NPC,
 	["Party"] = Party,
-	["Quest	"] = Quest,	
+	["Quest"] = Quest,
+	["Shop"] = Shop,
 };
 
 return tClasses

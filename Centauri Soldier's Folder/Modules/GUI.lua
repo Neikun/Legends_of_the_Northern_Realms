@@ -1,12 +1,4 @@
-tGUI = {
-	ActiveState = "",
-	States = {
-		["Shop"] = {
-			
-		},
-		["None"] = {},
-	},
-};
+tGUI = {};
 
 --[[
 All base GUI functions get one parameter, a gui context object (see below).
@@ -26,86 +18,38 @@ All base GUI functions get one parameter, a gui context object (see below).
 
 
 
-function DrawState()
 
-
-end
 
 --onDrawGui: a hook which is called after the dungeon view has been rendered.
 function OnDraw(hGUI)
-
-	if GUI.GetState() == "Shop" then	
-	local tPadding = {
-		Hor = 20,
-		Ver = 20,
-	};
-	local tSize = {
-		Width = (hGUI.width * 0.80) - tPadding.Hor * 2,
-		Height = (hGUI.height * 0.50) - tPadding.Ver * 2,
-	};		
-	local tPos = {
-		X = ((hGUI.width - tSize.Width) / 2) + tPadding.Hor,
-		Y = ((hGUI.height - tSize.Height) / 4) + tPadding.Ver,
-	};
-	
-	--[[
-	if tSize.Width < hGUI.width * 0.50 then
-	tSize.Width = hGUI.width;
-	end
-	
-	if tSize.Height < hGUI.height * 0.40 then
-	tSize.Height = hGUI.height;
-	end
-	
-	if tPos.X < tPadding.Hor then
-	tPos.X = tPadding.Hor;
-	end
-	
-	if tPos.Y < tPadding.Ver then
-	tPos.Y = tPadding.Ver;
-	end
-	]]
-	--hGUI.drawRect(tPos.X, tPos.Y, tSize.Width, tSize.Height);
-	hGUI.drawRect(tPos.X, tPos.Y, tSize.Width, tSize.Height);
-	end
-
+Dialog.Draw();
 end
 
 --onDrawInventory: a hook which is called after a champion’s inventory screen has been rendered.
 function OnDrawInventory(hGUI)
-
+	
+	if Dialog.GetState() ~= "" then
+	return false
+	end
+	
 end
 
 --onDrawStats: a hook which is called after a champion’s stats screem has been rendered.
 function OnDrawStats(hGUI)
-
+	
+	if Dialog.GetState() ~= "" then
+	return false
+	end
+	
 end
 
 --onDrawSkills: a hook which is called after a champion’s skills screen has been rendered.
 function OnDrawSkills(hGUI)
-
-end
-
-
-function SetState(sState)
 	
-	if type(sState) == "string" then
-	
-		if tGUI.States[sState] then	
-		tGUI.ActiveState = sState;
-	
-		else
-		tGUI.ActiveState = "";
-		
-		end
-	
-	else
-	tGUI.ActiveState = "";
-	
+	if Dialog.GetState() ~= "" then
+	return false
 	end
-
+	
 end
 
-function GetState()
-return tGUI.ActiveState
-end
+
