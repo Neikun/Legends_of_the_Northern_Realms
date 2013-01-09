@@ -8,5 +8,60 @@ Wanting some storyline ideas to start thinking about, So to get the ball rolling
     (This is just off the top of my head, and just to try and get ideas flowing.)
 
 
-    Your average dungeon crawler fanboy sits at his pc, playing the newest iteration of "Dungeon Emperor", When an electrical storm hits. 
+  [David] 
+   Your average dungeon crawler fanboy sits at his pc, playing the newest iteration of "Dungeon Emperor", When an electrical storm hits. 
 Vortex, warping, confused. . .wakes up in a world that he somewhat recognizes, and is comfortable (and excited!) to be in. "This looks like "Muscle and Mana 3! I love that franchise!" and "Oh my god! the limited edition cufflinks from "Magery 9 Collector's Box Set!" Kind of inside jokes to fanboys (Trying to come up with analogys for DM, Might n Magic, and Wizardry on the fly isn't easy!) Or, it could be a regular guy that has no interest in this genre, and he's kind of annoyed and confused by it all. Different jokes, other side of the fanboy thing. He more makes light of the seeming lack of logic around him. "Really?! the key to that door, is CONVENIENTLY placed, RIGHT THERE, and NOONE else thinks it's wierd?!" This could be an NPC, or even party member that ends up with you. Little script checks to see if he's in your party, and "Dude! Id that King Thane's sword!? Dibs!" (More jokes of him talking in todays slang rather than "Harken thee dost thou!" as the people around him do). I imagine the novelty will wear off before long, and he will end up fitting right in, being quite competent, and less fanboy. Possibly ending up with an integral role as a normal character. 
+
+[The friendly Guard]
+    Early simple fetch quest, to help the party gain an ally (Not a party member, but a liason for more quests/info.) 
+	A guard needs help, he's supposed to transport his prisoner to the court for judgement, and cannot find his cell key! This isn't the first time, and when the bosses find out, he is going to be in big trouble. A quick "I haven't seen it since I chased that kid near the barrels behind the square" hint, and you go searching the barrels for his key, which is easy to find. The guard is grateful and now owes you one.
+
+[Gatherer] 
+The potion shop is short on Grim caps! They're paying 10 gold for each cap you bring back, in addition to opening the shop for purchases.
+
+
+
+[The Baron's daughter]
+
+	In the starting town there is a Baron, who's daughter has been kidnapped for ransom. You are tasked with rescuing her, 
+and quite set on impressing the Baron with a job well done. However, when you find her, it turns out she has kidnampped 
+herself to try and extort money from her father.She is quite rude and non-helpful, spoiled, even. The player, realizing 
+there is no way to come out with a job "Well done", decides to drag her back screaming to her father
+ (Some threats made by her threatening to lie about the circumstance and your involvement helps make the journey a bit more harrowing).. 
+You return and report the events without negative consequence. (Whew!)
+
+[The Baron's daughter returns!]
+	The Baron's daughter is in trouble again. She's become involved in the riff-raff, and been caught robbing/stealing 
+from a powerful figure(s).The Baron is not aware of the transgression (yet), but when he finds out, it could lead to open war. Now it is in the parties best interest to find/rescue her. . .For which she is completely ungrateful. "What took you so long",and  "You did it wrong anyway!" You have to fight the guards/minions all the way out, while she complains. On the journey to bring her home safe, she warms up to you, becomes more appreciative, and is now a playable rogue you can add/drop from the party.
+
+[Corruption]
+
+ 	The earlier guards Captain has turned allegiance for a coup, causing a serious security concern for the entire kingdom. 
+The guard doesn't have direct evidence, but he KNOWS it's not right. Your earlier relationship causes you to give him 
+the benefit of the doubt, and investigate. You end up exposed, captured, and thrown into a dungeon (Nearly any mod would work here)
+to be forgotten while the "plan" is carried out by the Captain, but you have more pressing matters, like surviving.
+ Once you escape the dungeon, you return to the city just in time to warn the Baron/King of the plan, and save the day. 
+(With Equipment and Exp to boot!)
+
+[Revenge!]
+	The captain's brother is aware of grand circumstances you know nothing about, but essentially, the captain was right 
+all along, and now the kingdom is TRULY in danger. Betrayal at the highest level, the Captain wasn't investigating the Baron
+to find weaknesses in his security. The captain was investigating the security detail itself, as he had reason to believe an 
+assassination attempt was immenent. You had no way of learning this throughout the first confrontation, it was pretty cut and
+dry, defend yourselves or die.( As the Captain thought you were part of the assassination attempt when you encroached). 
+
+
+
+
+
+
+His brother comes back, swearing revenge on you. As it is playing out, he starts to realize you are not the bad guys he 
+assumed you are, and you end up helping him make things right. Eventually earning his trust and comraderie (NPC?) throughout your adventure.
+
+
+
+
+
+
+
+
