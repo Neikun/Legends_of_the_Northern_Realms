@@ -10,7 +10,7 @@ Wanting some storyline ideas to start thinking about, So to get the ball rolling
 
   [David] 
    Your average dungeon crawler fanboy sits at his pc, playing the newest iteration of "Dungeon Emperor", When an electrical storm hits. 
-Vortex, warping, confused. . .wakes up in a world that he somewhat recognizes, and is comfortable (and excited!) to be in. "This looks like "Muscle and Mana 3! I love that franchise!" and "Oh my god! the limited edition cufflinks from "Magery 9 Collector's Box Set!" Kind of inside jokes to fanboys (Trying to come up with analogys for DM, Might n Magic, and Wizardry on the fly isn't easy!) Or, it could be a regular guy that has no interest in this genre, and he's kind of annoyed and confused by it all. Different jokes, other side of the fanboy thing. He more makes light of the seeming lack of logic around him. "Really?! the key to that door, is CONVENIENTLY placed, RIGHT THERE, and NOONE else thinks it's wierd?!" This could be an NPC, or even party member that ends up with you. Little script checks to see if he's in your party, and "Dude! Id that King Thane's sword!? Dibs!" (More jokes of him talking in todays slang rather than "Harken thee dost thou!" as the people around him do). I imagine the novelty will wear off before long, and he will end up fitting right in, being quite competent, and less fanboy. Possibly ending up with an integral role as a normal character. 
+Vortex, warping, confused. . .wakes up in a world that he somewhat recognizes, and is comfortable (and excited!) to be in. "This looks like "Muscle and Mana 3! I love that franchise!" and "Oh my god! the limited edition cufflinks from "Magery 9 Collector's Box Set!" Kind of inside jokes to fanboys (Trying to come up with analogys for DM, Might n Magic, and Wizardry on the fly isn't easy!) Or, it could be a regular guy that has no interest in this genre, and he's kind of annoyed and confused by it all. Different jokes, other side of the fanboy thing. He more makes light of the seeming lack of logic around him. "Really?! the key to that door, is CONVENIENTLY placed, RIGHT THERE, and NOONE else thinks it's wierd?!" This could be an NPC, or even party member that ends up with you. Little script checks to see if he's in your party, and "Dude! Is that King Thane's sword!? Dibs!" (More jokes of him talking in todays slang rather than "Harken thee dost thou!" as the people around him do). I imagine the novelty will wear off before long, and he will end up fitting right in, being quite competent, and less fanboy. Possibly ending up with an integral role as a normal character. 
 
 [The friendly Guard]
     Early simple fetch quest, to help the party gain an ally (Not a party member, but a liason for more quests/info.) 
@@ -24,10 +24,10 @@ The potion shop is short on Grim caps! They're paying 10 gold for each cap you b
 [The Baron's daughter]
 
 	In the starting town there is a Baron, who's daughter has been kidnapped for ransom. You are tasked with rescuing her, 
-and quite set on impressing the Baron with a job well done. However, when you find her, it turns out she has kidnampped 
+and quite set on impressing the Baron with a job well done. However, when you find her, it turns out she has kidnapped 
 herself to try and extort money from her father.She is quite rude and non-helpful, spoiled, even. The player, realizing 
 there is no way to come out with a job "Well done", decides to drag her back screaming to her father
- (Some threats made by her threatening to lie about the circumstance and your involvement helps make the journey a bit more harrowing).. 
+ (Some threats made by her to lie about the circumstance and your involvement helps make the journey a bit more harrowing).. 
 You return and report the events without negative consequence. (Whew!)
 
 [The Baron's daughter returns!]
@@ -52,7 +52,25 @@ dry, defend yourselves or die.( As the Captain thought you were part of the assa
    His brother comes back, swearing revenge on you. As it is playing out, he starts to realize you are not the bad guys he 
 assumed you are, and you end up helping him make things right. Eventually earning his trust and comraderie (NPC?) throughout your adventure.
 
- -msyblade
+[Unlock the Inn]
+Simple Fetch Quest
+
+     The {Healing Crystal} in town will be an Inn, but first you need to help the owners get back inside, and possibly get to know them
+in the process. The darn lock is just jammed. There are some customers inside and outside, but the door is stuck fast, so the party 
+needs to find a way to open it. Some little custom item like a file (The metal kind!) or a hammer, even. Could make it a hammer, 
+causing you to shatter the door, and are now in debt to the Innkeeper, needing to work it off. This Inn could also end up being the local "Adventurer club" (What was it called in Bard's Tale?) where the player can switch party members on the fly.
+
+[The Tavern is overrun!]
+   
+The local tavern, where you can meet people/get quests, has a spider infestation in the basement! I'm thinking scaled down spiders,
+ maybe grouped, with a big spider "Boss".
+
+
+
+
+
+
+-msyblade
 
 
 
