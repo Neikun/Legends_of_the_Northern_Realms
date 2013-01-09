@@ -1,0 +1,17 @@
+Ok!
+
+This is a simple mockup of the map idea I was formulating.
+
+Meaning we'd make a GUI "app" for it in-game, so that players could move around the map as a sprite or some other indicator, and towns and points of interest (examples of both enclosed in the picture) could be seen and visited through a simple and intuitive user interface. You could also see in which towns you have active quests (the "!" in the map).
+
+The text could also appear when you come near it's "beacon", perhaps excluding major cities.
+
+The weird symbol with the boxes is supposed to represent the party in this picture, I couldn't think of a better symbol so that will have to do. The texts in italic indicate explanations for the symbols, this could be a quest name or a tag for a point of interest to explore. On the lower edge is a simple tooltip, telling what to press to enter a place (or anything else, really, if necessary). The upper corner shows the current region/kingdom the party is in.
+
+I presume this would be a light, but reasonably classy looking alternative. It still does not exclude the possibility of random encounters, hidden places and dungeons etc.
+
+Finally, the picture is indeed a MOCKUP. I'm not saying we should use the official map as the background, indeed if we use a zoomed up display we would need to draw more detailed maps ourselves, or give up maps and just draw the terrain itself from a birds' eye view. I also don't mean the mechanics would be just as presented, it is a simple example of what I was thinking.
+
+Tell me what you think!
+
+-Kuningas
