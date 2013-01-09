@@ -72,6 +72,10 @@ your creatures would work perfect
 [12/30/2012 7:01:49 PM] Arkos: we could use the teleporter that looks like a black hole is in it to move to other parts of the map
 
 ##### SUNKEN STRAIGHT #########################
+[12:50:57 AM] Juho Salila: I browsed again a bit in the github and found some talk about the Sunken strait. 
+Here's what my Tome of Lore of Northern Realms (.doc) says about it: Once Isle of Nex was connected to the mainland, 
+but ages ago catastrophic turmoil swept the lands deep into the ocean sinking everything but the highest peaks.
+
 [12/30/2012 6:55:58 PM] Arkos: Sunken Straight - 5- 10 feet deep full of sunken dead Greecian cities
 [12/30/2012 7:05:09 PM] Arkos: heck, maybe we can raise the sunken straight because someone lowered it
 [12/30/2012 7:05:17 PM] Neikun: http://warhammer40k.wikia.com/wiki/Machine_God
