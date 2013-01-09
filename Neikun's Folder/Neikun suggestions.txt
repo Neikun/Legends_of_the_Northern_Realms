@@ -39,5 +39,10 @@ The base party should be npcs now. Because the base party is now roughly level 1
 So this mod will have to feature a new party. 
 It needs to check if custom characters have been created, and if not, use a default party of our own creation.
 
+Final thoughts on Party/Ending of Grimrock, maybe not all of them made it out alive. Perhaps one died in the blast, one died shortly after from injuries and two lived.
+In this way, we forgo any past conclusions and really make the story our own.
+
 We should reference people's attitudes to the destruction of Mount Grimrock as well.
+Due to the size of the mountain, there would be large pieces of rock and dungeon debris scattered every which way for a long way.
+
 

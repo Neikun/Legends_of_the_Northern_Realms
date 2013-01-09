@@ -2,9 +2,10 @@ This document will be used send asset requests to Phitt who will make these at h
 This document will be sent to Phitt on a predifined schedule by Neikun.
 Neikun will alter the status of a request between "Unsent", "Sent", "Completed"
 
-Request:					Status:
+Request:				Status:
+
+Throne (Regal/Monstrous)		Unsent
+
+Floor Rug (Bedroom/Grand Hall)		Unsent
 
 
- A Throne! -msyblade
-
-A nice floor rug, maybe different colored/multiple versions (Bedrooms, Grand Halls, etc.) -msyblade
