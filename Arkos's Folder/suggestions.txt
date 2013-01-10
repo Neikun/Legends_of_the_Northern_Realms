@@ -1,3 +1,19 @@
+#############################################################################################
+### a dungeon for traveling over the mountains between Xaae and the serpent river dungeon ###
+#############################################################################################
+
+ I love this picture https://github.com/Neikun/Legends_of_the_Northern_Realms/blob/master/Area%20concepts/Xaae/Jungle_Temple_final_1200s.jpg
+
+[8:00:24 PM] Arkos: I imagine it between Xaae and the serpent river
+[8:00:57 PM] Arkos: would be cool to have a treachorous trail/bridges dungeon going over these mountains like in that picture
+on the surface making your way through the old rope bridges and trails with mudslides and huge cliffs
+[8:03:34 PM] Arkos: what do you think of that picture -- a dungeon for going over these mountains?
+[8:04:02 PM] Arkos: between Xaae and the Serpent river
+[8:04:36 PM] Neikun: Gorgeous. We will be limited by our artist, but it's good to have the ideas in our head.
+[8:05:16 PM] Arkos: Awesome!  Going on that bridge and it breaks! good stuff!
+[8:06:06 PM] Neikun: Probably doable. Especially when we figure out animations well. do it as a series of pitdoors
+
+
 
 #### A TRIP TO THE ROYAL LIBRARY ############
 [11:44:41 PM] Juho Salila: arkos.log: Royal Library is situated in Nothampton. 
