@@ -1,0 +1,7 @@
+Fun little short level. Mahric might be able to help you with prettying the gui, but very good. This is a good example of npcs coming to you to start the conversation.
+I suggest the conversation to happen more like this:
+The npc approaches you and says things with hudPrint.  "Hey listen!"
+You can click them to start a gui conversation. 
+
+In case the player fails to notice they're being spoken to, you could have the npc repeat after a delay. 
+In case the player wants to ignore them, there should be a way for the npc to take a hint. (Or at the very least an option in the gui conversation after clicking them for "Not now")
