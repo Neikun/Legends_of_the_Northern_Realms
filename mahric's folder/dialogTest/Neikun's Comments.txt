@@ -1,0 +1,16 @@
+When in conversation the player has the ability to turn. This isn't terrible.
+The player can however attack/throw things during conversation. This is bad.
+I love that you were able to make the ogre turn hostile on hit though.
+
+Good idea for clicking the screen to speed up the dialog up.
+You may want to increase the default type speed even slightly.
+
+Fast travel is looking amazing. You may want to have a gui pop up in the square before the map shows up where the player can anser yes or now:
+"Are you sure you'd like to travel to Uttermost?"
+
+Also, because the party can turn, it is possible to turn and cast fireburst at the wall and damage the party.
+
+Controls feedback: I don't think general controls will be needed as they can be accessed via the main menu.
+The music selector would be cool but likely not needed for this mod.
+
+Awesome stuff. Can't get over that fast travel system.
