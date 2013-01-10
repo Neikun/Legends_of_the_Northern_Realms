@@ -1,0 +1,11 @@
+I had no idea this (map travel) was already under construction!
+
+Very cool, and most importantly: it seems to work like a charm. Had I checked the material we had thoroughly before posting my inferior suggestion yesterday, I could have saved a lot of work. :P
+
+I have no complaints, but a couple inquiries about the future:
+-How will we include exploration? Should new map locations unlock with conversation and perhaps studying maps and books? I rather like the idea of secret locations or even dungeons, but I don't like manic "cleaning" for secrets everywhere I go.
+-How should food consumption work with traveling? I think food as a "fuel" for travel could work, but that'd mean there would have to be a renewing source of food everywhere travelable. On the other hand, could seem strange if it had no effect at all (or perhaps the party hunts on the way or something?)
+
+I might be ahead of our time asking these now, but that's what popped up in my mind.
+
+Dialogue is rather convincing too, no bugs to add from me. The text scroll is a cool addition, and with the skipping button it works rather fine too.
