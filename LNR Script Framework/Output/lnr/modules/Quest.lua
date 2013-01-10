@@ -94,7 +94,7 @@ sQuest = string.lower(sQuest);
 end
 
 --type, target, check
-function CreateCondition(sType, )
+function CreateCondition(sType, sdfsdf)
 
 
 end

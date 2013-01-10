@@ -9,7 +9,7 @@ tGUI = {};
 
 --onDrawGui: a hook which is called after the dungeon view has been rendered.
 function OnDraw(hGUI)
-Dialog.Draw();
+
 end
 
 --onDrawInventory: a hook which is called after a champion’s inventory screen has been rendered.

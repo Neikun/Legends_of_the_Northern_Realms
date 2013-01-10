@@ -232,7 +232,7 @@ end
 
 --[[
 ----------------------------------
-Util.TableToString(table, integer)
+Util.Table_ToString(table, integer)
 Return Type: string
 Method Type: internal
 ----------------------------------
