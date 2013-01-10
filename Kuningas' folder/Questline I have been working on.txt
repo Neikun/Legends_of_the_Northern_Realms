@@ -1,0 +1,34 @@
+Short writeup of my planned questline so far 
+
+
+The story begins in the Ranwyn (totally changeable) sewers, where a roque (originally, I intend to change it so it can be attended by the central party) has been tasked to pilfer a valuable and magical artifact from the temple of [insert deity name here].
+
+
+In the sewers there are certain seemingly unrelated clues, which become more important later on, like the existence of Wurlitz the Jeweler and an ogre or minotaur lackey called Rothbone. It also establishes the existence of Ranwyn sewerworkers, an unthankful but necessary profession. Original idea was to have one of them join the party (they are surprisingly capable fighters, the sewers get infested by snails and slimes on occasion, which also offer the main challenge of this level.)
+
+
+From the sewers, the party continues to the old escape tunnels used by the temple long ago. This place is infested by particularly nasty spiders -- the idea is that the party hurries through, only a most tough player should dare trying to defeat the spiders in combat. Still, experience is the only reward -- I don't want to punish those who go by the original plan. I also thought that destroying the spidereggs grant an xp bonus here.
+
+
+Thereon, the party enters the sleeping temple. This area would be littered by arcane traps, perhaps a few elemental revenants.
+
+
+The first dungeon would end with a boss -- an invincible magical construct, which can be destroyed by tricking it into the magical traps in the room.
+
+
+As the party acquires the artifact, the first dungeon ends.
+
+
+After this, a twist would occur. The party's employer turns out to represent a malignant organization intent on releasing some ancient horror upon the world. He would take the artifact by force via the lackey Rothbone, who then escapes with the artifact. The employer needn't even show his face, actually.
+
+
+The second dungeon would begin in the streets around the temple, including the residence of aforementioned Wurlitz the Jeweler. Rothbone the lackey would be the main goal, escaping with the artifact. He could be tracked by visiting Wurlitz the Jeweler, who has some connection to the strange organization. It turns out he's fled to a mysterious hiding place in the local cemetery. Through the streets, the level would end by finding the crypt entrance from the streets. This would be an exterior level.
+
+
+The crypt/catacombs would be an undead themed level. Typical exploration through them would lead to the organization's hiding place, and a bossfight with Rothbone would occur. Beating him to a fraction of his hit points would end the second part of the questline. (he is not killed, or at least the party is given a choice)
+
+
+It would turn out the party is late, and that Rothbone was left just to delay the party. He has not been paid for his job, so sensing his loss, he decides to switch sides and joins the party. He informs that the "Organization" leaders are headed towards [insert mysterious mountain here, not Grimrock], where they will find the place they can use the artefacts they have collected in. They must be stopped...
+
+
+This is as far as I've thought. The first dungeon is mapped, but not finished. Scripting and some modified enemies are still missing.
