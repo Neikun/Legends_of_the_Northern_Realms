@@ -300,7 +300,7 @@ function RequestDialog(sID)
 												
 					if hParty then
 					--THIS WILL BE UPDATED TO CALL THE DIALOG THROUGH THE GUI FRAMEWORK					
-					local nX, nY, nFacing, nlevel = hEntity.x, hEntity.y, Util.Position.GetOppositeFacing(hParty.facing), hEntity.level
+					local nX, nY, nFacing, nlevel = hEntity.x, hEntity.y, Util.Position_GetOppositeFacing(hParty.facing), hEntity.level
 					--facing only cannot be set. There must be other and different variables incuded. So, the moves once to a random location and then back again.
 					hEntity:setPosition(math.random(0, 31), math.random(0, 31), math.random(0, 3), nlevel);
 					--set the monster's desired postion

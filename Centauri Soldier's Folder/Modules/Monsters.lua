@@ -194,7 +194,7 @@ local nMinMonsterDist = tMonsters.MinMonsterDistance;
 	base number of spawned monsters . The number below stored in the 'nAlternator'
 	variable will determine whether that 'nAddative' modifier will add to the base
 	number or subtract from it.]]
-local nAlternator = Util.Math.GetAlternator();
+local nAlternator = Util.Math_GetAlternator();
 --this is the base number of monsters that will spawn in this level
 local nMonsters = tMonsters.BaseCount[nLevel];
 	
@@ -298,7 +298,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 				--get the monster's facing
 				for nFacingIndex, nFacingValue in pairs(tFacings) do
 										
-					if not Util.Dungeon.AdjacentCellIsWall(nLevel, nFacingValue, nX, nY) then
+					if not Util.Dungeon_AdjacentCellIsWall(nLevel, nFacingValue, nX, nY) then
 					nFacing = nFacingValue;
 					break;
 					end
@@ -313,7 +313,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 					--get the random monster to spawn
 					local sMonsterClass = Monsters.GetRandom(nLevel);
 					--this prevents duplicate IDs
-					sMonsterID = "monster_"..sMonsterClass.."_"..tostring(nLevel).."_"..tostring(nX).."_"..tostring(nY)..Util.String.GenerateUUID(tostring(math.random(1, 100))..sMonsterClass);
+					sMonsterID = "monster_"..sMonsterClass.."_"..tostring(nLevel).."_"..tostring(nX).."_"..tostring(nY)..Util.String_GenerateUUID(tostring(math.random(1, 100))..sMonsterClass);
 					--add this monster to the list of monsters spawned in this level
 					tMonsters.Spawned[nLevel][#tMonsters.Spawned[nLevel] + 1] = sMonsterID;
 					--spawn the beast!
@@ -323,7 +323,7 @@ local nMonsters = tMonsters.BaseCount[nLevel];
 					--set the monster's AI state (as discussed above)
 					hMonster:setAIState(tAI[math.random(1, #tAI)]);
 					--calculate the monster's level based in the mean party level as well as the dungeon level and adjusted for a little variety in difficulty
-					local nMonsterLevel = Util.Math.UpOrDown(nMeanPartyLevel + (tMonsters.BaseLevelVar * math.random(1, nLevel)));
+					local nMonsterLevel = Util.Math_UpOrDown(nMeanPartyLevel + (tMonsters.BaseLevelVar * math.random(1, nLevel)));
 						
 						--make sure the monster's level does not exceed the allowed lower limits
 						if nMonsterLevel < nMinLevelAllowed then

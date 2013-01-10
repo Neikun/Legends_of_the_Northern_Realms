@@ -50,13 +50,6 @@ tEscapeChars = {
 	},	
 };
 
---the subclasses used in this module
-Dungeon = {};
-Math = {};
-Position = {};
-String = {};
-Table = {};
-
 --================================================================================
 --								<<<All Util Methods>>>
 --================================================================================
@@ -101,12 +94,12 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.Dungeon.AdjacentCellIsWall(Integer, Integer, Integer, Integer)
+Util.Dungeon_AdjacentCellIsWall(Integer, Integer, Integer, Integer)
 Used to determine if a cell adjacent to
 the input cell is a wall. This is, of course,
 relative to the input facing.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function Dungeon.AdjacentCellIsWall(nLevel, nFacing, nX, nY)
+function Dungeon_AdjacentCellIsWall(nLevel, nFacing, nX, nY)
 
 	if nFacing == 0 then
 	nY = nY - 1;
@@ -136,23 +129,23 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.Math.GetAlternator
+Util.Math_GetAlternator
 Gets a random number:
 either 1 or -1.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function Math.GetAlternator()
+function Math_GetAlternator()
 return (-1) ^ math.random(1,2)
 end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.Math.UpOrDown(Integer)
+Util.Math_UpOrDown(Integer)
 A utility function that returns
 an integer value to the
 (randomly chosen) nearest high
 or low value.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function Math.UpOrDown(nValue)
+function Math_UpOrDown(nValue)
 		
 	if math.random() < 0.5 then
 	return math.floor(nValue)
@@ -165,7 +158,7 @@ end
 --================================================================================
 --									<<<POSITION>>>
 --================================================================================
-function Position.GetOppositeFacing(nFacing)
+function Position_GetOppositeFacing(nFacing)
 
 	if nFacing == 0 then
 	return 2
@@ -187,12 +180,12 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.String.GenerateUUID(String)
+Util.String_GenerateUUID(String)
 Creates a Universal Unique
 Identifier that may contain
 a prefix.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function String.GenerateUUID(sPrefix)
+function String_GenerateUUID(sPrefix)
 local tChars = {"x","3","y","1","b","2","p","e","8","f","v","t","g","9","h","7","u","4","i","z","a","j","0","c","k","l","5","m","n","w","o","q","r","s","d","6"};
 local tSequence = {1,4,4,4,12};
 local sUUID = "";
@@ -267,7 +260,7 @@ nil and table.
 4. The number(argument #2) MUST be
 exluded.
 ]]
-function Table.ToString(tInput, nCount)
+function Table_ToString(tInput, nCount)
 --the string to return
 local sRet = "";
 local nCount = nCount;
@@ -349,7 +342,7 @@ end
 
 --[[
 --------------------------
-Util.Table.FromString(string)
+Util.Table_FromString(string)
 Return Type: table
 Method Type: internal
 --------------------------
@@ -371,7 +364,7 @@ nil and table.
 4. The number(argument #2) MUST be
 excluded when called.
 ]]
-function Table.FromString(sInput, nCount)
+function Table_FromString(sInput, nCount)
 local nCount = nCount;
 
 	--initialize the count variable if it's not

@@ -163,7 +163,7 @@ local tMethods = Game.CheckDataModules();
 	--get the entity that stores the data
 	local hDataModule = GetDataModule(sClass)
 	--get the table that holds the data to load
-	local tData = Util.Table.FromString(hDataModule:getWallText());
+	local tData = Util.Table_FromString(hDataModule:getWallText());
 	tClass.SetDataTable(tData);
 	end
 
@@ -189,7 +189,7 @@ local tMethods = Game.CheckDataModules();
 	--get the table that needs to be converted to string
 	local tData = tClass.GetDataTable();
 	--convert the table to a string
-	local sData = Util.Table.ToString(tData);
+	local sData = Util.Table_ToString(tData);
 	--create the function to return the data
 	--local sFunction = "function ReturnData()\nlocal tRet = "..sData..";\nreturn tRet\nend";
 	--store the new function in the data module object
