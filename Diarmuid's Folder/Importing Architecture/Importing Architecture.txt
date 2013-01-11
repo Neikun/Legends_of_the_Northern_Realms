@@ -1,0 +1,20 @@
+
+
+
+[10:28:21 AM] Arkos: To Everyone:  Guys with Diarmuid’s importer, it’s a total game changer.  We don’t have to worry about how much space is allocated for outside levels vs traditional dungeons.  
+I suggest we focus on a new architecture to take advanatage of Diarmuid’s import system to create even more immersion and open-world feel.  
+May we create a hybrid of Mahric’s fast travel for long distances with other open world dungeon levels.  Let’s push the envelope!
+
+[10:29:14 AM] Eric Krauss: No need for annoying story excuses for losing the party's equipment now
+[10:48:13 AM] Georges Dimitrov: While I get my git working, here's what I suggest:
+[10:48:14 AM] Georges Dimitrov: We can also store which dungeons were completed or not.
+
+Now we cannot save entire dungeon states, but I think that we should have two categories:
+- The Core World Module, such as the main town, or the Library, to which you return frequently. 
+For this we should save a lot of data on everything what was done: items that were picked up should not reappear 
+(they can be either spawned if NOT picked up, or destroyed if already picked up), doors could stay open, npcs should remember what you did with them, etc.
+
+- Standalone dungeons that you travel to and back, and normally not return to: in those, if you return to the dungeon, you would have it all reset, 
+except maybe for key quest items that we would check. So if you go to a cave to retreive an old relic for the quest, exit and go back again, 
+you would find all weapons/monsters/keys/puzzles reset, but if you picked up the relic it wouldn't be on its altar anymore.
+[1:12:45 PM] Georges Dimitrov: Ah and by the way, don't worry for me and the serialization functions, it was much easier than I thought.
