@@ -9,3 +9,47 @@ I have no complaints, but a couple inquiries about the future:
 I might be ahead of our time asking these now, but that's what popped up in my mind.
 
 Dialogue is rather convincing too, no bugs to add from me. The text scroll is a cool addition, and with the skipping button it works rather fine too.
+
+#############################################################
+### Arkos:  I would like to add on to Kuningas comments #####
+#############################################################
+
+Today Diarmuid figured out how to import inventory and other information from one .dat to the next.
+
+With your Fast Travel system and his importer anything is possible - exploration etc.
+
+Below will get you up to speed on Diarmuid's importer
+
+
+[7:09:18 AM] Georges Dimitrov: give me 2 min
+[7:12:50 AM] Georges Dimitrov: Yep, it works!
+[7:13:36 AM] Georges Dimitrov: we can store all data in a character name with party:getChampion(1):setName(), then save, then on import, retrieve it with getName(). Tada!
+[7:16:04 AM] Georges Dimitrov: If you have a big string, it will just print over the characher sheet (like Champ1imt1 ="sword", Champ1imt2 = "shield"..., but if you start your "custom" string with the character normal name and then put like 50 blank lines, the data will be beyond the screen
+[7:16:17 AM] Georges Dimitrov: I tested with multiline strings
+[7:16:28 AM] Georges Dimitrov: set it in my custom test dungeon
+[7:16:35 AM] Georges Dimitrov: then imported in Phitt's mine
+[7:16:45 AM] Georges Dimitrov: and the string name was preserved
+[7:17:05 AM] Georges Dimitrov: So we can make this transparent to the player
+[7:17:31 AM] msyblade: Really Diarmuid. If you can get the import part done, this is a game changer.
+[7:18:23 AM] msyblade: Will you write an entry on the Github Scripting wiki so centauri can see what you're thinking?
+[7:18:25 AM] Seth Borga: This is too $%#% much for me to take in right now...
+
+
+[3:21:14 PM] !!!!!!  Arkos: I still think Mahric's fast travel will play an important part !!!!!!!!!!!!
+[3:21:55 PM] Neikun: It will absolutely. It simply allows our wandering areas to be larger, more complex, and more random.
+[3:23:06 PM] Neikun: Instead of maybe one floor for the forest outside the town, we might do three, one of which is only accessible by way of secret entry/ (This is a Grimrock mod after all. Secrets everywhere!)
+
+
+[10:28:21 AM] Arkos: To Everyone:  Guys with Diarmuid’s importer, it’s a total game changer.  We don’t have to worry about how much space is allocated for outside levels vs traditional dungeons.  I suggest we focus on a new architecture to take advanatage of Diarmuid’s import system to create even more immersion and open-world feel.  May we create a hybrid of Mahric’s fast travel for long distances with other open world dungeon levels.  Let’s push the envelope!
+[10:29:14 AM] Eric Krauss: No need for annoying story excuses for losing the party's equipment now
+[10:48:13 AM] Georges Dimitrov: While I get my git working, here's what I suggest:
+[10:48:14 AM] Georges Dimitrov: We can also store which dungeons were completed or not.
+
+Now we cannot save entire dungeon states, but I think that we should have two categories:
+- The Core World Module, such as the main town, or the Library, to which you return frequently. For this we should save a lot of data on everything what was done: items that were picked up should not reappear (they can be either spawned if NOT picked up, or destroyed if already picked up), doors could stay open, npcs should remember what you did with them, etc.
+
+- Standalone dungeons that you travel to and back, and normally not return to: in those, if you return to the dungeon, you would have it all reset, except maybe for key quest items that we would check. So if you go to a cave to retreive an old relic for the quest, exit and go back again, you would find all weapons/monsters/keys/puzzles reset, but if you picked up the relic it wouldn't be on its altar anymore.
+[1:12:45 PM] Georges Dimitrov: Ah and by the way, don't worry for me and the serialization functions, it was much easier than I thought.
+[1:13:22 PM] Georges Dimitrov: You'll have a working version tonight probably!
+[1:27:14 PM] Georges Dimitrov: Ok, running of to get the kid :), will continue working tonight.
+I have the io function ready. I created a global data variable, in which we will be able to put different tables, one for the party, one for global LotNR info and one for each dungeon .dat. I have a saveData function which puts the whole thing in the champion name and a getData function which restores everything in a table structure. Wll put that in an example dats tonight.
