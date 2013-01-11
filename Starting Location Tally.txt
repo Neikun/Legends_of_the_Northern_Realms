@@ -14,3 +14,6 @@ Voters:
  Neikun, 
 Kuningas,	
 
+Not voting (any starting area is good): (1)
+Voters:
+Mahric,
