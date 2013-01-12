@@ -1,0 +1,27 @@
+Ok since I do not saw any suggestions for trade so far, here is my idea
+
+Trade could work in similar way like in Dungeon Master 2 (its quite easy and shoudl be do-able withs some scripts). Standard currency shoud be
+coins (copper (2 copper = 1 silver), silver, gold (1 gold = 10 copperor 5 silver etc...). 
+Each standard item should have its value defined for sell / buy. Then some other items should be just sellable (some types or gems etc...), or
+just buy-able (like torches for example).
+
+When in store, on one wall is "window" with picutre of item you want buy or sell (see attached picture named trade table.jpg). This picture could be 
+scrollable for next item(s) by pushing arrows on the side of this window (arrows should be encrypted buttons).
+When you want buy some item, you need just put money somewhere (in case you are selling, put there item)  and confirm by pushing another button
+or talking to trader or something... 
+If item you are selling is matching what is on the picture, you get money. If you buying and you insert enough money, you will get your item.
+Some items should be unique (should dissapear from the option after buying)
+Trader should accept all money (for example if item cost 1G, it should accept also 5S). Or even if you insert more, it should return additional money back
+
+just idea. what you think ?
+
+
+
+pric list (C = 1copp, S = silver G = gold)
+
+Item name	buy value	sell value
+Torch		1C		none
+Flask		1S		1C
+Cudgel		1S		1C
+Blue gem	1Z		5C
+etc...
