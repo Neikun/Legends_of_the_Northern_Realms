@@ -1,0 +1,23 @@
+Corrg City
+
+Far away from civilization, in the waste rocky mountains full of minotaurs and ogres lies city of Corrg.
+It´s an Ogre city. Yes - not all ogres all hostile. 
+However do not expect warm welcome parties here. The only race which ogres respect are minotaurs, which are also living in this city.
+
+Corrg is situated in deep canyon, protected by mountains from several sides. These mountains are full of caves, which are often used as "houses"
+More respect and hiearchy = larger cave. Some minotaurs are also living in big rough houses.
+Unofficial "leader" of city is ogre known as Srg. Big King Srg how he is often called. Apart from the other ogres is is somehow smarter and also
+more brutal. He is searching for anything which would help him to gain more strenght and power. Like powerfull artifacts. Often he imprison visitors
+and send them to search some.
+
+
+Economy
+Some shops. Paradise for minotaurs. Axes, maces, armors. Also some dwarf staff (if dwarfes ever existed)
+
+Ingame
+Mine tilesets retextured to ice should work fine for caves
+otherwise north tileset could be used for buildings etc...
+
+
+
+
