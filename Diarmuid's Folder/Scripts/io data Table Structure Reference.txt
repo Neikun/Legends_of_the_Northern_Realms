@@ -1,0 +1,32 @@
+(saveItem) =
+	.n = name
+	.i = id
+	.s = stackSize
+	.c = charges
+	.f = fuel
+	.sI = subItems
+
+data
+	.system
+		.
+	.party
+		.items
+			[championIndex]
+				[slot] = "nil" or {saveItem}
+		.mouse = "nil" or {saveItem}
+	.[dungeon.id]
+		.items
+			.i = (saveItem)
+			.l = level
+			.x
+			.y
+			.f = facing
+		.torchHolders
+			[torchHolder.id]	
+				[1] = torch id
+				[2] = torch fuel
+		.alcoves
+			[alcove.id] = table of {saveItem}
+		.doors 
+			[door.id] = table of door states("o"/"c")
+	
