@@ -1,0 +1,17 @@
+So, here's the framework.
+It's not quite complete but the skeleton is up.
+Please check the wiki for coding cenventions to before editing any files.
+If the conventions do not suit you, let's all talk and find something that works for all of us.
+I think it's very important that we all agree on the same methods and are all on the same page.
+
+
+Please feel free to add your modules to the framework.
+Also, the idea of the framework is that the methods work together so
+feel free to integrate your new methods into existing ones where appropriate.
+
+The LNRSM utility in here is an auto-update program that ports the source files (the
+ones you're editing when you're writing code) in real-time to the code usable
+by the dungeon in you're currently working. It updates the code every few seconds
+so you'll see changes as soon as you reload your dungeon. Just run the utility as it sits
+but please remember to shut it off during your commits and syncs. I will be updating the utility
+soon with several improvements.
