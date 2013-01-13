@@ -13,6 +13,7 @@ Or Should they create a party of 4, and later add/drop ANY of them at will. (2)
 Tally Here: 
 Neikun (Should be able to create 1-4 characters, but be restricted from using the base party)
 Arkos (I agree with Neikun)
+Kuningas (I agree -- changeable characters are among the features I envisioned)
 
 
 
@@ -28,6 +29,7 @@ Neikun
 
 Non-Active party members will not progress unless the player intentionally progresses them.
 Tally Here:
+Kuningas: Weaker characters can be taken to lower level dungeons that would feel too easy for stronger characters. (another option: have another hero --one you'll need to have leveled that far-- train them, for some kind of fee perhaps)
 
 
 Whichever is prefered by the scripters (1)
