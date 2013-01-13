@@ -518,6 +518,135 @@ defineObject{
 	editorIcon = 92,
 }
 
+-- Doors
+
+defineObject{
+	name = "sx_town_door_indoor_portcullis",
+	class = "Door",
+	model = "assets/models/env/door_portcullis.fbx",
+	doorFrameModel = "mod_assets/sx_towntileset/models/sx_town_doorframe_indoor.fbx",
+	pullChainModel = "assets/models/env/door_pullchain.fbx",
+	pullChainAnim = "assets/animations/env/door_pullchain.fbx",
+	openSound = "gate_open",
+	closeSound = "gate_close",
+	lockSound = "gate_lock",
+	killPillars = true,
+	openVelocity = 1.3,
+	closeVelocity = 0,
+	closeAcceleration = -10,
+	sparse = true,
+	placement = "wall",
+	editorIcon = 124,
+}
+
+defineObject{
+	name = "sx_town_door_indoor_wooden",
+	class = "Door",
+	model = "assets/models/env/door_wooden.fbx",
+	doorFrameModel = "mod_assets/sx_towntileset/models/sx_town_doorframe_indoor.fbx",
+	pullChainModel = "assets/models/env/door_pullchain.fbx",
+	pullChainAnim = "assets/animations/env/door_pullchain.fbx",
+	openSound = "gate_open",
+	closeSound = "gate_close",
+	lockSound = "gate_lock",
+	killPillars = true,
+	openVelocity = 1.3,
+	closeVelocity = 0,
+	closeAcceleration = -10,
+	placement = "wall",
+	editorIcon = 128,
+}
+
+defineObject{
+	name = "sx_town_door_indoor_wooden_locked",
+	class = "Door",
+	model = "assets/models/env/door_wooden_locked.fbx",
+	doorFrameModel = "mod_assets/sx_towntileset/models/sx_town_doorframe_indoor.fbx",
+	pullChainModel = "assets/models/env/door_pullchain.fbx",
+	pullChainAnim = "assets/animations/env/door_pullchain.fbx",
+	openSound = "gate_open",
+	closeSound = "gate_close",
+	lockSound = "gate_lock",
+	killPillars = true,
+	openVelocity = 1.3,
+	closeVelocity = 0,
+	closeAcceleration = -10,
+	locked = true,
+	lockPos = vec(0, 1.05, 0),
+	lockSize = vec(100, 140),
+	placement = "wall",
+	editorIcon = 128,
+}
+
+defineObject{
+	name = "sx_town_door_indoor_iron",
+	class = "Door",
+	model = "assets/models/env/door_iron.fbx",
+	doorFrameModel = "mod_assets/sx_towntileset/models/sx_town_doorframe_indoor.fbx",
+	pullChainModel = "assets/models/env/door_pullchain.fbx",
+	pullChainAnim = "assets/animations/env/door_pullchain.fbx",
+	openSound = "gate_iron_open",
+	closeSound = "gate_iron_close",
+	lockSound = "gate_lock",
+	killPillars = true,
+	doubleDoor = true,
+	openVelocity = 1.1,
+	closeVelocity = -1.1,
+	closeAcceleration = 0,
+	placement = "wall",
+	editorIcon = 16,
+}
+
+defineObject{
+	name = "sx_town_door_indoor_metal",
+	class = "Door",
+	model = "assets/models/env/door_metal.fbx",
+	doorFrameModel = "mod_assets/sx_towntileset/models/sx_town_doorframe_indoor.fbx",
+	pullChainModel = "assets/models/env/door_pullchain.fbx",
+	pullChainAnim = "assets/animations/env/door_pullchain.fbx",
+	openSound = "gate_open",
+	closeSound = "gate_close",
+	lockSound = "gate_lock",
+	killPillars = true,
+	openVelocity = 1.3,
+	closeVelocity = 0,
+	closeAcceleration = -10,
+	placement = "wall",
+	editorIcon = 124,
+}
+
+defineObject{
+	name = "sx_town_door_indoor_ornament",
+	class = "Door",
+	model = "assets/models/env/door_ornament.fbx",
+	doorFrameModel = "mod_assets/sx_towntileset/models/sx_town_doorframe_indoor.fbx",
+	pullChainModel = "assets/models/env/door_pullchain.fbx",
+	pullChainAnim = "assets/animations/env/door_pullchain.fbx",
+	openSound = "gate_open",
+	closeSound = "gate_close",
+	lockSound = "gate_lock",
+	killPillars = true,
+	openVelocity = 1.3,
+	closeVelocity = 0,
+	closeAcceleration = -10,
+	placement = "wall",
+	editorIcon = 124,
+}
+
+defineObject{
+	name = "sx_town_secretwall_indoor",
+	class = "Door",
+	model = "mod_assets/sx_towntileset/models/sx_town_secretwall_indoor.fbx",
+	openSound = "wall_sliding",
+	closeSound = "wall_sliding",
+	lockSound = "wall_sliding_lock",
+	openVelocity = 0.5,
+	closeVelocity = -0.5,
+	secretDoor = true,
+	placement = "wall",
+	editorIcon = 120,
+}
+
 
 -- Stairs
 

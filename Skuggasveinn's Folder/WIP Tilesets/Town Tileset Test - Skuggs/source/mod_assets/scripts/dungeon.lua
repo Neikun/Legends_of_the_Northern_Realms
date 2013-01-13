@@ -11,10 +11,10 @@ mapDesc([[
 ################################
 ################################
 ################################
-################################
-################################
-################################
-#########################...####
+#############.#.#.#.#.#.#.######
+###########................#####
+###########.##############.#####
+###########.#############...####
 ######################......####
 #########################...####
 ##########################.#####
@@ -44,6 +44,20 @@ spawn("starting_location", 25,9,1, "starting_location")
 spawn("sx_town_window_indoor_snapon_lightrays", 27,9,1, "sx_town_window_indoor_snapon_lightrays_1")
 spawn("torch_holder", 25,8,3, "torch_holder_4")
 spawn("sx_town_window_indoor_light", 27,9,1, "sx_town_window_indoor_light_1")
+spawn("sx_town_window_indoor_light", 27,13,1, "sx_town_window_indoor_light_2")
+spawn("sx_town_window_indoor_light", 27,15,1, "sx_town_window_indoor_light_3")
+spawn("sx_town_window_indoor_snapon", 25,15,3, "sx_town_window_indoor_snapon_3")
+spawn("sx_town_window_indoor_snapon", 25,13,3, "sx_town_window_indoor_snapon_4")
+spawn("sx_town_window_indoor_snapon_lightrays", 27,13,1, "sx_town_window_indoor_snapon_lightrays_2")
+spawn("sx_town_window_indoor_snapon_lightrays", 27,15,1, "sx_town_window_indoor_snapon_lightrays_3")
+spawn("sx_town_door_indoor_iron", 25,6,0, "sx_town_door_indoor_iron_1")
+spawn("sx_town_door_indoor_metal", 23,5,2, "sx_town_door_indoor_metal_1")
+spawn("sx_town_door_indoor_ornament", 21,5,2, "sx_town_door_indoor_ornament_1")
+spawn("sx_town_door_indoor_portcullis", 19,6,0, "sx_town_door_indoor_portcullis_1")
+spawn("sx_town_door_indoor_wooden", 17,5,2, "sx_town_door_indoor_wooden_1")
+	:addPullChain()
+spawn("sx_town_door_indoor_wooden_locked", 15,6,0, "sx_town_door_indoor_wooden_locked_1")
+spawn("sx_town_secretwall_indoor", 12,6,1, "sx_town_secretwall_indoor_1")
 
 --- level 2 ---
 
