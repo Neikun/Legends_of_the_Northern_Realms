@@ -198,3 +198,18 @@ defineMaterial{
 	glossiness = 1,
 	depthBias = 0,
 }
+
+defineMaterial{
+	name = "sx_town_secret_button_easy",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_secret_button_easy_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_secret_button_easy_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_secret_button_easy_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 20,
+	depthBias = 0,
+}
+

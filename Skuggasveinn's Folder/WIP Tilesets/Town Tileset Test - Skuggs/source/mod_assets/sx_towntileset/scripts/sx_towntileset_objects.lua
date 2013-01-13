@@ -109,9 +109,9 @@ defineObject{
 }
 
 defineObject{
-	name = "sx_town_wall_low",
+	name = "sx_town_wall_halfsize",
 	class = "Door",
-	model = "mod_assets/sx_towntileset/models/sx_town_wall_low.fbx",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_halfsize.fbx",
 	openSound = "wall_sliding",
 	closeSound = "wall_sliding",
 	lockSound = "wall_sliding_lock",
@@ -241,6 +241,85 @@ defineObject{
     model = "mod_assets/sx_towntileset/models/sx_town_sign_weapons.fbx",
     placement = "floor",
 	editorIcon = 100,
+}
+defineObject{
+	name = "sx_town_sign_wall_alchemy",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_alchemy.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_food",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_food.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_harbor",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_harbor.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_jeweler",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_jeweler.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_magicbook",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_magicbook.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_map",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_map.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_smith",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_smith.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_tailor",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_tailor.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_tavern",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_tavern.fbx",
+	placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_sign_wall_weapons",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_weapons.fbx",
+	placement = "wall",
+	editorIcon = 92,
 }
 
 
@@ -377,6 +456,26 @@ defineObject{
 	placement = "wall",
 	killPillars = true,
 	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_secret_button_large",
+	class = "Button",
+	model = "mod_assets/sx_towntileset/models/sx_town_secret_button_large.fbx",
+	pressAnim = "assets/animations/env/dungeon_secret_button_large_press.fbx",
+	replacesWall = true,
+	placement = "wall",
+	editorIcon = 12,
+}
+
+defineObject{
+	name = "sx_town_secret_button_small",
+	class = "Button",
+	model = "mod_assets/sx_towntileset/models/sx_town_secret_button_small.fbx",
+	pressAnim = "assets/animations/env/dungeon_secret_button_small_press.fbx",
+	replacesWall = true,
+	placement = "wall",
+	editorIcon = 12,
 }
 
 
