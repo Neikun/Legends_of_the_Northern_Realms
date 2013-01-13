@@ -8,7 +8,14 @@
 
 data
 	.system
-		.
+		.savePoint = true/false
+		.origin
+			.id = dungeon.id
+			.name = dungeon.name
+			.saveLevel = party.level
+			.saveX = party.x
+			.saveY = party.y
+			.saveFacing = party.facing
 	.party
 		.items
 			[championIndex]
@@ -18,15 +25,23 @@ data
 		.items
 			.i = (saveItem)
 			.l = level
-			.x
-			.y
+			.x = x
+			.y = y
 			.f = facing
 		.torchHolders
 			[torchHolder.id]	
 				[1] = torch id
 				[2] = torch fuel
 		.alcoves
-			[alcove.id] = table of {saveItem}
+			[alcove.id]
+				[1]...[n] = {saveItem}
 		.doors 
-			[door.id] = table of door states("o"/"c")
-	
+			[door.id] = state("o"/"c")
+		.levers
+			[lever.id] = state("a"/"d")
+		.pits
+			[pit.id] = state("o"/"c")
+		.counters
+			[counter.id] = value
+		.mod
+			(Custom mod data)

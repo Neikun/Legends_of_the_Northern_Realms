@@ -1,5 +1,383 @@
 data = {}
 
+-- Dungeon Import/Export
+-- =====================
+
+function onSavePoint()
+	hudPrint("You have reached an exit zone. LotNR game data is now stored; if you")
+	hudPrint("wish, you can save your game and import the save in another dungeon.")
+	save()
+	data.system.savePoint = true
+end
+
+function offSavePoint()
+	data.system.savePoint = false
+end
+
+function autoexec()
+	data[dungeon.id] = {}
+	data.system = {}
+	data[dungeon.id].mod = {}
+	load()
+	data.system.savePoint = false
+	save()
+end
+
+function load()
+	local sData = importData()
+	if sData then
+		data = {}
+		data = sData
+		loadDungeonState()
+		hudPrint("LotNR game data loaded from dungeon "..data.system.origin.name)
+		if data.system.savePoint == false then
+			hudPrint("The save game you are trying to import was not saved at a proper")
+			hudPrint("save point. Please reload your save and reach a LotNR save export point")
+			dungeon.preventLoad()
+		end
+	end
+end
+
+function save()
+	saveDungeonState()
+	exportData()
+end
+
+function saveDungeonState()
+	savePartyData()
+	saveSystemData()
+	if not(data[dungeon.id]) then data[dungeon.id] = {} end
+	saveItemsData()
+	saveObjectsData()
+	saveMonstersData()
+end
+
+function loadDungeonState()
+	if data[dungeon.id] then
+		if data[dungeon.id].items then
+			loadItemsData()
+		end
+		loadMonstersData()
+		loadObjectsData()
+	end
+	if data.party then
+		loadPartyData()
+	end
+end
+
+function savePartyData()
+	data.party = {}
+	-- Save inventory items
+	if not(data.party.items) then data.party.items = {} end
+	for i = 1,4 do
+		data.party.items[i] = {}
+		for j = 1, 31 do
+			local item = party:getChampion(i):getItem(j)
+			if item then
+				data.party.items[i][j] = saveItem(item)
+			else
+				data.party.items[i][j] = "nil"
+			end
+		end
+	end
+	-- Save mouse item
+	local item = getMouseItem()
+	if item then
+		data.party.mouse = saveItem(item)
+	else
+		data.party.mouse = "nil"
+	end
+end
+
+function loadPartyData()
+	-- Load inventory items
+	local items = data.party.items
+	for i, v in ipairs(items) do
+		for slot, item in pairs(v) do
+			if item ~= "nil" then
+				party:getChampion(i):insertItem(slot, loadItem(item))
+			else
+				party:getChampion(i):removeItem(slot)
+			end
+		end
+	end
+	-- Load mouse item
+	local item = data.party.mouse 
+	if item ~= "nil" then
+		setMouseItem(loadItem(item))
+	else
+		setMouseItem(nil)
+	end
+end
+
+function saveSystemData()
+	if not(data.system) then data.system = {} end
+	local system = data.system
+	system.origin = {}
+	system.origin.id = dungeon.id
+	system.origin.name = dungeon.name
+	system.origin.saveLevel = party.level
+	system.origin.saveX = party.x
+	system.origin.saveY = party.y
+	system.origin.saveFacing = party.facing
+end
+
+function saveItemsData()
+	-- Save Torchholders Data
+	data[dungeon.id].torchHolders = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class", "TorchHolder"):toIterator() do
+		if i:hasTorch() then
+			for j in entitiesAt(i.level, i.x, i.y) do
+				if j.name == "torch" then
+					if not(data[dungeon.id].torchHolders[i.id]) then
+						data[dungeon.id].torchHolders[i.id] = {j.id, j:getFuel()}
+					end
+				end
+			end
+		else
+			table.insert(data[dungeon.id].torchHolders, {i.id, "nil"})
+		end
+	end
+	-- Save Alcoves & Altars data
+	data[dungeon.id].alcoves = {}
+	for i in grimq.fromAllEntitiesInWorld():toIterator() do
+		if i.class == "Alcove" or i.class == "Altar" then
+			if i:getItemCount() > 0 then
+				data[dungeon.id].alcoves[i.id] = {}
+				for j in i:containedItems() do
+					table.insert(data[dungeon.id].alcoves[i.id], saveItem(j))
+				end
+			end
+		end
+	end
+	-- Save Items Data
+	data[dungeon.id].items = {}
+	local items = data[dungeon.id].items
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Item"):toIterator() do
+		local contained = false
+		for _, v in pairs(data[dungeon.id].torchHolders) do
+			if v[1] == i.id then
+				contained = true
+			end
+		end
+		for _, alcoveItems in pairs(data[dungeon.id].alcoves) do
+			for _, w in ipairs(alcoveItems) do
+				if w.i == i.id then
+					contained = true
+				end
+			end
+		end
+		if not(contained) then
+			table.insert(items, {
+				i = saveItem(i),
+				l = i.level, 
+				x = i.x,
+				y = i.y,
+				f = i.facing
+				}
+			)
+		end
+	end
+end
+
+function loadItemsData()
+	-- Destroy existing items
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Item"):toIterator() do
+		i:destroy()
+	end
+	-- Load Torches Data
+	local torches = data[dungeon.id].torchHolders
+	for id, t in pairs(torches) do
+		findEntity(id):addItem(spawn("torch"):setFuel(t[2]))
+	end	
+	-- Load Alcoves Data
+	local alcoves = data[dungeon.id].alcoves
+	for id, a in pairs(alcoves) do
+		for _, i in ipairs(a) do
+			findEntity(id):addItem(loadItem(i))
+		end
+	end	
+	-- Load Items Data
+	local items = data[dungeon.id].items
+	for _, i in ipairs(items) do
+		loadItem(i.i, i.l, i.x, i.y, i.f)
+	end
+end
+
+function saveObjectsData()
+	-- Save Levers Data
+	data[dungeon.id].levers = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Lever"):toIterator() do
+		local state
+		if i:getLeverState() == "activated" then
+			state = "a"
+		else
+			state = "d"
+		end
+		data[dungeon.id].levers[i.id] = state
+	end
+	-- Save Teleporters Data
+	data[dungeon.id].tel = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Teleporter"):toIterator() do
+		local state
+		if i:isActivated() then
+			state = "a"
+		else
+			state = "d"
+		end
+		data[dungeon.id].tel[i.id] = state
+	end
+	-- Save Timers Data
+	data[dungeon.id].timers = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Timer"):toIterator() do
+		local state
+		if i:isActivated() then
+			state = "a"
+		else
+			state = "d"
+		end
+		data[dungeon.id].timers[i.id] = state
+	end
+	-- Save Counters Data
+	data[dungeon.id].counters = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Counter"):toIterator() do	
+		data[dungeon.id].counters[i.id] = i:getValue()
+	end
+	-- Save WallText Data
+	data[dungeon.id].wTexts = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class", "WallText"):toIterator() do	
+		data[dungeon.id].wTexts[i.id] = i:getWallText()
+	end
+	-- Save Doors Data
+	data[dungeon.id].doors = {}
+	for i in grimq.fromAllEntitiesInWorld():where(grimq.isDoor):toIterator() do
+		local state
+		if i:isOpen() then
+			state = "o"
+		else
+			state = "c"
+		end
+		data[dungeon.id].doors[i.id] = state
+	end
+	-- Save Pits Data
+	data[dungeon.id].pits = {}
+	for i in grimq.fromAllEntitiesInWorld():where("class","Pit"):toIterator() do
+		local state
+		if i:isOpen() then
+			state = "o"
+		else
+			state = "c"
+		end
+		data[dungeon.id].pits[i.id] = state
+	end
+end
+
+function loadObjectsData()
+	-- Load Levers Data
+	if data[dungeon.id].levers then
+		for id, state in pairs(data[dungeon.id].levers) do
+			if state == "a" then
+				findEntity(id):setLeverState("activated")
+			else
+				findEntity(id):setLeverState("deactivated")
+			end
+		end
+	end
+	-- Load Teleporters Data
+	if data[dungeon.id].tel then
+		for id, state in pairs(data[dungeon.id].tel) do
+			if state == "a" then
+				findEntity(id):activate()
+			else
+				findEntity(id):deactivate()
+			end
+		end
+	end
+	-- Load Timers Data
+	if data[dungeon.id].timers then
+		for id, state in pairs(data[dungeon.id].timers) do
+			if state == "a" then
+				findEntity(id):activate()
+			else
+				findEntity(id):deactivate()
+			end
+		end	
+	end
+	-- Load Counters Data
+	if data[dungeon.id].counters then
+		for id, value in pairs(data[dungeon.id].counters) do
+			findEntity(id):setValue(value)
+		end	
+	end
+	-- Load Wall Texts Data
+	if data[dungeon.id].wTexts then
+		for id, value in pairs(data[dungeon.id].wTexts) do
+			findEntity(id):setWallText(value)
+		end
+	end
+	-- Load Doors Data
+	if data[dungeon.id].doors then
+		for id, state in pairs(data[dungeon.id].doors) do
+			if state == "o" then
+				findEntity(id):setDoorState("open")
+			else
+				findEntity(id):setDoorState("closed")
+			end
+		end
+	end
+	-- Load Pits Data
+	if data[dungeon.id].pits then
+		for id, state in pairs(data[dungeon.id].pits) do
+			if state == "o" then
+				findEntity(id):setPitState("open")
+			else
+				findEntity(id):setPitState("closed")
+			end
+		end
+	end
+end
+
+function saveMonstersData()
+	data[dungeon.id].monsters = {}
+	local monsters = data[dungeon.id].monsters
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Monster"):toIterator() do
+		table.insert(monsters, {
+			i = i.id,
+			n = i.name,
+			l = i.level, 
+			x = i.x,
+			y = i.y,
+			f = i.facing,
+			v = i:getLevel(),
+			h = i:getHealth(),
+			}
+		)
+	end
+end
+
+function loadMonstersData()
+	-- Destroy existing monsters
+	for i in grimq.fromAllEntitiesInWorld():where("class", "Monster"):toIterator() do
+		i:destroy()
+	end
+	-- Load monsters data
+	local monsters = data[dungeon.id].monsters
+	for _, i in ipairs(monsters) do
+		spawn(i.n, i.l, i.x, i.y, i.f, i.id):setLevel(i.v):setHealth(i.h)
+	end
+end
+
+-- Tracking functions
+-- =====================
+
+function initSecrets()
+	--ToDO
+end
+
+function trackSecrets()
+	--ToDO
+end
+
 -- Table serialization code
 -- ========================
 
@@ -186,231 +564,6 @@ voidLines = [[
 
 
 ]]
-
--- Dungeon Import/Export
--- =====================
-
-function autoexec()
-	load()
-end
-
-function load()
-	local sData = importData()
-	if sData then
-		data = {}
-		data = sData
-		loadDungeonState()
-		hudPrint("LotNR game data loaded from dungeon"..data.system.originName)
-	end
-end
-
-function save()
-	saveDungeonState()
-	exportData()
-	hudPrint("You have reached an exit zone. LotNR game data is now stored; if you")
-	hudPrint("wish, you can save your game and import the save in another dungeon.")
-end
-
-function saveDungeonState()
-	savePartyData()
-	saveSystemData()
-	if not(data[dungeon.id]) then data[dungeon.id] = {} end
-	saveItemsData()
-end
-
-function loadDungeonState()
-	if data[dungeon.id] then
-		if data[dungeon.id].items then
-			loadItemsData()
-		end
-	end
-	if data.party then
-		loadPartyData()
-	end
-end
-
-function savePartyData()
-	data.party = {}
-	-- Save inventory items
-	if not(data.party.items) then data.party.items = {} end
-	for i = 1,4 do
-		data.party.items[i] = {}
-		for j = 1, 31 do
-			local item = party:getChampion(i):getItem(j)
-			if item then
-				data.party.items[i][j] = saveItem(item)
-			else
-				data.party.items[i][j] = "nil"
-			end
-		end
-	end
-	-- Save mouse item
-	local item = getMouseItem()
-	if item then
-		data.party.mouse = saveItem(item)
-	else
-		data.party.mouse = "nil"
-	end
-end
-
-function loadPartyData()
-	-- Load inventory items
-	local items = data.party.items
-	for i, v in ipairs(items) do
-		for slot, item in pairs(v) do
-			if item ~= "nil" then
-				party:getChampion(i):insertItem(slot, loadItem(item))
-			else
-				party:getChampion(i):removeItem(slot)
-			end
-		end
-	end
-	-- Load mouse item
-	local item = data.party.mouse 
-	if item ~= "nil" then
-		setMouseItem(loadItem(item))
-	else
-		setMouseItem(nil)
-	end
-end
-
-function saveSystemData()
-	if not(data.system) then data.system = {} end
-	local system = data.system
-	system.originId = dungeon.id
-	system.originName = dungeon.name
-	system.originSaveLevel = party.level
-	system.originSaveX = party.x
-	system.originSaveY = party.y
-end
-
-function saveItemsData()
-	-- Save Torchholders Data
-	data[dungeon.id].torchHolders = {}
-	for level = 1, getMaxLevels() do
-		for i in allEntities(level) do
-			if i.class == "TorchHolder" then
-				if i:hasTorch() then
-					for j in entitiesAt(i.level, i.x, i.y) do
-						if j.name == "torch" then
-							if not(data[dungeon.id].torchHolders[i.id]) then
-								data[dungeon.id].torchHolders[i.id] = {j.id, j:getFuel()}
-							end
-						end
-					end
-				else
-					table.insert(data[dungeon.id].torchHolders, {i.id, "nil"})
-				end
-			end
-		end
-	end
-	-- Save Alcoves & Altars data
-	data[dungeon.id].alcoves = {}
-	for level = 1, getMaxLevels() do
-		for i in allEntities(level) do
-			if i.class == "Alcove" or i.class == "Altar" then
-				if i:getItemCount() > 0 then
-					data[dungeon.id].alcoves[i.id] = {}
-					for j in i:containedItems() do
-						table.insert(data[dungeon.id].alcoves[i.id], saveItem(j))
-					end
-				end
-			end
-		end
-	end
-	-- Save Items Data
-	data[dungeon.id].items = {}
-	local items = data[dungeon.id].items
-	for level = 1, getMaxLevels() do
-		for i in allEntities(level) do
-			if i.class == "Item" then
-				local contained = false
-				for _, v in ipairs(data[dungeon.id].torchHolders) do
-					if v[2] == i.id then
-						contained = true
-					end
-				end
-				for _, alcoveItems in pairs(data[dungeon.id].alcoves) do
-					for _, w in ipairs(alcoveItems) do
-						if w.i == i.id then
-							contained = true
-						end
-					end
-				end
-				if not(contained) then
-					table.insert(items, {
-						i = saveItem(i),
-						l = i.level, 
-						x = i.x,
-						y = i.y,
-						f = i.facing
-						}
-					)
-				end
-			end
-		end
-	end
-end
-
-function loadItemsData()
-	-- Destroy existing items
-	for level = 1, getMaxLevels() do
-		for i in allEntities(level) do
-			if i.class == "Item" then
-				i:destroy()
-			end
-		end
-	end
-	-- Load Torches Data
-	local torches = data[dungeon.id].torchHolders
-	for id, t in pairs(torches) do
-		findEntity(id):addItem(spawn("torch"):setFuel(t[2]))
-	end	
-	-- Load Alcoves Data
-	local alcoves = data[dungeon.id].alcoves
-	for id, a in pairs(alcoves) do
-		for _, i in ipairs(a) do
-			findEntity(id):addItem(loadItem(i))
-		end
-	end	
-	-- Load Items Data
-	local items = data[dungeon.id].items
-	for _, i in ipairs(items) do
-		loadItem(i.i, i.l, i.x, i.y, i.f)
-	end
-end
-
-function saveObjectsData()
-	-- Save Doors Data
-	data[dungeon.id].doors = {}
-	for level = 1, getMaxLevels() do
-		for i in allEntities(level) do
-			if grimq.isDoor(i) then
-				local state
-				if i:isOpen() then
-					state = "o"
-				else
-					state = "c"
-				end
-				table.insert(data[dungeon.id].doors, state)
-			end
-		end
-	end
-end
-
-function loadObjectsData()
-	-- Load Doors Data
-	local doors = data[dungeon.id].doors
-	for id, state in ipairs(doors) do
-		if state == "o" then
-			findEntity(id):setDoorState("open")
-		else
-			findEntity(id):setDoorState("closed")
-		end
-	end	
-end
-
-
 
 -- grimQ item functions, based on Xanathar code
 -- =======================
