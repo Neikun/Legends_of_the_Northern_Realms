@@ -1,0 +1,200 @@
+
+
+defineMaterial{
+	name = "sx_town_wall",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_wall_dif.tga",
+	specularMap = "assets/textures/env/brickwall_stone_root_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_wall_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_floor",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_floor_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_floor_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_floor_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_wood_generic",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_wood_generic_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_wood_generic_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_wood_generic_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_wood_generic_2",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_wood_generic_2_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_wood_generic_2_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_wood_generic_2_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_signs",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_signs_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_signs_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_signs_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+
+defineMaterial{
+	name = "sx_town_metal_generic",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_metal_generic_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_metal_generic_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_metal_generic_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 75,
+	depthBias = 0,
+}
+
+
+defineMaterial{
+	name = "sx_town_wall_indoor",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_wall_indoor_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_wall_indoor_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_wall_indoor_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+
+defineMaterial{
+	name = "sx_town_door",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_door_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_door_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_door_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_housewall1",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_stonewall_02",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_wall_02_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_wall_02_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_wall_02_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_window",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_window_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_window_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_window_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_roof",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_roof_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_door_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_roof_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_town_dirt",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_dirt_dif.tga",
+	specularMap = "assets/textures/props/temple_wall_dirt_spec.tga",
+	normalMap = "assets/textures/props/temple_wall_dirt_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 20,
+	depthBias = 0,
+}
+
+defineMaterial{
+	name = "sx_water",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_water_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_water_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_water_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = true,
+	blendMode = "Translucent",
+	textureAddressMode = "Wrap",
+	glossiness = 1,
+	depthBias = 0,
+}
