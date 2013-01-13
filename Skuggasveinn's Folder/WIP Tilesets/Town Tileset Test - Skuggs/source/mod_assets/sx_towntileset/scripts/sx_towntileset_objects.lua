@@ -326,7 +326,7 @@ defineObject{
 defineObject{
 	name = "sx_town_floor_inside",
 	class = "Decoration",
-	model = "mod_assets/sx_towntileset/models/sx_town_floor_inside.fbx",
+	model = "mod_assets/sx_towntileset/models/sx_town_floor_indoor.fbx",
 	placement = "floor",
 	replacesFloor = true,
 	editorIcon = 136,
@@ -478,6 +478,46 @@ defineObject{
 	editorIcon = 12,
 }
 
+defineObject{
+    name = "sx_town_window_indoor_snapon",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_window_indoor_snapon.fbx",
+    placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+    name = "sx_town_window_indoor_snapon_lightrays",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_window_indoor_snapon_lightrays.fbx",
+    placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+    name = "sx_town_wall_indoor_02",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_wall_indoor_02.fbx",
+    placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+    name = "sx_town_wall_indoor_03",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_wall_indoor_03.fbx",
+    placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+    name = "sx_town_wall_indoor_04",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_wall_indoor_04.fbx",
+    placement = "wall",
+	editorIcon = 92,
+}
+
 
 -- Stairs
 
@@ -497,6 +537,23 @@ defineObject{
 	editorIcon = 48,
 }
 
+defineObject{
+	name = "sx_town_stairs_up_indoor",
+	class = "Stairs",
+	model = "mod_assets/sx_towntileset/models/sx_town_stairs_up_indoor.fbx",
+	down = false,
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "sx_town_stairs_down_indoor",
+	class = "Stairs",
+	model = "mod_assets/sx_towntileset/models/sx_town_stairs_down_indoor.fbx",
+	down = true,
+	editorIcon = 48,
+}
+
+
 
 
 -- Lightsources for Town Lanterns and Windows
@@ -510,6 +567,18 @@ defineObject{
 	brightness = 11,
 	castShadow = true,
 	particleSystem = "torch",
+	placement = "floor",
+	editorIcon = 88,
+}
+
+defineObject{
+	name = "sx_town_window_indoor_light",
+	class = "LightSource",
+	lightPosition = vec(0, 0.5, -0.8),
+	lightRange = 3,
+	lightColor = vec(1.00, 0.5, 0.25),
+	brightness = 5,
+	castShadow = true,
 	placement = "floor",
 	editorIcon = 88,
 }

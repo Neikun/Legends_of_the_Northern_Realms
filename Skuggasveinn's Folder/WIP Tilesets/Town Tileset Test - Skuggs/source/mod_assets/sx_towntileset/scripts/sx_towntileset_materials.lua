@@ -200,6 +200,20 @@ defineMaterial{
 }
 
 defineMaterial{
+	name = "sx_town_lightrays",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_lightrays_dif.tga",
+	--specularMap = "mod_assets/sx_towntileset/textures/sx_town_lightrays_spec.tga",
+	--normalMap = "mod_assets/sx_towntileset/textures/sx_town_lightrays_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = true,
+	blendMode = "Translucent",
+	textureAddressMode = "Wrap",
+	glossiness = 1,
+	depthBias = 0,
+}
+
+defineMaterial{
 	name = "sx_town_secret_button_easy",
 	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_secret_button_easy_dif.tga",
 	specularMap = "mod_assets/sx_towntileset/textures/sx_town_secret_button_easy_spec.tga",
