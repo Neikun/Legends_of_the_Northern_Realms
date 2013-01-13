@@ -134,8 +134,6 @@ function saveItemsData()
 					end
 				end
 			end
-		else
-			table.insert(data[dungeon.id].torchHolders, {i.id, "nil"})
 		end
 	end
 	-- Save Alcoves & Altars data
