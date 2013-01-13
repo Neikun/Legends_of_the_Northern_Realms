@@ -1,0 +1,51 @@
+#logfw_init:6: bad argument #1 to 'findEntity' (string expected, got number)
+stack traceback:
+	[C]: in function 'error'
+	[string "ScriptInterface.lua"]: in function 'close'
+	#logfw_init:6: in function <#logfw_init:4>
+	[string "ScriptEntity.lua"]: in function 'onMessageReceived'
+	[string "MessageSystem.lua"]: in function 'sendMessageToEntity'
+	[string "MessageSystem.lua"]: in function 'broadcastMessage'
+	[string "TriggerEvents.lua"]: in function 'fire'
+	[string "Timer.lua"]: in function 'update'
+	[string "Map.lua"]: in function 'updateEntities'
+	[string "Dungeon.lua"]: in function 'updateLevels'
+	[string "GameMode.lua"]: in function 'update'
+	[string "Grimrock.lua"]: in function 'display'
+	[string "Grimrock.lua"]: in main chunk
+
+OS Version 6.1
+
+OEM ID: 0
+Number of processors: 4
+Page size: 4096
+Processor type: 586
+
+Total memory: 8189 MB
+Free memory: 3336 MB
+
+Display device 0:
+  Device name: \\.\DISPLAY1
+  Device string: NVIDIA GeForce GT 440 
+  State flags: 08000005
+
+Display device 1:
+  Device name: \\.\DISPLAY2
+  Device string: NVIDIA GeForce GT 440 
+  State flags: 00000000
+
+Display device 2:
+  Device name: \\.\DISPLAYV1
+  Device string: RDPDD Chained DD
+  State flags: 00000008
+
+Display device 3:
+  Device name: \\.\DISPLAYV2
+  Device string: RDP Encoder Mirror Driver
+  State flags: 00200008
+
+Display device 4:
+  Device name: \\.\DISPLAYV3
+  Device string: RDP Reflector Display Driver
+  State flags: 00200008
+

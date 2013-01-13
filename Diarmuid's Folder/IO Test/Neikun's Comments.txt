@@ -1,0 +1,6 @@
+Dunno if this matters at all, but when I picked up a torch, the console said data leght <number>
+it probably doesn't matter, but probably should be spelled right.
+Just imported.. WHOA WHOA WHOA COOL
+Seeing this in action, really makes for some awesome dungeon mechanics. 
+
+Crashed to desktop upon trying to import back to first dungeon.
