@@ -4,8 +4,8 @@ Neikun will alter the status of a request between "Unsent", "Sent", "Completed"
 
 Request:				Status:
 
-Throne (Regal/Monstrous)		Unsent
+Throne (Regal/Monstrous)		Sent
 
-Floor Rug (Bedroom/Grand Hall)		Unsent
+Floor Rug (Bedroom/Grand Hall)		Sent
 
 
