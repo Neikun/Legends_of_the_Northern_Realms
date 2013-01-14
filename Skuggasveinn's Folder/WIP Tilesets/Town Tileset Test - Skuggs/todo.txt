@@ -1,15 +1,15 @@
-
 List of things that needs to be done.
 
 --Skuggasveinn todo list
 
-Signs above the shops
 Need to finish overhead assets.
 Needs town ambience
 Need to create half pillar
 Need to fine tune the fountain abit
-Need to create floor drainage and wall drainage
-Need new stars for sewer access
+Need to create wall drainage
+Need new stairs for sewer access
+Need to create outer wall gate (town exit)
+Need to complete the forest
 
 
 --Done list
@@ -20,3 +20,10 @@ DONE -change the decoration (hooks and chains) for something more town like (any
 DONE -the walls need more varity , its all to simple at this point (any suggestions ?)
 DONE -need to get the fountains and other assets into this, statues ?
 DONE Need to change the floor for something more town like
+DONE Need to create floor drainage
+DONE need to start indoor tileset
+DONE need to create doors for the indoor tileset
+DONE neee to create secretwall for the indoor tileset
+DONE signs abobe the shops
+DONE wall signs for shops
+DONE indoor stairs
