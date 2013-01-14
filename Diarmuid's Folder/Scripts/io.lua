@@ -30,11 +30,6 @@ function load()
 		data = sData
 		loadDungeonState()
 		hudPrint("LotNR game data loaded from dungeon "..data.system.origin.name)
-		if data.system.savePoint == false then
-			hudPrint("The save game you are trying to import was not saved at a proper")
-			hudPrint("save point. Please reload your save and reach a LotNR save export point")
-			dungeon.preventLoad()
-		end
 	end
 end
 
