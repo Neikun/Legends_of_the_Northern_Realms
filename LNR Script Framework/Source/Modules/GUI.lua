@@ -21,35 +21,28 @@ All base GUI functions get one parameter, a gui context object (see below).
 
 
 --onDrawGui: a hook which is called after the dungeon view has been rendered.
-function OnDraw(hGUI)
+function onDraw(h_gui)
 
+	-- draw dialog is one is active
+	if Dialog.isActivated() then
+		Dialog.onDraw(h_gui)
+	end
+	
 end
 
 --onDrawInventory: a hook which is called after a champion’s inventory screen has been rendered.
-function OnDrawInventory(hGUI)
-	
-	if Dialog.GetState() ~= "" then
-	return false
-	end
-	
+function onDrawInventory(h_gui)
+	-- removed return value; has no effect
 end
 
 --onDrawStats: a hook which is called after a champion’s stats screem has been rendered.
-function OnDrawStats(hGUI)
-	
-	if Dialog.GetState() ~= "" then
-	return false
-	end
-	
+function onDrawStats(h_gui)
+	-- removed return value; has no effect
 end
 
 --onDrawSkills: a hook which is called after a champion’s skills screen has been rendered.
-function OnDrawSkills(hGUI)
-	
-	if Dialog.GetState() ~= "" then
-	return false
-	end
-	
+function onDrawSkills(h_gui)
+	-- removed return value; has no effect
 end
 
 

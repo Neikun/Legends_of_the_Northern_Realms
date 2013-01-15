@@ -16,17 +16,16 @@ local tNPCObjects = NPC.GetObjects();
 	
 	--get the tile in front of the party
 	if hParty.facing == 0 then
-	nYAdjust = -1;
+		nYAdjust = -1;
 	
 	elseif hParty.facing == 1 then
-	nXAdjust = 1;
+		nXAdjust = 1;
 	
 	elseif hParty.facing == 2 then
-	nYAdjust = 1;
+		nYAdjust = 1;
 	
 	elseif hParty.facing == 3 then
-	nXAdjust = -1;
-	
+		nXAdjust = -1;	
 	end
 	
 	--check for NPCs in front of the party
@@ -36,26 +35,27 @@ local tNPCObjects = NPC.GetObjects();
 			
 			--if found, request a dialog
 			if hEntity.name == sObject then				
-			NPC.RequestDialog(hEntity.id);	
-			return false
+				NPC.requestDialog(hEntity.id);	
+				return false
 			end
 			
 		end
 		
 	end
 	
-return true
+	return true
 end
 
 
 
-function OnCastSpell(nChampionID, sSpell)
+function OnCastSpell(n_championID, s_spell)
 	
-	if NPC.GetDialogOpen().IsOpen then
-	return false
+	-- You can't cast if any dialog is open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
@@ -65,13 +65,14 @@ end
 
 
 
-function OnDamage(nChampionID, nDamage, sDamageType)
+function OnDamage(n_championID, n_damage, s_damageType)
 	
-	if Dialog.GetOpen().IsOpen then
-	return false
+	-- Not while having a dialog window open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
@@ -83,33 +84,36 @@ end
 
 function OnMove(hParty, nDirection)
 	
-	if Dialog.GetOpen().IsOpen then
-	return false
+	-- You can't move when a dialog window is open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
 
-function OnPickUpItem(hParty, hItem)
+function OnPickUpItem(h_party, h_item)
 	
-	if Dialog.GetOpen().IsOpen then
-	return false
+	-- You can't pick anything up while a dialog window is open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
 
-function OnProjectileHit(nChampionID, hProjectile, nDamage, sDamageType)
+function OnProjectileHit(n_championID, h_projectile, n_damage, s_damageType)
 	
-	if Dialog.GetOpen().IsOpen then
-	return false
+	-- You can't get hit by a projectile while a dialog window is open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
@@ -124,28 +128,31 @@ end
 
 
 
-function OnTurn(hParty, nDirection)
+function OnTurn(h_party, n_direction)
 	
-	if Dialog.GetOpen().IsOpen then
-	return false
+	-- You can't turn while a dialog window is open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
 
-function OnUseItem(nChampionID, hItem, nSlot)
+function OnUseItem(n_championID, h_item, n_slot)
 	
-	if Dialog.GetOpen().IsOpen then
-	return false
+	-- You can't use an item while a dialog window is open
+	if Dialog.isActivated() then
+		return false
 	end
 
-return true
+	return true
 end
 
 
 
 function OnWakeUp(hParty)
 end
+
 ]]);

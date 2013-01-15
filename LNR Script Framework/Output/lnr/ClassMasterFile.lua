@@ -2,8 +2,21 @@
 --It is auto updated by the 'LNR Script Monitor' Utility.
 
 Dialog = {};
-	function Dialog.DrawAll() end
-	function Dialog.GetOpen() end
+	function Dialog.new() end
+	function Dialog.addButton() end
+	function Dialog.activate() end
+	function Dialog.deactivate() end
+	function Dialog.quickYesNoDialog() end
+	function Dialog.quickDialog() end
+	function Dialog.isActivated() end
+	function Dialog.getActiveDialogNpc() end
+	function Dialog.getDialog() end
+	function Dialog.onDraw() end
+	function Dialog.getTileName() end
+	function Dialog.drawText() end
+	function Dialog.charWidth() end
+	function Dialog.countLines() end
+	function Dialog.getButtonMaxLines() end
 	function Dialog.SetOpen() end
 	function Dialog.SetState() end
 	function Dialog.GetState() end
@@ -18,10 +31,10 @@ Game = {};
 	function Game.Load() end
 	function Game.Save() end
 GUI = {};
-	function GUI.OnDraw() end
-	function GUI.OnDrawInventory() end
-	function GUI.OnDrawStats() end
-	function GUI.OnDrawSkills() end
+	function GUI.onDraw() end
+	function GUI.onDrawInventory() end
+	function GUI.onDrawStats() end
+	function GUI.onDrawSkills() end
 Help = {};
 Monsters = {};
 	function Monsters.GetRandom() end
@@ -36,7 +49,7 @@ NPC = {};
 	function NPC.GetDataTable() end
 	function NPC.GetIDByName() end
 	function NPC.HasDialog() end
-	function NPC.RequestDialog() end
+	function NPC.requestDialog() end
 	function NPC.SetAttr() end
 	function NPC.SetDataTable() end
 	function NPC.OnAttack() end

@@ -18,16 +18,16 @@ cloneObject{
 	return Party.OnDie(nChampionID);
 	end,
 	onDrawGui = function(hGUI)
-	return GUI.OnDraw(hGUI)
+	return GUI.onDraw(hGUI)
 	end,
 	onDrawInventory = function(hGUI)
-	return GUI.OnDrawInventory(hGUI)
+	return GUI.onDrawInventory(hGUI)
 	end,
 	onDrawStats = function(hGUI)
-	return GUI.OnDrawStats(hGUI)
+	return GUI.onDrawStats(hGUI)
 	end,	
 	onDrawSkills = function(hGUI)
-	return GUI.OnDrawSkills(hGUI)
+	return GUI.onDrawSkills(hGUI)
 	end,	
 	onLevelUp = function(nChampionID)
 	return Party.OnLevelUp(nChampionID);

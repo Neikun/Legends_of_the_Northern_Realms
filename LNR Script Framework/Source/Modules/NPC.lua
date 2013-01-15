@@ -81,7 +81,7 @@ table whose values are the NPC
 objects recognized by the frame-.
 ]]
 function GetObjects()
-return tNPC.Objects
+	return tNPC.Objects
 end
 
 
@@ -164,15 +164,15 @@ entity exists (or will exist).
 function Exists(sID)
 	
 	if type(sID) == "string" then
-	sID = string.lower(sID);
+		sID = string.lower(sID);
 
 		if tNPC.NPCs[sID] then
-		return true
+			return true
 		end
 	
 	end
 	
-return false
+	return false
 end
 
 
@@ -188,18 +188,18 @@ not exist, a blank string is
 returned.
 ]]
 function GetAttr(sID, sAtt)
-local sRet = "";
+	local sRet = "";
 		
 	if NPC.Exists(sID) then	
-	sID = string.lower(sID);
+		sID = string.lower(sID);
 	
 		if tNPC.NPCs[sID][sAtt] then
-		return tNPC.NPCs[sID][sAtt]
+			return tNPC.NPCs[sID][sAtt]
 		end
 		
 	end
 	
-return sRet
+	return sRet
 end
 
 
@@ -214,7 +214,7 @@ that will be saved in the data
 module.
 ]]
 function GetDataTable()
-return tNPC
+	return tNPC
 end
 
 
@@ -236,19 +236,19 @@ NPC share the same name.
 case-sensitive.
 ]]
 function GetIDByName(sName)
-local sRet = "";
-sName = string.lower(sName);
+	local sRet = "";
+	sName = string.lower(sName);
 
 	for sID, tNPC in pairs(tNPC.NPCs) do
-	local sMyName = string.lower(tNPC.NPCs.Name);
+		local sMyName = string.lower(tNPC.NPCs.Name);
 	
 		if sMyName == sName then
-		return sID
+			return sID
 		end
 		
 	end
 
-return sRet
+	return sRet
 end
 
 
@@ -274,39 +274,39 @@ end
 
 --[[
 -----------------------------------------------
-NPC.SetAttr(sID)
+NPC.requestDialog(s_id)
 Return Type: nil
 Method Type: external
 -----------------------------------------------
 Attempts to open a dialog with an NPC. The NPC
 ID is the ID (not name) of the entity.
 ]]
-function RequestDialog(sID)
+function requestDialog(s_id)
 	
-	if NPC.Exists(sID) then
-	sID = string.lower(sID);
+	if NPC.Exists(s_id) then
+	s_id = string.lower(s_id);
 	
 		--make sure no other dialog is open
 		if not Dialog.GetOpen().IsOpen then
-		local hEntity = findEntity(sID);
+			local hEntity = findEntity(s_id);
 			
 			--find outif the NPC has a dialog option
-			if NPC.HasDialog(sID) then
+			if NPC.HasDialog(s_id) then
 			
 				--check to see if the entity is in the dungeon
 				if hEntity then			
-				--find the party's location
-				local hParty = findEntity("party");
+					--find the party's location
+					local hParty = findEntity("party");
 												
 					if hParty then
-					--THIS WILL BE UPDATED TO CALL THE DIALOG THROUGH THE GUI FRAMEWORK					
-					local nX, nY, nFacing, nlevel = hEntity.x, hEntity.y, Util.Position_GetOppositeFacing(hParty.facing), hEntity.level
-					--facing only cannot be set. There must be other and different variables incuded. So, the moves once to a random location and then back again.
-					hEntity:setPosition(math.random(0, 31), math.random(0, 31), math.random(0, 3), nlevel);
-					--set the monster's desired postion
-					hEntity:setPosition(nX, nY, nFacing, nlevel);
-					--tell the NPC and player that they're interacting
-					Dialog.SetOpen(sID, true);					
+						--THIS WILL BE UPDATED TO CALL THE DIALOG THROUGH THE GUI FRAMEWORK					
+						local nX, nY, nFacing, nlevel = hEntity.x, hEntity.y, Util.Position_GetOppositeFacing(hParty.facing), hEntity.level
+						--facing only cannot be set. There must be other and different variables incuded. So, the moves once to a random location and then back again.
+						hEntity:setPosition(math.random(0, 31), math.random(0, 31), math.random(0, 3), nlevel);
+						--set the monster's desired postion
+						hEntity:setPosition(nX, nY, nFacing, nlevel);
+						--tell the NPC and player that they're interacting
+						--Dialog.SetOpen(s_id, true);					
 					end
 					
 				end
@@ -348,7 +348,7 @@ that was loaded from the data
 module.
 ]]
 function SetDataTable(tData)
-tNPC = tData;
+	tNPC = tData;
 end
 
 
@@ -366,7 +366,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnAttack(hEntity, sAttack)
-return false
+	return false
 end
 
 
@@ -379,7 +379,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnDamage(hEntity, nDamage, sDamageType)
-return false
+	return false
 end
 
 
@@ -392,7 +392,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnDealDamage(hEntity, nChampionID, nDamage)
-return false
+	return false
 end
 
 
@@ -405,7 +405,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnDie(hEntity)
-return false
+	return false
 end
 
 
@@ -417,18 +417,14 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnMove(hEntity, nDirection)
-local tDialog = Dialog.GetOpen();
+function OnMove(h_entity, nDirection)
 
-	if tDialog.IsOpen then
-		
-		if tDialog.ID == hEntity.id then
+	-- NPC can't move if the player is talking with him
+	if Dialog.getActiveDialogNpc() == h_entity.id then
 		return false
-		end
-		
 	end
 
-return true
+	return true
 end
 
 
@@ -441,7 +437,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnProjectileHit(hEntity, hProjectile, nDamage, sDamageType)
-return false
+	return false
 end
 
 
@@ -454,7 +450,7 @@ Method Type: internal
 See Scripting Reference
 ]]
 function OnRangedAttack(hEntity)
-return false
+	return false
 end
 
 
@@ -466,16 +462,12 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnTurn(hEntity, nDirection)
-local tDialog = Dialog.GetOpen();
+function OnTurn(h_entity, n_direction)
 
-	if tDialog.IsOpen then
-		
-		if tDialog.ID == hEntity.id then
+	-- NPC can't turn if the player is talking with him
+	if Dialog.getActiveDialogNpc() == h_entity.id then
 		return false
-		end
-		
 	end
 
-return true
+	return true
 end
