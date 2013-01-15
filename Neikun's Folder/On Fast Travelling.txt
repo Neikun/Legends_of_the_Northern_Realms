@@ -1,0 +1,3 @@
+We should be able to fast travel to locations we've already been to from a specific location.
+
+Some fast travelling instances should be interupted by various things. "i.e. Caravan robbers"
