@@ -24,6 +24,7 @@ tNPCBaseAttributes = {
 	Object = "",
 	Origin = "",
 	Skills = {},
+	Portrait = "",   -- Picture of the npc to use in dialogs. Please use a 128x128 image
 };
 
 

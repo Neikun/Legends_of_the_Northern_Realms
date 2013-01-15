@@ -17,6 +17,7 @@ Dialog = {};
 	function Dialog.charWidth() end
 	function Dialog.countLines() end
 	function Dialog.getButtonMaxLines() end
+	function Dialog.getButtonWidth() end
 	function Dialog.SetOpen() end
 	function Dialog.SetState() end
 	function Dialog.GetState() end

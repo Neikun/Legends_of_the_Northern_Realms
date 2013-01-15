@@ -138,11 +138,11 @@ function quickYesNoDialog(s_text, f_callBack, s_npc)
 		-- Use standard id and get current dialogdefinition
 		local s_id = "dlgQuickYesNo"
 		local t_dlg = getDialog(s_id)
-		
+
 		-- Make a new dialogdefinition if none is found
 		if t_dlg == nil then
 			s_id = new(s_text, "Yes", s_npc, s_id)
-			addButton(s_id, "No?!")
+			addButton(s_id, "No")
 		else
 			-- And replace text and npc if a dialogdefinition was found
 			t_dlg.text = s_text
@@ -251,51 +251,103 @@ end
 
 --[[
 ------------------------------------------------
-dialog.onDraw(h_GUI)
+dialog.onDraw(h_gui)
 Return Type: none
 Method Type: internal
 -------------------------------------------------
 Draws the active dialog on screen and processes button clicks.
 ]]
-function onDraw(h_GUI)
+function onDraw(h_gui)
 	if tDialog.activeDialog then		
 		local t_dlg = getDialog(tDialog.activeDialog)
 		local s_response = nil
+		
+		-- Define bunch of constantes we'll use while drawing
+		local n_minWindowWidth = 80
+		local n_dialogPixelWidth = 8.5
+		local n_dialogPixelHeight = 24
+		local n_portraitSize = 128
+		local n_windowTileSize = 128
 
 		-- Calculate window width, starting with minimum width and adding pixels depending on content
-		local n_windowWidth = 256
-		-- Add 8 pixels to width for every character in the widest line of the text. But the 1st 18 characters are free
-		n_windowWidth = n_windowWidth + math.max(0, (charWidth(t_dlg.text) - 18) * 8)
-		-- Round to the nearest higher whole factor of 128, since tiles are 128x128
-		n_windowWidth = math.ceil(n_windowWidth / 128) * 128
-		
-		-- Calculate offset of the window (position it in the middle of the screen)
-		local n_windowOffsetX = (h_GUI.width - n_windowWidth) / 2
-		
-		-- Calculate window height
-		local n_windowHeight = 256 -- min height
-		-- Add 24 pixels to height for each line, but the first 5 lines are free
-		n_windowHeight = n_windowHeight + math.max(0, (countLines(t_dlg.text) - 5) * 24)
-		-- Add 24 pixels to height for extra line of the buttontext, but the first line is free
-		n_windowHeight = n_windowHeight + math.max(0, (getButtonMaxLines(t_dlg.buttons) - 1) * 24)
-		-- Round to the nearest higher whole factor of 128
-		n_windowHeight = math.ceil(n_windowHeight / 128) * 128
-		
-		-- Calculate offset of the window (position it in the middle of the screen)
-		local n_windowOffsetY = (h_GUI.height - n_windowHeight) / 2
+		local n_windowWidth = n_minWindowWidth
 
-		-- Draw Window in tiles of 128x128 tiles
-		local n_maxX = math.floor(n_windowWidth / 128) - 1
-		local n_maxY = math.floor(n_windowHeight / 128) - 1
-		h_GUI.color(255, 255, 255, 255)				
+		-- Add pixels to width for every character in the widest line of the text.
+		-- But if there's a npc portrait take the largest of either: 1) text from first few lines + pictures width or 2) width of the widest line of all lines
+		if t_dlg.npc and NPC.Exists(t_dlg.npc) then
+			n_windowWidth = n_windowWidth + math.max(charWidth(t_dlg.text) * n_dialogPixelWidth, charWidth(t_dlg.text, 6) * n_dialogPixelWidth + n_portraitSize + 8)
+		else
+			n_windowWidth = n_windowWidth + charWidth(t_dlg.text) * n_dialogPixelWidth
+		end
+
+		-- Check if the buttons can fit and adjust width if needed
+		local n_buttonWidth = -20
+		for _, n_btn in pairs(t_dlg.buttons) do			
+			n_buttonWidth = n_buttonWidth + getButtonWidth(charWidth(n_btn)) + 20
+		end
+		n_windowWidth = math.max(n_windowWidth, n_minWindowWidth + n_buttonWidth)
+
+		
+		
+		
+
+		
+		-- Calculate window height, starting with minimum height and adding pixels depending on content
+		local n_windowHeight = 80
+		-- Add pixels if an npc is talking, but only if there are less than 6 lines of text
+		if t_dlg.npc and NPC.Exists(t_dlg.npc) and NPC.GetAttr(t_dlg.npc, "Portrait") and countLines(t_dlg.text) < 6 then
+			n_windowHeight = n_windowHeight + n_portraitSize + 30		
+			-- Add 24 pixels to height for each line, but the first 5 lines are free
+			n_windowHeight = n_windowHeight + math.max(0, (countLines(t_dlg.text) - 6) * n_dialogPixelHeight)
+		else
+			n_windowHeight = n_windowHeight + math.max(0, countLines(t_dlg.text) * n_dialogPixelHeight)
+		end
+
+		-- Calculate needed height for buttons. First the basic height, then add extra height for evert line of buttontext
+		n_windowHeight = n_windowHeight + 16
+		n_windowHeight = n_windowHeight + getButtonMaxLines(t_dlg.buttons) * n_dialogPixelHeight
+
+		
+		-- Round width and height to the nearest higher whole factor of 64
+		n_windowWidth = math.ceil(n_windowWidth / 64) * 64
+		n_windowHeight = math.ceil(n_windowHeight / 64) * 64
+		
+		-- Detemine if the width is a multiple of 128 or 64 (needed for drawing the window in right size); yields either 64 or 128
+		local n_multipleWidth = 128 - (64 * ((n_windowWidth / 64) % 2))
+		local n_multipleHeight = 128 - (64 * ((n_windowHeight / 64) % 2))
+		
+		-- Calculate offset of the window (position it in the middle of the screen)
+		local n_windowOffsetX = (h_gui.width - n_windowWidth) / 2
+		local n_windowOffsetY = (h_gui.height - n_windowHeight) / 2
+
+		-- Draw Window in tiles
+		local n_maxX = math.floor(n_windowWidth / n_windowTileSize) - 1
+		if n_multipleWidth == 64 then
+			n_maxX = n_maxX + 1
+		end		
+		local n_maxY = math.floor(n_windowHeight / n_windowTileSize) - 1
+		if n_multipleHeight == 64 then
+			n_maxY = n_maxY + 1
+		end
+		h_gui.color(255, 255, 255, 255)				
 		for n_y = 0, n_maxY do
 			for n_x = 0, n_maxX do
-				h_GUI.drawImage("mod_assets/lnr/textures/dialog/window_128_"..getTileName(n_x, n_maxX, n_y, n_maxY)..".tga", n_windowOffsetX + n_x * 128, n_windowOffsetY + n_y * 128)
+				h_gui.drawImage("mod_assets/lnr/textures/dialog/window_"..getTileName(n_x, n_maxX, n_y, n_maxY, n_multipleWidth, n_multipleHeight, n_windowTileSize)..".tga", n_windowOffsetX + n_x * n_windowTileSize, n_windowOffsetY + n_y * n_windowTileSize)
+			end
+		end
+
+		-- Draw NPC portrait
+		if t_dlg.npc then
+			if NPC.Exists(t_dlg.npc) then
+				h_gui.drawImage(NPC.GetAttr(t_dlg.npc, "Portrait"), n_windowOffsetX + n_windowWidth - 40 - 128, n_windowOffsetY + 40)
+				h_gui.font("tiny")
+				h_gui.color(255, 255, 255, 255)
+				h_gui.drawText(NPC.GetAttr(t_dlg.npc, "Name"), n_windowOffsetX + n_windowWidth - 40 - 128 + (128 - charWidth(NPC.GetAttr(t_dlg.npc, "Name")) * 8) / 2, n_windowOffsetY + 40 + 128 + 14)
 			end
 		end
 
 		-- Draw text
-		drawText(h_GUI, t_dlg.text, n_windowOffsetX + 40, n_windowOffsetY + 40)
+		drawText(h_gui, t_dlg.text, n_windowOffsetX + 40, n_windowOffsetY + 40)
 
 		-- Draw buttons
 		local n_maxLines = math.max(0, getButtonMaxLines(t_dlg.buttons) -1);
@@ -305,8 +357,7 @@ function onDraw(h_GUI)
 		for _, n_btn in pairs(t_dlg.buttons) do
 		
 			-- Calculate width, height and other numbers
-			local n_buttonWidth = 64 + math.max(0, (charWidth(n_btn) - 2) * 8)
-			n_buttonWidth = math.ceil(n_buttonWidth / 16) * 16
+			local n_buttonWidth = getButtonWidth(charWidth(n_btn))
 			local n_buttonHeight = math.ceil(32 + n_maxLines * 25)
 			n_buttonHeight = math.ceil(n_buttonHeight / 16) * 16
 			local n_maxX = math.ceil(n_buttonWidth / 16) - 1
@@ -317,24 +368,24 @@ function onDraw(h_GUI)
 			n_buttonY = n_windowOffsetY + n_buttonOffsetY 
 			for n_y = 0, n_maxY do
 				for n_x = 0, n_maxX do
-					h_GUI.drawImage("mod_assets/lnr/textures/dialog/button_16_"..getTileName(n_x, n_maxX, n_y, n_maxY)..".tga", n_buttonX + n_x * 16, n_buttonY + n_y * 16)
+					h_gui.drawImage("mod_assets/lnr/textures/dialog/button_"..getTileName(n_x, n_maxX, n_y, n_maxY, 16, 16, 16)..".tga", n_buttonX + n_x * 16, n_buttonY + n_y * 16)
 				end
 			end
 
 			-- Write the buttontext
-			h_GUI.font("small")
-			h_GUI.color(255, 255, 255, 255)
+			h_gui.font("small")
+			h_gui.color(255, 255, 255, 255)
 			local n_buttonTextX = n_windowOffsetX + n_buttonOffsetX - n_buttonWidth + (n_buttonWidth - (charWidth(n_btn)+0.5) * 8) / 2
 			local n_buttonTextY = n_windowOffsetY + n_buttonOffsetY + 6 + (n_buttonHeight - (countLines(n_btn)-1) * 16) / 2
-			h_GUI.drawText(n_btn, n_buttonTextX, n_buttonTextY)
-			
+			h_gui.drawText(n_btn, n_buttonTextX, n_buttonTextY)
+
 			-- Check if the button has been pressed
-			if h_GUI.button(n_btn, n_buttonX, n_buttonY, n_buttonWidth, n_buttonHeight) then
+			if h_gui.button(n_btn, n_buttonX, n_buttonY, n_buttonWidth, n_buttonHeight) then
 				s_response = n_btn
 			end
 			n_buttonOffsetX = n_buttonOffsetX - n_buttonWidth - 20
 		end
-		
+	
 		-- Handle if one of the buttons is pressed
 		if s_response then
 			
@@ -345,8 +396,14 @@ function onDraw(h_GUI)
 			end
 			
 		end
-
+		
+		-- See if the window itself is pressed
+		if h_gui.button(t_dlg.id, n_windowOffsetX, n_windowOffsetY, n_windowWidth, n_windowHeight - 70) then
+			tDialog.startedAt = -1000
+		end
+		
 	end
+
 end
 
 --[[
@@ -357,38 +414,38 @@ Method Type: internal
 -------------------------------------------------
 Helper function to determine which image can be taken from a nine-patch image like a window or button
 ]]
-function getTileName(n_x, n_n_maxX, n_y, n_n_maxY)
+function getTileName(n_x, n_n_maxX, n_y, n_n_maxY, n_width, n_height, n_maxSize)
 	-- Determine what image to use to draw
 	local s_tileName = ""
 	if n_y == 0 then
 		if n_x == 0 then
-			s_tileName = "top_left"
+			s_tileName = ""..n_maxSize.."_top_left"
 		else
 			if n_x == n_n_maxX then
-				s_tileName = "top_right"							
+				s_tileName = ""..n_width.."_"..n_maxSize.."_top_right"							
 			else
-				s_tileName = "top_middle"
+				s_tileName = ""..n_maxSize.."_top_middle"
 			end
 		end
 	else
 		if n_y == n_n_maxY then
 			if n_x == 0 then
-				s_tileName = "bottom_left"
+				s_tileName = ""..n_maxSize.."_"..n_height.."_bottom_left"
 			else
 				if n_x == n_n_maxX then
-					s_tileName = "bottom_right"							
+					s_tileName = ""..n_width.."_"..n_height.."_bottom_right"							
 				else
-					s_tileName = "bottom_middle"
+					s_tileName = ""..n_maxSize.."_"..n_height.."_bottom_middle"
 				end
 			end
 		else
 			if n_x == 0 then
-				s_tileName = "middle_left"
+				s_tileName = ""..n_maxSize.."_middle_left"
 			else
 				if n_x == n_n_maxX then
-					s_tileName = "middle_right"							
+					s_tileName = ""..n_width.."_"..n_maxSize.."_middle_right"							
 				else
-					s_tileName = "middle_middle"
+					s_tileName = ""..n_maxSize.."_middle_middle"
 				end
 			end
 		end
@@ -405,16 +462,16 @@ Method Type: internal
 Draws the "text that is being said" on the window, starting at n_areaX and n_areaY.
 Uses the elapsed time since activating the dialog to slowly write the text on the screen.
 ]]
-function drawText(h_GUI, s_text, n_areaX, n_areaY)
+function drawText(h_gui, s_text, n_areaX, n_areaY)
 
 	-- Set font size and color
-	h_GUI.font("medium")
-	h_GUI.color(255, 255, 255, 255)
+	h_gui.font("medium")
+	h_gui.color(255, 255, 255, 255)
 	
 	-- Determine what part of the text we need to write
-	local n_textLength = math.floor((getStatistic("play_time") - tDialog.startedAt) * 30)
+	local n_textLength = math.floor((getStatistic("play_time") - tDialog.startedAt) * 50)
 
-	h_GUI.drawText(string.sub(s_text, 1, n_textLength), n_areaX, n_areaY + 17)
+	h_gui.drawText(string.sub(s_text, 1, n_textLength), n_areaX, n_areaY + 17)
 end
 
 --[[
@@ -423,23 +480,27 @@ dialog.charWidth(string)
 Return Type: number
 Method Type: internal
 -------------------------------------------------
-Returns the maximum number of characters on a single line within the whole string.
+Returns the maximum number of characters on a single line within the first n_maxline-lines, or the whole string if that parameter is omitted.
 Example: The string "Hello\nWorld!" contains 2 lines. The first line contains 5 characters, the second one is 6.
          So this function would return 6 if used on the string.
 ]]
-function charWidth(s_text)
+function charWidth(s_text, n_maxLine)
 
 	local n_maxLen = 0
 	local n_curLen = 0
+	local n_lineCount = 0
 
 	for n_Nr = 1, string.len(s_text) do		
-		if string.sub(s_text, n_Nr, n_Nr) == "\n" then
-			n_curLen = 0
-		else
-			n_curLen = n_curLen + 1
-		end
-		if n_curLen > n_maxLen then 
-			n_maxLen = n_curLen
+		if n_maxLine == nil or n_lineCount <= n_maxLine then
+			if string.sub(s_text, n_Nr, n_Nr) == "\n" then
+				n_curLen = 0
+				n_lineCount = n_lineCount + 1
+			else
+				n_curLen = n_curLen + 1
+			end
+			if n_curLen > n_maxLen then 
+				n_maxLen = n_curLen
+			end
 		end
 	end
 	return n_maxLen
@@ -476,6 +537,16 @@ function getButtonMaxLines(t_buttons)
 		end
 	end
 	return n_maxLines
+end
+
+function getButtonWidth(s_caption)
+	-- Calculate with, starting with base width
+	local n_width = 64
+	-- 	Add pixels depending on character width, but first 2 characters are free
+	n_width = n_width + math.max(0, charWidth(s_caption) * 8)
+	-- Round to first whole number of 16
+	n_width = math.ceil(n_width / 16) * 16
+	return n_width
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
