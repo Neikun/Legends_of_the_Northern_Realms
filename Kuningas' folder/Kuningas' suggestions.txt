@@ -1,3 +1,8 @@
+--FEATURE SUGGESTION (for scripters)
+  Skill-system, with trainers in towns and perhaps hidden in dungeons,   that can teach new skills, or maybe just sell skill tomes for a really   high price. Perhaps also cheaper, but temporary buffs to certain   skills. Some special skills could be hidden in certain dungeons.
+  Skype log of some discussion enclosed in this folder.
+
+
 
 --FEATURE REQUEST/SUGGESTION (for the devs, I suppose):
   Camera controls for scripting, if ever possible!
