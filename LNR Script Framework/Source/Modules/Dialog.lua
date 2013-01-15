@@ -287,11 +287,7 @@ function onDraw(h_gui)
 		end
 		n_windowWidth = math.max(n_windowWidth, n_minWindowWidth + n_buttonWidth)
 
-		
-		
-		
 
-		
 		-- Calculate window height, starting with minimum height and adding pixels depending on content
 		local n_windowHeight = 80
 		-- Add pixels if an npc is talking, but only if there are less than 6 lines of text
@@ -302,6 +298,7 @@ function onDraw(h_gui)
 		else
 			n_windowHeight = n_windowHeight + math.max(0, countLines(t_dlg.text) * n_dialogPixelHeight)
 		end
+
 
 		-- Calculate needed height for buttons. First the basic height, then add extra height for evert line of buttontext
 		n_windowHeight = n_windowHeight + 16
@@ -357,9 +354,11 @@ function onDraw(h_gui)
 		for _, n_btn in pairs(t_dlg.buttons) do
 		
 			-- Calculate width, height and other numbers
-			local n_buttonWidth = getButtonWidth(charWidth(n_btn))
+			local n_buttonWidth = getButtonWidth(n_btn)
 			local n_buttonHeight = math.ceil(32 + n_maxLines * 25)
+			-- Round buttonheight to next higher divider of 16
 			n_buttonHeight = math.ceil(n_buttonHeight / 16) * 16
+			-- Calculate how many tiles are needed
 			local n_maxX = math.ceil(n_buttonWidth / 16) - 1
 			local n_maxY = math.ceil(n_buttonHeight / 16) -1
 
@@ -375,7 +374,7 @@ function onDraw(h_gui)
 			-- Write the buttontext
 			h_gui.font("small")
 			h_gui.color(255, 255, 255, 255)
-			local n_buttonTextX = n_windowOffsetX + n_buttonOffsetX - n_buttonWidth + (n_buttonWidth - (charWidth(n_btn)+0.5) * 8) / 2
+			local n_buttonTextX = n_windowOffsetX + n_buttonOffsetX - n_buttonWidth + (n_buttonWidth - (charWidth(n_btn) + .5) * 7) / 2
 			local n_buttonTextY = n_windowOffsetY + n_buttonOffsetY + 6 + (n_buttonHeight - (countLines(n_btn)-1) * 16) / 2
 			h_gui.drawText(n_btn, n_buttonTextX, n_buttonTextY)
 
@@ -385,7 +384,7 @@ function onDraw(h_gui)
 			end
 			n_buttonOffsetX = n_buttonOffsetX - n_buttonWidth - 20
 		end
-	
+
 		-- Handle if one of the buttons is pressed
 		if s_response then
 			
