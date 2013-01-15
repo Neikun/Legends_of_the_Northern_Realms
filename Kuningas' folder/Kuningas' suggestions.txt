@@ -1,12 +1,15 @@
-ORMUND: A rocky area, abundant with snakes.
 
+--FEATURE REQUEST/SUGGESTION (for the devs, I suppose):
+  Camera controls for scripting, if ever possible!
+  We could make short camera drives that would enable, among other   things: diagonal/curved movement (in certain places), elevation changes   (temporary or permament), crawlspaces, etc...
+  I've mentioned this before, but I've not got any comments, and I think   this would have almost as game-changing qualities as GUI controls,   which we now have.
 
+  Is this worth asking from Almost Human?
 
-NEW SUGGESTION / THOUGHT:
-I think this has been considered, although I've not participated in the discussion, at least not yet. I was wondering if we've thought about a champion hiring or a party forming mechanic? Some dungeoneering games had a temple or a tavern where you could hire heroes for your party. Is this (yet?) possible in Grimrock?
+--ORMUND: A rocky area, abundant with snakes.
 
-I think I saw something relating to this in the skype chat. It is not the most urgent of things, but it is a thought.
+--I think this has been considered, although I've not participated in the   discussion, at least not yet. I was wondering if we've thought about a   champion hiring or a party forming mechanic? Some dungeoneering games   had a temple or a tavern where you could hire heroes for your party. Is   this (yet?) possible in Grimrock?
 
-OLD:
+  I think I saw something relating to this in the skype chat. It is not   the most urgent of things, but it is a thought.
 
-Well, I suppose I suggest that Ranwyn is a big enough city to have sewers.
+--Well, I suppose I suggest that Ranwyn is a big enough city to have   sewers.
