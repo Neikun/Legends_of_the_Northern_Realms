@@ -6,839 +6,317 @@ mapName("Unnamed")
 setWallSet("dungeon")
 playStream("assets/samples/music/dungeon_ambient.ogg")
 mapDesc([[
-#####################.##########
-####################...#########
-###################.....########
-#####################.##########
-####.##############.....########
-##.....############.....########
-###...#############.....########
-###....############.....########
-###.#################.##########
-###.#################.##########
-###.#################.##########
-###.#################.##########
-###.#################.##########
-###.#################.##########
-###.#################.##########
-###.#################.##########
+.###############################
 ################################
 ################################
-##.#.#.#.#..##.#.###############
-...#..####.#.#..################
-.#.#.###.#.#.#.#.###############
-...#.###.#.#.#.#.###############
 ################################
-.###.##.##.#.#...###############
-..#..#.#.#..##..################
-.#.#.#.#.#.###.#################
-.###.##.##.###...###############
+######.#########################
+###.......######################
+###.......######################
+###.......######################
+###.......######################
+######.#########################
+######.#########################
+######.#########################
+######.#########################
+######.#########################
 ################################
-.###.##.##...#...#.#.###########
-.###.#.#.##.##..##..############
-.#.#.#...##.##.###.#############
-#.#.##.#.##.##...#.#############
+################################
+################################
+################################
+################################
+################################
+################################
+######.#########################
+######.#########################
+######.#########################
+######.#########################
+######.#########################
+##.###.#########################
+#......#########################
+################################
+################################
+################################
+################################
 ]])
-spawn("script_entity", 2,1,2, "script1")
+spawn("script_entity", 0,0,2, "scriptFramework")
 	:setSource("--\
--- Example of how to call the DIALOG script\
+-- Initialise the framework\
+--\
+function init()\
+\9spawn(\"LNR Script Framework\", 1, 0, 0, 0):open()\
+end\
+\
+init()\
+")
+spawn("script_entity", 2,24,0, "scriptQuickExample")
+	:setSource("--\
+-- Example of the Dialog.quickDialog() function\
+-- \
+-- It enables you to start a dialog with a close button by starting one function.\
+-- Tip: use [[ and ]] to define a multiple-line-string.\
 --\
 \
-function startDialog()\
-\9DIALOG.DefineDialog([[\
-Hello, world!\
-\
-This is an example of the new dialog system.\
+function press()\
+\9Dialog.quickDialog([[This is an example of the dialog system.\
 \
 Features:\
  - Grimrock style interface\
- - Text slowly appears on screen, as if it told by someone\
- - Optional picture (e.q. the person you talk with)\
- - Dynamic number of buttons\
+ - Automatically resizing window and buttons\
+ - Text appears on screen, as if being told\
+ - Optional portrait of npc you talk to\
 \
-Limitations:\
- - A lot of items are fixed size (window, buttons)\
- - Only support for up to 4 buttons (because of gui)\
- - No automatic wordwrap in text\
- - Party can still move and turn\
-\
-Still, it's a nice feature, don't you think so?\
-]], script1.done)\
-\9DIALOG.AddButton(\"Yes\")\
-\9DIALOG.AddButton(\"No\")\
-\9DIALOG.SetPortrait(\"mod_assets/textures/portrait_ogre.dds\", \"Harold Straus\")\
-\9DIALOG.ShowDialog()\
-end\
-\
-function done(response)\
-\9hudPrint(\"You chose: \"..response)\
+Check the wiki for more info how to use it,\
+But first see if you can get out of here...]])\
 end\
 ")
-spawn("script_entity", 2,2,2, "DIALOG")
+spawn("wall_button", 2,26,0, "wall_button_1")
+	:addConnector("toggle", "scriptQuickExample", "press")
+spawn("ogre", 5,27,3, "npc_guard")
+	:setAIState("guard")
+spawn("script_entity", 7,27,2, "scriptVerboseExample")
 	:setSource("--\
--- DIALOG Script\
+-- Example on how to build your own dialog\
+-- \
+-- This example uses all features:\
+--  * Shows portrait of the npc\
+--  * Defines buttons with custom text\
+--  * Uses a callback function to process the result\
 --\
 \
-_canMove = true\
-_dialog = nil\
-_show = false\
+s_challenge = \"Right, make me!\"\
 \
+function clickOgre()\
+\9local s_npcId = \"npc_guard\"\
+\9local s_text = [[Hey, you!\
+\9\9\9\9\9What are you doing here?\
 \
-function DefineDialog(text, callback)\
-\9_dialog = { text      = text,\
-\9\9\9\9buttons   = {},\
-\9\9\9\9callback  = callback,\
-\9\9\9\9portrait  = nil,\
-\9\9\9\9caption   = nil,\
-\9\9\9\9start     = getStatistic(\"play_time\"),\
-\9\9\9  }\
-end\
-\
-function AddButton(text)\
-\9if _dialog ~= nil then\9\
-\9\9table.insert(_dialog.buttons, 1, text)\
-\9else\
-\9\9print(\"WARNING: trying to add buttons without first defining a dialog\")\
-\9end\
-end\
-\
-function SetPortrait(image, caption)\
-\9if _dialog ~= nil then\
-\9\9_dialog.portrait = image\
-\9\9_dialog.caption = caption\
-\9else\
-\9\9print(\"WARNING: trying to set portrait without first defining a dialog\")\
-\9end\
-end\
-\
-function ShowDialog()\
-\9if _dialog ~= nil then\9\
-\9\9_show = true\
-\9else\
-\9\9print(\"WARNING: trying to show dialog without first defining a dialog\")\
-\9end\
-end\
-\
-function allowMoving(b)\
-\9_canMove = b\
-end\
-\
-function isMovingAllowed()\
-\9return _canMove\
-end\
-\
--------------------\
--- Draw function\
--------------------\
-function OnDraw(ctx)\
-\9if _dialog == nil then\
-\9\9-- We are not in a dialog. Check if the user clicked on an npc to start a dialog\
-\
-\9\9-- Determine area where the user can click to start interaction\
-\9\9local size = math.min(ctx.width, ctx.height) * 0.5\
-\9\9local x = (ctx.width - size) / 2\
-\9\9local y = (ctx.height - size) / 2\
-\
-\9\9-- Is the mouse within the area? (doesn't have to be pressed yet)\
-\9\9if ctx.mouseX >= x and ctx.mouseX <= x+size and ctx.mouseY >= y and ctx.mouseY <= y+size then\
-\9\9\9-- The mouse is in the right area, but is there an npc there?\
-\9\9\9local dx, dy = getForward(party.facing)\
-\9\9\9local npc = getNPC(party.level, party.x+dx, party.y+dy)\
-\9\9\
-\9\9\9-- There might be an npc, but is he behind a closed door?\
-\9\9\9if checkBlockingDoor(party.level, party.x, party.y, dx, dy) then\
-\9\9\9\9npc = nil\
-\9\9\9end\
-\
-\9\9\9-- If all is still well, we'll start the interaction\
-\9\9\9if npc ~= nil then\
-\9\9\9\9-- If the player is holding something, it throws it away. We don't want that, so we \
-\9\9\9\9-- capture the click event by using the ctx.button() function.\
-\9\9\9\9local x = ctx.button(\"captureClick\", x, y, size, size)\
-\9\9\9\9if x then\
-\9\9\9\9\9-- The actual interaction we're doing depends if the player is holding something on the mouse\
-\9\9\9\9\9-- If he has, he's giving something to the npc, else he's just starting basic interaction\
-\9\9\9\9\9local cursorItem = getMouseItem()\
-\9\9\9\9\9if cursorItem == nil then\
-\9\9\9\9\9\9hudPrint(\"Starting basic interaction with \"..npc.id)\
-\9\9\9\9\9\9script1:startDialog()\
-\9\9\9\9\9else\
-\9\9\9\9\9\9setMouseItem(nil)\
-\9\9\9\9\9\9hudPrint(\"Giving \"..npc.id..\" the \"..cursorItem.name)\
-\9\9\9\9\9end\
-\9\9\9\9end\
-\9\9\9end\
-\9\9end\
-\9else\
-\9\9-- A dialog is defined. Check if we can show it and if so, draw it\
-\9\9if _dialog ~= nil and _show then\
-\9\9\9_canMove = false\
-\9\9\9-- For now the width and height are fixed\
-\9\9\9local windowWidth = 724\
-\9\9\9local windowHeight = 656\
+\9\9\9\9\9You're not supposed to be here.\
+\9\9\9\9\9Leave while you can!]]\
 \9\
-\9\9\9-- Align window in the middle of the screen\
-\9\9\9-- Exception: small screens, because dialog should not overlap the list of heroes. Align those on the left\
-\9\9\9local x = (ctx.width - windowWidth) / 2\
-\9\9\9if ctx.width <= 1080 then x = 0 end\
-\9\9\9local y = (ctx.height - windowHeight) / 2\
-\9\
-\9\9\9-- Draw the window background\
-\9\9\9ctx.color(255, 255, 255, 255)\
-\9\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", x, y)\
-\9\
-\9\9\9-- Draw the content\
-\9\9\9drawPortrait(ctx, x + 48, y + 64, windowWidth - 48*2, windowHeight - 132)\
-\9\9\9drawText(ctx, x + 48, y + 64, windowWidth - 48*2, windowHeight - 132)\
-\9\
-\9\9\9-- Draw the buttons and check if they're pressed\
-\9\9\9response = drawButtons(ctx, x + 40, y + windowHeight - 54, windowWidth - 40*2, 44)\
-\
-\9\9\9-- If the user clicks on a random spot on the dialog show all text at once\
-\9\9\9local pressed = ctx.button(\"_1_\", x, y, windowWidth, windowHeight - 55)\
-\9\9\9if pressed then\
-\9\9\9\9_dialog.start = -1000\
-\9\9\9end\
-\
-\9\9\9-- Close the dialog box if the user has clicked on a button\
-\9\9\9if response ~= nil then\
-\9\9\9\9-- Call the callback function and make sure the dialog is disposed of\
-\9\9\9\9local callback = _dialog.callback\
-\9\9\9\9_show = false\
-\9\9\9\9_dialog = nil\
-\9\9\9\9_canMove = true\
-\9\9\9\9callback(response)\
-\9\9\9end\
-\9\9end\
-\9end\
+\9local s_dlgId = Dialog.new(s_text, \"I'm going already!\", s_npcId)\
+\9Dialog.addButton(s_dlgId, s_challenge)\
+\9Dialog.activate(s_dlgId, scriptVerboseExample.ogreCallBack)\
 end\
 \
-function drawPortrait(ctx, areaX, areaY, areaWidth, areaHeight)\
-\9ctx.color(255, 255, 255, 255)\
-\9if _dialog.portrait ~= nil then\
-\9\9-- For now all portaits have to me the same size\
-\9\9local portraitWidth = 128\
-\9\9local portraitHeight = 128\
-\9\9\
-\9\9-- Determine position of portrait (upper right corner)\
-\9\9local portraitX = areaX + areaWidth - portraitWidth\
-\9\9local portraitY = areaY;\
-\9\9\
-\9\9-- Draw image and caption\
-\9\9ctx.drawImage(_dialog.portrait, portraitX, portraitY)\
-\9\9if _dialog.caption ~= nil then\
-\9\9\9ctx.font(\"tiny\")\
-\9\9\9local charWidth = 7\
-\9\9\9local charHeight = 14\
-\9\9\9local captionWidth = charWidth * string.len(_dialog.caption)\
-\9\9\9ctx.drawText(_dialog.caption, portraitX + (portraitWidth - captionWidth) / 2, portraitY + portraitHeight + charHeight)\
+function ogreCallBack(s_caption)\
+\9if s_caption == s_challenge then\
+\9\9hudPrint(\"Oh oh... Now you've done it!\")\
+\9\9if b_lifeSaver then\
+\9\9\9pp_challenge:destroy()\
+\9\9\9b_lifeSaver:destroy()\
 \9\9end\
 \9end\
-end\
-\
-function drawText(ctx, areaX, areaY, areaWidth, areaHeight)\
-\9ctx.color(255, 255, 255, 255)\
-\9ctx.font(\"medium\")\
-\
-\9local charHeight = 17\
-\9local textLength = math.floor((getStatistic(\"play_time\") - _dialog.start) * 30)\
-\9ctx.drawText(string.sub(_dialog.text, 1, textLength), areaX, areaY + charHeight)\
-end\
-\
-function drawButtons(ctx, areaX, areaY, areaWidth, areaHeight)\
-\9-- For now all buttons are the same width\
-\9local buttonWidth = 148\
-\9local buttonHeight = 32\
-\9local buttonSpacing = 12\
-\9local response = nil\9\9-- Will be filled with the button text if the button is pressed\
-\9\
-\9-- Set font and (average text size)\
-\9ctx.color(255, 255, 255, 255)\
-\9ctx.font(\"small\")\
-\9local charWidth  = 8\9\9-- Average width of a sinlge character\
-\9local charOffsetY = 22\
-\
-\9for nr, t  in pairs(_dialog.buttons) do\
-\9\9-- Draw button\
-\9\9local buttonX = areaX + areaWidth - nr * (buttonWidth + buttonSpacing)\
-\9\9local buttonY = math.floor(areaY + (areaHeight - buttonHeight) / 2)\
-\9\9ctx.drawImage(\"mod_assets/textures/button.tga\", buttonX, buttonY)\
-\9\9ctx.drawText(t, buttonX + (buttonWidth - string.len(t) * charWidth)/2, buttonY + charOffsetY)\
-\
-\9\9-- Check if the button is pressed\
-\9\9local pressed = ctx.button(t, buttonX, buttonY, 148, 32)\
-\9\9if pressed then\
-\9\9\9response = t\
-\9\9end\
-\9end\
-\9return response\
-end\
-\
-\
-function getNPC(level, x, y)\
-\9-- See if there is an NPC on the given tile\
-\9-- NPCs are recognized by the name starting with \"npc_\" for now\
-\9local npc = nil\
-\9for i in entitiesAt(level, x, y) do\
-\9\9if string.sub(i.id, 1, 4) == \"npc_\" then\
-\9\9\9npc = i\
-\9\9\9break\
-\9\9end\
-\9end\
-\9return npc\
-end\
-\
-function checkBlockingDoor(level, x, y, dx, dy)\
-\9local blocked = false\
-\
-\9-- see if there is a door on the party's tile facing the same way as the party\
-\9for i in entitiesAt(level, x, y) do\
-\9\9-- There is a bug in the .class property: it will return nil for doors!\
-\9\9if i.class == nil then\
-\9\9\9-- check if the door is between npc and the party and closed\
-\9\9\9if i.facing == party.facing and i:isClosed() then\
-\9\9\9\9blocked = true\
-\9\9\9end\
-\9\9end\
-\9end\
-\
-\9-- see if there is a door on the npc's tile facing the opposite way of the party\
-\9for i in entitiesAt(level, x+dx, y+dy) do\
-\9\9-- There is a bug in the .class property: it will return nil for doors!\
-\9\9if i.class == nil then\
-\9\9\9-- check if the door is between npc and the party and closed\
-\9\9\9if i.facing == (party.facing + 2) % 4 and i:isClosed() then\
-\9\9\9\9blocked = true\
-\9\9\9end\
-\9\9end\
-\9end\
-\9\
-\9return blocked\
-end")
-spawn("script_entity", 31,31,2, "CHARSHEET")
-	:setSource("--\
--- PLEASE IGNORE THIS SCRIPT\
---\
--- It is part of something I was testing and it didn't work out.\
--- I'm not deleting it yet because I don't give up that easily.\
--- But for now just ignore it. Please...\
---\
-_charSheetOpen = false\
-_currentTab = nil\
-\
-function OnDraw(ctx)\
-\9if _charSheetOpen then\
-\9\9if _currentTab ~= nil then\
-\9\9\9ctx.color(255, 255, 255, 255)\
-\9\9\9ctx.font(\"large\")\
-\9\9\9ctx.drawText(\"\".._currentTab, 100, 100)\
-\9\9end\
-\9else\
-\9\9_currentTab = nil\
-\9end\
-\
-\9--\
-\9-- reset _charSheetopen next frameDraw we can see if the window is still open\
-\9--\
-\9_charSheetOpen = false\
-end\
-\
-function OnDrawTab(ctx, tab)\
-\9_charSheetOpen = true\
-\9if _currentTab == nil then\
-\9\9_currentTab = tab\
-\9end\
-\
-\9-- if user clicked on any of the tabs\
-\9clickedOnTab = determineTabClick(ctx)\
-\9if clickedOnTab ~= nil then\
---\9\9print(clickedOnTab)\
-\9\9_currentTab = clickedOnTab\
-\9end\
-\
-\9if _currentTab == 4 then\
-\9\9local x = ctx.width - 466\
-\9\9local y = 59\
-\9\9ctx.color(255, 255, 255, 255)\
-\9\9ctx.drawImage(\"mod_assets/textures/charsheet_background.tga\", x, y)\
---\9\9print(\"x:\"..ctx.mouseX..\" y:\"..ctx.mouseY)\
-\9end\
-end\
-\
-function determineTabClick(ctx)\
-\9local result = nil\
-\9ctx.color(0, 255, 255, 32)\
-\
-\9local y = 81\
-\9for i = 1,5 do\
-\9\9ctx.drawRect(1398, y, 52, 59)\
-\9\9if ctx.mouseDown(0) and ctx.mouseX >= 1398 and ctx.mouseX <= 1450 and ctx.mouseY >= y and ctx.mouseY <= y + 59 then\
-\9\9ctx.button(\"\"..i, 0, 0, ctx.width, ctx.height)\
---\9\9if ctx.button(\"\"..i, 1398, y, 52, 59) then\
---\9\9\9print(i)\
-\9\9\9result = i\
-\9\9end\
-\9\9y = y + 62\
-\9end\
-\9return result\
 end\
 ")
-spawn("blocker", 5,7,2, "blocker_1")
-spawn("blocker", 4,5,3, "blocker_2")
-spawn("blocker", 3,5,2, "blocker_3")
-spawn("blocker", 5,5,2, "blocker_4")
-spawn("ogre", 4,4,2, "npc_ogre")
-	:setAIState("guard")
-spawn("ogre", 2,5,1, "npc_ogre2")
-	:setAIState("guard")
-spawn("ogre", 6,5,3, "npc_ogre3")
-	:setAIState("guard")
-spawn("ogre", 6,7,3, "npc_ogre4")
-	:setAIState("guard")
-spawn("dungeon_door_wooden", 3,5,3, "dungeon_door_wooden_1")
-	:addPullChain()
-spawn("dungeon_door_portcullis", 6,5,3, "dungeon_door_portcullis_1")
-	:addPullChain()
-spawn("prison_secret_door", 5,7,1, "prison_secret_door_1")
-spawn("lever", 5,7,2, "lever_1")
-	:addConnector("any", "prison_secret_door_1", "toggle")
-spawn("script_entity", 20,0,2, "WINDOW")
-	:setSource("_goForIt = false\
-_hover = false\
-\
-function start()\
-\9_goForIt = true\
-end\
-\
-function stop()\
-\9_goForIt = false\
-end\
-\
-function toggleHover()\
-\9_hover = not _hover\
-end\
-\
-function OnDraw(ctx)\
-\9local s = \"\"\
-\9if _hover then\
-\9\9s = \"_hover\"\
-\9end\
-\9if _goForIt then\
-\9\9-- Draw the window background\
-\9\9ctx.color(255, 255, 255, 255)\
-\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", 0, 0)\
-\9\9\
-\9\9---\
-\9\9--- Graphics\
-\9\9---\
-\9\9ctx.font(\"large\")\
-\9\9ctx.drawText(\"Graphics\", 50, 70)\
-\9\9\
-\9\9ctx.font(\"small\")\
-\9\9ctx.drawText(\"Resolution\", 70, 100)\
-\9\9ctx.drawText(\"Display Mode\", 70, 125)\
-\9\9ctx.drawText(\"Wait for Vertical Sync\", 70, 150)\
-\9\9ctx.drawText(\"Redering Quality\", 70, 175)\
-\9\9ctx.drawText(\"Texture Resolution\", 70, 200)\
-\9\9ctx.drawText(\"Texture Filtering\", 70, 225)\
-\9\9ctx.drawText(\"Shadow Quality\", 70, 250)\
-\9\9ctx.drawText(\"SSAO Quality\", 70, 275)\
-\
-\9\9y = 85;\9\9\
-\9\9drawOptionBox(ctx, \"1920 x 1080\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"Borderless\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"Enabled\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9\
-\9\9---\
-\9\9--- Audio options\
-\9\9---\
-\9\9ctx.font(\"large\")\
-\9\9ctx.drawText(\"Audio\", 50, 310)\
-\9\9\
-\9\9ctx.font(\"small\")\
-\9\9ctx.drawText(\"Music & Ambient\", 70, 340)\
-\9\9ctx.drawText(\"Sound Effect\", 70, 365)\
-\9\9\
-\9\9drawSlider(ctx, 220, 325, _hover)\
-\9\9drawSlider(ctx, 220, 350, _hover)\
-\
-\9\9ctx.drawText(\"Mute\", 470, 340)\
-\9\9ctx.drawText(\"Mute\", 470, 365)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 445, 323)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 445, 348)\
-\
-\9\9\
-\9\9---\
-\9\9--- Game Options\
-\9\9---\
-\9\9ctx.font(\"large\")\
-\9\9ctx.drawText(\"Game\", 50, 410)\
-\
-\9\9ctx.font(\"small\")\
-\9\9ctx.drawText(\"Enable Arrow Icons\", 95, 440)\
-\9\9ctx.drawText(\"Disable Damage Texts\", 95, 465)\
-\9\9ctx.drawText(\"Hide Item Properties\", 95, 490)\
-\9\9ctx.drawText(\"Autosave\", 95, 515)\
-\9\9ctx.drawText(\"Mouse Look\", 395, 440)\
-\9\9ctx.drawText(\"Invert Horizontal\", 395, 465)\
-\9\9ctx.drawText(\"Invert Vertical\", 395, 490)\
-\9\9ctx.drawText(\"Tablet Mode\", 395, 515)\
-\9\9\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 70, 423)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 70, 448)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 70, 473)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_checked\"..s..\".tga\", 70, 498)\
-\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_checked\"..s..\".tga\", 370, 423)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 370, 448)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 370, 473)\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_checkbox_20_unchecked\"..s..\".tga\", 370, 498)\
-\9end\
-end\
-\
-function drawSlider(ctx, x, y, hover)\
-\9local s = \"\"\
-\9if hover \
-\9\9then s = \"_hover\" \
-\9end\
-\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_begin\"..s..\".tga\", x, y)\
-\9for i = 1, 9 do\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_middle\"..s..\".tga\", x + i*20, y)\
-\9end\
-\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_end\"..s..\".tga\", x + 9*20, y)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_button\"..s..\".tga\", x + 150, y)\
-end\
-\
-function drawOptionBox(ctx, t, x, y, hover)\
-\9local s = \"\"\
-\9if hover then\
-\9\9s = \"_hover\"\
-\9end\
-\9ctx.color(255, 255, 255, 255)\
-\9local w = 200\
-\9local h = 20\
-\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_20_left\"..s..\".tga\", x - 1, y)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_arrow_20_right\"..s..\".tga\", x + w, y)\
-\9ctx.color(0, 0, 0, 96)\
-\9drawBox(ctx, t, x + 29, y, w - 32, h, 1, hover)\
-end\
-\
-function drawBox(ctx, text, x, y, width, height, mode, hover)\
-\9-- Mode is used to draw different parts like a scrollbox\
-\9ctx.color(0, 0, 0, 96)\
-\9if mode == 2 then\
-\9\9ctx.color(16, 16, 16, 240)\
-\9end\
-\9if mode == 3 then\
-\9\9ctx.color(255, 255, 255, 16)\
-\9end\
-\9-- Main box\
-\9ctx.drawRect(x, y, width, height)\
-\9-- Shadow line on top and left\
-\9ctx.drawRect(x, y, width, 1)\
-\9ctx.drawRect(x, y, 1, height)\
-\9-- lighter lines on bottom and right\
-\9ctx.color(128, 128, 160, 128)\
-\9ctx.drawRect(x, y + height, width, 1)\
-\9ctx.drawRect(x + width, y, 1, height)\
-\
-\9if hover then\
-\9\9drawHighlight(ctx, x, y, width, height)\
-\9end\
-\9\
-\9-- draw the given text\
-\9if text ~= nil then\
-\9\9ctx.font(\"small\")\
-\9\9ctx.color(255, 255, 255, 255)\
-\9\9ctx.drawText(text, x + 5, y + 15)\
-\9end\
-end\
-\
-function drawListbox(ctx, text, x, y, width, height, hover, mode)\
-\9local s = \"\"\
-\9if hover then\
-\9\9s = \"_hover\"\
-\9end\
-\9drawBox(ctx, text, x, y, width, height, mode, false)\
-\9ctx.color(255, 255, 255, 255)\
-\9ctx.drawText(text, x + 5, y + 14)\
-\9-- Scroll area\
-\9ctx.color(16, 16, 16, 240)\
-\9ctx.drawRect(x + width - 19, y + 1, 18, height - 2)\
-\9ctx.color(255, 255, 255, 255)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_slider_20_button\"..s..\".tga\", x + width - 20, y + height * 0.5)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_up\"..s..\".tga\", x + width - 20, y + 0)\
-\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_down\"..s..\".tga\", x + width - 20, y + height - 20)\
-\9-- Selected item\
-\9ctx.color(222, 255, 255, 64)\
-\9ctx.drawRect(x + 1, y + 1 + 2 * 22, width - 21, 17)\
-\9-- Reset color to normal value\
-\9ctx.color(255, 255, 255, 255)\
-\9if hover then\
-\9\9drawHighlight(ctx, x, y, width, height)\
-\9end\
-end\
-\
-function drawDropDown(ctx, x, y, width, height, hover, collapsed)\
-\9-- Drop down box\
-\9ctx.font(\"small\")\
-\9ctx.drawText(\"Resolution\", 70, y + 20)\
-\9drawBox(ctx, \"1920 x 1080\", x, y+5, width, 20, 1, hover)\
-\9\
-\9-- Arrow. which one depends if it's collapsed or not\
-\9if collapsed then\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_down.tga\", x + width - 19, y + 5)\
-\9else\
-\9\9-- Expanded dropdown\
-\9\9ctx.drawImage(\"mod_assets/textures/ctl_dropdown_20_up.tga\", x + width - 19, y + 5)\
-\9\9drawListbox(ctx, \"1024 x 768\\n1280 x 1280\\n960 x 900\\n1920 x 1080\", x, y + 28, width + 20, height, false, 2)\
-\9end\9\9\
-end\
-\
-function drawHighlight(ctx, x, y, width, height)\
-\9ctx.color(128, 160, 160, 128)\
-\9drawOutline(ctx, x+1, y+1, width-2, height-2)\
-\9ctx.color(128, 160, 160, 96)\
-\9drawOutline(ctx, x+2, y+2, width-4, height-4)\
-\9ctx.color(128, 160, 160, 64)\
-\9drawOutline(ctx, x+3, y+3, width-6, height-6)\
-\9ctx.color(128, 160, 160, 32)\
-\9drawOutline(ctx, x+4, y+4, width-8, height-8)\
-end\
-\
-function drawOutline(ctx, x, y, width, height)\
-\9ctx.drawRect(x, y, width, 1)\
-\9ctx.drawRect(x, y, 1, height)\
-\9ctx.drawRect(x + width, y, 1, height)\
-\9ctx.drawRect(x, y + height, width, 1)\
-end\
-")
-spawn("prison_pressure_plate", 21,0,2, "prison_pressure_plate_1")
+spawn("pressure_plate_hidden", 4,27,3, "pp_challenge")
 	:setTriggeredByParty(true)
-	:setTriggeredByMonster(true)
-	:setTriggeredByItem(true)
-	:addConnector("activate", "WINDOW", "start")
-	:addConnector("deactivate", "WINDOW", "stop")
-spawn("prison_pressure_plate", 23,2,3, "prison_pressure_plate_2")
-	:setTriggeredByParty(true)
-	:setTriggeredByMonster(true)
-	:setTriggeredByItem(true)
-	:addConnector("activate", "WINDOW2", "start")
-	:addConnector("deactivate", "WINDOW2", "stop")
-spawn("script_entity", 23,1,2, "WINDOW2")
-	:setSource("_goForIt = false\
-_expand = false\
-_hover = false\
-\
-function toggleExpand()\
-\9_expand = not _expand\
-\9_hover = not _hover\
-end\
-\
-function start()\
-\9_goForIt = true\
-end\
-\
-function stop()\
-\9_goForIt = false\
-end\
-\
-function OnDraw(ctx)\
-\9if _goForIt then\
-\9\9local x = 0\
-\9\9local y = 0\
-\9\9local w = 0\
-\9\9local y = 0\
-\
-\9\9-- Draw the window background\
-\9\9ctx.color(255, 255, 255, 255)\
-\9\9ctx.drawImage(\"mod_assets/textures/window.tga\", 0, 0)\
-\9\9\
-\9\9---\
-\9\9--- Graphics\
-\9\9---\
-\9\9ctx.font(\"large\")\
-\9\9ctx.drawText(\"Graphics\", 50, 70)\
-\9\
-\9\9ctx.font(\"small\")\
-\9\9ctx.drawText(\"Display Mode\", 70, 125)\
-\9\9ctx.drawText(\"Wait for Vertical Sync\", 70, 150)\
-\9\9ctx.drawText(\"Redering Quality\", 70, 175)\
-\9\9ctx.drawText(\"Texture Resolution\", 70, 200)\
-\9\9ctx.drawText(\"Texture Filtering\", 70, 225)\
-\9\9ctx.drawText(\"Shadow Quality\", 70, 250)\
-\9\9ctx.drawText(\"SSAO Quality\", 70, 275)\
-\
-\9\9y = 108;\
-\9\9WINDOW.drawOptionBox(ctx, \"Borderless\", 260, y, _hover); y = y + 25\
-\9\9WINDOW.drawOptionBox(ctx, \"Enabled\", 260, y, _hover); y = y + 25\
-\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\9\9WINDOW.drawOptionBox(ctx, \"High\", 260, y, _hover); y = y + 25\
-\
-\
-\9\9--\
-\9\9--  Drop Down\
-\9\9--\
-\9\9x = 290\
-\9\9y = 80\
-\9\9w = 168\
-\9\9h = 85\
-\9\9WINDOW.drawDropDown(ctx, x, y, w, h, _hover, not _expand)\
-\9\9\
-\9\9---\
-\9\9--- Audio options\
-\9\9---\
-\9\9ctx.font(\"large\")\
-\9\9ctx.drawText(\"Audio\", 50, 310)\
-\9\9\
-\9\9ctx.font(\"small\")\
-\9\9ctx.drawText(\"Select music track to play\", 70, 340)\
-\9\9local text = \"Baz Luhrmann - Everybody's free to wear sunscreen\\nDarude - Sandstorm\\nWeird Al - Albuquerque\\nWithin Temptation - See Who I Am\"\
-\9\9WINDOW.drawListbox(ctx, text, 70, 350, 450, 85, _hover)\
-\
-\9end\
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setSilent(true)
+	:addConnector("activate", "scriptVerboseExample", "clickOgre")
+spawn("blocker", 4,27,2, "b_lifeSaver")
+spawn("script_entity", 7,25,2, "scriptQuickYesNoExample")
+	:setSource("function press()\
+\9Travel.start(4, 5)\
 end\
 ")
-spawn("wall_button", 23,2,1, "wall_button_1")
-	:addConnector("toggle", "WINDOW2", "toggleExpand")
-spawn("wall_button", 21,0,0, "wall_button_2")
-	:addConnector("toggle", "WINDOW", "toggleHover")
-spawn("torch_holder", 20,4,0, "torch_holder_1")
-	:addTorch()
-spawn("torch_holder", 22,4,0, "torch_holder_2")
-	:addTorch()
-spawn("dungeon_door_wooden", 21,4,0, "dungeon_door_wooden_2")
-	:addPullChain()
-	:setDoorState("open")
-spawn("barrel_crate_block", 19,4,0, "barrel_crate_block_1")
-spawn("barrel_crate_block", 19,7,3, "barrel_crate_block_2")
-spawn("barrel_crate_block", 19,6,2, "barrel_crate_block_3")
-spawn("barrel_crate_block", 20,7,0, "barrel_crate_block_4")
-spawn("barrel_crate_block", 23,4,1, "barrel_crate_block_5")
-spawn("script_entity", 4,9,2, "TRAVEL")
+spawn("script_entity", 0,27,1, "scriptInit")
+	:setSource("function initNPC()\
+\9NPC.Create(\"npc_guard\")\
+\9NPC.SetAttr(\"npc_guard\", \"Portrait\", \"mod_assets/textures/portraits/ogre.tga\")\
+\9NPC.SetAttr(\"npc_guard\", \"Name\", \"Grumpy guard\")\
+end\
+")
+spawn("pressure_plate_hidden", 2,27,2, "ppInit")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setActivateOnce(true)
+	:setSilent(true)
+	:addConnector("activate", "scriptInit", "initNPC")
+spawn("blocker", 6,27,3, "blocker_2")
+spawn("dungeon_door_portcullis", 6,27,3, "dungeon_door_portcullis_1")
+spawn("dungeon_door_portcullis", 2,27,3, "dungeon_door_portcullis_2")
+spawn("lever", 2,26,3, "lever_1")
+	:addConnector("any", "dungeon_door_portcullis_2", "toggle")
+spawn("iron_key", 6,27,3, "iron_key_1")
+spawn("lock", 5,27,0, "lock_1")
+	:setOpenedBy("iron_key")
+	:addConnector("activate", "dungeon_door_portcullis_1", "open")
+spawn("pressure_plate_hidden", 6,25,2, "pressure_plate_hidden_1")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setSilent(true)
+	:addConnector("activate", "scriptQuickYesNoExample", "press")
+spawn("baked_maggot", 1,27,3, "baked_maggot_1")
+spawn("script_entity", 2,0,1, "Travel")
 	:setSource("--\
 --  All points of interest on the map (and their corresponding location in the dungeon)\
 --\
-_pois = {\
-\9{ name = \"the Grotto of Xazarra\", x = 418, y = 15, dungeonLevel = 1, dungeonX = 3, dungeonY = 7, dungeonFacing = 0},\
-\9{ name = \"Uttermost\", x = 431, y = 144, dungeonLevel = 1, dungeonX = 21, dungeonY = 6, dungeonFacing = 0},\
+_hPOIs = {\
+\9{ name = \"Ormund\", x = 1016, y = 651, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Kalevala\", x = 1382, y = 1114, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Jonli\", x = 1215, y = 1163, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"the Grotto of Xazarra\", x = 1842, y = 798, dungeonLevel = 1, dungeonX = 6, dungeonY = 26, dungeonFacing = 2},\
+\9{ name = \"Uttermost\", x = 1903, y = 1079, dungeonLevel = 1, dungeonX = 6, dungeonY = 8, dungeonFacing = 0},\
+\9{ name = \"Amaranth\", x = 2264, y = 592, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Thraelm\", x = 2149, y = 1840, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Theareona\", x = 402, y = 1741, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Malan Tael\", x = 1337, y = 1586, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Peca\", x = 389, y = 1999, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Daejon\", x = 521, y = 2106, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Quenfar\", x = 520, y = 2324, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Qegandoc\", x = 1013, y = 2316, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Losancrel\", x = 925, y = 2458, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Conwyn\", x = 1382, y = 2558, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Congam\", x = 1694, y = 2682, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Arfi\", x = 1958, y = 2755, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Ranwyn\", x = 1536, y = 2763, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Nothampton\", x = 1915, y = 3389, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Harbardar\", x = 185, y = 4368, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Basabu\", x = 1934, y = 4379, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Vaeey\", x = 2208, y = 4231, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
+\9{ name = \"Sanchi\", x = 2745, y = 4218, dungeonLevel = 1, dungeonX = 0, dungeonY = 0, dungeonFacing = 0},\
 }\
 \
---\
--- Internal variables (you don't need them)\
---\
-_start = 0\
-_stage = 0\
-_from = nil\
-_to = nil\
-_mapWidth = 600\
-_mapHeight = 500\
+_iMapWidth = 3181\
+_iMapHeight = 4497\
+_iDurationStage2 = 5\
 \
-function start(fromPOI, toPOI)\
-\9_start = getStatistic(\"play_time\")\
-\9_stage = 1\
-\9_to = toPOI\
-\9_from = fromPOI\
-\9DIALOG.allowMoving(false)\
-\9hudPrint(\"You start your travel from \".._pois[_from].name..\" to \".._pois[_to].name..\"...\")\
+\
+_from = 0\
+_to = 0\
+_stage = 0\
+_start = 0\
+_partyEnabled = { true, true, true, true }\
+\
+function start(from, to)\
+\9_from = from\
+\9_to = to\
+\9Dialog.quickYesNoDialog(\"Are you sure you want to travel to\\n\".._hPOIs[_to].name..\"?\", Travel.startCallback)\
 end\
 \
-function OnDraw(ctx)\
+function startCallback(s_buttontext)\
+\9if string.lower(s_buttontext) == \"yes\" then\
+\9\9_start = getStatistic(\"play_time\")\
+\9\9_stage = 1\
+\9\9for i = 1, 4 do\
+\9\9\9_partyEnabled[i] = party:getChampion(i):getEnabled()\
+\9\9\9party:getChampion(i):setEnabled(false)\
+\9\9end\
+\9end\
+end\
+\
+\
+function onDraw(ctx)\
+\9--[[\
+\9\9For performance: extra check if we're doing anything. \
+\9\9If not then it was just a simple if-statement wasted.\
+\9--]]\
 \9if _stage ~= 0 then\
-\9\9local partyOffsetX = 0\
-\9\9local partyOffsetY = 0\
-\9\9local mapOffsetX = (ctx.width-_mapWidth) / 2 \
-\9\9local mapOffsetY = (ctx.height-_mapHeight) / 2\
-\9\
-\9\9local alpha = 255.0\
+\9\9local partyOffsetX = ctx.width / 2\
+\9\9local partyOffsetY = ctx.height / 2\
+\9\9local mapOffsetX = (ctx.width / 2) - _hPOIs[_from].x\
+\9\9local mapOffsetY = (ctx.height / 2) - _hPOIs[_from].y\
+\9\9local pct = 0\
+\9\9local alpha = 255\
 \9\9local delta = getStatistic(\"play_time\") - _start\
-\9\
+\
+\9\9-- Do stage specific stuff\
 \9\9if _stage == 1 then\
 \9\9\9if delta <= 1 then\
-\9\9\9\9alpha = 255*delta\
+\9\9\9\9alpha = 255 * delta\
+\9\9\9else\
+\9\9\9\9alpha = 255\
 \9\9\9end\
 \9\9end\
 \
 \9\9if _stage == 2 then\
-\9\9\9partyOffsetX = (_pois[_to].x - _pois[_from].x) * delta / 5\
-\9\9\9partyOffsetY = (_pois[_to].y - _pois[_from].y) * delta / 5\
+\9\9\9pct = delta / _iDurationStage2\
 \9\9end\
 \9\9\
 \9\9if _stage == 3 then\
-\9\9\9alpha = 0\
-\9\9\9partyOffsetX = _pois[_to].x - _pois[_from].x\
-\9\9\9partyOffsetY = _pois[_to].y - _pois[_from].y\
+\9\9\9pct = 1\
 \9\9\9if delta <= 1 then\
-\9\9\9\9alpha = 255 - 255*delta\
+\9\9\9\9alpha = 255 - 255 * delta\
+\9\9\9else\
+\9\9\9\9alpha = 0\
 \9\9\9end\
 \9\9end\
 \9\9\
+\9\9-- Calculate map offset (moving and non-moving)\
+\9\9mapOffsetX = mapOffsetX - (_hPOIs[_to].x - _hPOIs[_from].x) * pct\
+\9\9mapOffsetY = mapOffsetY - (_hPOIs[_to].y - _hPOIs[_from].y) * pct\
+\
+\9\9-- Compensate for corners\
+\9\9if mapOffsetX > 0 then\
+\9\9\9partyOffsetX = partyOffsetX - mapOffsetX\
+\9\9\9mapOffsetX = 0\
+\9\9end\9\9\
+\9\9if mapOffsetY > 0 then\
+\9\9\9partyOffsetY = partyOffsetY - mapOffsetY\
+\9\9\9mapOffsetY = 0\
+\9\9end\
+\9\9if mapOffsetX < - _iMapWidth + ctx.width then\
+\9\9\9partyOffsetX = partyOffsetX + (- _iMapWidth + ctx.width - mapOffsetX)\
+\9\9\9mapOffsetX = - _iMapWidth + ctx.width\
+\9\9end\
+\9\9if mapOffsetY < - _iMapHeight + ctx.height then\
+\9\9\9partyOffsetY = partyOffsetY + (- _iMapHeight + ctx.height - mapOffsetY)\
+\9\9\9mapOffsetY = - _iMapHeight + ctx.height\
+\9\9end\
+\
 \9\9-- Draw the map\
 \9\9ctx.color(0, 0, 0, alpha)\
 \9\9ctx.drawRect(0, 0, ctx.width, ctx.height)\
 \9\9ctx.color(255, 255, 255, alpha)\
 \9\9ctx.drawImage(\"mod_assets/textures/map.tga\", mapOffsetX, mapOffsetY)\
-\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", mapOffsetX + _pois[_from].x + partyOffsetX, mapOffsetY + _pois[_from].y + partyOffsetY)\
+\9\9ctx.drawImage(\"mod_assets/textures/party.tga\", partyOffsetX - 20, partyOffsetY - 20)\
 \
-\9\9-- Monitor for stage transitions\
-\9\9if _stage == 1 and delta > 2 then\
-\9\9\9party:setPosition(21, 6, 0, 1)\
+\9\9-- Check for stage transitions\
+\9\9if _stage == 1 and delta >= 1 then\
 \9\9\9_start = getStatistic(\"play_time\")\
 \9\9\9_stage = 2\
-\9\9\9party:setPosition(_pois[_to].dungeonX, _pois[_to].dungeonY, _pois[_to].dungeonFacing, _pois[_to].dungeonLevel)\
+\9\9\9party:setPosition(0, 0, 0, 1)\
 \9\9else\
-\9\9\9if _stage == 2 and delta >= 5 then\
+\9\9\9if _stage == 2 and delta >= _iDurationStage2 then\
 \9\9\9\9_start = getStatistic(\"play_time\")\
 \9\9\9\9_stage = 3\
-\9\9\9else\
+\9\9\9\9party:setPosition(_hPOIs[_to].dungeonX, _hPOIs[_to].dungeonY, _hPOIs[_to].dungeonFacing, _hPOIs[_to].dungeonLevel)\
+\9\9\9else\9\9\9\9\
 \9\9\9\9if _stage == 3 and delta >= 1 then\
-\9\9\9\9\9hudPrint(\"You arrive in \".._pois[_to].name..\"...\")\
-\9\9\9\9\9DIALOG.allowMoving(true)\
 \9\9\9\9\9_stage = 0\
+\9\9\9\9\9for i = 1, 4 do\
+\9\9\9\9\9\9party:getChampion(i):setEnabled(_partyEnabled[i])\
+\9\9\9\9\9end\
+\9\9\9\9\9hudPrint(\"You arrive in \".._hPOIs[_to].name)\
 \9\9\9\9end\
 \9\9\9end\
-\9\9end\
+\9\9end\9\9\
 \9end\
 end\
 ")
-spawn("pressure_plate_hidden", 3,8,2, "pressure_plate_hidden_1")
+spawn("torch_holder", 5,5,0, "torch_holder_1")
+	:addTorch()
+spawn("torch_holder", 7,5,0, "torch_holder_2")
+	:addTorch()
+spawn("dungeon_door_wooden", 6,5,0, "dungeon_door_wooden_1")
+spawn("barrel_crate_block", 3,7,3, "barrel_crate_block_1")
+spawn("barrel_crate_block", 4,8,0, "barrel_crate_block_2")
+spawn("barrel_crate_block", 3,8,1, "barrel_crate_block_3")
+spawn("barrel_crate_block", 3,5,1, "barrel_crate_block_4")
+spawn("barrel_crate_block", 9,5,2, "barrel_crate_block_5")
+spawn("pressure_plate_hidden", 6,9,2, "pressure_plate_hidden_2")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
 	:setSilent(true)
-	:addConnector("activate", "scriptTravelDemo", "travelToUtterMost")
-spawn("dungeon_wall_text", 3,7,3, "dungeon_wall_text_1")
-	:setWallText("To Uttermost")
-spawn("script_entity", 4,8,2, "scriptTravelDemo")
-	:setSource("\
-function travelToUtterMost()\
-\9TRAVEL.start(1, 2)\
+	:addConnector("activate", "script_entity_1", "press")
+spawn("script_entity", 7,9,1, "script_entity_1")
+	:setSource("function press()\
+\9Travel.start(5, 4)\
 end\
-\
-function travelToTheGrotto()\
-\9TRAVEL.start(2, 1)\
-end")
-spawn("pressure_plate_hidden", 21,8,2, "pressure_plate_hidden_2")
-	:setTriggeredByParty(true)
-	:setTriggeredByMonster(false)
-	:setTriggeredByItem(false)
-	:setSilent(true)
-	:addConnector("activate", "scriptTravelDemo", "travelToTheGrotto")
-spawn("tome_health", 4,5,3, "tome_health_1")
-spawn("tome_health", 3,6,1, "tome_health_2")
-spawn("tome_health", 4,6,2, "tome_health_3")
-spawn("tome_health", 4,5,1, "tome_health_4")
-spawn("tome_health", 4,6,0, "tome_health_5")
-spawn("tome_health", 4,7,3, "tome_health_6")
-spawn("tome_health", 4,7,1, "tome_health_7")
-spawn("tome_health", 5,6,3, "tome_health_8")
-spawn("tome_health", 5,6,1, "tome_health_9")
-spawn("starting_location", 4,6,0, "starting_location")
+")
+spawn("starting_location", 2,26,0, "starting_location")

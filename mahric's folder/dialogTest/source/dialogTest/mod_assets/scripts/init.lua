@@ -13,34 +13,16 @@ import "mod_assets/scripts/spells.lua"
 import "mod_assets/scripts/materials.lua"
 import "mod_assets/scripts/sounds.lua"
 
+
+-- Import LNR framework
+import "mod_assets/lnr/init.lua"
+
 cloneObject{
 	name = "party",
 	baseObject = "party",
 	
-	onMove = function()		
-		return DIALOG.isMovingAllowed()
-	end,
-	
 	onDrawGui = function(ctx)
-		DIALOG.OnDraw(ctx)
-		WINDOW.OnDraw(ctx)
-		WINDOW2.OnDraw(ctx)
-		CHARSHEET.OnDraw(ctx)
-		TRAVEL.OnDraw(ctx)
-	end,
-	
-	onDrawInventory = function(ctx)
-		CHARSHEET.OnDrawTab(ctx, 1)
-		return false
-	end,
-
-	onDrawStats = function(ctx)
-		CHARSHEET.OnDrawTab(ctx, 2)
-		return false
-	end,
-	
-	onDrawSkills = function(ctx)
-		CHARSHEET.OnDrawTab(ctx, 3)
-		return false
+		Travel.onDraw(ctx)
+		GUI.onDraw(ctx)
 	end,
 }
