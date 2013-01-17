@@ -71,8 +71,8 @@ sQuest = string.lower(sQuest);
 			tQuest.Quests[sQuest] = {};
 		
 				--give the quest all of the base attribtues that every quest has
-				for sIndex, vItem in pairs(tQuestBaseAttributes) do
-				tQuest.Quests[sQuest][sIndex] = vItem;
+				for s_index, v_item in pairs(tQuestBaseAttributes) do
+				tQuest.Quests[sQuest][s_index] = v_item;
 				end
 				
 			

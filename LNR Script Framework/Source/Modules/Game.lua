@@ -1,19 +1,19 @@
 tGame = {	
-	--DataModules = These are stored in the Game.GetModuleClasses() method
+	--DataModules = These are stored in the game.getModuleClasses() method
 	DataModuleEntity = "dungeon_wall_text_long",
 	Initialized = false,
 };
 
-function GetInitialized()
-return tGame.Initialized
+function getInitialized()
+return tgame.Initialized
 end
 
 function SetInitialized(bInitialized)
 	
 	if type(bInitialized) == "boolean" then
-	tGame.Initialized = bInitialized;
+	tgame.Initialized = bInitialized;
 	else
-	tGame.Initialized = false;
+	tgame.Initialized = false;
 	end
 	
 end
@@ -21,7 +21,7 @@ end
 
 --[[
 -----------------------
-Game.CheckDataModules()
+game.checkDataModules()
 Return Type: nil
 Method Type: internal
 -----------------------
@@ -31,25 +31,25 @@ they are created. This also
 returns a table containing a
 list of methods.
 ]]
-function CheckDataModules()
-local tMethods = GetModuleClasses();
+function checkDataModules()
+local t_methods = getModuleClasses();
 
-	for sClass, tClass in pairs(tMethods) do
-	sID = Game.GetDataModuleID(sClass);
+	for sClass, tClass in pairs(t_methods) do
+	sID = game.getDataModuleID(sClass);
 		
 		if not findEntity(sID) then
-		spawn(tGame.DataModuleEntity, 1, 0, 0, 0, sID);
+		spawn(tgame.DataModuleEntity, 1, 0, 0, 0, sID);
 		end
 		
 	end
 
-return tMethods
+return t_methods
 end
 
 
 --[[
 -----------------------
-Game.GetModuleClasses()
+game.getModuleClasses()
 Return Type: table
 Method Type: internal
 -----------------------
@@ -65,7 +65,7 @@ intentionally as they may not
 be designed or suited for use
 with the methods that call this.
 ]]
-function GetModuleClasses()
+function getModuleClasses()
 local tClasses = {
 	["Dialog"] = Dialog,
 	["Game"] = Game,
@@ -83,7 +83,7 @@ end
 
 --[[
 ----------------------
-Game.GetClassMethods()
+game.getClassMethods()
 Return Type: table
 Method Type: internal
 ----------------------
@@ -100,7 +100,7 @@ intentionally as they may not
 be designed or suited for use
 with the methods that call this.
 ]]
-function GetClassMethods(sClass)
+function getClassMethods(sClass)
 local tMethdods = {
 	["Dialog"] = {},
 	["Game"] = {},
@@ -118,7 +118,7 @@ end
 
 --[[
 ----------------------
-Game.GetDataModuleID()
+game.getDataModuleID()
 Return Type: string
 Method Type: internal
 ----------------------
@@ -127,43 +127,43 @@ data module id the same
 universally throughout
 all methods.
 ]]
-function GetDataModuleID(sClass)
+function getDataModuleID(sClass)
 return "data_module_"..string.lower(string.gsub(sClass, " ", "_"));
 end
 
 
 --[[
 ---------------------
-Game.GetDataModule()
+game.getDataModule()
 Return Type: table
 Method Type: internal
 ---------------------
 This will load all non-persistent
 data from data modules (wall text(s)).
 ]]
-function GetDataModule(sClass)
-local sID = GetDataModuleID(sClass)
+function getDataModule(sClass)
+local sID = getDataModuleID(sClass)
 return findEntity(sID)
 end
 
 
 --[[
 ---------------------
-Game.Load()
+game.load()
 Return Type: table
 Method Type: external
 ---------------------
 This will load all non-persistent
 data from data modules (wall text(s)).
 ]]
-function Load()
-local tMethods = Game.CheckDataModules();
+function load()
+local t_methods = game.checkDataModules();
 
-	for sClass, tClass in pairs(tMethods) do
+	for sClass, tClass in pairs(t_methods) do
 	--get the entity that stores the data
-	local hDataModule = GetDataModule(sClass)
+	local hDataModule = game.getDataModule(sClass)
 	--get the table that holds the data to load
-	local tData = Util.Table_FromString(hDataModule:getWallText());
+	local tData = util.table_fromString(hDataModule:getWallText());
 	tClass.SetDataTable(tData);
 	end
 
@@ -172,26 +172,26 @@ end
 
 --[[
 ---------------------
-Game.Save()
+game.save()
 Return Type: nil
 Method Type: external
 ---------------------
 This will store all non-persistent
 data in wall text(s) so the data
-can be recalled by Game.Load().
+can be recalled by game.load().
 ]]
-function Save()
-local tMethods = Game.CheckDataModules();
+function save()
+local t_methods = game.checkDataModules();
 
-	for sClass, tClass in pairs(tMethods) do
+	for sClass, tClass in pairs(t_methods) do
 	--get the entity that will store the data
-	local hDataModule = GetDataModule(sClass);
+	local hDataModule = game.getDataModule(sClass);
 	--get the table that needs to be converted to string
 	local tData = tClass.GetDataTable();
 	--convert the table to a string
-	local sData = Util.Table_ToString(tData);
+	local sData = util.table_toString(tData);
 	--create the function to return the data
-	--local sFunction = "function ReturnData()\nlocal tRet = "..sData..";\nreturn tRet\nend";
+	--local sFunction = "function ReturnData()\nlocal t_ret = "..sData..";\nreturn t_ret\nend";
 	--store the new function in the data module object
 	hDataModule:setWallText(sData);
 	end

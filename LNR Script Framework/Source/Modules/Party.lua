@@ -24,16 +24,17 @@ local tNPCObjects = NPC.GetObjects();
 	
 	--get the tile in front of the party
 	if hParty.facing == 0 then
-		nYAdjust = -1;
+	nYAdjust = -1;
 	
 	elseif hParty.facing == 1 then
-		nXAdjust = 1;
+	nXAdjust = 1;
 	
 	elseif hParty.facing == 2 then
-		nYAdjust = 1;
+	nYAdjust = 1;
 	
 	elseif hParty.facing == 3 then
-		nXAdjust = -1;	
+	nXAdjust = -1;
+	
 	end
 	
 	--check for NPCs in front of the party
@@ -43,15 +44,15 @@ local tNPCObjects = NPC.GetObjects();
 			
 			--if found, request a dialog
 			if hEntity.name == sObject then				
-				NPC.requestDialog(hEntity.id);	
-				return false
+			NPC.RequestDialog(hEntity.id);	
+			return false
 			end
 			
 		end
 		
 	end
 	
-	return true
+return true
 end
 
 
@@ -63,14 +64,13 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnCastSpell(n_championID, s_spell)
+function OnCastSpell(nChampionID, sSpell)
 	
-	-- You can't cast if any dialog is open
-	if Dialog.isActivated() then
-		return false
+	if NPC.GetDialogOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 
@@ -94,14 +94,13 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnDamage(n_championID, n_damage, s_damageType)
+function OnDamage(nChampionID, nDamage, sDamageType)
 	
-	-- Not while having a dialog window open
-	if Dialog.isActivated() then
-		return false
+	if Dialog.GetOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 
@@ -127,12 +126,11 @@ See Scripting Reference
 ]]
 function OnMove(hParty, nDirection)
 	
-	-- You can't move when a dialog window is open
-	if Dialog.isActivated() then
-		return false
+	if Dialog.GetOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 
@@ -144,14 +142,13 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnPickUpItem(h_party, h_item)
+function OnPickUpItem(hParty, hItem)
 	
-	-- You can't pick anything up while a dialog window is open
-	if Dialog.isActivated() then
-		return false
+	if Dialog.GetOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 
@@ -163,14 +160,13 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnProjectileHit(n_championID, h_projectile, n_damage, s_damageType)
+function OnProjectileHit(nChampionID, hProjectile, nDamage, sDamageType)
 	
-	-- You can't get hit by a projectile while a dialog window is open
-	if Dialog.isActivated() then
-		return false
+	if Dialog.GetOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 
@@ -206,14 +202,13 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnTurn(h_party, n_direction)
+function OnTurn(hParty, nDirection)
 	
-	-- You can't turn while a dialog window is open
-	if Dialog.isActivated() then
-		return false
+	if Dialog.GetOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 
@@ -225,14 +220,13 @@ Method Type: internal
 ---------------------
 See Scripting Reference
 ]]
-function OnUseItem(n_championID, h_item, n_slot)
+function OnUseItem(nChampionID, hItem, nSlot)
 	
-	-- You can't use an item while a dialog window is open
-	if Dialog.isActivated() then
-		return false
+	if Dialog.GetOpen().IsOpen then
+	return false
 	end
 
-	return true
+return true
 end
 
 

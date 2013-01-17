@@ -1,61 +1,61 @@
 tUtil = {
-	
+	--used in util.table_toString
+	escapeChars = {
+		[1] = {
+			Char = "\\",
+			Relacement_char = "\\\\",
+		},
+		[2] = {
+			Char = "\a",
+			Relacement_char = "\\a",
+		},
+		[3] = {
+			Char = "\b",
+			Relacement_char = "\\b",
+		},
+		[4] = {
+			Char = "\f",
+			Relacement_char = "\\f",
+		},
+		[5] = {
+			Char = "\r\n",
+			Relacement_char = "\\r\\n",
+		},
+		[6] = {
+			Char = "\t",
+			Relacement_char = "\\t",
+		},
+		[7] = {
+			Char = "\v",
+			Relacement_char = "\\v",
+		},
+		[8] = {
+			Char = "\"",
+			Relacement_char = "\\\"",
+			},
+		[9] = {
+			Char = "\'",
+			Relacement_char = "\\'",
+		},	
+		[10] = {
+			Char = "%[",
+			Relacement_char = "%%[",
+			},
+		[11] = {
+			Char = "%]",
+			Relacement_char = "%%]",
+		},	
+	},
 };
 
---used in Util.TableToString
-tEscapeChars = {
-	[1] = {
-		Char = "\\",
-		RelacementChar = "\\\\",
-	},
-	[2] = {
-		Char = "\a",
-		RelacementChar = "\\a",
-	},
-	[3] = {
-		Char = "\b",
-		RelacementChar = "\\b",
-	},
-	[4] = {
-		Char = "\f",
-		RelacementChar = "\\f",
-	},
-	[5] = {
-		Char = "\r\n",
-		RelacementChar = "\\r\\n",
-	},
-	[6] = {
-		Char = "\t",
-		RelacementChar = "\\t",
-	},
-	[7] = {
-		Char = "\v",
-		RelacementChar = "\\v",
-	},
-	[8] = {
-		Char = "\"",
-		RelacementChar = "\\\"",
-		},
-	[9] = {
-		Char = "\'",
-		RelacementChar = "\\'",
-	},	
-	[10] = {
-		Char = "%[",
-		RelacementChar = "%%[",
-		},
-	[11] = {
-		Char = "%]",
-		RelacementChar = "%%]",
-	},	
-};
+;
 
 --================================================================================
 --								<<<All Util Methods>>>
 --================================================================================
 
-function VarIsValid(tTypes, vVar)
-local tValidTypes = {
+function varIsValid(t_types, v_var)
+local t_validTypes = {
 	b = "boolean",
 	f = "funciton",
 	l = "nil",
@@ -64,17 +64,17 @@ local tValidTypes = {
 	t = "table",
 };
 
-	if type(tTypes) == "table" then
-	local sVarType = type(vVar);
+	if type(t_types) == "table" then
+	local s_varType = type(v_var);
 	
-		for nTypeID, sTypeID in pairs(tTypes) do
-		sTypeID = string.lower(sTypeID);
+		for n_typeID, s_typeID in pairs(t_types) do
+		s_typeID = string.lower(s_typeID);
 		
 			---check that the input type exists
-			if tValidTypes[sTypeID] then
+			if t_validTypes[s_typeID] then
 				
 				--check to see if the input variable meets one of the allowed types input
-				if sVarType == tValidTypes[sTypeID] then				
+				if s_varType == t_validTypes[s_typeID] then				
 				return true
 				end
 		
@@ -94,29 +94,29 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.Dungeon_AdjacentCellIsWall(Integer, Integer, Integer, Integer)
+util.dungeon_adjacentCellIsWall(Integer, Integer, Integer, Integer)
 Used to determine if a cell adjacent to
 the input cell is a wall. This is, of course,
 relative to the input facing.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function Dungeon_AdjacentCellIsWall(nLevel, nFacing, nX, nY)
+function dungeon_adjacentCellIsWall(n_level, n_facing, n_x, n_y)
 
-	if nFacing == 0 then
-	nY = nY - 1;
+	if n_facing == 0 then
+	n_y = n_y - 1;
 	
-	elseif nFacing == 1 then
-	nX = nX + 1;
+	elseif n_facing == 1 then
+	n_x = n_x + 1;
 	
-	elseif nFacing == 2 then
-	nY = nY + 1;
+	elseif n_facing == 2 then
+	n_y = n_y + 1;
 	
-	elseif nFacing == 3 then
-	nX = nX - 1;
+	elseif n_facing == 3 then
+	n_x = n_x - 1;
 	
 	end
 	
-	if nX > -1 and nX < 32 and nY > -1 and nY < 32 then
-	return isWall(nLevel, nX, nY)
+	if n_x > -1 and n_x < 32 and n_y > -1 and n_y < 32 then
+	return isWall(n_level, n_x, n_y)
 	end
 	
 return true
@@ -129,7 +129,7 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.Math_GetAlternator
+util.Math_GetAlternator
 Gets a random number:
 either 1 or -1.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
@@ -139,18 +139,18 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.Math_UpOrDown(Integer)
+util.math_upOrDown(Integer)
 A utility function that returns
 an integer value to the
 (randomly chosen) nearest high
 or low value.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function Math_UpOrDown(nValue)
+function math_upOrDown(n_value)
 		
 	if math.random() < 0.5 then
-	return math.floor(nValue)
+	return math.floor(n_value)
 	else
-	return math.ceil(nValue)
+	return math.ceil(n_value)
 	end
 
 end
@@ -158,15 +158,15 @@ end
 --================================================================================
 --									<<<POSITION>>>
 --================================================================================
-function Position_GetOppositeFacing(nFacing)
+function position_getOppositeFacing(n_facing)
 
-	if nFacing == 0 then
+	if n_facing == 0 then
 	return 2
-	elseif nFacing == 1 then
+	elseif n_facing == 1 then
 	return 3
-	elseif nFacing == 2 then
+	elseif n_facing == 2 then
 	return 0	
-	elseif nFacing == 3 then
+	elseif n_facing == 3 then
 	return 1
 	end
 
@@ -180,48 +180,48 @@ end
 
 
 --[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-Util.String_GenerateUUID(String)
+util.string_generateUUID(String)
 Creates a Universal Unique
 Identifier that may contain
 a prefix.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function String_GenerateUUID(sPrefix)
-local tChars = {"x","3","y","1","b","2","p","e","8","f","v","t","g","9","h","7","u","4","i","z","a","j","0","c","k","l","5","m","n","w","o","q","r","s","d","6"};
-local tSequence = {1,4,4,4,12};
-local sUUID = "";
-local nMaxPrefixLength = 6; --range from 0 to 8
-local sDelimiter = "-";
+function string_generateUUID(s_prefix)
+local t_chars = {"x","3","y","1","b","2","p","e","8","f","v","t","g","9","h","7","u","4","i","z","a","j","0","c","k","l","5","m","n","w","o","q","r","s","d","6"};
+local t_sequence = {1,4,4,4,12};
+local s_UUID = "";
+local n_maxPrefixLength = 6; --range from 0 to 8
+local s_delimiter = "-";
 
-if type(sPrefix) == "string" then
-local nLength = string.len(sPrefix);
+if type(s_prefix) == "string" then
+local nLength = string.len(s_prefix);
 	
-	if nLength > nMaxPrefixLength then
-	sPrefix = string.sub(sPrefix, 1, nMaxPrefixLength);
+	if nLength > n_maxPrefixLength then
+	s_prefix = string.sub(s_prefix, 1, n_maxPrefixLength);
 	end
 	
-	if string.gsub(sPrefix, " ", "") ~= "" then
-	sUUID = sPrefix..sDelimiter;
+	if string.gsub(s_prefix, " ", "") ~= "" then
+	s_UUID = s_prefix..s_delimiter;
 	end
 	
-	if nLength < nMaxPrefixLength then
-	tSequence[1] = tSequence[1] + (nMaxPrefixLength - nLength);
+	if nLength < n_maxPrefixLength then
+	t_sequence[1] = t_sequence[1] + (n_maxPrefixLength - nLength);
 	end
 	
 else
-tSequence[1] = 8;
+t_sequence[1] = 8;
 end
 
 --fix the - at the end...
-for nIndex, nSequence in pairs(tSequence) do
+for n_index, n_sequence in pairs(t_sequence) do
 	
-	for x = 1, nSequence do
-	sUUID = sUUID..tChars[math.random(1, 36)];
+	for x = 1, n_sequence do
+	s_UUID = s_UUID..t_chars[math.random(1, 36)];
 	end
 
-sUUID = sUUID.."-";
+s_UUID = s_UUID.."-";
 end
 
-return sUUID
+return s_UUID
 end
 
 
@@ -232,7 +232,7 @@ end
 
 --[[
 ----------------------------------
-Util.Table_ToString(table, integer)
+util.table_toString(table, integer)
 Return Type: string
 Method Type: internal
 ----------------------------------
@@ -249,7 +249,7 @@ is not accessable from inside LoG.
 A few Notes:
 1. This function creates tags for
 a mark-up system used with the
-Util.StringToTable() function. It
+util.StringToTable() function. It
 is not intended to be used for any
 other purpose.
 2. This will handle indices
@@ -260,95 +260,95 @@ nil and table.
 4. The number(argument #2) MUST be
 exluded.
 ]]
-function Table_ToString(tInput, nCount)
+function table_toString(t_input, n_count)
 --the string to return
-local sRet = "";
-local nCount = nCount;
+local s_ret = "";
+local n_count = n_count;
 
 	--initialize the count variable if it's not
-	if type(nCount) ~= "number" then
-	nCount = 0;
+	if type(n_count) ~= "number" then
+	n_count = 0;
 	end
 	
 --step the count variable
-nCount = nCount + 1;
+n_count = n_count + 1;
 --convert to string for use with the tags
-local sCount = tostring(nCount);
+local s_count = tostring(n_count);
 	
 	--if the input type is a table...
-	if type(tInput) == "table" then
-	sRet = sRet.."<t"..sCount..">";
+	if type(t_input) == "table" then
+	s_ret = s_ret.."<t"..s_count..">";
 		
 		--process each item in the table
-		for vIndex, vItem in pairs(tInput) do
-		local sIndexType = type(vIndex);
-		local sItemType = type(vItem);
-		local sIndex = "";
+		for v_index, v_item in pairs(t_input) do
+		local s_indexType = type(v_index);
+		local s_itemType = type(v_item);
+		local s_index = "";
 				
 			--write the index to string
-			local sMyType = "n";
-			if sIndexType == "string" then
-			sMyType = "s";
+			local s_myType = "n";
+			if s_indexType == "string" then
+			s_myType = "s";
 			end
 			
 			--set up the key, value pair start tag
-			sRet = sRet.."<p"..sCount..">"..sMyType;
+			s_ret = s_ret.."<p"..s_count..">"..s_myType;
 			
 			--write the	item to string
-			if sItemType == "number" then
-			sRet = sRet.."n<k>"..vIndex.."</k><v>"..vItem.."</v>";
+			if s_itemType == "number" then
+			s_ret = s_ret.."n<k>"..v_index.."</k><v>"..v_item.."</v>";
 			
-			elseif sItemType == "string" then
+			elseif s_itemType == "string" then
 			
-				for nIndex, tChar in pairs(tEscapeChars) do
-				vItem = string.gsub(vItem, tChar.Char, tChar.RelacementChar);
+				for n_index, t_char in pairs(tutil.escapeChars) do
+				v_item = string.gsub(v_item, t_char.Char, t_char.Relacement_char);
 				end
 			
-			sRet = sRet.."s<k>"..vIndex.."</k><v>"..vItem.."</v>";
+			s_ret = s_ret.."s<k>"..v_index.."</k><v>"..v_item.."</v>";
 			
-			elseif sItemType == "boolean" then
+			elseif s_itemType == "boolean" then
 			
-				if vItem then
-				sRet = sRet.."b<k>"..vIndex.."</k><v>".."true</v>";
+				if v_item then
+				s_ret = s_ret.."b<k>"..v_index.."</k><v>".."true</v>";
 				else
-				sRet = sRet.."b<k>"..vIndex.."</k><v>".."false</v>";
+				s_ret = s_ret.."b<k>"..v_index.."</k><v>".."false</v>";
 				end
 			
-			elseif sItemType == "nil" then
-			sRet = sRet.."l<k>"..vIndex.."</k><v>".."nil</v>";
+			elseif s_itemType == "nil" then
+			s_ret = s_ret.."l<k>"..v_index.."</k><v>".."nil</v>";
 						
-			elseif sItemType == "function" then
+			elseif s_itemType == "function" then
 			--Can't use this, don't have access to the getfenv function in LoG
 									
-			elseif sItemType == "userdata" then
+			elseif s_itemType == "userdata" then
 			--do the userdata stuff here...
 			
-			elseif sItemType == "table" then
-			sRet = sRet.."t<k>"..vIndex.."</k><v>"..Util.TableToString(vItem, nCount).."</v>";
+			elseif s_itemType == "table" then
+			s_ret = s_ret.."t<k>"..v_index.."</k><v>"..util_tableToString(v_item, n_count).."</v>";
 			
 			end
 		
 		--finish this key, value pair
-		sRet = sRet.."</p"..sCount..">";
+		s_ret = s_ret.."</p"..s_count..">";
 		end
 			
 	end
 
-sRet = sRet.."</t"..sCount..">";
+s_ret = s_ret.."</t"..s_count..">";
 
-return sRet
+return s_ret
 end
 
 
 --[[
 --------------------------
-Util.Table_FromString(string)
+util.table_fromString(string)
 Return Type: table
 Method Type: internal
 --------------------------
 Converts a table, previously
 created by the above-listed
-Util.TableToString() function
+util.TableToString() function
 back into a table.
 A Few Notes:
 1. This works ONLY with the
@@ -364,23 +364,23 @@ nil and table.
 4. The number(argument #2) MUST be
 excluded when called.
 ]]
-function Table_FromString(sInput, nCount)
-local nCount = nCount;
+function table_fromString(sInput, n_count)
+local n_count = n_count;
 
 	--initialize the count variable if it's not
-	if type(nCount) ~= "number" then
-	nCount = 0;
+	if type(n_count) ~= "number" then
+	n_count = 0;
 	end
 	
 --step the count variable
-nCount = nCount + 1;
+n_count = n_count + 1;
 --convert to string for use with the tags
-local sCount = tostring(nCount);
+local s_count = tostring(n_count);
 
 --the table that will be returned
-local tRet = {};
+local t_ret = {};
 --used for simplicity
-local tTypes = {
+local t_types = {
 	b = "boolean",
 	l = "nil",
 	n = "number",
@@ -388,15 +388,15 @@ local tTypes = {
 	t = "table",
 };
 --a list of the tags being used
-local tTags = {
+local t_tags = {
 	KVP = {
 		Open = {
 			Length = 0,
-			String = "<p"..sCount..">",
+			String = "<p"..s_count..">",
 		},
 		Close = {
 			Length = 0,
-			String = "</p"..sCount..">",
+			String = "</p"..s_count..">",
 		},
 	},
 	Key = {
@@ -422,9 +422,9 @@ local tTags = {
 };
 
 	--get the length of all of the tags
-	for sTagClass, tTag in pairs(tTags) do
-	tTags[sTagClass].Open.Length = string.len(tTag.Open.String);
-	tTags[sTagClass].Close.Length = string.len(tTag.Close.String);
+	for sTagClass, tTag in pairs(t_tags) do
+	t_tags[sTagClass].Open.Length = string.len(tTag.Open.String);
+	t_tags[sTagClass].Close.Length = string.len(tTag.Close.String);
 	end
 
 --where the last search ended (and the next search wil start)
@@ -437,43 +437,43 @@ local nSearchKVP_S, nSearchKVP_E = 0, 0;
 	--make sure no loopy happens
 	bContinue = false;
 	--find the point where the next key,value pair open tag begins
-	nSearchKVP_S, nSearchKVP_E = string.find(sInput, tTags.KVP.Open.String, nSearch_E);
+	nSearchKVP_S, nSearchKVP_E = string.find(sInput, t_tags.KVP.Open.String, nSearch_E);
 		
 		if nSearchKVP_S and nSearchKVP_E then
 		--get the start point of the key tag
 		local nKeyStart = nSearchKVP_E + 3;
 		--get the index type
-		local sKeyType = tTypes[string.sub(sInput, nSearchKVP_E + 1, nSearchKVP_E + 1)];
+		local sKeyType = t_types[string.sub(sInput, nSearchKVP_E + 1, nSearchKVP_E + 1)];
 		--get the item type
-		local sValueType = tTypes[string.sub(sInput, nSearchKVP_E + 2, nSearchKVP_E + 2)];
+		local sValueType = t_types[string.sub(sInput, nSearchKVP_E + 2, nSearchKVP_E + 2)];
 		--find the start of the close tag in this key, value pair
-		local nMyEnd = string.find(sInput, tTags.KVP.Close.String, nKeyStart);
+		local nMyEnd = string.find(sInput, t_tags.KVP.Close.String, nKeyStart);
 			
 			if nMyEnd then
 			--get the string containing the type strings, index and item of the key, value pair
 			local sKVPRaw = string.sub(sInput, nKeyStart, nMyEnd - 1);
 			--get the start and end points for the key open tag
-			local nKeyOpen_S, nKeyOpen_E = string.find(sKVPRaw, tTags.Key.Open.String, 1);
+			local nKeyOpen_S, nKeyOpen_E = string.find(sKVPRaw, t_tags.Key.Open.String, 1);
 				
 				if nKeyOpen_S and nKeyOpen_E then
 				--get the start and end points for the key close tag
-				local nKeyClose_S, nKeyClose_E = string.find(sKVPRaw, tTags.Key.Close.String, 1);
+				local nKeyClose_S, nKeyClose_E = string.find(sKVPRaw, t_tags.Key.Close.String, 1);
 					
 					if nKeyClose_S and nKeyClose_E then
 					--get the start and end points for the value open tag
-					local nValueOpen_S, nValueOpen_E = string.find(sKVPRaw, tTags.Value.Open.String, 1);
+					local n_valueOpen_S, n_valueOpen_E = string.find(sKVPRaw, t_tags.Value.Open.String, 1);
 					
-						if nValueOpen_S and nValueOpen_E then
+						if n_valueOpen_S and n_valueOpen_E then
 						--reverse the string to ensure the last value close tag is found
 						local sReverse = string.reverse(sKVPRaw);
 						--get the start and end points for the value close tag
-						local nValueClose_S, nValueClose_E = string.find(sReverse, tTags.Value.Close.String, 1);
+						local n_valueClose_S, n_valueClose_E = string.find(sReverse, t_tags.Value.Close.String, 1);
 							
-							if nValueClose_S and nValueClose_E then
+							if n_valueClose_S and n_valueClose_E then
 							--get the key
 							local vKey = string.sub(sKVPRaw, nKeyOpen_E + 1, nKeyClose_S - 1);
 							--get the value
-							local vValue = string.sub(sKVPRaw, nValueOpen_E + 1, string.len(sKVPRaw) - nValueClose_E);
+							local vValue = string.sub(sKVPRaw, n_valueOpen_E + 1, string.len(sKVPRaw) - n_valueClose_E);
 							--store the info to be returned
 								
 								-- the modified key (to be)
@@ -510,12 +510,12 @@ local nSearchKVP_S, nSearchKVP_E = 0, 0;
 								vModValue = tostring(vValue);
 								
 								elseif sValueType == "table" then
-								vModValue = Util.StringToTable(vValue, nCount);
+								vModValue = util.StringToTable(vValue, n_count);
 								
 								end								
 								
 								--set the table item
-								tRet[vModKey] = vModValue;
+								t_ret[vModKey] = vModValue;
 								
 							--mark the start of the next search (and the end of this one)
 							nSearch_E = nMyEnd - 1;
@@ -534,5 +534,5 @@ local nSearchKVP_S, nSearchKVP_E = 0, 0;
 	
 	end
 
-return tRet
+return t_ret
 end
