@@ -48,13 +48,28 @@ tUtil = {
 	},
 };
 
-;
 
 --================================================================================
 --								<<<All Util Methods>>>
 --================================================================================
 
+
+--[[
+------------------------------
+util.varIsValid(table, string)
+Return Type: boolean
+Method Type: external
+------------------------------
+This will check the validity
+of a variable's type. The first
+arguement is a numerically-indexed
+table whose values are strings all
+of the allowed variable types.
+For Example:
+util.varIsValid({"string","number","nil"}, v_myVar)
+]]
 function varIsValid(t_types, v_var)
+--a list of all usable variable inputs
 local t_validTypes = {
 	b = "boolean",
 	f = "funciton",
@@ -63,11 +78,14 @@ local t_validTypes = {
 	s = "string",
 	t = "table",
 };
-
-	if type(t_types) == "table" then
-	local s_varType = type(v_var);
 	
-		for n_typeID, s_typeID in pairs(t_types) do
+	--make sure the table containing the allowed types exists
+	if type(t_types) == "table" then
+	--get the type of variable that was input
+	local s_varType = type(v_var);
+		
+		--for each item in the allowed variable types table...
+		for n_typeID, s_typeID in pairs(t_types) do		
 		s_typeID = string.lower(s_typeID);
 		
 			---check that the input type exists
@@ -93,12 +111,15 @@ end
 --================================================================================
 
 
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+--[[
+-------------------------------------------------------------------
 util.dungeon_adjacentCellIsWall(Integer, Integer, Integer, Integer)
-Used to determine if a cell adjacent to
-the input cell is a wall. This is, of course,
-relative to the input facing.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+Return Type: boolean
+Method Type: external
+-------------------------------------------------------------------
+Used to determine if a cell adjacent to the input cell is a wall.
+This is, of course, relative to the input facing.
+]]
 function dungeon_adjacentCellIsWall(n_level, n_facing, n_x, n_y)
 
 	if n_facing == 0 then
@@ -128,23 +149,36 @@ end
 --================================================================================
 
 
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-util.Math_GetAlternator
+--[[
+-------------------------
+util.math_getAlternator()
+Return Type: number
+Method Type: external
+-------------------------
 Gets a random number:
-either 1 or -1.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
-function Math_GetAlternator()
+either 1 or -1. This is
+used for randomaly converting
+a positive number to negative
+and vice versa.
+]]
+function math_getAlternator()
+-- (-1 ^ 1 == -1 and -1 ^ 2 == 1)
 return (-1) ^ math.random(1,2)
 end
 
 
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-util.math_upOrDown(Integer)
-A utility function that returns
-an integer value to the
-(randomly chosen) nearest high
-or low value.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+--[[
+--------------------------
+util.math_upOrDown(number)
+Return Type: number
+Method Type: external
+--------------------------
+A utility function that
+returns an integer value to
+the (randomly chosen) nearest
+high or low value of the
+input number.
+]]
 function math_upOrDown(n_value)
 		
 	if math.random() < 0.5 then
@@ -155,21 +189,46 @@ function math_upOrDown(n_value)
 
 end
 
+
 --================================================================================
 --									<<<POSITION>>>
 --================================================================================
-function position_getOppositeFacing(n_facing)
 
-	if n_facing == 0 then
-	return 2
-	elseif n_facing == 1 then
-	return 3
-	elseif n_facing == 2 then
-	return 0	
-	elseif n_facing == 3 then
-	return 1
+
+--[[
+---------------------------------------
+util.position_getOppositeFacing(number)
+Return Type: number
+Method Type: external
+---------------------------------------
+Given a facing, this function will return
+a facing that is opposite.
+Note: if the facing value is invalid, 0
+is returned.
+]]
+function position_getOppositeFacing(n_facing)
+	
+	if util.VarIsValid({"number"}, n_facing) then
+		--input north, output south
+		if n_facing == 0 then
+		return 2
+		
+		--input east, output west
+		elseif n_facing == 1 then
+		return 3
+		
+		--input south, output north
+		elseif n_facing == 2 then
+		return 0
+		
+		--input west, output east
+		elseif n_facing == 3 then	
+		return 1
+		end
+	
 	end
 
+--default return value
 return 0
 end
 
@@ -179,12 +238,16 @@ end
 --================================================================================
 
 
---[[>>>>>>>>>>>>>>>>>>>>>>>>>>
-util.string_generateUUID(String)
+--[[
+--------------------------------
+util.string_generateUUID(string)
+Return Type: number
+Method Type: external
+--------------------------------
 Creates a Universal Unique
 Identifier that may contain
 a prefix.
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<]]
+]]
 function string_generateUUID(s_prefix)
 local t_chars = {"x","3","y","1","b","2","p","e","8","f","v","t","g","9","h","7","u","4","i","z","a","j","0","c","k","l","5","m","n","w","o","q","r","s","d","6"};
 local t_sequence = {1,4,4,4,12};
@@ -211,7 +274,6 @@ else
 t_sequence[1] = 8;
 end
 
---fix the - at the end...
 for n_index, n_sequence in pairs(t_sequence) do
 	
 	for x = 1, n_sequence do
@@ -221,7 +283,8 @@ for n_index, n_sequence in pairs(t_sequence) do
 s_UUID = s_UUID.."-";
 end
 
-return s_UUID
+--fixes the extra - at the end
+return string.sub(s_UUID, 1, string.len(s_UUID) - 1)
 end
 
 
