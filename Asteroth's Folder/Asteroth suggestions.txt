@@ -16,6 +16,8 @@ very resilient against cold. The locals consumed them to gain their strength.
 Setting/rule suggestions
 I would like a system of corruption that can accrue.Possibly similiar to JohnWordsworth's thirst(but much slower, and
 depending on situation.) Probably only in some areas.(note this was just off the top of my head I don't want to force a whole new major mechanic)
+Familiars: Possibly have mages select familiar from gui screen. Upon which they will become a permanent inventory item.
+Standard familiars I would suggest include a raven, owl(Serpentine?) or lizard/toad.
 
 Equipment suggestions
 I would like some pieces of equipment that can be upgraded.
