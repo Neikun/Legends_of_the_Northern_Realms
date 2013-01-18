@@ -7,6 +7,23 @@ defineObject{
 }
 
 defineObject{
+	name = "sx_town_pillar_halfsize",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_pillar_halfsize.fbx",
+	placement = "pillar",
+	editorIcon = 108,
+}
+
+defineObject{
+	name = "sx_town_pillar_wood_halfsize",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_pillar_wood_halfsize.fbx",
+	placement = "pillar",
+	editorIcon = 108,
+}
+
+
+defineObject{
     name = "sx_town_door",
     class = "Decoration",
     model = "mod_assets/sx_towntileset/models/sx_town_door.fbx",
@@ -34,6 +51,20 @@ defineObject{
 	name = "sx_town_door_portcullis",
 	class = "Door",
 	model = "mod_assets/sx_towntileset/models/sx_town_door_portcullis.fbx",
+	openSound = "wall_sliding",
+	closeSound = "wall_sliding",
+	lockSound = "wall_sliding_lock",
+	openVelocity = 0.5,
+	closeVelocity = -0.5,
+	secretDoor = true,
+	placement = "wall",
+	editorIcon = 120,
+}
+
+defineObject{
+	name = "sx_town_wall_chain",
+	class = "Door",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_chain.fbx",
 	openSound = "wall_sliding",
 	closeSound = "wall_sliding",
 	lockSound = "wall_sliding_lock",
@@ -335,7 +366,16 @@ defineObject{
 defineObject{
 	name = "sx_town_floor_drainage",
 	class = "Decoration",
-	model = "mod_assets/sx_towntileset/models/sx_town_floor_drainage.fbx",
+	model = "mod_assets/sx_towntileset/models/sx_town_floor_drainage_small.fbx",
+	placement = "floor",
+	replacesFloor = true,
+	editorIcon = 136,
+}
+
+defineObject{
+	name = "sx_town_floor_drainage_large",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_floor_drainage_large.fbx",
 	placement = "floor",
 	replacesFloor = true,
 	editorIcon = 136,
@@ -518,6 +558,25 @@ defineObject{
 	editorIcon = 92,
 }
 
+defineObject{
+    name = "sx_town_wall_flowers",
+    class = "Decoration",
+    model = "mod_assets/sx_towntileset/models/sx_town_wall_flowers.fbx",
+    placement = "wall",
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_floor_pit",
+	class = "Pit",
+    model = "mod_assets/sx_towntileset/models/sx_town_floor_pit.fbx",
+	trapDoorModel = "mod_assets/sx_towntileset/models/sx_town_floor_pit_trapdoor.fbx",
+	openAnim = "assets/animations/env/dungeon_pit_trapdoor_open.fbx",
+	closeAnim = "assets/animations/env/dungeon_pit_trapdoor_close.fbx",
+	placement = "floor",
+	editorIcon = 40,
+}
+
 -- Doors
 
 defineObject{
@@ -647,6 +706,19 @@ defineObject{
 	editorIcon = 120,
 }
 
+defineObject{
+	name = "sx_town_wall_outside_inside",
+	class = "Door",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_outside_inside.fbx",
+	openSound = "wall_sliding",
+	closeSound = "wall_sliding",
+	lockSound = "wall_sliding_lock",
+	openVelocity = 0.5,
+	closeVelocity = -0.5,
+	secretDoor = true,
+	placement = "wall",
+	editorIcon = 120,
+}
 
 -- Stairs
 
@@ -760,6 +832,16 @@ defineObject{
 	editorIcon = 88,
 }
 
+defineObject{
+	name = "sx_swingdoor",
+	class = "Lever",
+	model = "mod_assets/sx_towntileset/models/swingdoor_ani.fbx",
+	activateAnim = "mod_assets/sx_towntileset/animations/swingdoor_open.fbx",
+	deactivateAnim = "mod_assets/sx_towntileset/animations/swingdoor_close.fbx",
+	placement = "wall",
+	editorIcon = 12,
+}
+
 -- particle effects for town
 
 defineParticleSystem{
@@ -792,3 +874,42 @@ defineParticleSystem{
  }
 }
 
+defineObject{
+    name = "gravestone_01",
+    class = "Blockage",
+	model = "mod_assets/sx_towntileset/models/gravestone_01.fbx",
+    placement = "floor",
+	repelProjectiles = true,
+	hitSound = "impact_blade",
+	editorIcon = 56,
+}
+
+defineObject{
+    name = "gravestone_02",
+    class = "Blockage",
+	model = "mod_assets/sx_towntileset/models/gravestone_02.fbx",
+    placement = "floor",
+	repelProjectiles = true,
+	hitSound = "impact_blade",
+	editorIcon = 56,
+}
+
+defineObject{
+    name = "gravestone_03",
+    class = "Blockage",
+	model = "mod_assets/sx_towntileset/models/gravestone_03.fbx",
+    placement = "floor",
+	repelProjectiles = true,
+	hitSound = "impact_blade",
+	editorIcon = 56,
+}
+
+defineObject{
+    name = "gravestone_04",
+    class = "Blockage",
+	model = "mod_assets/sx_towntileset/models/gravestone_04.fbx",
+    placement = "floor",
+	repelProjectiles = true,
+	hitSound = "impact_blade",
+	editorIcon = 56,
+}

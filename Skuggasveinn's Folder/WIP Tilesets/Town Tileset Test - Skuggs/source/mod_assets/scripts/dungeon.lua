@@ -40,7 +40,6 @@ mapDesc([[
 ################################
 ]])
 spawn("sx_town_stairs_down_indoor", 22,9,3, "sx_town_stairs_down_indoor_1")
-spawn("starting_location", 25,9,1, "starting_location")
 spawn("sx_town_window_indoor_snapon_lightrays", 27,9,1, "sx_town_window_indoor_snapon_lightrays_1")
 spawn("torch_holder", 25,8,3, "torch_holder_4")
 spawn("sx_town_window_indoor_light", 27,9,1, "sx_town_window_indoor_light_1")
@@ -76,8 +75,8 @@ mapDesc([[
 ###################...##########
 ###################....#########
 ###################...##########
-###################...##########
-####################.###########
+###################....#########
+####################...#########
 ###################....#.#######
 ##############...##....#.#######
 ##############............######
@@ -213,7 +212,6 @@ spawn("sx_town_wall_window_low_snapon", 20,17,2, "sx_town_wall_window_low_snapon
 spawn("sx_town_wall_window_low_snapon", 19,17,3, "sx_town_wall_window_low_snapon_4")
 spawn("sx_town_wall_window_low_snapon", 22,13,0, "sx_town_wall_window_low_snapon_5")
 spawn("sx_town_wall_window_low_snapon", 24,13,0, "sx_town_wall_window_low_snapon_6")
-spawn("sx_town_wall_barrels", 22,13,1, "sx_town_wall_barrels_1")
 spawn("sx_town_wall_barrels", 19,17,2, "sx_town_wall_barrels_2")
 spawn("sx_town_wall_barrels", 24,17,2, "sx_town_wall_barrels_3")
 spawn("sx_town_wall_barrels", 14,14,3, "sx_town_wall_barrels_4")
@@ -255,11 +253,9 @@ spawn("sx_town_wall_indoor", 19,8,0, "sx_town_wall_indoor_4")
 spawn("sx_town_wall_indoor", 20,8,0, "sx_town_wall_indoor_5")
 spawn("sx_town_wall_indoor", 21,8,0, "sx_town_wall_indoor_6")
 spawn("sx_town_wall_indoor", 21,10,1, "sx_town_wall_indoor_8")
-spawn("sx_town_wall_indoor", 21,11,1, "sx_town_wall_indoor_9")
-spawn("sx_town_wall_indoor", 21,11,2, "sx_town_wall_indoor_10")
+spawn("sx_town_wall_indoor", 22,11,0, "sx_town_wall_indoor_9")
 spawn("sx_town_wall_indoor", 19,11,2, "sx_town_wall_indoor_11")
 spawn("sx_town_wall_indoor", 20,12,3, "sx_town_wall_indoor_12")
-spawn("sx_town_wall_indoor", 20,12,1, "sx_town_wall_indoor_13")
 spawn("sx_town_housewall", 18,15,0, "sx_town_housewall_78")
 spawn("sx_town_housewall", 18,15,2, "sx_town_housewall_98")
 spawn("sx_town_battlement", 22,14,1, "sx_town_battlement_11")
@@ -277,13 +273,12 @@ spawn("sx_town_wall_lower", 26,15,0, "sx_town_wall_lower_3")
 spawn("sx_town_wall_lower", 26,16,2, "sx_town_wall_lower_4")
 spawn("sx_town_wall_lower", 25,15,0, "sx_town_wall_lower_5")
 spawn("sx_town_wall_lower", 25,16,2, "sx_town_wall_lower_6")
-spawn("torch_holder", 21,11,2, "torch_holder_1")
+spawn("torch_holder", 20,12,3, "torch_holder_1")
 	:addTorch()
 spawn("sx_town_pillar_flower_yellow", 21,13,2, "sx_town_pillar_flower_yellow_3")
 spawn("sx_town_wall_lowest", 27,15,0, "sx_town_wall_lowest_1")
 spawn("sx_town_wall_lowest", 27,16,2, "sx_town_wall_lowest_2")
 spawn("sx_town_window_light_E", 24,17,3, "sx_town_window_light_E_5")
-spawn("sx_town_doorframe_w_door", 20,13,0, "sx_town_doorframe_w_door_1")
 spawn("sx_town_door_portcullis", 22,16,1, "sx_town_door_portcullis_1")
 spawn("sx_town_door_portcullis", 23,16,1, "sx_town_door_portcullis_2")
 spawn("sx_town_starsky", 25,16,3, "sx_town_starsky_3")
@@ -309,7 +304,6 @@ spawn("sx_town_table_01", 19,10,0, "sx_town_table_01_2")
 spawn("sx_pillar_killer", 21,10,1, "sx_pillar_killer_1")
 spawn("sx_pillar_killer", 21,8,1, "sx_pillar_killer_2")
 spawn("sx_pillar_killer", 20,8,0, "sx_pillar_killer_3")
-spawn("sx_pillar_killer", 21,11,2, "sx_pillar_killer_4")
 spawn("sx_pillar_killer", 19,8,3, "sx_pillar_killer_5")
 spawn("sx_pillar_killer", 19,10,3, "sx_pillar_killer_6")
 spawn("sx_pillar_killer", 19,11,2, "sx_pillar_killer_7")
@@ -328,7 +322,7 @@ spawn("sx_town_pillar_wood", 21,12,0, "sx_town_pillar_wood_16")
 spawn("sx_town_wall_04", 24,17,2, "sx_town_wall_04_1")
 spawn("sx_town_wall_05", 19,13,3, "sx_town_wall_05_1")
 spawn("sx_town_wall_05", 24,17,3, "sx_town_wall_05_2")
-spawn("sx_town_floor_drainage", 21,15,3, "sx_town_floor_drainage_1")
+spawn("sx_town_floor_drainage", 21,15,2, "sx_town_floor_drainage_1")
 spawn("sx_town_housewall", 9,22,0, "sx_town_housewall_123")
 spawn("sx_town_housewall", 10,22,0, "sx_town_housewall_124")
 spawn("sx_town_housewall", 11,22,0, "sx_town_housewall_125")
@@ -378,6 +372,36 @@ spawn("sx_town_window_light_E", 12,24,0, "sx_town_window_light_E_10")
 spawn("sx_town_sign_tavern", 20,13,2, "sx_town_sign_tavern_1")
 spawn("sx_town_sign_wall_tavern", 21,13,0, "sx_town_sign_wall_tavern_1")
 spawn("sx_town_stairs_up_indoor", 22,9,1, "sx_town_stairs_up_indoor_1")
+spawn("sx_town_wall_flowers", 19,13,0, "sx_town_wall_flowers_1")
+spawn("sx_town_wall_05", 22,13,1, "sx_town_wall_05_5")
+spawn("sx_town_wall_flowers", 22,14,1, "sx_town_wall_flowers_2")
+spawn("sx_town_wall_indoor", 22,11,1, "sx_town_wall_indoor_42")
+spawn("sx_town_wall_indoor", 22,12,1, "sx_town_wall_indoor_43")
+spawn("sx_town_pillar", 21,13,2, "sx_town_pillar_12")
+spawn("sx_town_pillar", 22,13,1, "sx_town_pillar_13")
+spawn("sx_town_floor_inside", 21,12,0, "sx_town_floor_inside_37")
+spawn("sx_town_floor_inside", 22,12,0, "sx_town_floor_inside_38")
+spawn("sx_town_floor_inside", 22,11,0, "sx_town_floor_inside_39")
+spawn("sx_town_ceiling_indoors", 22,11,2, "sx_town_ceiling_indoors_37")
+spawn("sx_town_ceiling_indoors", 22,12,0, "sx_town_ceiling_indoors_38")
+spawn("sx_town_ceiling_indoors", 21,12,0, "sx_town_ceiling_indoors_39")
+spawn("sx_town_secretwall_indoor", 20,12,1, "sx_town_secretwall_indoor_2")
+spawn("sx_pillar_killer", 22,11,1, "sx_pillar_killer_4")
+spawn("sx_town_pillar_wood", 23,11,3, "sx_town_pillar_wood_8")
+spawn("sx_town_pillar_wood", 23,12,0, "sx_town_pillar_wood_9")
+spawn("torch_holder", 19,9,3, "torch_holder_6")
+	:addTorch()
+spawn("starting_location", 20,14,0, "starting_location")
+spawn("sx_town_wall_outside_inside", 21,13,0, "sx_town_wall_outside_inside_1")
+spawn("sx_town_wall_outside_inside", 22,13,0, "sx_town_wall_outside_inside_2")
+spawn("sx_town_wall_window_low_snapon", 22,12,2, "sx_town_wall_window_low_snapon_20")
+spawn("sx_town_floor_pit", 23,15,1, "sx_town_floor_pit_1")
+	:addTrapDoor()
+	:setPitState("closed")
+spawn("wall_button", 24,14,3, "wall_button_1")
+	:addConnector("toggle", "sx_town_floor_pit_1", "toggle")
+spawn("sx_town_doorway", 20,13,0, "sx_town_doorway_3")
+spawn("sx_swingdoor", 20,13,0, "sx_swingdoor_1")
 
 --- level 3 ---
 
@@ -388,8 +412,8 @@ mapDesc([[
 ################################
 ################################
 ###################..###########
-###################.############
-###################...##########
+###################.##.#########
+###################....#########
 ###################....#########
 ###################.....########
 ###################.#.....######
@@ -486,8 +510,8 @@ spawn("sx_town_housewall", 21,7,3, "sx_town_housewall_88")
 spawn("sx_town_housewall", 20,6,2, "sx_town_housewall_89")
 spawn("sx_town_housewall", 20,4,0, "sx_town_housewall_90")
 spawn("sx_town_housewall", 21,4,0, "sx_town_housewall_91")
-spawn("sx_town_housewall", 21,4,1, "sx_town_housewall_92")
-spawn("sx_town_housewall", 22,5,0, "sx_town_housewall_93")
+spawn("sx_town_housewall", 22,4,1, "sx_town_housewall_92")
+spawn("sx_town_housewall", 22,3,3, "sx_town_housewall_93")
 spawn("sx_town_housewall", 22,5,1, "sx_town_housewall_94")
 spawn("sx_town_housewall", 23,6,0, "sx_town_housewall_95")
 spawn("sx_town_housewall", 23,6,1, "sx_town_housewall_96")
@@ -630,8 +654,7 @@ spawn("sx_town_window_light_E", 22,11,2, "sx_town_window_light_E_3")
 spawn("sx_town_wall", 23,11,3, "sx_town_wall_11")
 spawn("sx_town_window_high", 24,12,2, "sx_town_window_high_14")
 spawn("sx_town_window_light_S", 24,12,2, "sx_town_window_light_S_3")
-spawn("sx_town_pillar", 23,7,3, "sx_town_pillar_8")
-spawn("sx_town_pillar_flower_yellow", 23,7,3, "sx_town_pillar_flower_yellow_4")
+spawn("sx_town_pillar_flower_yellow", 23,6,3, "sx_town_pillar_flower_yellow_4")
 spawn("sx_town_housewall", 19,2,0, "sx_town_housewall_113")
 spawn("sx_town_housewall", 19,2,3, "sx_town_housewall_114")
 spawn("sx_town_housewall", 19,3,3, "sx_town_housewall_115")
@@ -705,18 +728,39 @@ spawn("sx_town_table_02", 30,16,1, "sx_town_table_02_4")
 spawn("sx_town_table_02", 30,17,1, "sx_town_table_02_5")
 spawn("sx_town_pillar_wood", 31,16,3, "sx_town_pillar_wood_41")
 spawn("sx_town_pillar_wood", 31,17,2, "sx_town_pillar_wood_42")
+spawn("sx_town_pillar_halfsize", 23,7,2, "sx_town_pillar_halfsize_3")
+spawn("sx_town_wall_halfsize", 23,6,2, "sx_town_wall_halfsize_4")
+spawn("sx_town_pillar_halfsize", 20,6,0, "sx_town_pillar_halfsize_1")
+spawn("sx_town_pillar_halfsize", 20,5,3, "sx_town_pillar_halfsize_2")
+spawn("sx_town_wall_halfsize", 20,6,3, "sx_town_wall_halfsize_1")
+spawn("sx_town_wall_halfsize", 20,5,3, "sx_town_wall_halfsize_2")
+spawn("sx_town_wall_halfsize", 20,4,3, "sx_town_wall_halfsize_3")
+spawn("sx_simple_stairs_down", 22,3,0, "sx_simple_stairs_down_3")
+spawn("sx_town_wall_lower", 22,3,1, "sx_town_wall_lower_7")
+spawn("sx_town_wall_lower", 22,3,3, "sx_town_wall_lower_8")
+spawn("sx_town_wall", 21,3,1, "sx_town_wall_12")
+spawn("sx_town_wall", 22,3,1, "sx_town_wall_13")
+spawn("sx_town_pillar", 22,4,1, "sx_town_pillar_8")
+spawn("sx_town_pillar", 23,4,1, "sx_town_pillar_9")
+spawn("sx_town_wall_lower", 22,2,3, "sx_town_wall_lower_9")
+spawn("sx_town_wall_lower", 22,2,1, "sx_town_wall_lower_10")
+spawn("sx_town_wall", 21,2,1, "sx_town_wall_14")
+spawn("sx_town_wall", 22,2,1, "sx_town_wall_15")
+spawn("sx_town_housewall", 22,2,3, "sx_town_housewall_139")
+spawn("sx_town_sign_wall_harbor", 22,4,1, "sx_town_sign_wall_harbor_1")
+spawn("sx_town_housewall", 22,3,1, "sx_town_housewall_140")
 
 --- level 4 ---
 
 mapName("Unnamed")
-setWallSet("dungeon")
+setWallSet("town_tileset")
 playStream("assets/samples/music/dungeon_ambient.ogg")
 mapDesc([[
 ################################
 ################################
-################################
-################################
-################################
+#####################..#########
+######################.##...####
+#########################...####
 ################################
 ################################
 ################################
@@ -745,3 +789,16 @@ mapDesc([[
 ################################
 ################################
 ]])
+spawn("sx_simple_stairs_up", 22,3,2, "sx_simple_stairs_up_3")
+spawn("sx_town_wall", 21,3,1, "sx_town_wall_16")
+spawn("sx_town_wall", 23,3,3, "sx_town_wall_17")
+spawn("sx_town_pillar", 22,3,2, "sx_town_pillar_10")
+spawn("sx_town_pillar", 23,3,0, "sx_town_pillar_11")
+spawn("sx_town_wall", 21,4,1, "sx_town_wall_18")
+spawn("sx_town_wall", 23,4,3, "sx_town_wall_19")
+spawn("sx_town_housewall", 22,3,1, "sx_town_housewall_141")
+spawn("sx_town_housewall", 22,3,3, "sx_town_housewall_142")
+spawn("sx_town_housewall", 22,4,1, "sx_town_housewall_143")
+spawn("sx_town_housewall", 22,4,3, "sx_town_housewall_144")
+spawn("sx_town_housewall", 22,5,3, "sx_town_housewall_145")
+spawn("sx_town_housewall", 22,5,1, "sx_town_housewall_146")
