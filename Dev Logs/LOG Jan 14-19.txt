@@ -15,6 +15,7 @@ DearthFang Ridges
 Concepts for Dungeon entrances
 East of the DearthFang ridges
 Forest Concepts
+Forest of Malan Yera
 Frostbites
 Grotto 
 Jonli
@@ -41,6 +42,7 @@ Xafi
 
 --areas with suggestions --
 East of DearthFang Ridges
+Forest of Malan Yera
 Murwynd Woods
 Nex
 Nothampton
