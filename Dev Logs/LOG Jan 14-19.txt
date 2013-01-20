@@ -1,0 +1,7 @@
+Diarmuid made more progress on his EXSP and  recreated the portal mechanic from the game, Portal.
+
+Skuggasveinn was able to make clickable, open in doors by assigning a pit open animation/ pit close animation to a lever with a door model and tying it to an invisible class = door.
+
+Neikun took these principles and made an infinitely spinning object by defining it as a lever with the healing crystal animation on both deactivate and activate, with a timer set to 13 second intervals to toggle the lever (and keep the animation going seamlessly) Unfortunate side effect: The sound of the lever activation still plays. 
+
+Drakken and Neikun wrote pieces for Nothampton world info.
