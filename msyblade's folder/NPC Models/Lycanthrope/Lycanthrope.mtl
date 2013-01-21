@@ -1,0 +1,13 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+# 
+newmtl Lycanthrope
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.449020 0.449020 0.449020
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd wolf.tga
+
+
