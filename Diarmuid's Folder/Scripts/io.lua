@@ -1,7 +1,14 @@
+-- ================================================================================
+--                                SAVE IO SCRIPT
+-- ================================================================================
+
+-- Main Data Object
 data = {}
 
--- Dungeon Import/Export
--- =====================
+
+-- ===================================================================================================
+--                                GLOBAL SAVE/LOAD FUNCTIONS
+-- ===================================================================================================
 
 function onSavePoint()
 	hudPrint("You have reached an exit zone. LotNR game data is now stored; if you")
@@ -60,6 +67,10 @@ function loadDungeonState()
 	end
 end
 
+-- ===================================================================================================
+--                                DUNGEON IMPORT/EXPORT FUNCTIONS
+-- ===================================================================================================
+
 function savePartyData()
 	data.party = {}
 	-- Save inventory items
@@ -90,7 +101,11 @@ function loadPartyData()
 	for i, v in ipairs(items) do
 		for slot, item in pairs(v) do
 			if item ~= "nil" then
-				party:getChampion(i):insertItem(slot, loadItem(item))
+				if checkItemName(item.n) then
+					party:getChampion(i):insertItem(slot, loadItem(item))
+				else
+					print("Warning, "..item.n.." is not defined in this Dungeon")
+				end
 			else
 				party:getChampion(i):removeItem(slot)
 			end
@@ -99,7 +114,11 @@ function loadPartyData()
 	-- Load mouse item
 	local item = data.party.mouse 
 	if item ~= "nil" then
-		setMouseItem(loadItem(item))
+		if checkItemName(item.n) then
+			setMouseItem(loadItem(item))		
+		else
+			print("Warning, "..item.n.." is not defined in this Dungeon")
+		end
 	else
 		setMouseItem(nil)
 	end
@@ -111,6 +130,7 @@ function saveSystemData()
 	system.origin = {}
 	system.origin.id = dungeon.id
 	system.origin.name = dungeon.name
+	system.origin.version = dungeon.version
 	system.origin.saveLevel = party.level
 	system.origin.saveX = party.x
 	system.origin.saveY = party.y
@@ -185,15 +205,25 @@ function loadItemsData()
 	end	
 	-- Load Alcoves Data
 	local alcoves = data[dungeon.id].alcoves
-	for id, a in pairs(alcoves) do
-		for _, i in ipairs(a) do
-			findEntity(id):addItem(loadItem(i))
+	for id, alcove in pairs(alcoves) do
+		for _, item in ipairs(alcove) do
+			if checkItemName(item.n) then
+				findEntity(id):addItem(loadItem(item))
+			else
+				print("Warning, "..item.n.." is not defined in this Dungeon")
+			end
+			
 		end
 	end	
 	-- Load Items Data
 	local items = data[dungeon.id].items
-	for _, i in ipairs(items) do
-		loadItem(i.i, i.l, i.x, i.y, i.f)
+	for _, item in ipairs(items) do
+		if checkItemName(item.n) then
+			loadItem(item.i, item.l, item.x, item.y, item.f)
+		else
+			print("Warning, "..item.n.." is not defined in this Dungeon")
+		end
+		
 	end
 end
 
@@ -269,62 +299,76 @@ function loadObjectsData()
 	-- Load Levers Data
 	if data[dungeon.id].levers then
 		for id, state in pairs(data[dungeon.id].levers) do
-			if state == "a" then
-				findEntity(id):setLeverState("activated")
-			else
-				findEntity(id):setLeverState("deactivated")
+			if findEntity(id) then
+				if state == "a" then
+					findEntity(id):setLeverState("activated")
+				else
+					findEntity(id):setLeverState("deactivated")
+				end
 			end
 		end
 	end
 	-- Load Teleporters Data
 	if data[dungeon.id].tel then
 		for id, state in pairs(data[dungeon.id].tel) do
-			if state == "a" then
-				findEntity(id):activate()
-			else
-				findEntity(id):deactivate()
+			if findEntity(id) then
+				if state == "a" then
+					findEntity(id):activate()
+				else
+					findEntity(id):deactivate()
+				end
 			end
 		end
 	end
 	-- Load Timers Data
 	if data[dungeon.id].timers then
 		for id, state in pairs(data[dungeon.id].timers) do
-			if state == "a" then
-				findEntity(id):activate()
-			else
-				findEntity(id):deactivate()
+			if findEntity(id) then
+				if state == "a" then
+					findEntity(id):activate()
+				else
+					findEntity(id):deactivate()
+				end
 			end
 		end	
 	end
 	-- Load Counters Data
 	if data[dungeon.id].counters then
 		for id, value in pairs(data[dungeon.id].counters) do
-			findEntity(id):setValue(value)
+			if findEntity(id) then
+				findEntity(id):setValue(value)
+			end
 		end	
 	end
 	-- Load Wall Texts Data
 	if data[dungeon.id].wTexts then
 		for id, value in pairs(data[dungeon.id].wTexts) do
-			findEntity(id):setWallText(value)
+			if findEntity(id) then
+				findEntity(id):setWallText(value)
+			end
 		end
 	end
 	-- Load Doors Data
 	if data[dungeon.id].doors then
 		for id, state in pairs(data[dungeon.id].doors) do
-			if state == "o" then
-				findEntity(id):setDoorState("open")
-			else
-				findEntity(id):setDoorState("closed")
+			if findEntity(id) then
+				if state == "o" then
+					findEntity(id):setDoorState("open")
+				else
+					findEntity(id):setDoorState("closed")
+				end
 			end
 		end
 	end
 	-- Load Pits Data
 	if data[dungeon.id].pits then
 		for id, state in pairs(data[dungeon.id].pits) do
-			if state == "o" then
-				findEntity(id):setPitState("open")
-			else
-				findEntity(id):setPitState("closed")
+			if findEntity(id) then
+				if state == "o" then
+					findEntity(id):setPitState("open")
+				else
+					findEntity(id):setPitState("closed")
+				end
 			end
 		end
 	end
@@ -558,10 +602,10 @@ voidLines = [[
 
 ]]
 
--- grimQ item functions, based on Xanathar code
--- =======================
+-- ===================================================================================================
+--                               ITEM FUNCTIONS (Based on Xanathar's Code)
+-- ===================================================================================================
 
--- saves an item into the table
 function saveItem(item)
    local itemTable = { }
    itemTable.i = item.id
@@ -584,40 +628,70 @@ function saveItem(item)
    return itemTable
 end
 
--- loads an item from the table
 function loadItem(itemTable, level, x, y, facing, id)
-   local spitem = nil
-   	id = id or itemTable.i
+	local itemToSpawn = nil
+	id = id or itemTable.i
 	
-    -- if id is numeric then create a new unique id for item
-    -- for some reason numeric id's are not allowed as a spawn-function argument
-   if (id and string.find(id, "^%d+$")) then
-      id = nil
-   end
-   if (level ~= nil) then
-	  spitem = spawn(itemTable.n, level, x, y, facing,id)
-   else
-	  spitem = spawn(itemTable.n,nil,nil,nil,nil,id)
-   end
-   if itemTable.s > 0 then
-	  spitem:setStackSize(itemTable.s)
-   end
-   if itemTable.c > 0 then
-	  spitem:setCharges(itemTable.c)
-   end            
+	id = checkItemId(id)
+	
+	if (level ~= nil) then
+		itemToSpawn = spawn(itemTable.n, level, x, y, facing,id)
+	else
+		itemToSpawn = spawn(itemTable.n,nil,nil,nil,nil,id)
+	end
+	if itemTable.s > 0 then
+		itemToSpawn:setStackSize(itemTable.s)
+	end
+	if itemTable.c > 0 then
+		itemToSpawn:setCharges(itemTable.c)
+	end            
    
-   if itemTable.t ~= nil then
-	  spitem:setScrollText(itemTable.t)
-   end
+	if itemTable.t ~= nil then
+		itemToSpawn:setScrollText(itemTable.t)
+	end
+	
+	if type(itemTable.f) ~= "string" then
+		itemToSpawn:setFuel(itemTable.f)
+	end
+
+	if (itemTable.sI ~= nil) then
+		for _, subTable in pairs(itemTable.sI) do
+			local subItem = loadItem(subTable)
+			itemToSpawn:addItem(subItem, false)
+		end
+	end
    
-   spitem:setFuel(itemTable.f)
-   
-   if (itemTable.sI ~= nil) then
-	  for _, subTable in pairs(itemTable.sI) do
-		 local subItem = loadItem(subTable)
-		 spitem:addItem(subItem, false)
-	  end
-   end
-   
-   return spitem
+	return itemToSpawn
 end
+
+function checkItemId(id)
+	if findEntity(id) then
+		return nil
+	end
+	for i = 1,4 do
+		for j = 1, 31 do
+			if party:getChampion(i):getItem(j).id == id then
+				return nil
+			end
+		end
+	end
+	if getMouseItem().id == id then
+		return nil
+	end
+	if string.find(id, "^%d+$") then
+		return nil
+	end
+	return id
+end
+
+function checkItemName(name)
+	for _, items in pairs(io_items.ioItemList) do
+		for _,item in ipairs(items) do
+			if name == item then
+				return true
+			end
+		end
+	end
+	return false
+end
+
