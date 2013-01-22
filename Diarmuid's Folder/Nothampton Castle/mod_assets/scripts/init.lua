@@ -12,7 +12,6 @@ import "mod_assets/scripts/recipes.lua"
 import "mod_assets/scripts/spells.lua"
 import "mod_assets/scripts/materials.lua"
 import "mod_assets/scripts/sounds.lua"
-import "mod_assets/scripts/sx_yuleland.lua"
-import "mod_assets/scripts/castle_exterior_materials.lua"
-import "mod_assets/scripts/castle_exterior_objects.lua"
-import "mod_assets/scripts/castle_exterior_wall_set.lua"
+
+-- import castle wallset
+import "mod_assets/scripts/castle_exterior.lua"
