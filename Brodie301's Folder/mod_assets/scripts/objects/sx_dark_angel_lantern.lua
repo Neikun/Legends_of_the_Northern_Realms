@@ -1,3 +1,5 @@
+
+--This is a combination of 2 of Skuggaveinn's models
 defineObject{
 	name = "dark_angel_lantern",
 	class = "Blockage",
