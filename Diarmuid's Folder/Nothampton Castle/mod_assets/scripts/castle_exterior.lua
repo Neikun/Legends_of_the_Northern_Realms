@@ -17,15 +17,27 @@ defineMaterial{
    }
    
 defineMaterial{
-   name = "sky",
+   name = "exterior_sky_10",
    diffuseMap = "mod_assets/textures/castle_exterior/sky.tga",
+   doubleSided = false,
+   lighting = true,
+   alphaTest = true,
+   blendMode = "Translucent",
+   textureAddressMode = "Clamp",
+   glossiness = 00,
+   depthBias = 0,
+   }
+   
+defineMaterial{
+   name = "star_sky",
+   diffuseMap = "mod_assets/textures/castle_exterior/stars.tga",
    doubleSided = true,
    lighting = true,
    alphaTest = false,
    blendMode = "Opaque",
    textureAddressMode = "Clamp",
-   glossiness = 30,
-   depthBias = 2,
+   glossiness = 00,
+   depthBias = 0,
    }
    
 defineMaterial{
@@ -38,20 +50,21 @@ defineMaterial{
    alphaTest = false,
    blendMode = "Opaque",
    textureAddressMode = "Clamp",
-   glossiness = 30,
+   glossiness = 20,
    depthBias = 0,
    }
 
 defineMaterial{
    name = "castle_wall",
    diffuseMap = "mod_assets/textures/castle_exterior/castle_wall_dif.tga",
-   specularMap = "mod_assets/textures/castle_exterior/castle_stone_spec.tga",
+   specularMap = "mod_assets/textures/castle_exterior/castle_wall_spec.tga",
+   normalMap = "mod_assets/textures/castle_exterior/castle_stone_red_normal.tga",
    doubleSided = false,
    lighting = true,
    alphaTest = false,
    blendMode = "Opaque",
    textureAddressMode = "Clamp",
-   glossiness = 30,
+   glossiness = 20,
    depthBias = 0,
    }
    
@@ -115,9 +128,25 @@ defineObject{
 }
 
 defineObject{
+	name = "_castle_exterior_wall_3above",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/wall_3above.fbx",
+	placement = "wall",
+	editorIcon = 120,
+}
+
+defineObject{
 	name = "_castle_exterior_wall_1below",
 	class = "Decoration",
 	model = "mod_assets/models/castle_exterior/wall_1below.fbx",
+	placement = "wall",
+	editorIcon = 120,
+}
+
+defineObject{
+	name = "_castle_exterior_wall_2below",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/wall_2below.fbx",
 	placement = "wall",
 	editorIcon = 120,
 }
@@ -171,12 +200,21 @@ defineObject{
    }
    
 defineObject{
+   name = "_castle_exterior_pillar_big_3above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/pillar_big_3above.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+   
+defineObject{
    name = "_castle_exterior_pillar_big_1below",
    class = "Decoration",
    model = "mod_assets/models/castle_exterior/pillar_big_1below.fbx",
    placement = "pillar",
    editorIcon = 108,
    }
+
 
 -- Small Pillars
 -- =================================================================================
@@ -213,6 +251,109 @@ defineObject{
    editorIcon = 108,
    }
 
+   
+-- Parapet Pillars
+-- =================================================================================
+
+defineObject{
+   name = "castle_exterior_parapet_pillar",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_pillar.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+
+defineObject{
+   name = "_castle_exterior_parapet_pillar_1above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_pillar_1above.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+  
+defineObject{
+   name = "_castle_exterior_parapet_pillar_2above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_pillar_2above.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+  
+defineObject{
+   name = "_castle_exterior_parapet_pillar_3above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_pillar_3above.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+  
+defineObject{
+   name = "_castle_exterior_parapet_pillar_1below",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_pillar_1below.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+  
+defineObject{
+   name = "_castle_exterior_parapet_pillar_2below",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_pillar_2below.fbx",
+   placement = "pillar",
+   editorIcon = 108,
+   }
+   
+-- Parapets
+-- =================================================================================
+
+defineObject{
+   name = "castle_exterior_parapet",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet.fbx",
+   placement = "wall",
+   editorIcon = 92,
+   }
+
+defineObject{
+   name = "_castle_exterior_parapet_1above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_1above.fbx",
+   placement = "wall",
+   editorIcon = 108,
+   }
+   
+defineObject{
+   name = "_castle_exterior_parapet_2above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_2above.fbx",
+   placement = "wall",
+   editorIcon = 108,
+   }
+      
+defineObject{
+   name = "_castle_exterior_parapet_3above",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_3above.fbx",
+   placement = "wall",
+   editorIcon = 108,
+   }
+      
+defineObject{
+   name = "_castle_exterior_parapet_1below",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_1below.fbx",
+   placement = "wall",
+   editorIcon = 108,
+   }
+      
+defineObject{
+   name = "_castle_exterior_parapet_2below",
+   class = "Decoration",
+   model = "mod_assets/models/castle_exterior/parapet_2below.fbx",
+   placement = "wall",
+   editorIcon = 108,
+   }
+   
 -- Windows
 -- =================================================================================
 
@@ -252,12 +393,43 @@ defineObject{
 -- =================================================================================
 
 defineObject{
-	name = "castle_exterior_sky",
+	name = "sky_plane",
 	class = "Decoration",
-	model = "mod_assets/models/castle_exterior/sky.fbx",
-	placement = "floor",
-	replacesFloor = false,
-	editorIcon = 136,
+	model = "mod_assets/models/castle_exterior/sky_plane.fbx",
+	placement = "ceiling",
+	editorIcon = 88,
+}
+
+defineParticleSystem{
+	name = "sky_particle",
+	emitters = {
+
+		-- outer glow
+		{
+			spawnBurst = true,
+			emissionRate = 1,
+			emissionTime = 0,
+			maxParticles = 1,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,0},
+			velocity = {0,0},
+			texture = "mod_assets/textures/castle_exterior/stars.tga",
+			lifetime = {1000000, 1000000},
+			colorAnimation = false,
+			color0 = {1, 1, 1},
+			opacity = 0.5,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {20, 20},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = 0.01,
+			objectSpace = true,
+		}
+	}
 }
 
 -- SX Objects
@@ -268,8 +440,8 @@ defineObject{
 	class = "LightSource",
 	lightPosition = vec(0, 10, 0),
 	lightRange = 60,
-	lightColor = vec(1, 0.8, 0.7),
-	brightness = 8,
+	lightColor = vec(0.7, 0.8, 1.0),
+	brightness = 3,
 	castShadow = true,
 	flicker = false,
 	placement = "floor",
@@ -300,7 +472,7 @@ defineObject{
 	placement = "wall",
 	replacesWall = true,
 	killPillars = true,
-	editorIcon = 8,
+	editorIcon = 124,
 }
 
 defineObject{
@@ -313,13 +485,11 @@ defineObject{
 
 defineObject{
 	name = "sx_remove_floor",
-	class = "Pit",
-	model = "mod_assets/models/sx_pit.fbx",
-	trapDoorModel = "mod_assets/models/sx_pit_door.fbx",
-	openAnim = "assets/animations/env/dungeon_pit_trapdoor_open.fbx",
-	closeAnim = "assets/animations/env/dungeon_pit_trapdoor_close.fbx",
+	class = "Decoration",
+	model = "mod_assets/models/sx_blocker.fbx",
+	replacesFloor = true,
 	placement = "floor",
-	editorIcon = 40,
+	editorIcon = 136,
 }
 
 defineObject{
