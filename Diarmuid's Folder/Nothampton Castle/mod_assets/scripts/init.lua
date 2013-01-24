@@ -2,6 +2,7 @@
 
 -- import standard assets
 import "assets/scripts/standard_assets.lua"
+import "mod_assets/framework/framework.lua"
 
 -- import custom assets
 import "mod_assets/scripts/items.lua"
@@ -15,3 +16,6 @@ import "mod_assets/scripts/sounds.lua"
 
 -- import castle wallset
 import "mod_assets/scripts/castle_exterior.lua"
+import "mod_assets/scripts/multi_level_env.lua"
+
+

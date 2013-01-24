@@ -17,30 +17,6 @@ defineMaterial{
    }
    
 defineMaterial{
-   name = "exterior_sky_10",
-   diffuseMap = "mod_assets/textures/castle_exterior/sky.tga",
-   doubleSided = false,
-   lighting = true,
-   alphaTest = true,
-   blendMode = "Translucent",
-   textureAddressMode = "Clamp",
-   glossiness = 00,
-   depthBias = 0,
-   }
-   
-defineMaterial{
-   name = "star_sky",
-   diffuseMap = "mod_assets/textures/castle_exterior/stars.tga",
-   doubleSided = true,
-   lighting = true,
-   alphaTest = false,
-   blendMode = "Opaque",
-   textureAddressMode = "Clamp",
-   glossiness = 00,
-   depthBias = 0,
-   }
-   
-defineMaterial{
    name = "castle_stone_red",
    diffuseMap = "mod_assets/textures/castle_exterior/castle_stone_red_dif.tga",
    specularMap = "mod_assets/textures/castle_exterior/castle_stone_spec.tga",
@@ -388,48 +364,80 @@ defineObject{
 	placement = "wall",
 	editorIcon = 120,
 }
-
--- Sky
+   
+-- Stairs
 -- =================================================================================
 
 defineObject{
-	name = "sky_plane",
-	class = "Decoration",
-	model = "mod_assets/models/castle_exterior/sky_plane.fbx",
-	placement = "ceiling",
-	editorIcon = 88,
+	name = "castle_exterior_stairs_up",
+	class = "Stairs",
+	model = "mod_assets/models/sx_blocker.fbx",
+	down = false,
+	editorIcon = 48,
 }
 
-defineParticleSystem{
-	name = "sky_particle",
-	emitters = {
+defineObject{
+	name = "castle_exterior_stairs_down",
+	class = "Stairs",
+	model = "mod_assets/models/sx_blocker.fbx",
+	down = true,
+	editorIcon = 48,
+}
 
-		-- outer glow
-		{
-			spawnBurst = true,
-			emissionRate = 1,
-			emissionTime = 0,
-			maxParticles = 1,
-			boxMin = {0,0,0},
-			boxMax = {0,0,0},
-			sprayAngle = {0,0},
-			velocity = {0,0},
-			texture = "mod_assets/textures/castle_exterior/stars.tga",
-			lifetime = {1000000, 1000000},
-			colorAnimation = false,
-			color0 = {1, 1, 1},
-			opacity = 0.5,
-			fadeIn = 0.1,
-			fadeOut = 0.1,
-			size = {20, 20},
-			gravity = {0,0,0},
-			airResistance = 1,
-			rotationSpeed = 0,
-			blendMode = "Additive",
-			depthBias = 0.01,
-			objectSpace = true,
-		}
-	}
+defineObject{
+	name = "_castle_exterior_stairs",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up.fbx",
+	placement = "floor",
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "_castle_exterior_stairs_1above",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up_1above.fbx",
+	placement = "floor",
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "_castle_exterior_stairs_2above",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up_2above.fbx",
+	placement = "floor",
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "_castle_exterior_stairs_3above",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up_3above.fbx",
+	placement = "floor",
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "_castle_exterior_stairs_1below",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up_1below.fbx",
+	placement = "floor",
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "_castle_exterior_stairs_2below",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up_2below.fbx",
+	placement = "floor",
+	editorIcon = 48,
+}
+
+defineObject{
+	name = "_castle_exterior_stairs_3below",
+	class = "Decoration",
+	model = "mod_assets/models/castle_exterior/stairs_up_3below.fbx",
+	placement = "floor",
+	editorIcon = 48,
 }
 
 -- SX Objects
@@ -440,8 +448,8 @@ defineObject{
 	class = "LightSource",
 	lightPosition = vec(0, 10, 0),
 	lightRange = 60,
-	lightColor = vec(0.7, 0.8, 1.0),
-	brightness = 3,
+	lightColor = vec(0.6, 0.7, 1.0),
+	brightness = 0.7,
 	castShadow = true,
 	flicker = false,
 	placement = "floor",

@@ -63,6 +63,15 @@ spawn("sx_outwall_pillarkiller", 19,19,1, "sx_outwall_pillarkiller_29")
 spawn("sx_outwall_pillarkiller", 19,20,2, "sx_outwall_pillarkiller_30")
 spawn("sx_outwall_pillarkiller", 17,20,2, "sx_outwall_pillarkiller_31")
 spawn("sx_outwall_pillarkiller", 17,19,3, "sx_outwall_pillarkiller_32")
+spawn("script_entity", 6,9,1, "logfw_init")
+	:setSource("spawn(\"LoGFramework\", party.level,1,1,0,'fwInit')\
+fwInit:open() \
+-- timer will call this method automatically  0.1 seconds after the game is started\
+function main()\
+   fw.debug.enabled = false\
+   fwInit:close() --must be called\
+end\
+")
 
 --- level 2 ---
 
@@ -84,13 +93,13 @@ mapDesc([[
 ################################
 ############.......#############
 ############.......#############
-############.........###########
+############..........##########
 ############.......#...#########
 ############.......#.#.#########
 ############...........#########
 ############..........##########
-##############...##...##########
-##############...##.############
+#############.#..##...##########
+#############....##.############
 #############.......############
 ############......##############
 ############......##############
@@ -257,7 +266,6 @@ spawn("sx_ceiling_lamp_outside", 16,23,0, "sx_ceiling_lamp_outside_3")
 spawn("sx_remove_ceiling", 20,14,0, "sx_remove_ceiling_94")
 spawn("sx_remove_ceiling", 19,14,0, "sx_remove_ceiling_165")
 spawn("sx_remove_ceiling", 20,15,0, "sx_remove_ceiling_767")
-spawn("sx_simple_stairs_down", 20,16,2, "sx_simple_stairs_down_1")
 spawn("teleporter", 20,17,0, "teleporter_1")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
@@ -272,8 +280,7 @@ spawn("castle_exterior_pillar_big", 22,16,0, "castle_exterior_pillar_big_28")
 spawn("castle_exterior_pillar_big", 21,16,0, "castle_exterior_pillar_big_29")
 spawn("castle_exterior_pillar_big", 21,17,0, "castle_exterior_pillar_big_30")
 spawn("castle_exterior_pillar_big", 22,17,0, "castle_exterior_pillar_big_31")
-spawn("castle_exterior_wall", 20,16,3, "castle_exterior_wall_5")
-spawn("castle_exterior_wall", 20,16,1, "castle_exterior_wall_6")
+spawn("castle_exterior_wall", 20,15,3, "castle_exterior_wall_5")
 spawn("castle_exterior_pillar_big", 19,21,0, "castle_exterior_pillar_big_65")
 spawn("sx_remove_ceiling", 12,16,2, "sx_remove_ceiling_56")
 spawn("sx_remove_ceiling", 12,17,2, "sx_remove_ceiling_60")
@@ -295,8 +302,8 @@ spawn("sx_remove_wall", 18,12,1, "sx_remove_wall_15")
 spawn("sx_remove_wall", 18,13,1, "sx_remove_wall_16")
 spawn("sx_remove_wall", 19,14,0, "sx_remove_wall_17")
 spawn("sx_remove_wall", 20,14,0, "sx_remove_wall_18")
-spawn("sx_remove_wall", 20,14,1, "sx_remove_wall_19")
-spawn("sx_remove_wall", 21,15,0, "sx_remove_wall_20")
+spawn("sx_remove_wall", 21,14,1, "sx_remove_wall_19")
+spawn("sx_remove_wall", 21,14,0, "sx_remove_wall_20")
 spawn("sx_remove_wall", 22,17,1, "sx_remove_wall_21")
 spawn("sx_remove_wall", 21,18,1, "sx_remove_wall_22")
 spawn("sx_remove_wall", 21,19,1, "sx_remove_wall_23")
@@ -322,10 +329,8 @@ spawn("sx_remove_wall", 12,23,3, "sx_remove_wall_42")
 spawn("sx_remove_wall", 12,22,3, "sx_remove_wall_43")
 spawn("sx_remove_wall", 12,22,0, "sx_remove_wall_44")
 spawn("sx_remove_wall", 13,21,3, "sx_remove_wall_45")
-spawn("sx_remove_wall", 13,21,0, "sx_remove_wall_46")
-spawn("sx_remove_wall", 14,20,3, "sx_remove_wall_47")
-spawn("sx_remove_wall", 14,19,3, "sx_remove_wall_48")
-spawn("sx_remove_wall", 13,18,2, "sx_remove_wall_49")
+spawn("sx_remove_wall", 13,20,3, "sx_remove_wall_47")
+spawn("sx_remove_wall", 13,19,3, "sx_remove_wall_49")
 spawn("sx_remove_wall", 12,18,2, "sx_remove_wall_50")
 spawn("sx_remove_ceiling", 14,13,0, "sx_remove_ceiling_57")
 spawn("sx_remove_floor", 14,13,3, "sx_remove_floor_44")
@@ -339,7 +344,7 @@ spawn("sx_outwall_pillarkiller", 15,12,0, "sx_outwall_pillarkiller_7")
 spawn("sx_outwall_pillarkiller", 17,12,0, "sx_outwall_pillarkiller_8")
 spawn("sx_outwall_pillarkiller", 18,12,1, "sx_outwall_pillarkiller_9")
 spawn("sx_outwall_pillarkiller", 19,14,0, "sx_outwall_pillarkiller_10")
-spawn("sx_outwall_pillarkiller", 20,14,1, "sx_outwall_pillarkiller_11")
+spawn("sx_outwall_pillarkiller", 21,14,0, "sx_outwall_pillarkiller_11")
 spawn("sx_outwall_pillarkiller", 21,18,1, "sx_outwall_pillarkiller_12")
 spawn("sx_outwall_pillarkiller", 21,19,2, "sx_outwall_pillarkiller_13")
 spawn("sx_outwall_pillarkiller", 20,19,2, "sx_outwall_pillarkiller_14")
@@ -352,8 +357,7 @@ spawn("sx_outwall_pillarkiller", 13,25,2, "sx_outwall_pillarkiller_20")
 spawn("sx_outwall_pillarkiller", 12,24,2, "sx_outwall_pillarkiller_21")
 spawn("sx_outwall_pillarkiller", 12,23,3, "sx_outwall_pillarkiller_22")
 spawn("sx_outwall_pillarkiller", 12,22,0, "sx_outwall_pillarkiller_23")
-spawn("sx_outwall_pillarkiller", 13,21,0, "sx_outwall_pillarkiller_24")
-spawn("sx_outwall_pillarkiller", 14,19,3, "sx_outwall_pillarkiller_25")
+spawn("sx_outwall_pillarkiller", 13,20,3, "sx_outwall_pillarkiller_24")
 spawn("sx_outwall_pillarkiller", 12,18,2, "sx_outwall_pillarkiller_26")
 spawn("sx_remove_floor", 19,21,0, "sx_remove_floor_38")
 spawn("sx_remove_ceiling", 19,21,1, "sx_remove_ceiling_59")
@@ -372,7 +376,6 @@ spawn("sx_remove_wall", 22,15,0, "sx_remove_wall_68")
 spawn("sx_outwall_pillarkiller", 22,15,0, "sx_outwall_pillarkiller_35")
 spawn("sx_outwall_pillarkiller", 22,16,1, "sx_outwall_pillarkiller_36")
 spawn("sx_outwall_pillarkiller", 22,17,2, "sx_outwall_pillarkiller_37")
-spawn("sx_remove_floor", 21,15,2, "sx_remove_floor_53")
 spawn("sx_remove_floor", 22,15,2, "sx_remove_floor_54")
 spawn("sx_remove_floor", 22,16,2, "sx_remove_floor_55")
 spawn("sx_remove_floor", 22,17,2, "sx_remove_floor_56")
@@ -408,12 +411,50 @@ spawn("castle_exterior_parapet_pillar", 18,14,1, "castle_exterior_parapet_pillar
 spawn("castle_exterior_parapet_pillar", 18,15,1, "castle_exterior_parapet_pillar_9")
 spawn("castle_exterior_parapet_pillar", 18,16,1, "castle_exterior_parapet_pillar_10")
 spawn("castle_exterior_parapet_pillar", 18,17,1, "castle_exterior_parapet_pillar_11")
+spawn("sx_ceiling_lamp_outside", 19,14,1, "sx_ceiling_lamp_outside_10")
+spawn("castle_exterior_parapet_pillar", 19,18,1, "castle_exterior_parapet_pillar_3")
+spawn("castle_exterior_parapet_pillar", 20,14,2, "castle_exterior_parapet_pillar_12")
+spawn("castle_exterior_parapet_pillar", 21,15,2, "castle_exterior_parapet_pillar_13")
+spawn("castle_exterior_stairs_down", 20,15,2, "castle_exterior_stairs_down_1")
+spawn("sx_remove_floor", 21,14,2, "sx_remove_floor_89")
+spawn("sx_remove_ceiling", 21,14,0, "sx_remove_ceiling_204")
+spawn("sx_remove_floor", 20,16,2, "sx_remove_floor_61")
+spawn("sx_remove_floor", 20,15,2, "sx_remove_floor_90")
+spawn("torch_holder", 18,15,1, "torch_holder_2")
+	:addTorch()
+spawn("sx_remove_ceiling", 13,20,0, "sx_remove_ceiling_205")
+spawn("sx_remove_floor", 13,20,0, "sx_remove_floor_91")
+spawn("sx_remove_ceiling", 13,19,0, "sx_remove_ceiling_206")
+spawn("sx_remove_floor", 13,19,0, "sx_remove_floor_92")
+spawn("castle_exterior_wall_windows", 14,20,0, "castle_exterior_wall_windows_5")
+spawn("castle_exterior_wall_windows", 13,19,1, "castle_exterior_wall_windows_6")
+spawn("castle_exterior_pillar_big", 14,20,3, "castle_exterior_pillar_big_51")
+spawn("castle_exterior_pillar_big", 14,19,1, "castle_exterior_pillar_big_70")
+spawn("castle_exterior_pillar_big", 15,19,3, "castle_exterior_pillar_big_71")
+spawn("castle_exterior_pillar_big", 15,20,0, "castle_exterior_pillar_big_72")
+spawn("castle_exterior_parapet", 13,19,0, "castle_exterior_parapet_2")
+spawn("castle_exterior_parapet", 12,19,0, "castle_exterior_parapet_18")
+spawn("castle_exterior_parapet", 11,18,1, "castle_exterior_parapet_19")
+spawn("castle_exterior_parapet", 11,17,1, "castle_exterior_parapet_20")
+spawn("castle_exterior_parapet", 12,16,2, "castle_exterior_parapet_21")
+spawn("castle_exterior_parapet", 13,17,3, "castle_exterior_parapet_22")
+spawn("castle_exterior_parapet", 13,17,2, "castle_exterior_parapet_23")
+spawn("castle_exterior_parapet", 14,17,2, "castle_exterior_parapet_24")
+spawn("castle_exterior_parapet", 15,18,3, "castle_exterior_parapet_25")
+spawn("castle_exterior_parapet_pillar", 13,19,1, "castle_exterior_parapet_pillar_14")
+spawn("castle_exterior_parapet_pillar", 12,19,1, "castle_exterior_parapet_pillar_15")
+spawn("castle_exterior_parapet_pillar", 12,18,3, "castle_exterior_parapet_pillar_16")
+spawn("castle_exterior_parapet_pillar", 12,17,2, "castle_exterior_parapet_pillar_17")
+spawn("castle_exterior_parapet_pillar", 13,17,3, "castle_exterior_parapet_pillar_18")
+spawn("castle_exterior_parapet_pillar", 13,18,2, "castle_exterior_parapet_pillar_19")
+spawn("castle_exterior_parapet_pillar", 14,18,0, "castle_exterior_parapet_pillar_20")
+spawn("castle_exterior_parapet_pillar", 15,18,3, "castle_exterior_parapet_pillar_21")
 
 --- level 3 ---
 
 mapName("Castle Level 3")
 setWallSet("castle_exterior")
-playStream("assets/samples/music/dungeon_ambient.ogg")
+playStream("mod_assets/sounds/Grimrock Theme Test 01.ogg")
 mapDesc([[
 ################################
 ################################
@@ -429,8 +470,8 @@ mapDesc([[
 ###########.........############
 ###########.#######.############
 ###########.#.....#...##########
-###########.#.....###.##########
-#########...#.....###..#########
+###########.#.....###..#########
+#########...#.....##.#.#########
 #########...#.....##.#.#########
 #########...#.....##.#.#########
 ######......###.#....#.#########
@@ -448,9 +489,7 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("torch_holder", 14,13,0, "torch_holder_1")
-	:addTorch()
-spawn("torch_holder", 17,16,1, "torch_holder_2")
+spawn("torch_holder", 16,17,2, "torch_holder_1")
 	:addTorch()
 spawn("castle_exterior_pillar_big", 15,13,2, "castle_exterior_pillar_big_1")
 spawn("castle_exterior_pillar_big", 13,13,2, "castle_exterior_pillar_big_3")
@@ -467,197 +506,327 @@ spawn("castle_exterior_pillar_big", 21,17,2, "castle_exterior_pillar_big_14")
 spawn("castle_exterior_pillar_big", 20,17,2, "castle_exterior_pillar_big_15")
 spawn("castle_exterior_pillar_big", 17,19,2, "castle_exterior_pillar_big_11")
 spawn("script_entity", 18,14,0, "dungeonCompiler")
-	:setSource("\9-- ==========================================================================\
-\9--                 MULTI-LEVEL DUNGEON COMPILER\
-\9-- ==========================================================================\
+	:setSource("-- ==========================================================================\
+--                 MULTI-LEVEL DUNGEON COMPILER\
+-- ==========================================================================\
 \
 \
-\9-- Wallset Definition\
-\9-- ************************************\
+-- Wallset Definition\
+-- ************************************\
 \
 \
-\9wallset = {\
-\9\9_wall  = {\
-\9\9\9{1, \"_castle_exterior_wall_1above\"},\
-\9\9\9{2, \"_castle_exterior_wall_2above\"},\
-\9\9\9{3, \"_castle_exterior_wall_3above\"},\
-\9\9\9{-1, \"_castle_exterior_wall_1below\"},\
-\9\9\9{-2, \"_castle_exterior_wall_2below\"},\
-\9\9},\
-\9\9_pillar = {\
-\9\9\9{1, \"_castle_exterior_pillar_small_1above\"},\
-\9\9\9{2, \"_castle_exterior_pillar_small_2above\"},\
-\9\9\9{-1, \"_castle_exterior_pillar_small_1below\"},\
-\9\9},\
-\9\9_floor = {\
-\9\9\9{-1, \"_castle_exterior_floor_1below\"},\
-\9\9},\
-\9\9castle_exterior_pillar_big = {\
-\9\9\9{1, \"_castle_exterior_pillar_big_1above\"},\
-\9\9\9{2, \"_castle_exterior_pillar_big_2above\"},\
-\9\9\9{3, \"_castle_exterior_pillar_big_3above\"},\
-\9\9\9{-1, \"_castle_exterior_pillar_big_1below\"},\
-\9\9},\
-\9\9castle_exterior_pillar_small = {\
-\9\9\9{1, \"_castle_exterior_pillar_small_1above\"},\
-\9\9\9{2, \"_castle_exterior_pillar_small_2above\"},\
-\9\9\9{-1, \"_castle_exterior_pillar_small_1below\"},\
-\9\9},\
-\9\9castle_exterior_wall_windows = {\
-\9\9\9{1, \"_castle_exterior_wall_windows_1above\"},\
-\9\9\9{2, \"_castle_exterior_wall_windows_2above\"},\
-\9\9\9{-1, \"_castle_exterior_wall_windows_1below\"},\
-\9\9},\
-\9\9castle_exterior_parapet = {\
-\9\9\9{1, \"_castle_exterior_parapet_1above\"},\
-\9\9\9{2, \"_castle_exterior_parapet_2above\"},\
-\9\9\9{3, \"_castle_exterior_parapet_3above\"},\
-\9\9\9{-1, \"_castle_exterior_parapet_1below\"},\
-\9\9\9{-2, \"_castle_exterior_parapet_2below\"},\
-\9\9},\
-\9\9castle_exterior_parapet_pillar = {\
-\9\9\9{1, \"_castle_exterior_parapet_pillar_1above\"},\
-\9\9\9{2, \"_castle_exterior_parapet_pillar_2above\"},\
-\9\9\9{3, \"_castle_exterior_parapet_pillar_3above\"},\
-\9\9\9{-1, \"_castle_exterior_parapet_pillar_1below\"},\
-\9\9\9{-2, \"_castle_exterior_parapet_pillar_2below\"},\
-\9\9},\9\9\9\9\
-\9}\
+wallset = {\
+\9_wall  = {\
+\9\9{1, \"_castle_exterior_wall_1above\"},\
+\9\9{2, \"_castle_exterior_wall_2above\"},\
+\9\9{3, \"_castle_exterior_wall_3above\"},\
+\9\9{-1, \"_castle_exterior_wall_1below\"},\
+\9\9{-2, \"_castle_exterior_wall_2below\"},\
+\9},\
+\9_pillar = {\
+\9\9{1, \"_castle_exterior_pillar_small_1above\"},\
+\9\9{2, \"_castle_exterior_pillar_small_2above\"},\
+\9\9{-1, \"_castle_exterior_pillar_small_1below\"},\
+\9},\
+\9_floor = {\
+\9\9{-1, \"_castle_exterior_floor_1below\"},\
+\9},\
+\9castle_exterior_pillar_big = {\
+\9\9{1, \"_castle_exterior_pillar_big_1above\"},\
+\9\9{2, \"_castle_exterior_pillar_big_2above\"},\
+\9\9{3, \"_castle_exterior_pillar_big_3above\"},\
+\9\9{-1, \"_castle_exterior_pillar_big_1below\"},\
+\9},\
+\9castle_exterior_pillar_small = {\
+\9\9{1, \"_castle_exterior_pillar_small_1above\"},\
+\9\9{2, \"_castle_exterior_pillar_small_2above\"},\
+\9\9{-1, \"_castle_exterior_pillar_small_1below\"},\
+\9},\
+\9castle_exterior_wall_windows = {\
+\9\9{1, \"_castle_exterior_wall_windows_1above\"},\
+\9\9{2, \"_castle_exterior_wall_windows_2above\"},\
+\9\9{-1, \"_castle_exterior_wall_windows_1below\"},\
+\9},\
+\9castle_exterior_parapet = {\
+\9\9{1, \"_castle_exterior_parapet_1above\"},\
+\9\9{2, \"_castle_exterior_parapet_2above\"},\
+\9\9{3, \"_castle_exterior_parapet_3above\"},\
+\9\9{-1, \"_castle_exterior_parapet_1below\"},\
+\9\9{-2, \"_castle_exterior_parapet_2below\"},\
+\9},\
+\9castle_exterior_parapet_pillar = {\
+\9\9{1, \"_castle_exterior_parapet_pillar_1above\"},\
+\9\9{2, \"_castle_exterior_parapet_pillar_2above\"},\
+\9\9{3, \"_castle_exterior_parapet_pillar_3above\"},\
+\9\9{-1, \"_castle_exterior_parapet_pillar_1below\"},\
+\9\9{-2, \"_castle_exterior_parapet_pillar_2below\"},\
+\9},\9\
+\9_castle_exterior_stairs = {\
+\9\9{1, \"_castle_exterior_stairs_1above\"},\
+\9\9{2, \"_castle_exterior_stairs_2above\"},\
+\9\9{3, \"_castle_exterior_stairs_3above\"},\
+\9\9{-1, \"_castle_exterior_stairs_1below\"},\
+\9\9{-2, \"_castle_exterior_stairs_2below\"},\
+\9\9{-3, \"_castle_exterior_stairs_3below\"},\
+\9},\
+\9torch_holder = {\
+\9\9{1, \"_torch_holder_1above\"},\
+\9\9{2, \"_torch_holder_2above\"},\
+\9\9{3, \"_torch_holder_3above\"},\
+\9\9{-1, \"_torch_holder_1below\"},\
+\9\9{-2, \"_torch_holder_2below\"},\
+\9\9{-3, \"_torch_holder_3below\"},\
+\9},\
+\9_torch = {\
+\9\9{1, \"_torch_lit_1above\"},\
+\9\9{2, \"_torch_lit_2above\"},\
+\9\9{3, \"_torch_lit_3above\"},\
+\9\9{-1, \"_torch_lit_1below\"},\
+\9\9{-2, \"_torch_lit_2below\"},\
+\9\9{-3, \"_torch_lit_3below\"},\
+\9},\
+}\
 \
 \
-\9-- Main Compiler Module\
-\9-- ************************************\
+-- Main Compiler Module\
+-- ************************************\
 \
-\9function compileDungeon(firstLevel, lastLevel)\
-\9\9local levels = getMaxLevels()\
-\9\9for level = 1,levels do\
-\9\9\9for x = 0,31 do\
-\9\9\9\9for y = 0,31 do\
-\9\9\9\9\9for l = firstLevel, lastLevel do\
-\9\9\9\9\9\9if l ~= level then\
-\9\9\9\9\9\9\9local stairsCheck = false\
-\9\9\9\9\9\9\9-- Create Objects\
-\9\9\9\9\9\9\9for i in entitiesAt(l, x, y) do\
-\9\9\9\9\9\9\9\9-- Spawn multi-level architecture\
-\9\9\9\9\9\9\9\9for object, defs in pairs(dungeonCompiler.wallset) do\
-\9\9\9\9\9\9\9\9\9if i.name == object then\
-\9\9\9\9\9\9\9\9\9\9local objToSpawn\
-\9\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(defs) do\
-\9\9\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
-\9\9\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9if objToSpawn then\
-\9\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9-- Spawn sx_remove_floor elements where not already present\
-\9\9\9\9\9\9\9\9if l > firstLevel then\
-\9\9\9\9\9\9\9\9\9if i.name == \"sx_remove_ceiling\" then\
-\9\9\9\9\9\9\9\9\9\9local removeFloorFound = false\
-\9\9\9\9\9\9\9\9\9\9for j in entitiesAt(l-1, x, y) do\
-\9\9\9\9\9\9\9\9\9\9\9if j.name == \"sx_remove_floor\" then\
-\9\9\9\9\9\9\9\9\9\9\9\9removeFloorFound = true\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9if not(removeFloorFound) then\
-\9\9\9\9\9\9\9\9\9\9\9spawn(\"sx_remove_floor\", l-1, x, y, 0)\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9-- Create Walls\
-\9\9\9\9\9\9\9if isWall(l, x, y) then\
-\9\9\9\9\9\9\9\9for wallDir = 0, 3 do\
-\9\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
-\9\9\9\9\9\9\9\9\9local wallRemover = false\
-\9\9\9\9\9\9\9\9\9local isFloor = false\
-\9\9\9\9\9\9\9\9\9for i in entitiesAt(l, x+dx, y+dy) do\
-\9\9\9\9\9\9\9\9\9\9if i.name == \"sx_remove_wall\" and (i.facing+2)%4 == wallDir then\
-\9\9\9\9\9\9\9\9\9\9\9wallRemover = true\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9if l > level then\
-\9\9\9\9\9\9\9\9\9\9isFloor = true\
-\9\9\9\9\9\9\9\9\9\9for i in entitiesAt(l-1, x+dx, y+dy) do\
-\9\9\9\9\9\9\9\9\9\9\9if i.name == \"sx_remove_floor\" then\
-\9\9\9\9\9\9\9\9\9\9\9\9isFloor = false\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9if not(isWall(l, x+dx, y+dy)) and not(wallRemover) and not(isFloor) then\
-\9\9\9\9\9\9\9\9\9\9local objToSpawn\
-\9\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._wall) do\
-\9\9\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
-\9\9\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9if objToSpawn then\
-\9\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x+dx, y+dy, (wallDir+2)%4)\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9local px, py = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9\9-- Create pillars\
-\9\9\9\9\9\9\9\9\9\9objToSpawn = nil\
-\9\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._pillar) do\
-\9\9\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
-\9\9\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9if objToSpawn then\
-\9\9\9\9\9\9\9\9\9\9\9local p1x, p1y, p2x, p2y\
-\9\9\9\9\9\9\9\9\9\9\9local wx, wy = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9\9\9if wallDir == 0 then\
-\9\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x, y\
-\9\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x+wx, y+wy\
-\9\9\9\9\9\9\9\9\9\9\9elseif wallDir == 1 then\
-\9\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x+dx, y+dy\
-\9\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x+dx+wx, y+dy+wy\
-\9\9\9\9\9\9\9\9\9\9\9elseif wallDir == 2 then\
-\9\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x+dx, y+dy\
-\9\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x+dx-wx, y+dy-wy\
-\9\9\9\9\9\9\9\9\9\9\9elseif wallDir == 3 then\
-\9\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x, y\
-\9\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x-wx, y-wy\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9\9if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)) then\
-\9\9\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, p1x, p1y, wallDir, \"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9\9if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)) then\
-\9\9\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, p2x, p2y, wallDir, \"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9--Create floor\
-\9\9\9\9\9\9\9if l > level then\
-\9\9\9\9\9\9\9\9local removeFloorFound = false\
-\9\9\9\9\9\9\9\9for j in entitiesAt(l, x, y) do\
-\9\9\9\9\9\9\9\9\9if j.name == \"sx_remove_floor\" then\
-\9\9\9\9\9\9\9\9\9\9removeFloorFound = true\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9if (l == lastLevel or not(removeFloorFound)) and not(isWall(l, x, y)) then\
+function compileDungeon(firstLevel, lastLevel)\
+\9local levels = getMaxLevels()\
+\9for level = 1,levels do\
+\9\9for x = 0,31 do\
+\9\9\9for y = 0,31 do\
+\9\9\9\9for l = firstLevel, lastLevel do\
+\9\9\9\9\9-- Spawn stairs\
+\9\9\9\9\9for i in entitiesAt(l, x, y) do\
+\9\9\9\9\9\9if i.name == \"castle_exterior_stairs_up\" then\
+\9\9\9\9\9\9\9spawn(\"_castle_exterior_stairs\", l, x, y, i.facing)\
+\9\9\9\9\9\9end\
+\9\9\9\9\9end\
+\9\9\9\9\9if l ~= level then\
+\9\9\9\9\9\9local stairsCheck = false\
+\9\9\9\9\9\9-- Create Objects\
+\9\9\9\9\9\9for i in entitiesAt(l, x, y) do\
+\9\9\9\9\9\9\9-- Spawn multi-level architecture\
+\9\9\9\9\9\9\9for object, defs in pairs(dungeonCompiler.wallset) do\
+\9\9\9\9\9\9\9\9if i.name == object then\
 \9\9\9\9\9\9\9\9\9local objToSpawn\
-\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._floor) do\
+\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(defs) do\
 \9\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
 \9\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
 \9\9\9\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9\9\9\9if objToSpawn then\
-\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x, y, 0)\
+\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x, y, i.facing)\
 \9\9\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9end\9\9\9\9\9\9\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9-- Spawn torchHolders\
+\9\9\9\9\9\9\9if i.class == \"TorchHolder\" and i:hasTorch() then\
+\9\9\9\9\9\9\9\9local objToSpawn\
+\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._torch) do\
+\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
+\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9if objToSpawn then\
+\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x, y, i.facing)\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9local fxId = dungeonCompiler:playFx(\"torchLight\",level, x, y, i.facing)\
+\9\9\9\9\9\9\9\9findEntity(fxId):translate(0,(level - l)*4.5,0)\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9-- Spawn sx_remove_floor elements where not already present\
+\9\9\9\9\9\9\9if l > firstLevel then\
+\9\9\9\9\9\9\9\9if i.name == \"sx_remove_ceiling\" then\
+\9\9\9\9\9\9\9\9\9local removeFloorFound = false\
+\9\9\9\9\9\9\9\9\9for j in entitiesAt(l-1, x, y) do\
+\9\9\9\9\9\9\9\9\9\9if j.name == \"sx_remove_floor\" then\
+\9\9\9\9\9\9\9\9\9\9\9removeFloorFound = true\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9if not(removeFloorFound) then\
+\9\9\9\9\9\9\9\9\9\9spawn(\"sx_remove_floor\", l-1, x, y, 0)\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9end\
+\9\9\9\9\9\9-- Create Walls\
+\9\9\9\9\9\9if isWall(l, x, y) then\
+\9\9\9\9\9\9\9for wallDir = 0, 3 do\
+\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9\9\9local wallRemover = false\
+\9\9\9\9\9\9\9\9local isFloor = false\
+\9\9\9\9\9\9\9\9local isStairs = false\
+\9\9\9\9\9\9\9\9for i in entitiesAt(l, x+dx, y+dy) do\
+\9\9\9\9\9\9\9\9\9if i.name == \"sx_remove_wall\" and (i.facing+2)%4 == wallDir then\
+\9\9\9\9\9\9\9\9\9\9wallRemover = true\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9if l > level then\
+\9\9\9\9\9\9\9\9\9isFloor = true\
+\9\9\9\9\9\9\9\9\9for i in entitiesAt(l-1, x+dx, y+dy) do\
+\9\9\9\9\9\9\9\9\9\9if i.name == \"sx_remove_floor\" then\
+\9\9\9\9\9\9\9\9\9\9\9isFloor = false\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9if not(isWall(l, x+dx, y+dy)) and not(wallRemover) and not(isFloor) then\
+\9\9\9\9\9\9\9\9\9local objToSpawn\
+\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._wall) do\
+\9\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
+\9\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9if objToSpawn then\
+\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x+dx, y+dy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9local px, py = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9-- Create pillars\
+\9\9\9\9\9\9\9\9\9objToSpawn = nil\
+\9\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._pillar) do\
+\9\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
+\9\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9if objToSpawn then\
+\9\9\9\9\9\9\9\9\9\9local p1x, p1y, p2x, p2y\
+\9\9\9\9\9\9\9\9\9\9local wx, wy = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9\9if wallDir == 0 then\
+\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x, y\
+\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x+wx, y+wy\
+\9\9\9\9\9\9\9\9\9\9elseif wallDir == 1 then\
+\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x+dx, y+dy\
+\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x+dx+wx, y+dy+wy\
+\9\9\9\9\9\9\9\9\9\9elseif wallDir == 2 then\
+\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x+dx, y+dy\
+\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x+dx-wx, y+dy-wy\
+\9\9\9\9\9\9\9\9\9\9elseif wallDir == 3 then\
+\9\9\9\9\9\9\9\9\9\9\9p1x, p1y = x, y\
+\9\9\9\9\9\9\9\9\9\9\9p2x, p2y = x-wx, y-wy\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9\9if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)) then\
+\9\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, p1x, p1y, wallDir, \"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9\9if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)) then\
+\9\9\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, p2x, p2y, wallDir, \"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9end\
+\9\9\9\9\9\9--Create floor\
+\9\9\9\9\9\9if l > level then\
+\9\9\9\9\9\9\9local removeFloorFound = false\
+\9\9\9\9\9\9\9for j in entitiesAt(l, x, y) do\
+\9\9\9\9\9\9\9\9if j.name == \"sx_remove_floor\" then\
+\9\9\9\9\9\9\9\9\9removeFloorFound = true\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9if (l == lastLevel or not(removeFloorFound)) and not(isWall(l, x, y)) then\
+\9\9\9\9\9\9\9\9local objToSpawn\
+\9\9\9\9\9\9\9\9for _, spawnObjects in ipairs(dungeonCompiler.wallset._floor) do\
+\9\9\9\9\9\9\9\9\9if spawnObjects[1] == level - l then\
+\9\9\9\9\9\9\9\9\9\9objToSpawn = spawnObjects[2]\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9if objToSpawn then\
+\9\9\9\9\9\9\9\9\9spawn(objToSpawn, level, x, y, 0)\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9end\9\9\9\9\9\9\
 \9\9\9\9\9end\
 \9\9\9\9end\
 \9\9\9end\
 \9\9end\
 \9end\
+end\
 \
-\9compileDungeon(1,4)")
+\
+\
+\
+\
+fxDefs = {}\
+\
+function defineFx(self, name, properties)\
+\9if not(self.fxDefs[name]) then \
+\9\9self.fxDefs[name] = {} \
+\9else\
+\9\9return false\
+\9end\
+\9\
+\9-- populate Table\
+\9for k,v in pairs(properties) do\
+\9\9self.fxDefs[name][k] = v\
+\9end\
+\9\
+\9if debugDefinitions then\
+\9\9print(\"FX defined: \"..name)\
+\9end\
+end\
+\
+function playFx(self, name, level, x, y, facing, properties)\
+\
+\9-- retreive fx definition\
+\9local fx = {}\
+\9for k, v in pairs(self.fxDefs[name]) do\
+\9\9fx[k] = v\
+\9end\
+\9if properties then\
+\9\9for k, v in pairs(properties) do\
+\9\9\9fx[k] = v\
+\9\9end\
+\9end\
+\9local red, green, blue = unpack(fx.color)\
+\9\9\
+\9local particleSystem\
+\9local tx, ty, tz \
+\9if not(facing) then\
+\9\9particleSystem = fx.particleSystem\
+\9\9tx, ty, tz = unpack(fx.translation)\
+\9else\
+\9\9if type(fx.particleSystem) == \"table\" then\
+\9\9\9particleSystem = fx.particleSystem[facing+1]\
+\9\9else\
+\9\9\9particleSystem = fx.particleSystem\
+\9\9end\
+\9\9if #fx.translation > 3 then\
+\9\9\9tx, ty, tz = unpack(fx.translation[facing+1])\
+\9\9else\
+\9\9\9tx, ty, tz = unpack(fx.translation)\
+\9\9end\
+\9end\
+\9\
+\9-- spawn fx\
+\9fxId = randomId(\"playFx\")\
+\9spawn(\"fx\", level, x, y, 0, fxId)\
+\9\9:setParticleSystem(particleSystem)\
+\9\9:setLight(red, green, blue, fx.brightness, fx.range, fx.time, fx.castShadow)\
+\9\9:translate(tx, ty, tz)\
+\9\
+\9return fxId\
+end\
+\
+function randomId(prefix)\
+\9local numId = math.random(10000,99999)\
+\9while findEntity(prefix..\".\"..numId) do\
+\9\9numId = math.random(10000,99999)\
+\9end\
+\9return prefix..\".\"..numId\
+end\
+\
+\
+dungeonCompiler:defineFx(\"torchLight\",{\
+\9particleSystem = \"torch\",\
+\9color = {1, 0.5, 0.25},\
+\9brightness = 10,\
+\9range = 6,\
+\9time = 1000000,\
+\9castShadow = true,\
+\9translation = {{0,1.5,1},{1,1.5,0},{0,1.5,-1},{-1,1.5,0}}\
+\9}\
+)\
+\
+compileDungeon(1,4)")
 spawn("sx_remove_ceiling", 13,13,1, "sx_remove_ceiling_1")
 spawn("sx_remove_ceiling", 13,14,1, "sx_remove_ceiling_2")
 spawn("sx_remove_ceiling", 13,15,2, "sx_remove_ceiling_3")
@@ -686,7 +855,6 @@ spawn("sx_remove_ceiling", 17,17,2, "sx_remove_ceiling_25")
 spawn("sx_remove_ceiling", 17,18,2, "sx_remove_ceiling_26")
 spawn("sx_remove_ceiling", 18,18,2, "sx_remove_ceiling_27")
 spawn("sx_remove_ceiling", 20,18,2, "sx_remove_ceiling_29")
-spawn("sx_remove_ceiling", 20,17,0, "sx_remove_ceiling_30")
 spawn("sx_remove_ceiling", 15,18,2, "sx_remove_ceiling_31")
 spawn("sx_remove_ceiling", 15,19,3, "sx_remove_ceiling_32")
 spawn("sx_remove_ceiling", 15,20,2, "sx_remove_ceiling_33")
@@ -717,11 +885,8 @@ spawn("sx_remove_ceiling", 13,19,3, "sx_remove_ceiling_1201")
 spawn("sx_remove_ceiling", 13,20,3, "sx_remove_ceiling_1202")
 spawn("sx_remove_ceiling", 12,20,3, "sx_remove_ceiling_1203")
 spawn("sx_remove_ceiling", 12,21,3, "sx_remove_ceiling_1204")
-spawn("sx_simple_stairs_up", 20,17,0, "sx_simple_stairs_up_1")
 spawn("castle_exterior_wall", 20,17,3, "castle_exterior_wall_1")
 spawn("castle_exterior_wall", 20,17,1, "castle_exterior_wall_2")
-spawn("castle_exterior_wall", 20,16,3, "castle_exterior_wall_3")
-spawn("castle_exterior_wall", 20,16,1, "castle_exterior_wall_4")
 spawn("sx_remove_ceiling", 20,16,3, "sx_remove_ceiling_1346")
 spawn("castle_exterior_pillar_big", 14,22,3, "castle_exterior_pillar_big_32")
 spawn("castle_exterior_pillar_big", 14,23,3, "castle_exterior_pillar_big_33")
@@ -738,7 +903,7 @@ spawn("castle_exterior_pillar_big", 18,21,3, "castle_exterior_pillar_big_43")
 spawn("castle_exterior_pillar_big", 19,21,3, "castle_exterior_pillar_big_44")
 spawn("castle_exterior_pillar_big", 19,20,3, "castle_exterior_pillar_big_45")
 spawn("castle_exterior_pillar_big", 22,20,1, "castle_exterior_pillar_big_46")
-spawn("castle_exterior_pillar_big", 22,16,2, "castle_exterior_pillar_big_47")
+spawn("castle_exterior_pillar_big", 22,15,2, "castle_exterior_pillar_big_47")
 spawn("castle_exterior_pillar_big", 18,27,0, "castle_exterior_pillar_big_48")
 spawn("castle_exterior_pillar_big", 15,27,2, "castle_exterior_pillar_big_49")
 spawn("castle_exterior_pillar_big", 15,26,2, "castle_exterior_pillar_big_50")
@@ -753,8 +918,8 @@ spawn("castle_exterior_pillar_big", 12,12,3, "castle_exterior_pillar_big_60")
 spawn("castle_exterior_pillar_big", 19,12,2, "castle_exterior_pillar_big_61")
 spawn("castle_exterior_pillar_big", 19,14,1, "castle_exterior_pillar_big_62")
 spawn("castle_exterior_pillar_big", 21,14,2, "castle_exterior_pillar_big_63")
-spawn("castle_exterior_pillar_big", 21,16,3, "castle_exterior_pillar_big_64")
-spawn("teleporter", 20,16,2, "teleporter_3")
+spawn("castle_exterior_pillar_big", 21,15,3, "castle_exterior_pillar_big_64")
+spawn("teleporter", 20,15,2, "teleporter_3")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
@@ -779,21 +944,19 @@ spawn("script_entity", 15,9,3, "script_entity_1")
 end\
 \
 ")
-spawn("sx_simple_stairs_down", 13,20,3, "sx_simple_stairs_down_2")
-spawn("sx_simple_stairs_down", 13,21,3, "sx_simple_stairs_down_3")
 spawn("sx_remove_ceiling", 13,21,3, "sx_remove_ceiling_90")
 spawn("sx_remove_ceiling", 14,21,3, "sx_remove_ceiling_91")
 spawn("sx_remove_ceiling", 14,20,3, "sx_remove_ceiling_92")
 spawn("sx_remove_floor", 12,20,3, "sx_remove_floor_57")
 spawn("sx_remove_floor", 12,21,3, "sx_remove_floor_58")
-spawn("castle_exterior_wall", 13,21,2, "castle_exterior_wall_7")
+spawn("castle_exterior_wall", 14,20,0, "castle_exterior_wall_7")
 spawn("sx_remove_floor", 13,21,3, "sx_remove_floor_59")
 spawn("sx_remove_floor", 13,20,2, "sx_remove_floor_60")
 spawn("teleporter", 12,20,1, "teleporter_4")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
-	:setTeleportTarget(14,20,1,3)
+	:setTeleportTarget(15,20,1,3)
 	:setInvisible(true)
 	:setSilent(true)
 	:setHideLight(true)
@@ -802,7 +965,7 @@ spawn("teleporter", 12,21,1, "teleporter_5")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
-	:setTeleportTarget(14,21,1,3)
+	:setTeleportTarget(15,21,1,3)
 	:setInvisible(true)
 	:setSilent(true)
 	:setHideLight(true)
@@ -833,8 +996,8 @@ spawn("sx_remove_wall", 19,12,1, "sx_remove_wall_103")
 spawn("sx_remove_wall", 21,13,0, "sx_remove_wall_104")
 spawn("sx_remove_wall", 20,13,0, "sx_remove_wall_105")
 spawn("sx_remove_wall", 21,13,1, "sx_remove_wall_106")
-spawn("sx_remove_wall", 21,14,1, "sx_remove_wall_107")
-spawn("sx_remove_wall", 22,15,0, "sx_remove_wall_108")
+spawn("sx_remove_wall", 22,14,1, "sx_remove_wall_107")
+spawn("sx_remove_wall", 22,14,0, "sx_remove_wall_108")
 spawn("sx_remove_wall", 22,15,1, "sx_remove_wall_109")
 spawn("sx_remove_wall", 22,16,1, "sx_remove_wall_110")
 spawn("sx_remove_wall", 22,17,1, "sx_remove_wall_111")
@@ -967,7 +1130,7 @@ spawn("sx_remove_ceiling", 19,13,3, "sx_remove_ceiling_167")
 spawn("sx_remove_ceiling", 20,13,3, "sx_remove_ceiling_168")
 spawn("sx_remove_ceiling", 21,13,3, "sx_remove_ceiling_169")
 spawn("sx_remove_ceiling", 21,14,3, "sx_remove_ceiling_128")
-spawn("sx_remove_ceiling", 21,15,0, "sx_remove_ceiling_170")
+spawn("sx_remove_ceiling", 22,14,0, "sx_remove_ceiling_170")
 spawn("sx_remove_ceiling", 22,15,3, "sx_remove_ceiling_171")
 spawn("sx_remove_ceiling", 22,16,2, "sx_remove_ceiling_172")
 spawn("sx_remove_ceiling", 22,17,2, "sx_remove_ceiling_173")
@@ -994,7 +1157,13 @@ spawn("sx_remove_ceiling", 13,26,1, "sx_remove_ceiling_194")
 spawn("sx_remove_ceiling", 12,26,3, "sx_remove_ceiling_195")
 spawn("sx_remove_ceiling", 12,25,3, "sx_remove_ceiling_196")
 spawn("sx_remove_ceiling", 11,25,0, "sx_remove_ceiling_197")
-spawn("starting_location", 16,15,2, "starting_location_1")
+spawn("castle_exterior_stairs_up", 20,17,0, "castle_exterior_stairs_up_1")
+spawn("sx_remove_wall", 20,15,0, "sx_remove_wall_72")
+spawn("castle_exterior_stairs_down", 14,21,3, "castle_exterior_stairs_down_2")
+spawn("castle_exterior_stairs_down", 14,20,3, "castle_exterior_stairs_down_3")
+spawn("sx_ceiling_lamp_outside", 9,20,0, "sx_ceiling_lamp_outside_11")
+spawn("torch_holder", 16,21,1, "torch_holder_7")
+	:addTorch()
 
 --- level 4 ---
 
@@ -1035,8 +1204,6 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("sx_simple_stairs_up", 12,20,1, "sx_simple_stairs_up_2")
-spawn("sx_simple_stairs_up", 12,21,1, "sx_simple_stairs_up_3")
 spawn("castle_exterior_pillar_big", 7,19,1, "castle_exterior_pillar_big_19")
 spawn("castle_exterior_pillar_big", 7,23,1, "castle_exterior_pillar_big_27")
 spawn("castle_exterior_pillar_big", 12,23,1, "castle_exterior_pillar_big_56")
@@ -1063,11 +1230,9 @@ spawn("sx_remove_ceiling", 8,19,1, "sx_remove_ceiling_88")
 spawn("sx_remove_ceiling", 9,19,2, "sx_remove_ceiling_89")
 spawn("castle_exterior_wall", 12,21,2, "castle_exterior_wall_8")
 spawn("castle_exterior_wall", 12,20,0, "castle_exterior_wall_9")
-spawn("castle_exterior_wall", 13,20,0, "castle_exterior_wall_11")
-spawn("castle_exterior_wall", 13,22,0, "castle_exterior_wall_12")
 spawn("castle_exterior_pillar_big", 12,20,3, "castle_exterior_pillar_big_68")
 spawn("castle_exterior_pillar_big", 12,22,3, "castle_exterior_pillar_big_69")
-spawn("teleporter", 13,21,3, "teleporter_6")
+spawn("teleporter", 14,21,3, "teleporter_6")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
@@ -1076,7 +1241,7 @@ spawn("teleporter", 13,21,3, "teleporter_6")
 	:setSilent(true)
 	:setHideLight(true)
 	:setScreenFlash(false)
-spawn("teleporter", 13,20,3, "teleporter_7")
+spawn("teleporter", 14,20,3, "teleporter_7")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
@@ -1101,3 +1266,20 @@ spawn("sx_remove_ceiling", 13,20,2, "sx_remove_ceiling_151")
 spawn("sx_remove_ceiling", 13,21,2, "sx_remove_ceiling_152")
 spawn("torch_holder", 14,15,3, "torch_holder_3")
 	:addTorch()
+spawn("castle_exterior_stairs_up", 12,20,1, "castle_exterior_stairs_up_2")
+spawn("castle_exterior_stairs_up", 12,21,1, "castle_exterior_stairs_up_3")
+spawn("sx_remove_wall", 14,20,1, "sx_remove_wall_137")
+spawn("sx_remove_wall", 14,21,1, "sx_remove_wall_139")
+spawn("sx_remove_ceiling", 14,20,2, "sx_remove_ceiling_198")
+spawn("sx_remove_ceiling", 14,21,2, "sx_remove_ceiling_203")
+spawn("torch_holder", 11,19,0, "torch_holder_4")
+	:addTorch()
+spawn("torch_holder", 8,22,2, "torch_holder_6")
+	:addTorch()
+spawn("starting_location", 10,20,1, "starting_location_1")
+spawn("castle_exterior_pillar_big", 11,19,1, "castle_exterior_pillar_big_73")
+spawn("castle_exterior_pillar_big", 11,18,3, "castle_exterior_pillar_big_74")
+spawn("castle_exterior_pillar_big", 11,17,0, "castle_exterior_pillar_big_75")
+spawn("castle_exterior_pillar_big", 11,14,2, "castle_exterior_pillar_big_76")
+spawn("castle_exterior_pillar_big", 9,14,1, "castle_exterior_pillar_big_77")
+spawn("castle_exterior_pillar_big", 9,19,1, "castle_exterior_pillar_big_78")
