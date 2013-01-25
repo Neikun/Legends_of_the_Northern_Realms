@@ -119,7 +119,7 @@ defineMaterial{
 defineMaterial{
 	name = "sx_town_housewall1",
 	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_dif.tga",
-	specularMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_spec.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_dif.tga",
 	normalMap = "mod_assets/sx_towntileset/textures/sx_town_housewall1_normal.tga",
 	doubleSided = false,
 	lighting = true,
@@ -241,4 +241,19 @@ defineMaterial{
 	glossiness = 20,
 	depthBias = 0,
 }
+
+defineMaterial{
+	name = "WizDishes",
+	diffuseMap = "mod_assets/sx_towntileset/textures/WizDishes_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/WizDishes_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/WizDishes_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 40,
+	depthBias = 0,
+}
+
 

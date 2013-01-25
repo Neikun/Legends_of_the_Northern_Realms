@@ -12,7 +12,7 @@ import "mod_assets/sx_towntileset/scripts/sx_towntileset_sounds.lua"
 -- Define the Town WallSet
 
 defineWallSet{
-	name = "town_tileset",
+	name = "sx_town",
 	randomFloorFacing = false,
 
 	floors = {
@@ -23,8 +23,8 @@ defineWallSet{
 	},
 	
 	walls = {
-		"mod_assets/sx_towntileset/models/sx_town_wall.fbx", 1,
-		--"assets/models/env/temple_wall_drainage.fbx", 1,
+		"mod_assets/sx_towntileset/models/sx_town_wall.fbx", 5,
+		"mod_assets/sx_towntileset/models/sx_town_wall_drainage.fbx", 1,
 	},
 	
 	pillars = {
@@ -55,7 +55,7 @@ defineWallSet{
 }
 
 defineWallSet{
-	name = "town_tileset_indoor",
+	name = "sx_town_indoor",
 	randomFloorFacing = false,
 
 	floors = {

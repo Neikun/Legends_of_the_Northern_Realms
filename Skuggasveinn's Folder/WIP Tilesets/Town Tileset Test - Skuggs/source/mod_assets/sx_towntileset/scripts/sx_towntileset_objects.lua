@@ -109,6 +109,15 @@ defineObject{
 }
 
 defineObject{
+	name = "sx_town_wall_drainage",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_drainage.fbx",
+	placement = "wall",
+	replacesWall = true,
+	editorIcon = 92,
+}
+
+defineObject{
     name = "sx_town_wall_high",
     class = "Decoration",
     model = "mod_assets/sx_towntileset/models/sx_town_wall_high.fbx",
@@ -442,7 +451,6 @@ defineObject{
 	model = "mod_assets/sx_towntileset/models/sx_town_wall_04.fbx",
 	placement = "wall",
 	replacesWall = true,
-	--statueBase = true,
 	editorIcon = 8,
 }
 
@@ -452,7 +460,6 @@ defineObject{
 	model = "mod_assets/sx_towntileset/models/sx_town_wall_05.fbx",
 	placement = "wall",
 	replacesWall = true,
-	--statueBase = true,
 	editorIcon = 8,
 }
 
@@ -462,7 +469,48 @@ defineObject{
 	model = "mod_assets/sx_towntileset/models/sx_town_fountain_flowing.fbx",
 	placement = "wall",
 	replacesWall = true,
-	--statueBase = true,
+	editorIcon = 8,
+}
+
+defineObject{
+	name = "sx_town_wall_shop_01",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_shop_01.fbx",
+	placement = "wall",
+	replacesWall = true,
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_wall_fireplace_indoor",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_fireplace_indoor.fbx",
+	placement = "wall",
+	replacesWall = true,
+	editorIcon = 92,
+}
+
+defineObject{
+	name = "sx_town_wall_alcove",
+	class = "Alcove",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_alcove.fbx",
+	replacesWall = true,
+	anchorPos = vec(0, 0.85, 0.2),
+	targetPos = vec(0,1.3,0),
+	targetSize = vec(0.6, 0.5, 0.6),
+	placement = "wall",
+	editorIcon = 8,
+}
+
+defineObject{
+	name = "sx_town_wall_alcove_indoor",
+	class = "Alcove",
+	model = "mod_assets/sx_towntileset/models/sx_town_wall_alcove_indoor.fbx",
+	replacesWall = true,
+	anchorPos = vec(0, 0.85, 0.2),
+	targetPos = vec(0,1.3,0),
+	targetSize = vec(0.6, 0.5, 0.6),
+	placement = "wall",
 	editorIcon = 8,
 }
 
@@ -760,6 +808,19 @@ defineObject{
 -- Lightsources for Town Lanterns and Windows
 
 defineObject{
+	name = "sx_floor_fireplace_light",
+	class = "LightSource",
+	lightPosition = vec(0, 0.5, 2),
+	lightRange = 10,
+	lightColor = vec(1, 0.5, 0.25),
+	brightness = 11,
+	castShadow = true,
+	particleSystem = "sx_floor_fireplace_light",
+	placement = "floor",
+	editorIcon = 88,
+}
+
+defineObject{
 	name = "sx_town_lantern_fire",
 	class = "LightSource",
 	lightPosition = vec(0, 2.5, 1.2),
@@ -842,6 +903,31 @@ defineObject{
 	editorIcon = 12,
 }
 
+defineObject{
+	name = "sx_invisible_lever",
+	class = "Lever",
+	model = "mod_assets/sx_towntileset/models/sx_blocker.fbx",
+	activateAnim = "assets/animations/env/lever_down.fbx",
+	deactivateAnim = "assets/animations/env/lever_up.fbx",
+	placement = "wall",
+	editorIcon = 12,
+}
+
+defineObject{
+	name = "sx_invisible_door",
+	class = "Door",
+	model = "mod_assets/sx_towntileset/models/sx_blocker.fbx",
+	openSound = "wall_sliding",
+	closeSound = "wall_sliding",
+	lockSound = "wall_sliding_lock",
+	openVelocity = 10,
+	closeVelocity = -10,
+	secretDoor = true,
+	placement = "wall",
+	editorIcon = 120,
+}
+
+
 -- particle effects for town
 
 defineParticleSystem{
@@ -873,6 +959,92 @@ defineParticleSystem{
  }
  }
 }
+
+-- Particle system for Floor Lantern
+-- same as torch but has been enlarged
+
+defineParticleSystem{
+	name = "sx_floor_fireplace_light",
+	emitters = {
+		-- smoke
+		{
+			emissionRate = 5,
+			emissionTime = 0,
+			maxParticles = 50,
+			boxMin = {-0.03, 0.1, -0.03},
+			boxMax = { 0.03, 0.1,  0.03},
+			sprayAngle = {0,30},
+			velocity = {0.1,0.5},
+			texture = "assets/textures/particles/smoke_01.tga",
+			lifetime = {1,1.75},
+			color0 = {0.15, 0.15, 0.15},
+			opacity = 1,
+			fadeIn = 0.5,
+			fadeOut = 0.5,
+			size = {0.6, 1.2},
+			gravity = {0,0,0},
+			airResistance = 0.1,
+			rotationSpeed = 0.6,
+			blendMode = "Translucent",
+		},
+
+		-- flames
+		{
+			emissionRate = 50,
+			emissionTime = 0,
+			maxParticles = 100,
+			boxMin = {-0.03, -0.03, 0.03},
+			boxMax = { 0.03, 0.03,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.2, 1},
+			texture = "assets/textures/particles/torch_flame.tga",
+			frameRate = 35,
+			frameSize = 64,
+			frameCount = 16,
+			lifetime = {0.25, 0.85},
+			colorAnimation = true,
+			color0 = {2, 2, 2},
+			color1 = {1.0, 1.0, 1.0},
+			color2 = {1.0, 0.5, 0.25},
+			color3 = {1.0, 0.3, 0.1},
+			opacity = 1,
+			fadeIn = 0.15,
+			fadeOut = 0.3,
+			size = {0.70, 0.030},
+			gravity = {0,0,0},
+			airResistance = 1.0,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = -0.002,
+		},
+
+		-- glow
+		{
+			spawnBurst = true,
+			emissionRate = 1,
+			emissionTime = 0,
+			maxParticles = 1,
+			boxMin = {0,0,-0.1},
+			boxMax = {0,0,-0.1},
+			sprayAngle = {0,30},
+			velocity = {0,0},
+			texture = "assets/textures/particles/glow.tga",
+			lifetime = {1000000, 1000000},
+			colorAnimation = false,
+			color0 = {0.23, 0.11, 0.08},
+			opacity = 1,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {2, 2},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = -0.002,
+		}
+	}
+}
+
 
 defineObject{
     name = "gravestone_01",
@@ -913,3 +1085,6 @@ defineObject{
 	hitSound = "impact_blade",
 	editorIcon = 56,
 }
+
+
+
