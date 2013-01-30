@@ -23,7 +23,12 @@ It still retains that honor amongst the common populace, but those willing to se
 
 Sometimes, it seems, gods themselves have a mind to the matters of the common world, sometimes it is against the will of gods that an individual return to terrible unlife from an early grave. Whatever the result, in every case one's death is only the first step.
 
+
+
+
+
 I -- Phoenix
+
 We do not know if the Phoenix is a god, deity, or just a very, very powerful magical creature. What we do know is it's wondrous ability to persist living even after death. Thus, it is no wonder a religious following has formed.
 
 I have heard tell of people being resurrected at the altars to this being. I once spoke to a Phoenix priest about it, and he told me what he knew. Apparently they believe the Phoenix chooses to return life to those it deems to have unfulfilled destinies ahead of them. Many times has an old priest been brought to the altar to no avail, having outlived their purpose on this fair realm, but sometimes the corpse of an unlucky adventurer has merely brushed the altar to spring back to life, all their wounds healed and health restored.
@@ -31,6 +36,8 @@ I have heard tell of people being resurrected at the altars to this being. I onc
 Altars to Phoenix are not common, however, and the tendency of it's followers to dwell in the most unreachable and inhospitable places to imitate their deity has led to these altars being abandoned in dark and inhospitable places. A few of them have sprung up in major cities, but they never advertise their presence for obvious reasons.
 
 The Phoenix itself apparently resides on the unreachable eastern tops of the Frostbites -- or so I was told.
+
+INGAME: Altars of Phoenix could be a rare, cost-free form of resurrection in the absence of crystals
 
 
 
@@ -42,6 +49,8 @@ I have been told of Kalevalan heroes who have been brought back from the Netherw
 Undoubtedly, the Netherworld is not hospitable to the living either.
 
 However, there is little additional information to be known here -- the Kalevalan tradition is an oral one, and I mainly worked with literary sources and a few accounts of alleged sorcerers. Suffice to say, it is not common for anyone to return from the dead in their northern land.
+
+INGAME: Perhaps an adventure in the Netherworld to recruit an ancient champion or just seek knowledge?
 
 
 
@@ -61,6 +70,8 @@ That cursed soul will forever be indebted to some dark god according to their ne
 
 Sometimes, it is said, the will of a champion is so strong that they continue on the path of light even after a forceful resurrection, if only to serve their destiny to the end and be locked away like the rest of their kind. I find this fate a sad one, but unfortunately every undead will lose their mind eventually. It is better for this to happen in a cold dark cell than a busy market square.
 
+INGAME: Undead enemies, obviously. Also the possibility to turn a dead champion into an intelligent undead
+
 
 
 
@@ -75,6 +86,8 @@ His other traits aside, he is the master embalmer, who taught that art to the an
 
 The cobra god/goddess (based on many egyptian snake gods and goddesses) of the southern people is especially notable in the mummification myth, since it is said it both protects the graves of the ancient kings, and can also with it's bite return them to life when needed. Needless to say, such beings are thankfully rarely observed.
 
+INGAME: MUMMIES! Need I say more? Also, maybe a champion could even be mummified...
+
 
 
 
@@ -86,5 +99,7 @@ Little is known about the mysterious crystal formations that seem to possess hea
 Some Alchymists believe that the crystal is, in fact, the near-mythical "lapis philosophorum", a source of eternal life. I find that hard to believe when observing the dull fragments I once saw in the Deep Archives.
 
 I know the source of the crystal fragments is recorded somewhere in the Deep Archives as well, but asking about it from the Magister, I only got a very hostile recommendation to forget about it. Thus this part of this study is a woefully short one.
+
+INGAME: Self explanatory.
 
 WORK IN PROGRESS, there are still some ways that are not considered here, feel free to add to it or propose changes as well
