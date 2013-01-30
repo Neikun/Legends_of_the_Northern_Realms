@@ -1,0 +1,3 @@
+--Congam is a small shanti-like town with worn down shacks and a mix of NPC's.
+Maybe a single trader/merchant selling the very basic of supplies: food, potions, water, etc...
+The local NPC's don't like outsiders, but need to rid its shore of a great ghost that haunts its flooded temple. 
