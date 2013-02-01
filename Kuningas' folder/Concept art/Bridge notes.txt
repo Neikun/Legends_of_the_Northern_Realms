@@ -1,0 +1,17 @@
+A concept art I drew for the bridge level I thought of a few weeks ago.
+
+The main point is to be a different kind of level that can be done using mostly existing assets.
+
+The only modeling required is the bridge pylons (four planes at it's simplest, a big pillar essentially) and the rock formations. (on both sides of the bridge, just big enough to make it look like it is built in a valley between mountains)
+
+The balconies are just something that I thought up to show the level structure.
+
+Height can be hidden with a light cloud/fogcover.
+
+Additional features could include being broken at some point, gates that need to be opened to proceed etc.
+
+I also thought the interior could contain some kind of a warehouse and a military barracks. Manned by skeletons, probably.
+
+
+Excuse the quality again -- it doesn't scale well from a 3ds screen. The colors appear damn vivid too, don't know why.
+
