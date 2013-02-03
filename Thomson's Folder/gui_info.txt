@@ -1,0 +1,82 @@
+ Background info
+-----------------
+
+There are two independent code bases that aim to provide GUI: One written
+by Mahric (available in mahric's folder\dialogTest) and another one
+called grimwidgets, that was written by Xanathar, JKos and Thomson
+(available here: https://github.com/xanathar/grimwidgets)
+
+Both approaches have their own strengths and weaknesses. All participants
+seem to agree that duplicating the work is counter-productive, so it makes
+sense to try to merge them. To do so, we need reuse best pieces from
+both solutions.
+
+This is an attempt to find out the best/worst elements in each solutions, i.e.
+things that we want to use in our work forward or throw away if the second
+solution provides better alternative.
+
+ Dialog
+--------
+1. It looks awesome. The dialog boxes are bautifully textured.
+2. Text appearing (letter by letter) is very nice. It is convenient
+   that is can be skipped in the player is impatient.
+3. The code uses LoadModule() from LNR framework.
+4. It is possible to display only one dialog at a time.
+5. It is very easy to create dialog boxes.
+6. It introduces NPC concept, so there are things specific to NPC displayed,
+   e.g. portait and NPC's name. It should be easy to store some state
+   between different dialogs with the same NPC.
+7. Buttons look awesome, but there's no pressed button animation when
+   cursor is over it.
+
+
+ Grimwidgets
+-------------
+1. The gui look like crap.
+2. Objects are hierarchical. You can say that this window will contain
+   elements inside and specify relative positions, like:
+   button1:setRelativePosition({'left','bottom'})
+   button7:setRelativePosition({'after','button5'})
+   It's very good for more complex widgets.
+3. The code uses fw_addModule from grimwidgets.
+4. It is possible to display many widgets at the same time, e.g.
+   compass, water meter, and a dialog box.
+5. You can hook into GUI (always displayed), items (displayed when
+   viewing inventory), stats (diplayed when viewing stats) or
+   skills (displayed when viewing skills).
+6. Allows keyboard presses hooks. It is easy to trigger some action
+   by keypress, e.g. show or hide a gui compass.
+7. The does does not meet LotNR coding standards.
+8. There's limited number of comments available.
+9. Get new champion script is functional.
+10.It seems more flexible, but requires a bit more work to create typical
+   things, like a new dialog box.
+11.There's no NPC concept. All widgets (dialog boxes) are independent.
+12. Buttons may be defined as 3D (cursor sensitive), so there's a feel
+   of them being pressed down. This also gives a hint to player what can
+   be pressed and what is just a decoration.
+
+
+ Proposed way forward
+----------------------
+1. We definitely need to use look and feel of Dialog.
+2. NPC handling in Dialog is very useful.
+3. NPC usage should be optional. I think it is already, but I haven't looked
+   too thoroughly. There are many cases where dialogs are not related to
+   any NPC.
+4. We should retain the simplicity of creating new dialog boxes from Dialog.
+5. Widgets hierarchy in grimwidgets is very useful for stacking together
+   more complex widgets, e.g. showing runes in a spellbook or perhaps
+   one day displaying items in a shop.
+6. Hooking your widgets to specific screens (e.g. items, skills) in
+   grimwidgets is convenient.
+7. Ability to hook some widgets into keypresses is very useful in grimwidgets.
+8. 3D feel in grimwidgets is cool.
+
+Unless there are objections, I (thomson) would like to take up the task
+of merging both approaches.
+
+Full disclosure: I intend to make the solution generic, so other mods may
+benefit from a standard GUI look and feel. In particular, I plan to use
+it in EOB mod, but I suppose there will be other mods that would be interested
+as well.
