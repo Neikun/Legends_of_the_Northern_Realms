@@ -256,4 +256,32 @@ defineMaterial{
 	depthBias = 0,
 }
 
+defineMaterial{
+	name = "sx_sky_day_01",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_sky_day_01_dif.tga",
+	--specularMap = "mod_assets/sx_towntileset/textures/sx_sky_day_01_spec.tga",
+	--normalMap = "mod_assets/sx_towntileset/textures/sx_sky_day_01_normal.tga",
+	doubleSided = false,
+	lighting = false,
+	alphaTest = false,
+	blendMode = "Translucent",
+	textureAddressMode = "Wrap",
+	glossiness = 20,
+	depthBias = 10,
+}
+
+defineMaterial{
+	name = "sx_sky_mountain_01",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_sky_mountain_01_dif.tga",
+	--specularMap = "mod_assets/sx_towntileset/textures/sx_sky_mountain_01_spec.tga",
+	--normalMap = "mod_assets/sx_towntileset/textures/sx_sky_mountain_01_normal.tga",
+	doubleSided = false,
+	lighting = false,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 20,
+	depthBias = 1,
+}
+
 

@@ -391,6 +391,15 @@ defineObject{
 }
 
 defineObject{
+	name = "sx_town_floor_outside",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_town_floor.fbx",
+	placement = "floor",
+	replacesFloor = true,
+	editorIcon = 136,
+}
+
+defineObject{
 	name = "sx_town_ceiling_indoors",
 	class = "Decoration",
 	model = "mod_assets/sx_towntileset/models/sx_town_ceiling_indoor.fbx",
@@ -421,6 +430,14 @@ defineObject{
 	model = "mod_assets/sx_towntileset/models/sx_town_pillar_wood.fbx",
 	placement = "pillar",
 	editorIcon = 108,
+}
+
+defineObject{
+	name = "sx_skydome_01",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_skydome_01.fbx",
+	placement = "floor",
+	editorIcon = 100,
 }
 
 defineObject{
@@ -768,6 +785,41 @@ defineObject{
 	editorIcon = 120,
 }
 
+defineObject{
+	name = "sx_swingdoor",
+	class = "Lever",
+	model = "mod_assets/sx_towntileset/models/swingdoor_ani.fbx",
+	activateAnim = "mod_assets/sx_towntileset/animations/swingdoor_open.fbx",
+	deactivateAnim = "mod_assets/sx_towntileset/animations/swingdoor_close.fbx",
+	placement = "wall",
+	editorIcon = 12,
+}
+
+defineObject{
+	name = "sx_invisible_lever",
+	class = "Lever",
+	model = "mod_assets/sx_towntileset/models/sx_blocker.fbx",
+	activateAnim = "assets/animations/env/lever_down.fbx",
+	deactivateAnim = "assets/animations/env/lever_up.fbx",
+	placement = "wall",
+	editorIcon = 12,
+}
+
+defineObject{
+	name = "sx_invisible_door",
+	class = "Door",
+	model = "mod_assets/sx_towntileset/models/sx_blocker.fbx",
+	openSound = "wall_sliding",
+	closeSound = "wall_sliding",
+	lockSound = "wall_sliding_lock",
+	openVelocity = 10,
+	closeVelocity = -10,
+	secretDoor = true,
+	placement = "wall",
+	editorIcon = 120,
+}
+
+
 -- Stairs
 
 defineObject{
@@ -801,6 +853,7 @@ defineObject{
 	down = true,
 	editorIcon = 48,
 }
+
 
 
 
@@ -893,39 +946,6 @@ defineObject{
 	editorIcon = 88,
 }
 
-defineObject{
-	name = "sx_swingdoor",
-	class = "Lever",
-	model = "mod_assets/sx_towntileset/models/swingdoor_ani.fbx",
-	activateAnim = "mod_assets/sx_towntileset/animations/swingdoor_open.fbx",
-	deactivateAnim = "mod_assets/sx_towntileset/animations/swingdoor_close.fbx",
-	placement = "wall",
-	editorIcon = 12,
-}
-
-defineObject{
-	name = "sx_invisible_lever",
-	class = "Lever",
-	model = "mod_assets/sx_towntileset/models/sx_blocker.fbx",
-	activateAnim = "assets/animations/env/lever_down.fbx",
-	deactivateAnim = "assets/animations/env/lever_up.fbx",
-	placement = "wall",
-	editorIcon = 12,
-}
-
-defineObject{
-	name = "sx_invisible_door",
-	class = "Door",
-	model = "mod_assets/sx_towntileset/models/sx_blocker.fbx",
-	openSound = "wall_sliding",
-	closeSound = "wall_sliding",
-	lockSound = "wall_sliding_lock",
-	openVelocity = 10,
-	closeVelocity = -10,
-	secretDoor = true,
-	placement = "wall",
-	editorIcon = 120,
-}
 
 
 -- particle effects for town
