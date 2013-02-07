@@ -14,7 +14,11 @@ Tally Here:
 Neikun (Should be able to create 1-4 characters, but be restricted from using the base party)
 Arkos (I agree with Neikun)
 Kuningas (I agree -- changeable characters are among the features I envisioned)
-
+Drakkan - I vote for starting just with one character. We shopuld this way create lots of interesting NPC´s which will
+be able to join the party and player could always choose, which ones wanna have in party. If you start game with four chars,
+there is no need for player to dismiss some members to hire some new (except when some characters will be required
+for specific quests etc.)
+but still - starting with one character will give game more variables and fun from my view.
 
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -25,6 +29,8 @@ For instance "I need to go take my new mage for a spin and get him a few skills.
 Non-Active Party members should scale experience to the main party (1)
 Tally Here:
 Neikun
+Drakkan - players will do not want to start exping weak characters, when already having stronger ones. Also if I remember
+correctly, all RPG games which use similar system are using this option.
 
 
 Non-Active party members will not progress unless the player intentionally progresses them. (1)
@@ -35,5 +41,4 @@ Kuningas: Weaker characters can be taken to lower level dungeons that would feel
 Whichever is prefered by the scripters (1)
 Tally Here:
 Arkos
-
 
