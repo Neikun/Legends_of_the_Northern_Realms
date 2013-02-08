@@ -1,0 +1,76 @@
+This is a copy of grimwidgets, that I'm working on together
+with JKos and Xanathar. I plan to update this copy occasionally,
+but the most up to date version is here:
+
+https://github.com/xanathar/grimwidgets
+
+Useful things in the repo:
+
+1. All-purpose book (can contain text, sections, images, columns, many
+   pages, etc.) Just pick it up and right click to see a demo.
+
+2. Various dialog boxes (just press buttons around), every one does
+   something different.
+
+3. Events. The idea is to have a a simple way to define scripted events.
+Here's simplified code that handles it. It is possible to specify
+optional callback that is called when specific action is taken.
+
+This is really a FSM (finite state machine) implementation with well
+defined states and transitions between them (actions). There's no limit
+how much complex this could get. It is possible to do loops between
+states if needed.
+
+states = {
+
+  { "init",   "An injured dwarf lies on the ground before you."},
+
+  { "healed", "Having regained his strength, the dwarf thanks you."},
+
+  { "join",   "Taghor joins your party"},
+  { "nojoin", "Taghor thanks again and wanders off"}
+}
+
+function onJoin()
+
+   hudPrint("You've got a new dwarf in your party!")
+end
+
+
+
+actions = {
+
+  { "init",      "healed",   "Tend his wounds"},
+
+  { "init",      "abort",    "Leave" },
+
+  { "healed",    "join",     "Yes" },
+
+  { "healed",    "nojoin",   "No" },
+
+  { "join",      "end",      "Continue", onJoin},
+
+  { "nojoin",    "end",      "Continue"}
+
+}
+
+
+4. Add new member to your party. If there are less than 4 guys, the new
+one joins immediately. If there are 4 already, a GUI dialog is shown asking
+who should be left behind.
+
+5. Spellbook. Open skills tab for your mage and you'll see a spellbook with
+some spells listed. The list of spells is short, but it shows it may work.
+
+6. On screen compass. Press C to show/hide a compass.
+
+I'd appreciate your comments and suggestions on those scripts.
+It is a merge of old grimwidgets code and Dialog code written by Mahric.
+It currently uses module loading from LoG framework by JKos, but it is
+very similar to what is in LotNR framework. I don't know how other modules
+work, so I won't try doing merge between those two frameworks on my own.
+Can someone help with this?
+
+Thomson
+
+
