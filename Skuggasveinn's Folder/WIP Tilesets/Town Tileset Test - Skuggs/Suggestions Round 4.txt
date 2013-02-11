@@ -3,8 +3,7 @@ One other cool decoration could be an Ogre's head on a plaque.
 
 Light beam looks a lot better than I though it did once in game.
 
-Drakkan
-requested + ideas
+Drakkan CITY request + ideas
 1. - some kind of dirt floor (probably little grassy) - to be used for some courtyards parts, where is not stone floor
 probably your forest tileset floor will be fine for it, do not know.
 2. - city wall text (probably some iron small desks - should be used for streets names, etc...)
@@ -15,3 +14,16 @@ armory - armor-rack
 tailor - some general clothes stuff
 4. - some squares decorations (fountains, statues, obelisks...)
 5. missing object sx_town_ceiling_outdoors  (stone ceiling, could ber used in some tunnels etc.)
+6. missing object pillar_high   (stone / wooden pillar in 2nd row)
+
+
+Drakkan FOREST Ideas + requests
+- campfire (something like fireplace indoor, just in open space)
+- some variatons on forest wall (like forest_wall5,6 etc...)
+- cave entrance
+- smaller tree (so far only one huge is available)
+- wooden walls (forsome shelters, cottages...)
+- door for forest house (wooden), window for forest cottage
+- some dirty path (like road)
+- river / stream (flooding water from flood dungeon will be fine, just located on the ground)
+- bridge over river :)
