@@ -22,6 +22,14 @@ defineObject{
 	editorIcon = 108,
 }
 
+defineObject{
+	name = "sx_remove_wall",
+	class = "Decoration",
+	model = "mod_assets/sx_towntileset/models/sx_blocker2.fbx",
+	placement = "wall",
+	replacesWall = true,
+	editorIcon = 8,
+}
 
 defineObject{
     name = "sx_town_door",

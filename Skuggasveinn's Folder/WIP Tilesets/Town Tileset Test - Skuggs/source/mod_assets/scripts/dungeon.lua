@@ -220,7 +220,6 @@ spawn("sx_town_lantern", 17,15,0, "sx_town_lantern_1")
 spawn("sx_town_lantern", 23,16,2, "sx_town_lantern_2")
 spawn("sx_town_lantern", 22,17,1, "sx_town_lantern_3")
 spawn("sx_town_lantern_fire", 17,15,0, "sx_town_lantern_fire_1")
-spawn("sx_town_lantern_fire", 22,17,1, "sx_town_lantern_fire_2")
 spawn("sx_town_lantern_fire", 23,16,2, "sx_town_lantern_fire_3")
 spawn("sx_town_window_light_E", 14,16,1, "sx_town_window_light_E_1")
 spawn("sx_town_window_light_N", 21,13,0, "sx_town_window_light_N_1")
@@ -459,10 +458,11 @@ spawn("script_entity", 19,12,3, "script_entity_2")
 function opentaverndoor()\
 \9sx_swingdoor_1:toggle()\
 end")
-spawn("starting_location", 20,16,0, "starting_location")
 spawn("sx_town_wall_text", 22,17,2, "sx_town_wall_text_1")
-	:setWallText("This is a test of a wall sign\
-with generic runes")
+	:setWallText("The Merchant Quarter")
+spawn("sx_autumn_tree_large_01", 8,23,2, "sx_autumn_tree_large_01_4")
+spawn("sx_autumn_tree_large_01", 8,24,2, "sx_autumn_tree_large_01_5")
+spawn("starting_location", 15,15,2, "starting_location")
 
 --- level 3 ---
 
@@ -820,6 +820,7 @@ spawn("sx_town_starsky", 18,5,2, "sx_town_starsky_70")
 spawn("sx_town_starsky", 19,1,1, "sx_town_starsky_71")
 spawn("sx_town_starsky", 18,1,1, "sx_town_starsky_72")
 spawn("sx_town_wall_04", 21,4,0, "sx_town_wall_04_4")
+spawn("sx_autumn_tree_large_01", 31,12,3, "sx_autumn_tree_large_01_6")
 
 --- level 4 ---
 
