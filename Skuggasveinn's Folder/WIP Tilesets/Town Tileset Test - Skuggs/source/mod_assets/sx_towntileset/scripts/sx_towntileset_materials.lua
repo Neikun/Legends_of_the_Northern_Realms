@@ -70,6 +70,19 @@ defineMaterial{
 	depthBias = 0,
 }
 
+defineMaterial{
+	name = "sx_town_signs_generic",
+	diffuseMap = "mod_assets/sx_towntileset/textures/sx_town_signs_gen_dif.tga",
+	specularMap = "mod_assets/sx_towntileset/textures/sx_town_signs_gen_spec.tga",
+	normalMap = "mod_assets/sx_towntileset/textures/sx_town_signs_gen_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 15,
+	depthBias = 0,
+}
 
 defineMaterial{
 	name = "sx_town_metal_generic",

@@ -32,7 +32,7 @@ defineWallSet{
 	},
 	
 	ceilings = {
-		"mod_assets/sx_towntileset/models/sx_blocker2.fbx", 1,
+		"mod_assets/sx_towntileset/models/sx_starsky.fbx", 1,
 	},
 	
 	ceilingShafts = {

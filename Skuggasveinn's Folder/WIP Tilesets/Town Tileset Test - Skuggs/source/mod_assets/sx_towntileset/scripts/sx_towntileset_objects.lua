@@ -400,6 +400,15 @@ defineObject{
 }
 
 defineObject{
+	name = "sx_town_wall_text",
+	class = "WallText",
+	model = "mod_assets/sx_towntileset/models/sx_town_sign_wall_generic.fbx",
+	placement = "wall",
+	replacesWall = false,
+	editorIcon = 28,
+}
+
+defineObject{
 	name = "sx_town_ceiling_indoors",
 	class = "Decoration",
 	model = "mod_assets/sx_towntileset/models/sx_town_ceiling_indoor.fbx",
