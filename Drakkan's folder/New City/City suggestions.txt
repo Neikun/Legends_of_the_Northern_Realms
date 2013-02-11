@@ -1,4 +1,10 @@
-any comments here pls
+Drakkan - any comments here pls
+This is just my first test with this tileset. It is not definitely finished - missing some objects like statutes, fountains etc...
+but overall it should work like that.
+I already requested Skugg with some objects to make (like text_object etc...)
+There is few quests to finish (starting in tavern approaching the woman) it is just for fun, not sure if ever implemented.
+
+
 
 
 ///////KUNINGAS COMMENTS///////////
@@ -29,3 +35,7 @@ Also a general comment not really limited to this build:
 -Roofs for smaller houses would be a nice addition -- looking up the buldings are majestic, but the streetlevel looks dungeonish at times.
 
 //////////////////////////////////////////////////////////
+brief Drakkans coment - thin alleys - definitely good point, could make wider for next city
+dark sky - I wonder what happened with starsky_objects. When I started editing city it was everythere, but then it "dissapeared"
+somehow and I was lazy to add this object on every square. Also not sure if this will not cause major lagging.
+Hudprinitng - yep agreed. I need some text signs on the wall, where streest names will be printed
