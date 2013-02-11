@@ -4,6 +4,12 @@ but overall it should work like that.
 I already requested Skugg with some objects to make (like text_object etc...)
 There is few quests to finish (starting in tavern approaching the woman) it is just for fun, not sure if ever implemented.
 
+log
+v2
+stars
+new quest in armory
+two endings and some dialogue stuff
+
 
 
 
