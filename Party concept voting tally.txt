@@ -19,7 +19,10 @@ be able to join the party and player could always choose, which ones wanna have 
 there is no need for player to dismiss some members to hire some new (except when some characters will be required
 for specific quests etc.)
 but still - starting with one character will give game more variables and fun from my view.
-
+Mahric - I vote for starting with 1 character and expand, but with this extra remark.
+Why restrict the player with not being able to switch? If the player finds a charcter he likes more and he identifies with that, 
+who are we not to allow him to switch the one he started with? Such restriction gains us nothing and can be viewed as a limit 
+for the player. 
 
 ------------------------------------------------------------------------------------------------------------------------
 Tally number 2: Should the champions not currently in the party scale xp to the main character, or stagnate if not used.
@@ -31,7 +34,9 @@ Tally Here:
 Neikun
 Drakkan - players will do not want to start exping weak characters, when already having stronger ones. Also if I remember
 correctly, all RPG games which use similar system are using this option.
-
+Mahric - It is a challenge, since it raises more questions (like: what do we do with equipment), but this is what would keep 
+players interested most in switching (if they want to). Else lower NPCs would never be added to a party or require grinding
+to get the lower character to  sufficient skill level.
 
 Non-Active party members will not progress unless the player intentionally progresses them. (1)
 Tally Here:
