@@ -1,0 +1,10 @@
+Starting party
+one character. one or two more should join shortly after begining. At the end player shoudl have choice lets say max from 10 char
+there should be some "weaker" characters which are able to join party at the begining and player is able to train them and few
+strong chars which will offer joining party later in game.
+
+Also some characters which will join party just for some time (to do particular quest etc..) is very fine option - this way
+player will ahve still some variations in party, which is cool.
+
+Inns
+should be central points where player could hire character which he does not have in party curently.

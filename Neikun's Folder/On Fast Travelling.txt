@@ -1,3 +1,13 @@
 We should be able to fast travel to locations we've already been to from a specific location.
 
 Some fast travelling instances should be interupted by various things. "i.e. Caravan robbers"
+
+
+Drakkans comment: I already played the "fast travel" dungeon and it is looking really cool. Not sure how you want manage that 
+player could choose where he want to fast travel, but thats probably only scripting problem. Interrupted things - why not, it is
+causual stuff in game like these :)
+some tips for instances:
+- caravan with rare goods
+- traveling NPC which coul join party based on some conversation
+- some unique dungeon just for exp and some items
+- bandits of course (animals, humans...)

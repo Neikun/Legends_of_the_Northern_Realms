@@ -1,0 +1,11 @@
+Trainers
+
+Regular building in town, where player could go and train (buy) skill he wants. Each town should have one or more trainers.
+Each trainer is able to train some specific skills. For example City of XXX wll have just trainer Swift John, which is
+able to provide training in skills like Dodge, Athletic etc... another city should have some master-mage who is able to train
+skills like fire-magic or earth magic, but he doesn not know ice magic of course. For that you need visit Icy tower where lonely
+mage is living and could train you... etc...
+
+
+In game - it should work simply - buying tomes. TOme +1 for skill player want to buy for X gold coins. thats all
+As skills are probably the "most wanted" it should be overpriced. 
