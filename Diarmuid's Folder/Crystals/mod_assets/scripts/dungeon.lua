@@ -221,6 +221,8 @@ function useCrystal(altar)\
 \9\9-- Call Crystal Hook\
 \9\9if crystal.color == \"green\" then\
 \9\9\9onGreenCrystalClick(crystal)\
+\9\9elaseif crystal.color == \"pink\" then\
+\9\9\9onPinkCrystalClick(crystal)\
 \9\9end\
 \9\9\
 \9\9-- Turn off activated state lights and turn on deactivated state lights\
@@ -335,10 +337,16 @@ function onGreenCrystalClick(crystal)\
 \9\
 end\
 \
+function onPinkCrystalClick(crystal)\
+\9\
+\9party:heal()\
+\9\
+end\
+\
 ")
-spawn("healing_crystal", 16,17,0, "healing_crystal_1")
+spawn("healing_crystal", 16,18,0, "healing_crystal_1")
 spawn("dx_healing_crystal_object_green", 16,16,0, "dx_healing_crystal_object_green_1")
 	:setSource("")
 spawn("starting_location", 13,16,1, "starting_location")
-spawn("dx_healing_crystal_object_pink", 16,15,3, "dx_healing_crystal_object_pink_1")
+spawn("dx_healing_crystal_object_pink", 16,14,3, "dx_healing_crystal_object_pink_1")
 	:setSource("")
