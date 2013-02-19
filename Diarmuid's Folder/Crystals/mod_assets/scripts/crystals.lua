@@ -1,17 +1,21 @@
 crystalColors = {
 	"green",
+	"pink",
 }
 
 lightColors = {
 	green = {0.5,1,0.5},
+	pink = {1,0.5,1},
 }
 
 particleFogColors = {
-	green = {0.14, 0.803922, 0.352941},
+	green = {0.15, 0.80, 0.35},
+	pink = {0.80, 0.15, 0.70},
 }
 
 particleStarsColors = {
 	green = {1.0,4.0,1.0},
+	pink = {4.0,1.0,2.0},
 }
 
 for _,color in ipairs(crystalColors) do 
@@ -196,6 +200,59 @@ for _,color in ipairs(crystalColors) do
 			}
 		}
 	}
+	
+		defineParticleSystem{
+		name = "dx_healing_crystal_fade_"..color,
+		emitters = {
+			-- fog
+			{
+				spawnBurst = true,
+				emissionRate = 10,
+				emissionTime = 0,
+				maxParticles = 25,
+				boxMin = {-0.5, 0.0,-0.5},
+				boxMax = { 0.5, 2.5, 0.5},
+				sprayAngle = {0,360},
+				velocity = {0.1,0.2},
+				objectSpace = true,
+				texture = "assets/textures/particles/fog.tga",
+				lifetime = {3,3},
+				color0 = particleFogColors[color],
+				opacity = 1,
+				fadeIn = 2.2,
+				fadeOut = 4.2,
+				size = {1.5, 1.5},
+				gravity = {0,0,0},
+				airResistance = 0.1,
+				rotationSpeed = 0.3,
+				blendMode = "Additive",
+			},
+
+			-- stars
+			{
+				spawnBurst = true,
+				emissionRate = 200,
+				emissionTime = 0,
+				maxParticles = 400,
+				boxMin = {-0.6, 0.3,-0.6},
+				boxMax = { 0.6, 2.5, 0.6},
+				sprayAngle = {0,360},
+				velocity = {0.2,0.2},
+				objectSpace = true,
+				texture = "assets/textures/particles/teleporter.tga",
+				lifetime = {1,3},
+				color0 = particleStarsColors[color],
+				opacity = 1,
+				fadeIn = 0,
+				fadeOut = 5,
+				size = {0.05, 0.13},
+				gravity = {0,0,0},
+				airResistance = 0.1,
+				rotationSpeed = 2,
+				blendMode = "Additive",
+			}
+		}
+	}
 
 	-- ***********************************************************************************
 	--                          Define crystal materials
@@ -204,7 +261,7 @@ for _,color in ipairs(crystalColors) do
 	defineMaterial{
 		name = "dx_healing_crystal_"..color,
 		diffuseMap = "mod_assets/textures/crystals/dx_healing_crystal_"..color..".tga",
-		specularMap = "assets/textures/env/healing_crystal_spec.tga",
+		specularMap = "mod_assets/textures/crystals/dx_healing_crystal_spec.tga",
 		normalMap = "assets/textures/env/healing_crystal_normal.tga",
 		doubleSided = false,
 		lighting = true,

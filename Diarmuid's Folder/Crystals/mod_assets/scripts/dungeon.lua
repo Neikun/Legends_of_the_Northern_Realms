@@ -83,7 +83,6 @@ function createCrystals()\
 \9\9\9\9\9\9crystal.fakeItem = crystal.id..\"_fakeItem\"\
 \9\9\9\9\9\9crystal.animTimerActivated = crystal.id..\"_animTimer1\"\
 \9\9\9\9\9\9crystal.animTimerDeactivated = crystal.id..\"_animTimer2\"\
-\9\9\9\9\9\9crystal.pickUpTimer = crystal.id..\"_pickUpTimer\"\
 \9\9\9\9\9\9\
 \9\9\9\9\9\9-- Set it to active\
 \9\9\9\9\9\9crystal.active = true\
@@ -221,7 +220,7 @@ function useCrystal(altar)\
 \9\
 \9\9-- Call Crystal Hook\
 \9\9if crystal.color == \"green\" then\
-\9\9\9onGreenCrystalClick()\
+\9\9\9onGreenCrystalClick(crystal)\
 \9\9end\
 \9\9\
 \9\9-- Turn off activated state lights and turn on deactivated state lights\
@@ -234,6 +233,11 @@ function useCrystal(altar)\
 \9\9\
 \9\9-- Turn off particle system\
 \9\9findEntity(crystal.particleSystem):deactivate()\
+\9\9\
+\9\9-- Spawn fadeout partile system\
+\9\9spawn(\"fx\", altar.level, altar.x, altar.y, 0)\
+\9\9\9:setParticleSystem(\"dx_healing_crystal_fade_\"..crystal.color)\
+\9\9\9:setLight(0,0,0,1,0,8,false)\
 \9\9\
 \9\9-- Destroy shader projectile\
 \9\9findEntity(crystal.shader):destroy()\
@@ -325,7 +329,7 @@ createCrystals()\
 -- *****************************************************************************************\
 \
 \
-function onGreenCrystalClick()\
+function onGreenCrystalClick(crystal)\
 \9\
 \9party:heal()\
 \9\
@@ -336,3 +340,5 @@ spawn("healing_crystal", 16,17,0, "healing_crystal_1")
 spawn("dx_healing_crystal_object_green", 16,16,0, "dx_healing_crystal_object_green_1")
 	:setSource("")
 spawn("starting_location", 13,16,1, "starting_location")
+spawn("dx_healing_crystal_object_pink", 16,15,3, "dx_healing_crystal_object_pink_1")
+	:setSource("")
