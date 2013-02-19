@@ -76,21 +76,49 @@ for _,color in ipairs(crystalColors) do
 		name = "_dx_healing_crystal_light_"..color,
 		class = "LightSource",
 		lightPosition = vec(1, 1.5, 1),
-		lightRange = 10,
+		lightRange = 6.5,
 		lightColor = vec(lightColors[color][1], lightColors[color][2], lightColors[color][3]),
-		brightness = 6,
+		brightness = 3,
 		castShadow = false,
-		flicker = false,
+		flicker = true,
 		placement = "floor",
 		editorIcon = 88,
 	}
 
+	-- Activated state top lightsource
+	defineObject{
+		name = "_dx_healing_crystal_top_light_"..color,
+		class = "LightSource",
+		lightPosition = vec(0, 3, 0),
+		lightRange = 6.5,
+		lightColor = vec(lightColors[color][1], lightColors[color][2], lightColors[color][3]),
+		brightness = 3,
+		castShadow = false,
+		flicker = true,
+		placement = "floor",
+		editorIcon = 88,
+	}
+	
+	-- Activated state bottom lightsource
+	defineObject{
+		name = "_dx_healing_crystal_bottom_light_"..color,
+		class = "LightSource",
+		lightPosition = vec(0, 0.3, 0),
+		lightRange = 6.5,
+		lightColor = vec(lightColors[color][1], lightColors[color][2], lightColors[color][3]),
+		brightness = 3,
+		castShadow = false,
+		flicker = true,
+		placement = "floor",
+		editorIcon = 88,
+	}
+	
 	-- Dectivated state lightsources
 	defineObject{
 		name = "_dx_healing_crystal_light_deactivated_"..color,
 		class = "LightSource",
 		lightPosition = vec(1, 1.5, 1),
-		lightRange = 5,
+		lightRange = 6.5,
 		lightColor = vec(lightColors[color][1], lightColors[color][2], lightColors[color][3]),
 		brightness = 1,
 		castShadow = false,

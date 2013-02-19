@@ -17,17 +17,17 @@ mapDesc([[
 ################################
 ################################
 ################################
-################################
-################################
-################################
-############.#.....#############
-##############.....#############
-############.......#############
-############.......#############
-############.......#############
-################################
-################################
-################################
+#############.......############
+#############.......############
+#############.......############
+###########.#.......############
+#############.......############
+#############.......############
+#############.......############
+#############.......############
+#############.......############
+#############.......############
+#############.......############
 ################################
 ################################
 ################################
@@ -39,10 +39,9 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("starting_location", 15,16,0, "starting_location")
-spawn("torch_holder", 15,14,0, "torch_holder_1")
+spawn("torch_holder", 11,14,0, "torch_holder_1")
 	:addTorch()
-spawn("script_entity", 13,12,0, "crystalHandler")
+spawn("script_entity", 8,12,0, "crystalHandler")
 	:setSource("crystalObjects = {}\
 \
 -- *****************************************************************************************\
@@ -76,6 +75,8 @@ function createCrystals()\
 \9\9\9\9\9\9\9crystal.dimLights[j] = crystal.id..\"_dimLight_\"..j\
 \9\9\9\9\9\9\9crystal.gratings[j] = crystal.id..\"_grating_\"..j\
 \9\9\9\9\9\9end\
+\9\9\9\9\9\9crystal.topLight = crystal.id..\"_topLight\"\
+\9\9\9\9\9\9crystal.bottomLight = crystal.id..\"_bottomLight\"\
 \9\9\9\9\9\9crystal.particleSystem = crystal.id..\"_particleSystem\"\
 \9\9\9\9\9\9crystal.altar = crystal.id..\"_altar\"\
 \9\9\9\9\9\9crystal.timer = crystal.id..\"_timer\"\
@@ -107,6 +108,8 @@ function createCrystals()\
 \9\9\9\9\9\9\9spawn(\"_dx_healing_crystal_light_\"..crystal.color, level, x, y, j, crystal.lights[j])\
 \9\9\9\9\9\9\9spawn(\"_dx_healing_crystal_light_deactivated_\"..crystal.color, level, x, y, j, crystal.dimLights[j]):deactivate()\
 \9\9\9\9\9\9end\
+\9\9\9\9\9\9spawn(\"_dx_healing_crystal_top_light_\"..crystal.color, level, x, y, 0, crystal.topLight)\
+\9\9\9\9\9\9spawn(\"_dx_healing_crystal_bottom_light_\"..crystal.color, level, x, y, 0, crystal.bottomLight)\
 \9\9\9\9\9\9\
 \9\9\9\9\9\9spawn(\"_dx_healing_crystal_particleSystem_\"..crystal.color, level, x, y, 0, crystal.particleSystem)\
 \9\9\9\9\9\9\
@@ -216,14 +219,18 @@ function useCrystal(altar)\
 \9\
 \9if crystal.active then\
 \9\
-\9\9-- Heal Party\
-\9\9party:heal()\
+\9\9-- Call Crystal Hook\
+\9\9if crystal.color == \"green\" then\
+\9\9\9onGreenCrystalClick()\
+\9\9end\
 \9\9\
 \9\9-- Turn off activated state lights and turn on deactivated state lights\
 \9\9for i = 0,3 do\
 \9\9\9findEntity(crystal.lights[i]):deactivate()\
 \9\9\9findEntity(crystal.dimLights[i]):activate()\
 \9\9end\
+\9\9findEntity(crystal.topLight):deactivate()\
+\9\9findEntity(crystal.bottomLight):deactivate()\
 \9\9\
 \9\9-- Turn off particle system\
 \9\9findEntity(crystal.particleSystem):deactivate()\
@@ -249,10 +256,12 @@ function reactivateCrystal(timer)\
 \9local level, x, y = timer.level, timer.x, timer.y\
 \9\9\
 \9-- Turn off deactivated state lights and turn on activated state lights\
-\9\9for i = 0,3 do\
-\9\9\9findEntity(crystal.lights[i]):activate()\
-\9\9\9findEntity(crystal.dimLights[i]):deactivate()\
-\9\9end\
+\9for i = 0,3 do\
+\9\9findEntity(crystal.lights[i]):activate()\
+\9\9findEntity(crystal.dimLights[i]):deactivate()\
+\9end\
+\9findEntity(crystal.topLight):activate()\
+\9findEntity(crystal.bottomLight):activate()\
 \9\
 \9-- Turn on particle system\
 \9findEntity(crystal.particleSystem):activate()\
@@ -311,11 +320,19 @@ end\
 \
 createCrystals()\
 \
+-- *****************************************************************************************\
+--                                  CUSTOM CRYSTAL FUNCTIONS\
+-- *****************************************************************************************\
+\
+\
+function onGreenCrystalClick()\
+\9\
+\9party:heal()\
+\9\
+end\
+\
 ")
-spawn("healing_crystal", 13,18,0, "healing_crystal_1")
-spawn("timer", 14,13,1, "timer_1")
-	:setTimerInterval(14)
-	:activate()
-	:addConnector("activate", "script_entity_1", "test")
-spawn("dx_healing_crystal_object_green", 12,16,1, "dx_healing_crystal_object_green_1")
+spawn("healing_crystal", 16,17,0, "healing_crystal_1")
+spawn("dx_healing_crystal_object_green", 16,16,0, "dx_healing_crystal_object_green_1")
 	:setSource("")
+spawn("starting_location", 13,16,1, "starting_location")
