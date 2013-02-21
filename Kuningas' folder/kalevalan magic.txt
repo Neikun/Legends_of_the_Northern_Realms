@@ -1,0 +1,64 @@
+
+FEEL FREE TO ADD SUGGESTIONS AND COMMENTS
+
+Kalevalan Wisemen and Talesingers (or an alternate form of magic)
+
+In the areas surrounding Kalevala, they have always practised the ancient pseudo-magical art of talesinging, the retelling of ancient heroics through an instrument and/or voice. Some just call it heroic poetry, but apparently it is more than that.
+
+Many northerners consider talesinging a veritable form of magic, but woefully little information exists here in the south.
+
+Since talesinging is not always practised as magic, it's effects are shrouded in perpetual mystery. Most common tales tell of inducing sleep, resurrection, heartening, even controlling the elements. Many sorts of illusions or conjurations are also common.
+
+One of the most famous tales tells of a duel of song between two mighty sorcerers, which ended in the inferior one being buried up to his neck in swamp. The tale does not reveal specifics -- did the earth give in beneath him or was he forced to a nearby bog?
+
+Talesinging is most often practised by so-called wisemen, a common-folk type of druid or shaman indigenous to the northern lands. Most villages have a designated wiseman who acts as both a record keeper and all-around religious figure. Some are said to possess magical powers.
+
+
+IN-GAME IMPLEMENTATION:
+
+I'm thinking using an instrument, such as the flute or a kantele (a finnish folk instrument) that works as a catalyst for the spells -- similarly to the staff in the main game. This item would be used to bring up the spell casting UI, which would then be used to cast the appropriate spell.
+The spells would not be as immediate as normal spells, instead of fireballs and poison clouds there could be things like banishing undead, making a safe area during combat, buffs of all sorts etc. Morely supportive form of magic, which alone might not do vast amounts of damage.
+
+I'm thinking of few ways that this could be implemented.
+
+1 -- similar to existing, runic magic:
+
+The instrument brings up an UI from which you choose the "components" (I'm thinking notes or verses), and click on the instrument again to cast. 
+
+Pros:
+-An established technique
+-Versatile amount of spell options
+
+Cons:
+-Provenly clunky
+-Not very different in the end, might end up as additional clunk only
+
+
+2 -- Choose a spell from a list of some kind when 
+equipping/in inventory, cast that spell on clicking
+Compare to systems in other games where you equip a spell, which can then be used similarly to a weapon.
+
+Pros:
+-Simple, as long as the spell choosing is kept simple as well
+-Enables discovering spells in various ways
+
+Cons:
+-More fitting for immediate types of effects, like the existing spells mostly
+
+
+3 -- Map buttons for "spell components", also support for mouse selection
+
+Compare to the instruments in many zelda games (such as the Ocarina of Time); an instrument which can be played using different buttons, and certain combinations result in magical effects.
+
+Pros:
+-Can be fast, hammering a set of keys is faster than clickin (or is it?)
+-Reasonably different from regular magic, whilst retaining certain similarity
+
+Cons:
+-Takes up keys if used on the keyboard
+-Hard to use while moving (since you'd be using the WASD keys on the left hand, and mouse is necessary on the right
+
+
+In general, spells should be discovered as pieces of poetry, or verses, or chords, or something like that. A sorcerer's most valuable asset are the spells he knows.
+
+FEEL FREE TO ADD OR COMMENT ON THE PROPOSED UI SOLUTIONS AS WELL, THESE ARE JUST THE ONES I CAME UP WITH.
