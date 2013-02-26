@@ -45,3 +45,66 @@ brief Drakkans coment - thin alleys - definitely good point, could make wider fo
 dark sky - I wonder what happened with starsky_objects. When I started editing city it was everythere, but then it "dissapeared"
 somehow and I was lazy to add this object on every square. Also not sure if this will not cause major lagging.
 Hudprinitng - yep agreed. I need some text signs on the wall, where streest names will be printed
+
+
+
+///////thomson's comments/////////////
+The new tileset and new props look great. I really like them, but I do not want
+to repeat the compliments others were giving. Here are my comments:
+
+There is a light glitch. The light shines through the walls. Stand at 11,23 and
+look south (at 11,25).
+
+"Its dark here" => "It's dark here" ("its" is possessive form or it. "it's" is
+a contration of "it is")
+
+as usually => as usual.
+
+Why can't I steal torches? "This is not your property" is a poor excuse. I'm an
+an asipring thief, why can't I steal a torch? It would be better if you allow
+to steal one torch, and it spawns a partol looking for torch thief. After that
+the player could comment "I better not steal another one". You can make it more
+belivable if the first torch stolen has very short burn time (there's a call 
+setFuel() for that). The player could comment. "Why bother? Stealing another
+one would bring more patrols and they are worthless anyway".
+
+Quest for bringing 3 metal parts. It is largely unbalanced. 150 exp vs full
+helm - 150xp is 2,5 snails killed :(
+
+After compliting the quest there's no "sorry, I'm busy." or "I don't have
+anything more for you".
+
+"Note from Agen" => "Agent"
+
+Tailor left a note that he's out to tarven, but he really is in the Inn. 
+
+It was not obvious that I need to put the gems on the table before the inn
+keeper.
+
+There's a visual glitch when you enter the tavern walking backwards (looking at
+the courtyard).
+
+There's a visual glitch when you go up the stairs in the tavern and in tailor's
+house.
+
+Light rays cast from the windows, up in the tavern look amazing from distance,
+but there are unpleasant patches of light and dark texture when looked up close.
+
+"Be quite" => "Be quiet"
+
+The final of the map is glitchy.
+
+- when Yennifer runs away, there's information to return to thieves guild.
+  There's nothing that can be triggered there.
+- I found 2 ways to bring green smaragd to thieves guild:
+  a) keep the smaragd in the mouse pointer
+  b) throw it through the stairs
+  Bringing the smaragd to thieves guild does nothing (i put it in the alcove,
+  but there is no reaction)
+
+There are several other small typos in various texts.
+
+In general, great map with a lot of potential. It feels a bit unfinished, but
+I understand that as it is a demo.
+
+///////////////////////////////////////
