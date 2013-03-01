@@ -1,0 +1,6 @@
+Hey, so I was messing around with the GMT and my newly dowloaded DDS plugin for PS CS6, and I ended up creating a variation of the Leather Brigandine I call the Frost Brigandine! 
+Just merge the scripts, models, and textures folders from Radar's Folder/Frost Armor/ with the ones in whatever dungeon you want.
+
+This is really good news because I can even create custom textures for custom 3D objects for you guys now.
+
+I figure it might be useful to have some kind of frost resist in the North. :) Maybe tomorrow I will play around some more and complete a whole set.
