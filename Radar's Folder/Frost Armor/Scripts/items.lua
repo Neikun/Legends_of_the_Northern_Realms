@@ -15,4 +15,5 @@ cloneObject{
 	protection = 4,
 	resistCold = 10,
 	weight = 8.0,
+	description = "This strange leather armor radiates with an unnatural warmth."
 }
