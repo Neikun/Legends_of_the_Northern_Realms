@@ -17,3 +17,68 @@ cloneObject{
 	weight = 8.0,
 	description = "This strange leather armor radiates with an unnatural warmth."
 }
+
+cloneObject{
+	name = "frost_boots",
+	baseObject = "leather_boots",
+	uiName = "Frost Boots",
+	model = "mod_assets/models/frost_boots.fbx",
+	slot = "Feet",
+	Armorskill = "light_armor",
+	armorSet = "frostleather",
+	gfxAtlas = "mod_assets/textures/frost_items.tga",
+	gfxIndex = 1,
+	protection = 4,
+	resistCold = 5,
+	weight = 8.0,
+	description = "These strange leather boots radiate with an unnatural warmth."
+}
+
+cloneObject{
+	name = "frost_cap",
+	baseObject = "leather_cap",
+	uiName = "Frost Cap",
+	model = "mod_assets/models/frost_cap.fbx",
+	slot = "Head",
+	armorSkill = "light_armor",
+	armorSet = "frostleather",
+	gfxAtlas = "mod_assets/textures/frost_items.tga",
+	gfxIndex = 2,
+	protection = 4,
+	resistCold = 5,
+	weight = 0.8,
+	description = "This strange leather cap radiates with an unnatural warmth."
+}
+
+cloneObject{
+	name = "frost_gloves",
+	baseObject = "leather_gloves",
+	uiName = "Frost Gloves",
+	model = "mod_assets/models/frost_clothes_small.fbx",
+	slot = "Gauntlets",
+	armorskill = "light_armor",
+	armorSet = "frostleather",
+	gfxAtlas = "mod_assets/textures/frost_items.tga",
+	gfxIndex = 4,
+	protection = 2,
+	resistCold = 5,
+	weight = 0.8,
+	description = "These strange leather gloves radiate with an unnatural warmth."
+}
+
+
+cloneObject{
+	name = "frost_greaves",
+	baseObject = "leather_greaves",
+	uiName = "Frost Greaves",
+	model = "mod_assets/models/frost_greaves.fbx",
+	slot = "Legs",
+	armorskill = "light_armor",
+	armorSet = "frostleather",
+	gfxAtlas = "mod_assets/textures/frost_items.tga",
+	gfxIndex = 3,
+	protection = 2,
+	resistCold = 5,
+	weight = 0.8,
+	description = "These strange leather greaves radiate with an unnatural warmth."
+}

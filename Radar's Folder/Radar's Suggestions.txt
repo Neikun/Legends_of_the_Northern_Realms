@@ -1,1 +1,5 @@
 Perhaps we should somehow stop the player from swapping out "Player 1" for NPCs. Whether we dictate their character or they choose it, we want the main character to remain consistant.
+
+ToDo:
+
+Make Chitin Gauntlets(?)

@@ -1,9 +1,14 @@
-Hey, so I was messing around with the GMT and my newly dowloaded DDS plugin for PS CS6, and I ended up creating a variation of the Leather Brigandine I call the Frost Brigandine! 
-Just merge the scripts, models, and textures folders from Radar's Folder/Frost Armor/ with the ones in whatever dungeon you want.
+Full set of Frost Armor. 5 pieces. Head, Torso, Legs, Gauntlets, Feet.
 
-=======
-It has a custom icon as well.
+Unique textures and icons.
 
-This is really good news because I can even create custom textures for custom 3D objects for you guys now.
+Total stats:
 
-I figure it might be useful to have some kind of frost resist in the North. :) Maybe tomorrow I will play around some more and complete a whole set.
+18 armor
+30 Cold Resist
+
+All five pieces require leather armor to use currently.
+
+Msyblade suggested that we maybe include set bonuses for some armors. 
+I don't think this is one for that, but we should keep it in mind for future armor sets.
+

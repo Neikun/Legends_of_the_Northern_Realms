@@ -14,3 +14,80 @@ defineMaterial{
 	glossiness = 20,
 	depthBias = 0,
 }
+
+defineMaterial{
+	name = "frost_boots",
+	diffuseMap = "mod_assets/textures/frost_boots_dif.tga",
+	specularMap = "assets/textures/items/leather_boots_spec.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 20,
+	depthBias = 0,
+}
+
+defineMaterial{
+	
+	name = "frost_clothes",
+	
+	diffuseMap = "mod_assets/textures/frost_clothes_dif.tga",
+	
+	specularMap = "assets/textures/items/leather_clothes_spec.tga",
+	
+	doubleSided = false,
+	
+	lighting = true,
+	
+	alphaTest = false,
+	
+	blendMode = "Opaque",
+	
+	textureAddressMode = "Wrap",
+	
+	glossiness = 20,
+	
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "frost_cap",
+	diffuseMap = "mod_assets/textures/frost_cap_dif.tga",
+	specularMap = "assets/textures/items/leather_cap_spec.tga",
+	doubleSided = false,
+	
+	lighting = true,
+	
+	alphaTest = false,
+	
+	blendMode = "Opaque",
+	
+	textureAddressMode = "Wrap",
+	
+	glossiness = 20,
+	
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "frost_greaves",
+	diffuseMap = "mod_assets/textures/frost_greaves_dif.tga",
+	specularMap = "assets/textures/items/leather_greaves_spec.tga",
+	doubleSided = false,
+	
+	lighting = true,
+	
+	alphaTest = false,
+	
+	blendMode = "Opaque",
+	
+	textureAddressMode = "Wrap",
+	
+	glossiness = 20,
+	
+	depthBias = 0,
+
+}
