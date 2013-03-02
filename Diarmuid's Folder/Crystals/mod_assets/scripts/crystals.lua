@@ -1,21 +1,34 @@
 crystalColors = {
 	"green",
 	"pink",
+	"red",
+	"black",
+	"orange",
 }
 
 lightColors = {
 	green = {0.5,1,0.5},
 	pink = {1,0.5,1},
+	red = {1.6,0.5,0.5},
+	black = {0.1, 0.1, 0.1},
+	orange = {1.10, 0.3, 0},
+	
 }
 
 particleFogColors = {
 	green = {0.15, 0.80, 0.35},
 	pink = {0.80, 0.15, 0.70},
+	red = {1.10, 0.20, 0.20},
+	black = {0.2, 0.2, 0.2},
+	orange = {1.10, 0.22, 0},
 }
 
 particleStarsColors = {
 	green = {1.0,4.0,1.0},
 	pink = {4.0,1.0,2.0},
+	red = {4.0, 1.0, 1.0},
+	black = {0, 0, 0},
+	orange = {1.10, 0.1, 0},
 }
 
 for _,color in ipairs(crystalColors) do 
