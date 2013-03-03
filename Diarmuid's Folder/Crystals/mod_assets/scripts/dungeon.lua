@@ -391,5 +391,3 @@ spawn("dx_healing_crystal_object_black", 16,22,2, "dx_healing_crystal_object_bla
 spawn("dx_healing_crystal_object_orange", 16,24,2, "dx_healing_crystal_object_orange_1")
 	:setSource("")
 spawn("starting_location", 14,23,0, "starting_location")
-spawn("dx_healing_crystal_object_glass_red", 14,20,2, "dx_healing_crystal_object_glass_red_1")
-	:setSource("")

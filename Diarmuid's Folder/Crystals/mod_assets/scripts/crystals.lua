@@ -10,16 +10,6 @@ function defineCrystal(defs)
 		editorIcon = 60,
 	}
 	
-	if defs.defineGlassVersion then
-	
-		cloneObject{
-			name = "dx_healing_crystal_object_glass_"..defs.color,
-			baseObject = "script_entity",
-			editorIcon = 60,
-		}
-	
-	end
-
 	-- ***********************************************************************************
 	--                     Define crystal projectile objects
 	-- ***********************************************************************************
@@ -47,25 +37,7 @@ function defineCrystal(defs)
 		placement = "floor",
 		editorIcon = 60,
 	}
-	
-	if defs.defineGlassVersion then
-	
-		-- Glass Crystal, activated
-		cloneObject{
-			name = "_dx_healing_crystal_glass_"..defs.color,
-			baseObject = "_dx_healing_crystal_"..defs.color,
-			trapDoorModel = "mod_assets/models/crystals/dx_healing_crystal_glass_"..defs.color..".fbx",		
-		}
-
-		-- Glass Crystal, deactivated
-		cloneObject{
-			name = "_dx_healing_crystal_deactivated_glass_"..defs.color,
-			baseObject = "_dx_healing_crystal_deactivated_"..defs.color,
-			trapDoorModel = "mod_assets/models/crystals/dx_healing_crystal_glass_"..defs.color..".fbx",		
-		}
-	
-	end
-	
+		
 	-- Projectile shader
 	defineObject{
 		name = "_dx_healing_crystal_shader_"..defs.color,
@@ -293,25 +265,7 @@ function defineCrystal(defs)
 		glossiness = 20,
 		depthBias = 0,
 	}
-	
-	if defs.defineGlassVersion then
-	
-		defineMaterial{
-			name = "dx_healing_crystal_glass_"..defs.color,
-			diffuseMap = "mod_assets/textures/crystals/dx_healing_crystal_glass_"..defs.color..".tga",
-			specularMap = "mod_assets/textures/crystals/dx_healing_crystal_spec.tga",
-			normalMap = "assets/textures/env/healing_crystal_normal.tga",
-			doubleSided = false,
-			lighting = false,
-			alphaTest = false,
-			blendMode = "Additive",
-			textureAddressMode = "Wrap",
-			glossiness = 50,
-			depthBias = 0,
-		}
-
-	end
-	
+		
 end
 
 
@@ -380,7 +334,6 @@ defineCrystal{
 	lightColor = {1.6,0.5,0.5},
 	particleFogColor = {1.10, 0.20, 0.20},
 	particleStarsColor = {4.0, 1.0, 1.0},
-	defineGlassVersion = true,
 }
 
 defineCrystal{
