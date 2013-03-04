@@ -7,6 +7,7 @@ cloneObject{
 	baseObject = "leather_gloves",
 	uiName = "Chitin Gloves",
 	model = "mod_assets/models/chitin_gloves.fbx",
+	slot = "Gauntlets",
 	armorSkill = "light_armor",
 	armorSet = "chitin",
 	gfxAtlas = "mod_assets/textures/chitin_items.tga",
