@@ -1,0 +1,19 @@
+QUEST STORY - 
+This could be side-quest (or even main)
+
+old cleric named XXX send you to graveyard to pick up something (holy water...)
+he open way for you. On graveyard you will find key and enter mausoleum.
+Suddenly door closed and you are trapped. You need get out of here.
+
+What player do not know yet, that old cleric is reeeeealy evil and serve to necormancer
+providing him with fresh bodies and also sending him some adventures to amuse him.
+ Dungeon under graveyard should be 1-2 floor large. More deadly puzzles than fights here
+. Party could discover some broken wall or something in some crypt and escape the
+"main" dungeon part to another one. Here is first NPC - some woman trapped by
+necormancer. After player get back to the surface. Necromancer appears ans summon
+lots of undeads here (all spawners on map are enabled) - player need to escpae the 
+graveyard.
+
+
+
+If somebody wanna edit the dungeons below the graveyard, you are welcome
