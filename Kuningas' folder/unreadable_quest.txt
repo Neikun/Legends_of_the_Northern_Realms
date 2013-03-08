@@ -1,0 +1,24 @@
+
+The Unreadable
+
+In a nigh forgotten court in *insert city here* stands a weathered stone slab, inscribed with mysterious runes shaped in the form of a strangely coiling snake. It has stood there longer than the oldest scholars trace their memory, yet there has been no-one to decipher it's runes, although there are tales about great treasures or magical powers the glyphs are supposed to reveal.
+The runes themselves are very distinct from any other form of writing, so once seen a wide-traveled adventurer just might find them in a completely different place...
+
+Quest initiation:
+
+Studying the runestone in person. ("You look at the runes for a while, but don't understand them at all. Still, even after weeks, you'd probably recognize the typography were you to witness it elsewhere")
+
+Progress:
+
+Somewhere else (Royal Library? Mage Academy? Some fitting dungeon? The shop of an antiquarian? Doesn't matter, really, but is should be believable), you stumble upon the same kind of writing in a document which explains enough about them to make them readable -- the secret of the writing is now unveiled to you! It tells you to follow the serpent's directions in invoking a set of ancestral standing stones traditionally known as the "Snake's Teeth" on a nearby moor. It should make the "Serpent Under The Fields" open it's jaws and clear a pathway within it's body where one could find one of the legendary Midgormun Hearts, potent magical gemstones only scant a few of which are known to exist.
+Doing so, earth under the party would give and they would fall into the main event of the quest.
+
+Dungeon:
+
+The Moorserpent's Belly would be a serpentine but pretty linear dungeon. It would be mostly trap and puzzle oriented, but some enemies could be encountered as well. The quest reward would be the Midgormun Heart, which should be a fairly potent artefact. It's effects don't really matter at this point -- maybe if further questline is introduced it could be of importance.
+
+Sequels?
+
+Possible repercussions could include getting stalked by a serpent cult which held it's rituals near the Snake's Teeth, only to later find a hole and a mysterious dungeon there.
+
+This is a quick rewrite, I purposefully left the details obscure for easy fitting for different locations.

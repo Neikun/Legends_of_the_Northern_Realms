@@ -1,0 +1,26 @@
+Town signs textures
+
+Basic shops:
+
+(red)
+- Weaponsmith (melee weapons, throwing weapons)
+- Armorsmith (heavy armors, shields)
+
+(green)
+- Tannery (light armors, missile weapons)
+- Apothecary (potions, ingredients)
+
+(blue)
+- Grocery (food)
+- Tailor (clothes)
+
+
+Optional shops:
+- Magic shop (orbs, magic staves, wands, books)
+- Traveler's shop (conteiners, light sources) *may be merged with Tannery
+- Jeweler (gems)
+- Goldsmith (necklaces, bracers) *may be merged with Jeweler
+
+Other:
+- Inn
+- Harbour

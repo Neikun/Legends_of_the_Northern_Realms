@@ -1,0 +1,101 @@
+LoTNR Overview List
+by Radar6590 » Sat Mar 02, 2013 5:39 pm
+
+Ok, so, I've been reading through the entire repository, and we have a lot of good ideas. That said, we lack cohesion of these ideas and how they immediately tie into one another.When reading through the repository, I had a hard time picturing "the whole mod" in my head. 
+
+I think that right now we should really focus on the overarching story and the places that the player needs to go to finish our mod. Once we have our overworld and primary Quest locations set, it will be easy to fill in the area related plots. 
+
+My goal in this thread is to catalogue all of the .txts I've read in the repository. What we need is organization and to truly lock down the type of content we need to make if we want this thing to come together before LoG 2 is released. That's not to say I want to impose deadlines or anything. I love the way we work. But this way, people can look at this list and say "Hey, I need to make content for this --." and then they do it, and once this list is 100% complete, we're done! Sounds simple, right? haha. I think in general we may be thinking on a little too grand of a scale. You'll see why below.
+
+Please post things I missed and new ideas here (or in your .txts in the repo!) and I will try to keep up with everything in this thread so we have clear, concise, up-to-date status of the project. I will also add this to a .txt doc in the repo.
+
+So here we go:
+
+Overworld:
+1. Juho's Border World Map
+
+Main Quest:
+
+1.The player is introduced (through cinematic?)the events after Grimrock. Mork and Contar die, Yennica and Sancsaron live.
+
+2. The Player begins his journey in the starting town or the Great library of Nothampton.
+
+3. The Player makes first contact (good or bad) with Sancsaron, begins quest of chasing artifacts or the rogue mage.
+
+4. The player is introduced to the overworld, and now has the choice to continue on the Main Quest or attempt side quests.
+
+5. The first clues (maybe to artifact 1?)will be in the Library itself, expanding Zhandul lore. The player learns the relative location of the other 
+artifacts.
+
+6. The player finds artifact 1 and clues to the second in a dungeon. (How? You Tell me. Specific types of crypts or something?)
+
+7. The player finds artifact 2 and clues to the third in a separate dungeon.
+
+8. The player finds artifact 3 and the fact that Zhandul's orb is the last artifact in a separate dungeon.
+
+9. The player returns to find Sanscaron corrupt/having killed everyone in the library if he's on the run. Boss battle ensues.
+
+10. Open the the dungeon in the Library.
+
+11. Complete the dungeon (with cube inside?!?!?)
+
+12. Roll credits
+
+As we can see, the main quest itself is looking like a huge designing challenge. In this state it needs the library, the town, at least 3 overworld 
+dungeons (never-mind the travel level to get there.) and a final dungeon inside the library which could in itself probably account for a whole "normal" 
+mod.
+
+It's a big project. These assets and models should be created first. I'm sorry I can't create a more detailed checklist, but maybe someone will take 
+the initiative to tackle that immense task. Someone more knowledgeable about the technical progress we've made.
+
+Party NPC Side Quests:
+
+1. Fighter Side Quest
+
+2. Rogue Side Quest (I was thinking, maybe we could have Yennica recruitable ince she lived? She couldn't be high level from Grimrock balance wise 
+{hit her head maybe?}, but could scale with the other NPCs. This may add a bit more of a tie in and would be a nice option of familiarity for 
+the player.)
+
+3. Mage Side Quest
+
+4. Ranger Side Quest
+
+I'd say that besides the main quest these are the most important quests to include. Especially if the party poll is going the way it seems: having 
+1 player character and adding party members. These quests are not too complex. They probably require the home town and at least 1 area/puzzle per 
+NPC to complete the quest.
+
+Miscellaneous Quests:
+
+1. We lost our Key - Gain access to a healing crystal and recruits in town by gathering a custom item to unlock the inn.
+
+2. Spider Infestation - The Inn has bugs in the basement.
+ 
+3. Infiltration - There's a plot to kill the king (and it's his own Guard Captain!) Help the Captain's Brother solve the case (NPC fighter Quest??!)
+I combined this one from two of msy's that were very similar.
+
+4. Kidnapped - The Baron's daughter has kidnapped herself to extort money from the king. Dispatch of the bandit's she's been palling around without 
+with (wanting a cut)and bring the brat home.
+
+5. Rumors of War - Return items the Baron's daughter has stolen from a diplomatic envoy to prevent all out war.
+
+6. The Grimmest Cap I've ever seen. - Gather a Grim cap to access the Alchemy Shop. They'll buy more from you when they open.
+
+7. Errand Boy - A guard forgot his weapon while on duty. Help him out and get it for him before the Captain sees.
+
+8. Assassin - (one I thought of) Upon entering an abandoned building in town, you are accosted by an assassin. Kill him, read a note on his body, 
+and confront his employer (another NPC in town?).
+
+9. Betray the Baron - Steal the Baron's Engraved Stone Tablet and return it to a shady mage. (Slightly simplified from Kuningas' Quest by setting 
+it in Nothampton. Also the writing in this and the next quest involving a "Dagger of the World Serpent" are pretty much names from Skyrim, including 
+Olaf Wurm - vs. - Olaf one Eye, who captured a dragon [wyrm]. Alduin is the World Eater, and a dragon. Even the phrase "Fetch an ancient stone tablet" 
+is exactly what Farengar tells you to do. It just goes a little beyond referential. We can do them. Just... with some name changes.)
+
+10. Basalisk Tooth Dagger - Find and retrieve a powerful dagger artifact, defeat the shady mage, who just beats you to it.
+
+These misc Quests are great and I love them all lets do it!
+
+There's another quest from Kuningas in his folder called "Questline I have been working on.txt" that seems very large scale. I think Drakken continues it and takes it to a jungle tileset. I think these are interesting ideas, but they involved many dungeons and locations that would take up precious resources. Since we are in the North, we may want to stick with a sort of theme instead of covering so many different types of locations. This is my opinion of course and anyone can feel free to disagree with me.
+
+We also have ideas of many towns, cities, and hamlets. Talking with Neikun, I got the impression that this current mod was to be a prequel for a much more grand mod to be done upon the release of LoG 2. I think it's important that we preserve these ideas for these future projects but it may be best to have one large town location with many quests in it and then save room for ourselves on different floors so that players can travel to dungeons, which are infinitely more interesting than traveling to other towns when you really think about it.
+
+If I missed any quests or ideas please tell me and I will add them immediately.

@@ -1,0 +1,14 @@
+Full set of Frost Armor. 5 pieces. Head, Torso, Legs, Gauntlets, Feet.
+
+Unique textures and icons.
+
+Total stats:
+
+18 armor
+30 Cold Resist
+
+All five pieces require leather armor to use currently.
+
+Msyblade suggested that we maybe include set bonuses for some armors. 
+I don't think this is one for that, but we should keep it in mind for future armor sets.
+

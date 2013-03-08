@@ -1,0 +1,198 @@
+skyObjects = {}
+movingId = nil
+ambiance = "day"
+skyLight = nil
+
+autohook = {
+	party = {
+		onMove = function(self, dir)
+			skyScript.moveSkySphere(dir)
+		end,
+		onPickUpItem = function(self, item)
+			if item.name == "skysphere_item" then
+				return false
+			end
+		end
+	}
+}
+
+function delay(delay, funct, args)
+	local delayId = skyScript.randomTimerId("delay")
+	local delayTimer = timers:create(delayId)
+	delayTimer:setTimerInterval(delay)
+	delayTimer:addCallback(funct,args)
+	delayTimer:setTickLimit(1,true)
+	delayTimer:activate()
+	return delayId
+end
+
+function randomTimerId(prefix)
+	local numId = math.random(10000,99999)
+	while timers:find(prefix.."."..numId) do
+		numId = math.random(10000,99999)
+	end
+	return prefix.."."..numId
+end
+
+
+function createSkySphere(level, x, y)
+	
+	local skyId
+	
+	if ambiance == "day" then
+		shootProjectile("sx_skysphere", level, x, y, 0, 0, 0, 0, 0, 3, 0, 1, party, true)
+		for i in entitiesAt(level, x, y) do
+			if string.find(i.name, "skysphere") then
+				skyId = i.id
+			end
+		end	
+	end
+	
+	if not(findEntity("skylight")) then
+		if ambiance == "day" then
+			spawn("skylight_sun", level, x, y, 0, "skylight")
+		elseif ambiance == "night" then
+			spawn("skylight_moon", level, x, y, 0, "skylight")
+		end
+	end
+	
+	if skyId then
+		skyScript.skyObjects[skyId] = {}
+		local sky = skyScript.skyObjects[skyId]
+		sky.level = level
+		sky.x = x
+		sky.y = y
+	end
+	
+end
+
+
+function getCollisionAhead(level, x, y, facing)
+	
+	local dx, dy = getForward(facing)
+	local monsters = {}
+	
+	-- Check for entities on current tile
+	for i in entitiesAt(level, x, y) do
+		if grimq.isDoor(i) and i:isClosed() and i.facing == facing then
+			return "door", nil, i
+		end
+		if (i.class == "Alcove" or i.class == "Button" or i.class == "Decoration" 
+			or i.class == "Lever" or i.class == "Lock" or i.class == "Receptor" 
+			or i.class == "TorchHolder" or i.class == "WallText") and i.facing == facing and isWall(level, x+dx, y+dy) then
+			return "wall", i.class, i
+		end
+	end
+	
+	-- Check for entities on next tile
+	for i in entitiesAt(level, x+dx, y+dy) do
+		if grimq.isDoor(i) and i:isClosed() and (i.facing+2)%4 == facing then
+			return "door", nil, i
+		end
+		if i.class == "Monster" then
+			table.insert(monsters, i)
+		end
+		if i.class == "Party" then
+			return "party", nil, i
+		end
+		if i.class == "Blockage" or i.class == "Crystal" then
+			return "object", i.class, i
+		end
+	end
+
+	if isWall(level, x+dx, y+dy) then
+		return "wall", nil, nil
+	end
+	if #monsters > 0 then
+		return "monster", nil, monsters
+	else
+		return nil, nil, nil
+	end
+end
+
+
+function moveSkySphere(dir)
+
+	if getCollisionAhead(party.level, party.x, party.y, dir) then
+		return false
+	end
+	
+	local dx, dy = getForward(dir)
+	local newX = party.x+dx
+	local newY = party.y+dy
+		
+	if ambiance == "day" then
+		for id,_ in pairs(skyScript.skyObjects) do
+			if findEntity(id) then
+				findEntity(id):destroy()
+			else
+				skyObjects[id] = nil
+			end
+		end
+	
+		
+		shootProjectile("sx_skysphere", party.level, party.x, party.y, dir, 6.7, 0, 0, -dx*0.6, 3, dy*0.6, 1, party, true)
+		
+
+
+		local skyId
+		skyScript.delay(0.1,
+			function(self)
+				for i in entitiesAt(party.level, party.x, party.y) do
+					if string.find(i.name, "skysphere") then
+						skyScript.setMovingId(i.id)
+					end
+				end	
+			end,
+			{}
+		)
+	end
+	
+	skyScript.delay(0.5, 
+		function(self, newX, newY)
+			if skyScript.movingId then
+				findEntity(skyScript.movingId):destroy()
+				skyScript.setMovingId(nil)
+			end
+			if skyScript.ambiance == "day" then
+				skyScript.createSkySphere(party.level, newX, newY)
+			end
+			if findEntity("skylight") then
+				findEntity("skylight"):destroy()
+				if skyScript.ambiance == "day" then
+					spawn("skylight_sun", party.level, newX, newY, 0, "skylight")
+				elseif skyScript.ambiance == "night" then
+					spawn("skylight_moon", party.level, newX, newY, 0, "skylight")
+				end
+			end
+		end,
+		{newX, newY}
+	)
+end
+
+function setMovingId(id)
+	movingId = id
+end
+
+function setAmbiance(newAmbiance)
+	ambiance = newAmbiance
+	if ambiance == "night" then
+		for i in entitiesAt(party.level, party.x, party.y) do
+			if string.find(i.name, "skysphere") then
+				i:destroy()
+			end
+		end	
+	end
+	if findEntity("skylight") then
+		findEntity("skylight"):destroy()
+		if skyScript.ambiance == "day" then
+			spawn("skylight_sun", party.level, newX, newY, 0, "skylight")
+		elseif skyScript.ambiance == "night" then
+			spawn("skylight_moon", party.level, newX, newY, 0, "skylight")
+		end
+	end
+	createSkySphere(party.level, party.x, party.y)
+end
+
+createSkySphere(party.level, party.x, party.y)
+shootProjectile("dx_clouds_01", 2, 16, 13, 2, 0.1, 0, 0, 0, 8, 0, 0, party, true)

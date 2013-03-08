@@ -3,6 +3,494 @@
 -- TODO: place your custom material definitions here
 
 
+
+defineMaterial{
+	name = "airshiprope",
+
+	diffuseMap = "mod_assets/textures/wiosla1.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "airshiprope2",
+
+	diffuseMap = "mod_assets/textures/wiosla2.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+
+defineMaterial{
+	name = "airshipdeck",
+
+	diffuseMap = "mod_assets/textures/domek1.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "airshipdeck2",
+
+	diffuseMap = "mod_assets/textures/domek2.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "airshipdeck3",
+
+	diffuseMap = "mod_assets/textures/domek3.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+
+defineMaterial{
+	name = "airship4",
+
+	diffuseMap = "mod_assets/textures/kadlub2.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+defineMaterial{
+	name = "airship3",
+
+	diffuseMap = "mod_assets/textures/kadlub1.tga",
+	
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+defineMaterial{
+	name = "airship2",
+
+	diffuseMap = "mod_assets/textures/drewno2b.tga",
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+defineMaterial{
+	name = "airship1",
+
+	diffuseMap = "mod_assets/textures/dach.tga",
+		doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+
+defineMaterial{
+	name = "fountain",
+
+	diffuseMap = "mod_assets/textures/fountainD.tga",
+	normalMap = "mod_assets/textures/fountainN.tga",
+	specularMap = "mod_assets/textures/fountainS.tga",
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+defineMaterial{
+	name = "bad_dog",
+
+	diffuseMap = "mod_assets/textures/baddog_normals.tga",
+
+	
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+
+defineMaterial{
+	name = "barb_f_body",
+
+	diffuseMap = "mod_assets/textures/barb.tga",
+
+	
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "poster_bed",
+
+	diffuseMap = "mod_assets/textures/poster_bed_d.tga",
+
+	
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+defineMaterial{
+	name = "diz1",
+
+	diffuseMap = "mod_assets/textures/diz1.tga",
+
+	
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = true,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+defineMaterial{
+	name = "cook_clothes",
+
+	diffuseMap = "mod_assets/textures/cook_clothes_D.tga",
+	normalMap = "mod_assets/textures/additional_cloth_normal.tga",
+		
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = true,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "cook_eye",
+
+	diffuseMap = "mod_assets/textures/cook_eye_D.tga",
+	specularMap = "mod_assets/textures/cook_eye_S.tga",
+		
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = true,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "cook_hand",
+
+	diffuseMap = "mod_assets/textures/cook_hand_D.tga",
+		
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = true,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "cook_head",
+
+	diffuseMap = "mod_assets/textures/cook_head_D.tga",
+	normalMap = "mod_assets/textures/cook_head_N.tga",
+normalMap = "mod_assets/textures/additional_head_normal.tga",
+		
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = true,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+	name = "wolf",
+
+	diffuseMap = "mod_assets/textures/wolf.tga",
+	
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = true,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = -2,
+
+	depthBias = 0,
+
+}
+
+
+--Samurai
+defineMaterial{
+	name = "samurai",
+	diffuseMap = "mod_assets/textures/td.tga",
+	
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = -2.2,
+	depthBias = 0,
+}
+
+
+
+--WIZ
+defineMaterial{
+	name = "wiz1",
+	diffuseMap = "mod_assets/textures/wiz1dds.tga",
+	
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = -2.2,
+	depthBias = 0,
+}
+defineMaterial{
+	name = "wiz2",
+	diffuseMap = "mod_assets/textures/wiz2dds.tga",
+	
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = -2.2,
+	depthBias = 0,
+}
+
+
+
+
+--Cathedral
+defineMaterial{
+	name = "primal",
+	diffuseMap = "mod_assets/textures/PrimalBeast_Dif.tga",
+	
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = -2.2,
+	depthBias = 0,
+}
+
+
+
 --Cathedral
 defineMaterial{
 	name = "cathedral",

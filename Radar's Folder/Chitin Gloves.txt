@@ -1,0 +1,14 @@
+I've now made Chitin Gloves for us. It is part of the Chitin set and 
+has the same relative stats to the other pieces and the Gauntlets of Valor do to its set.
+
+For example:
+
+Cuirass of Valor armor = 15
+Gauntlets of Valor armor = 15
+
+Chitin Cuirass armor = 9
+Chitin Gloves armor = 9
+
+The weight now corrosponds to the Valor Set. Komag pointed out that all chitin items weight a little over 50% of valor 
+items, so these gloves now have a weight of 1.5 kg to Valor Gauntlets being 2.5 kg.
+

@@ -8,6 +8,9 @@ import "mod_assets/wall_plaques/scripts/wall_plaques.lua"
 
 import "mod_assets/log_carpets/log_carpets.lua"
 
+
+
+
 -- import standard assets
 import "assets/scripts/standard_assets.lua"
 -- please insert into ini.lua: import "mod_assets/grim_bed/grim_bed.lua"
