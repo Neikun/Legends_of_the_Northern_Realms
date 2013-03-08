@@ -211,7 +211,7 @@ defineParticleSystem{
 			opacity = 1.0,
 			fadeIn = 1,
 			fadeOut = 4,
-			size = {0.03, 0.1},
+			size = {0.03, 0.08},
 			gravity = {0,0,0},
 			airResistance = 1,
 			rotationSpeed = 0.4,
@@ -234,7 +234,7 @@ defineParticleSystem{
 			opacity = 1.0,
 			fadeIn = 1,
 			fadeOut = 4,
-			size = {0.03, 0.1},
+			size = {0.03, 0.08},
 			gravity = {0,0,0},
 			airResistance = 1,
 			rotationSpeed = 0.3,
@@ -257,13 +257,42 @@ defineParticleSystem{
 			opacity = 1.0,
 			fadeIn = 1,
 			fadeOut = 4,
-			size = {0.05, 0.1},
+			size = {0.05, 0.08},
 			gravity = {0,0,0},
 			airResistance = 1,
 			rotationSpeed = 0.5,
 			blendMode = "Additive",
 			depthBias = 0.03,
 			
+		},
+	}
+}
+
+defineParticleSystem{
+	name = "dx_dark_stars",
+	emitters = {
+		{
+			spawnBurst = true,
+			objectSpace = true,
+			emissionRate = 400,
+			emissionTime = 0,
+			maxParticles = 400,
+			boxMin = {-7.5, 0.0, -7.5},
+			boxMax = { 7.5, 7.0, 7.5},
+			sprayAngle = {0,0},
+			velocity = {0,0},
+			texture = "assets/textures/particles/glow.tga",
+			lifetime = {100000,100000},
+			color0 = {0.3,0.3,0.3},
+			opacity = 1.0,
+			fadeIn = 1,
+			fadeOut = 4,
+			size = {0.02, 0.05},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = 0.02,
 		},
 	}
 }
@@ -416,6 +445,19 @@ defineObject{
 	weight = 0.3,
 	onUseItem = function()
 		skyScript.setAmbiance("night")
+	end,
+}
+
+defineObject{
+	name = "scroll_dark_night",
+	class = "Item",
+	uiName = "Scroll of Night Ambiance",
+	model = "assets/models/items/scroll.fbx",
+	gfxIndex = 112,
+	scroll = true,
+	weight = 0.3,
+	onUseItem = function()
+		skyScript.setAmbiance("dark_night")
 	end,
 }
 

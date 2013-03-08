@@ -218,9 +218,9 @@ function createStars()
 			spawn("fx", party.level, starsX, starsY, 0, starsId)
 
 			local stars = findEntity(starsId)
-			stars:setParticleSystem("dx_stars")
+			stars:setParticleSystem(getAmbiance().stars)
 			stars:setLight(0, 0, 0, 1, 0, 1000000, false)
-			stars:translate(0,5,0)
+			stars:translate(0,8,0)
 
 			table.insert(starsObjects, starsId)
 
@@ -304,47 +304,47 @@ function delay(delay, funct, args)
 
 	local delayId = skyScript.randomTimerId("delay")
 	local delayTimer = timers:create(delayId)
-	
+
 	delayTimer:setTimerInterval(delay)
 	delayTimer:addCallback(funct,args)
 	delayTimer:setTickLimit(1,true)
 	delayTimer:activate()
-	
+
 	return delayId
-	
+
 end
 
 
 function randomTimerId(prefix)
 
 	local numId = math.random(10000,99999)
-	
+
 	while timers:find(prefix.."."..numId) do
 		numId = math.random(10000,99999)
 	end
-	
+
 	return prefix.."."..numId
-	
+
 end
 
 
 function getCollisionAhead(level, x, y, facing)
-	
+
 	local dx, dy = getForward(facing)
 	local monsters = {}
-	
+
 	-- Check for entities on current tile
 	for i in entitiesAt(level, x, y) do
 		if grimq.isDoor(i) and i:isClosed() and i.facing == facing then
 			return "door", nil, i
 		end
-		if (i.class == "Alcove" or i.class == "Button" or i.class == "Decoration" 
-			or i.class == "Lever" or i.class == "Lock" or i.class == "Receptor" 
-			or i.class == "TorchHolder" or i.class == "WallText") and i.facing == facing and isWall(level, x+dx, y+dy) then
+		if (i.class == "Alcove" or i.class == "Button" or i.class == "Decoration"
+				or i.class == "Lever" or i.class == "Lock" or i.class == "Receptor"
+				or i.class == "TorchHolder" or i.class == "WallText") and i.facing == facing and isWall(level, x+dx, y+dy) then
 			return "wall", i.class, i
 		end
 	end
-	
+
 	-- Check for entities on next tile
 	for i in entitiesAt(level, x+dx, y+dy) do
 		if grimq.isDoor(i) and i:isClosed() and (i.facing+2)%4 == facing then
@@ -375,20 +375,20 @@ end
 function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)
 
 	local pIds = {}
-	
+
 	for i in entitiesAt(level, x, y) do
 		if i.class == "Item" and string.find(i.id, "^%d+$") then
 			pIds[i.id] = i.name
 		end
 	end
-	
+
 	shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)
- 	
+
 	for i in entitiesAt(level, x, y) do
 		if i.class == "Item" and string.find(i.id, "^%d+$") and not(pIds[i.id]) then
 			return i.id
 		end
-	end  
+	end
 
 end
 
@@ -420,11 +420,11 @@ defineAmbiance{
 
 defineAmbiance{
 	name = "night",
-	stars = true,
+	stars = "dx_dark_stars",
 	skyLightColor = {0.6, 0.7, 1.1},
-	skyLightBrightness = 3,
+	skyLightBrightness = 0.3,
 	clouds = "dx_clouds_dark",
-	cloudsFrequence = 3,
+	cloudsFrequence = 7,
 }
 
 setAmbiance("night")

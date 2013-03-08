@@ -980,9 +980,9 @@ function createStars()\
 \9\9\9spawn(\"fx\", party.level, starsX, starsY, 0, starsId)\
 \
 \9\9\9local stars = findEntity(starsId)\
-\9\9\9stars:setParticleSystem(\"dx_stars\")\
+\9\9\9stars:setParticleSystem(getAmbiance().stars)\
 \9\9\9stars:setLight(0, 0, 0, 1, 0, 1000000, false)\
-\9\9\9stars:translate(0,5,0)\
+\9\9\9stars:translate(0,8,0)\
 \
 \9\9\9table.insert(starsObjects, starsId)\
 \
@@ -1066,47 +1066,47 @@ function delay(delay, funct, args)\
 \
 \9local delayId = skyScript.randomTimerId(\"delay\")\
 \9local delayTimer = timers:create(delayId)\
-\9\
+\
 \9delayTimer:setTimerInterval(delay)\
 \9delayTimer:addCallback(funct,args)\
 \9delayTimer:setTickLimit(1,true)\
 \9delayTimer:activate()\
-\9\
+\
 \9return delayId\
-\9\
+\
 end\
 \
 \
 function randomTimerId(prefix)\
 \
 \9local numId = math.random(10000,99999)\
-\9\
+\
 \9while timers:find(prefix..\".\"..numId) do\
 \9\9numId = math.random(10000,99999)\
 \9end\
-\9\
+\
 \9return prefix..\".\"..numId\
-\9\
+\
 end\
 \
 \
 function getCollisionAhead(level, x, y, facing)\
-\9\
+\
 \9local dx, dy = getForward(facing)\
 \9local monsters = {}\
-\9\
+\
 \9-- Check for entities on current tile\
 \9for i in entitiesAt(level, x, y) do\
 \9\9if grimq.isDoor(i) and i:isClosed() and i.facing == facing then\
 \9\9\9return \"door\", nil, i\
 \9\9end\
-\9\9if (i.class == \"Alcove\" or i.class == \"Button\" or i.class == \"Decoration\" \
-\9\9\9or i.class == \"Lever\" or i.class == \"Lock\" or i.class == \"Receptor\" \
-\9\9\9or i.class == \"TorchHolder\" or i.class == \"WallText\") and i.facing == facing and isWall(level, x+dx, y+dy) then\
+\9\9if (i.class == \"Alcove\" or i.class == \"Button\" or i.class == \"Decoration\"\
+\9\9\9\9or i.class == \"Lever\" or i.class == \"Lock\" or i.class == \"Receptor\"\
+\9\9\9\9or i.class == \"TorchHolder\" or i.class == \"WallText\") and i.facing == facing and isWall(level, x+dx, y+dy) then\
 \9\9\9return \"wall\", i.class, i\
 \9\9end\
 \9end\
-\9\
+\
 \9-- Check for entities on next tile\
 \9for i in entitiesAt(level, x+dx, y+dy) do\
 \9\9if grimq.isDoor(i) and i:isClosed() and (i.facing+2)%4 == facing then\
@@ -1137,20 +1137,20 @@ end\
 function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
 \
 \9local pIds = {}\
-\9\
+\
 \9for i in entitiesAt(level, x, y) do\
 \9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
 \9\9\9pIds[i.id] = i.name\
 \9\9end\
 \9end\
-\9\
+\
 \9shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
- \9\
+\
 \9for i in entitiesAt(level, x, y) do\
 \9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") and not(pIds[i.id]) then\
 \9\9\9return i.id\
 \9\9end\
-\9end  \
+\9end\
 \
 end\
 \
@@ -1182,22 +1182,32 @@ defineAmbiance{\
 \
 defineAmbiance{\
 \9name = \"night\",\
-\9stars = true,\
+\9stars = \"dx_stars\",\
 \9skyLightColor = {0.6, 0.7, 1.1},\
-\9skyLightBrightness = 3,\
+\9skyLightBrightness = 1.5,\
 \9clouds = \"dx_clouds_dark\",\
 \9cloudsFrequence = 3,\
 }\
 \
-setAmbiance(\"night\")\
+defineAmbiance{\
+\9name = \"dark_night\",\
+\9stars = \"dx_dark_stars\",\
+\9skyLightColor = {0.6, 0.7, 1.0},\
+\9skyLightBrightness = 0.3,\
+\9clouds = \"dx_clouds_dark\",\
+\9cloudsFrequence = 5,\
+}\
+\
+setAmbiance(\"dark_night\")\
 \
 \
 -- ***************************************************************************************\
 --                                       Test scrolls\
 -- ***************************************************************************************\
 \
-party:getChampion(1):insertItem(30, spawn(\"scroll_day\"))\
-party:getChampion(1):insertItem(31, spawn(\"scroll_night\"))")
+party:getChampion(1):insertItem(29, spawn(\"scroll_day\"))\
+party:getChampion(1):insertItem(30, spawn(\"scroll_night\"))\
+party:getChampion(1):insertItem(31, spawn(\"scroll_dark_night\"))")
 
 --- level 2 ---
 
