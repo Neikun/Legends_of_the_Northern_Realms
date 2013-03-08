@@ -759,6 +759,445 @@ end\
 \9\9completeGame(\"mod_assets/cinematics/romance.lua\")\
 \9end\
 end")
+spawn("script_entity", 2,0,1, "skyScript")
+	:setSource("skySphereId = nil\
+currentAmbiance = nil\
+skyLightId = nil\
+skyAmbiances = {}\
+skyClouds = {}\
+starsObjects = {}\
+\
+-- ***************************************************************************************\
+--                                       Party onMove hook\
+-- ***************************************************************************************\
+\
+\
+autohook =\
+{\
+\9party =\
+\9{\
+\9\9onMove = function(self, dir)\
+\9\9\9skyScript.onMove(dir)\
+\9\9end,\
+\9}\
+}\
+\
+function onMove(dir)\
+\
+\9local ambianceDefs = skyAmbiances[currentAmbiance]\
+\
+\9if getCollisionAhead(party.level, party.x, party.y, dir) then\
+\9\9return false\
+\9end\
+\
+\9if ambianceDefs.skySphere then\
+\9\9moveSkySphere(dir)\
+\9end\
+\
+\9moveSkyLight(dir)\
+end\
+\
+\
+\
+-- ***************************************************************************************\
+--                                       SkySphere functions\
+-- ***************************************************************************************\
+\
+\
+function createSkySphere(level, x, y)\
+\
+\9if getAmbiance().skySphere then\
+\
+\9\9skySphereId = shootProjectileWithId(getAmbiance().skySphere, level, x, y, 0, 0, 0, 0, 0, 3, 0, 1, party, true)\
+\
+\9end\
+\
+end\
+\
+\
+function destroySkySphere()\
+\
+\9if skySphereId and findEntity(skySphereId) then\
+\
+\9\9findEntity(skySphereId):destroy()\
+\
+\9end\
+\
+end\
+\
+\
+function moveSkySphere(dir)\
+\
+\9local dx, dy = getForward(dir)\
+\9local newX = party.x+dx\
+\9local newY = party.y+dy\
+\
+\9destroySkySphere()\
+\
+\9skySphereId = shootProjectileWithId(getAmbiance().skySphere, party.level, party.x, party.y, dir, 6.7, 0, 0, -dx*0.6, 3, dy*0.6, 1, party, true)\
+\
+\9delay(0.5,\
+\9\9function(self, newX, newY)\
+\
+\9\9\9if skySphereId then\
+\9\9\9\9findEntity(skySphereId):destroy()\
+\9\9\9\9skyScript.setSkySphereId(nil)\
+\9\9\9end\
+\
+\9\9\9createSkySphere(party.level, newX, newY)\
+\
+\9\9end,\
+\9\9{newX, newY}\
+\9)\
+\
+end\
+\
+\
+function setSkySphereId(id)\
+\9skySphereId = id\
+end\
+\
+\
+\
+\
+-- ***************************************************************************************\
+--                                       SkyLight functions\
+-- ***************************************************************************************\
+\
+\
+function createSkyLight(level, x, y)\
+\
+\9spawn(\"fx\", level, x, y, 0, \"skyLight\")\
+\
+\9local skyLight = findEntity(\"skyLight\")\
+\
+\9if getAmbiance().skyLightParticleSystem then\
+\9\9skyLight:setParticleSystem(getAmbiance().skyLightParticleSystem)\
+\9else\
+\9\9skyLight:setParticleSystem(\"dx_none\")\
+\9end\
+\
+\9local rColor, gColor, bColor = unpack(getAmbiance().skyLightColor)\
+\9local brightness = getAmbiance().skyLightBrightness\
+\9skyLight:setLight(rColor, gColor, bColor, brightness, 80, 1000000, false)\
+\9skyLight:translate(3,20,-3)\
+\
+end\
+\
+\
+function moveSkyLight(dir)\
+\
+\9local dx, dy = getForward(dir)\
+\9local interval = 0.3\
+\
+\9dx = dx * interval\
+\9dy = dy * interval\
+\
+\9local fxTimer = timers:create(randomTimerId(\"lightTimer\"))\
+\9fxTimer:setTimerInterval(0.05)\
+\9fxTimer:setTickLimit(10, true)\
+\9fxTimer:addCallback(\
+\9\9function(self, dx, dy)\
+\9\9\9local skyLight = findEntity(\"skyLight\")\
+\9\9\9if skyLight then\
+\9\9\9\9skyLight:translate(dx,0,-dy)\
+\9\9\9end\
+\9\9end,\
+\9\9{dx, dy}\
+\9)\
+\9fxTimer:activate()\
+\
+end\
+\
+\
+function destroySkyLight()\
+\
+\9local skyLight = findEntity(\"skyLight\")\
+\9if skyLight then\
+\9\9skyLight:destroy()\
+\9end\
+\
+end\
+\
+\
+-- ***************************************************************************************\
+--                                       Clouds functions\
+-- ***************************************************************************************\
+\
+\
+function createClouds()\
+\
+\9local cloudsGrid = math.ceil(getAmbiance().cloudsFrequence)\
+\
+\9for x = 0, cloudsGrid do\
+\
+\9\9for y = 0, cloudsGrid do\
+\
+\9\9\9local cloudsInterval = math.ceil(32/cloudsGrid)\
+\9\9\9local cloudsX = clampCoord(x * cloudsInterval + math.random(5) - 3)\
+\9\9\9local cloudsY = clampCoord(y * cloudsInterval + math.random(5) - 3)\
+\9\9\9local clouds = shootProjectileWithId(getAmbiance().clouds, party.level, cloudsX, cloudsY, 2, 0, 0, 0, 0, 9 + math.random() * 2, 0, 1, party, true)\
+\
+\9\9\9table.insert(skyClouds,clouds)\
+\
+\9\9end\
+\
+\9end\
+\
+end\
+\
+\
+function destroyClouds()\
+\
+\9for _, cloudsId in ipairs(skyClouds) do\
+\
+\9\9local clouds = findEntity(cloudsId)\
+\9\9if clouds then\
+\9\9\9clouds:destroy()\
+\9\9end\
+\
+\9end\
+\
+\9skyClouds = {}\
+\
+end\
+\
+-- ***************************************************************************************\
+--                                       Stars functions\
+-- ***************************************************************************************\
+\
+\
+function createStars()\
+\
+\9for x = 0, 6 do\
+\
+\9\9for y = 0,6 do\
+\
+\9\9\9local starsX = x * 5 + 1\
+\9\9\9local starsY = y * 5 + 1\
+\9\9\9local starsId = \"stars.\"..starsX..\".\"..starsY\
+\
+\9\9\9spawn(\"fx\", party.level, starsX, starsY, 0, starsId)\
+\
+\9\9\9local stars = findEntity(starsId)\
+\9\9\9stars:setParticleSystem(\"dx_stars\")\
+\9\9\9stars:setLight(0, 0, 0, 1, 0, 1000000, false)\
+\9\9\9stars:translate(0,5,0)\
+\
+\9\9\9table.insert(starsObjects, starsId)\
+\
+\9\9end\
+\
+\9end\
+\
+end\
+\
+\
+function destroyStars()\
+\
+\9for _, starsId in ipairs(starsObjects) do\
+\
+\9\9local stars = findEntity(starsId)\
+\9\9if stars then\
+\9\9\9stars:destroy()\
+\9\9end\
+\
+\9end\
+\
+\9starsObjects = {}\
+\
+end\
+\
+-- ***************************************************************************************\
+--                                       Ambiance functions\
+-- ***************************************************************************************\
+\
+\
+function getAmbiance()\
+\9return skyAmbiances[currentAmbiance]\
+end\
+\
+\
+function setAmbiance(newAmbiance)\
+\
+\9if currentAmbiance == newAmbiance then\
+\9\9return false\
+\9end\
+\
+\9currentAmbiance = newAmbiance\
+\
+\9destroySkySphere()\
+\9createSkySphere(party.level, party.x, party.y)\
+\
+\9destroySkyLight()\
+\9createSkyLight(party.level, party.x, party.y)\
+\
+\9destroyClouds()\
+\9createClouds()\
+\
+\9destroyStars()\
+\9if getAmbiance().stars then createStars() end\
+\
+end\
+\
+\
+function defineAmbiance(defs)\
+\
+\9if not(skyAmbiances[defs.name]) then\
+\
+\9\9skyAmbiances[defs.name] = {}\
+\9\9local ambiance = skyAmbiances[defs.name]\
+\9\9for property,_ in pairs(defs) do\
+\9\9\9if property ~= \"name\" then\
+\9\9\9\9ambiance[property] = defs[property]\
+\9\9\9end\
+\9\9end\
+\
+\9end\
+\
+end\
+\
+\
+-- ***************************************************************************************\
+--                                       Helper functions\
+-- ***************************************************************************************\
+\
+function delay(delay, funct, args)\
+\
+\9local delayId = skyScript.randomTimerId(\"delay\")\
+\9local delayTimer = timers:create(delayId)\
+\9\
+\9delayTimer:setTimerInterval(delay)\
+\9delayTimer:addCallback(funct,args)\
+\9delayTimer:setTickLimit(1,true)\
+\9delayTimer:activate()\
+\9\
+\9return delayId\
+\9\
+end\
+\
+\
+function randomTimerId(prefix)\
+\
+\9local numId = math.random(10000,99999)\
+\9\
+\9while timers:find(prefix..\".\"..numId) do\
+\9\9numId = math.random(10000,99999)\
+\9end\
+\9\
+\9return prefix..\".\"..numId\
+\9\
+end\
+\
+\
+function getCollisionAhead(level, x, y, facing)\
+\9\
+\9local dx, dy = getForward(facing)\
+\9local monsters = {}\
+\9\
+\9-- Check for entities on current tile\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if grimq.isDoor(i) and i:isClosed() and i.facing == facing then\
+\9\9\9return \"door\", nil, i\
+\9\9end\
+\9\9if (i.class == \"Alcove\" or i.class == \"Button\" or i.class == \"Decoration\" \
+\9\9\9or i.class == \"Lever\" or i.class == \"Lock\" or i.class == \"Receptor\" \
+\9\9\9or i.class == \"TorchHolder\" or i.class == \"WallText\") and i.facing == facing and isWall(level, x+dx, y+dy) then\
+\9\9\9return \"wall\", i.class, i\
+\9\9end\
+\9end\
+\9\
+\9-- Check for entities on next tile\
+\9for i in entitiesAt(level, x+dx, y+dy) do\
+\9\9if grimq.isDoor(i) and i:isClosed() and (i.facing+2)%4 == facing then\
+\9\9\9return \"door\", nil, i\
+\9\9end\
+\9\9if i.class == \"Monster\" then\
+\9\9\9table.insert(monsters, i)\
+\9\9end\
+\9\9if i.class == \"Party\" then\
+\9\9\9return \"party\", nil, i\
+\9\9end\
+\9\9if i.class == \"Blockage\" or i.class == \"Crystal\" then\
+\9\9\9return \"object\", i.class, i\
+\9\9end\
+\9end\
+\
+\9if isWall(level, x+dx, y+dy) then\
+\9\9return \"wall\", nil, nil\
+\9end\
+\9if #monsters > 0 then\
+\9\9return \"monster\", nil, monsters\
+\9else\
+\9\9return nil, nil, nil\
+\9end\
+end\
+\
+\
+function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
+\
+\9local pIds = {}\
+\9\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
+\9\9\9pIds[i.id] = i.name\
+\9\9end\
+\9end\
+\9\
+\9shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
+ \9\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") and not(pIds[i.id]) then\
+\9\9\9return i.id\
+\9\9end\
+\9end  \
+\
+end\
+\
+\
+function clampCoord(val)\
+\
+\9if val < 0 then\
+\9\9val = 0\
+\9elseif val > 31 then\
+\9\9val = 31\
+\9end\
+\
+\9return val\
+end\
+\
+-- ***************************************************************************************\
+--                                       Initialization\
+-- ***************************************************************************************\
+\
+defineAmbiance{\
+\9name = \"day\",\
+\9skySphere = \"dx_skysphere_blue\",\
+\9skyLightColor = {1.0, 0.9, 0.7},\
+\9skyLightBrightness = 12,\
+\9skyLightParticleSystem = \"dx_sun\",\
+\9clouds = \"dx_clouds_01\",\
+\9cloudsFrequence = 5,\
+}\
+\
+defineAmbiance{\
+\9name = \"night\",\
+\9stars = true,\
+\9skyLightColor = {0.6, 0.7, 1.1},\
+\9skyLightBrightness = 3,\
+\9clouds = \"dx_clouds_dark\",\
+\9cloudsFrequence = 3,\
+}\
+\
+setAmbiance(\"night\")\
+\
+\
+-- ***************************************************************************************\
+--                                       Test scrolls\
+-- ***************************************************************************************\
+\
+party:getChampion(1):insertItem(30, spawn(\"scroll_day\"))\
+party:getChampion(1):insertItem(31, spawn(\"scroll_night\"))")
 
 --- level 2 ---
 
@@ -3371,6 +3810,7 @@ function ogreCallBack(s_caption)\
 \9end\
 end")
 spawn("warden", 20,22,2, "warden_1")
+spawn("starting_location", 16,16,0, "starting_location_1")
 
 --- level 3 ---
 

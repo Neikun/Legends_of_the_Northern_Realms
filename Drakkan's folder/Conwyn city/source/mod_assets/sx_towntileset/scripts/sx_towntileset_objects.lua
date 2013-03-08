@@ -922,7 +922,7 @@ defineObject{
 	lightRange = 10,
 	lightColor = vec(1.00, 0.5, 0.25),
 	brightness = 11,
-	castShadow = true,
+	castShadow = false,
 	placement = "floor",
 	editorIcon = 88,
 }
@@ -934,7 +934,7 @@ defineObject{
 	lightRange = 10,
 	lightColor = vec(1.00, 0.5, 0.25),
 	brightness = 11,
-	castShadow = true,
+	castShadow = false,
 	placement = "floor",
 	editorIcon = 88,
 }
@@ -946,7 +946,7 @@ defineObject{
 	lightRange = 10,
 	lightColor = vec(1.00, 0.5, 0.25),
 	brightness = 11,
-	castShadow = true,
+	castShadow = false,
 	placement = "floor",
 	editorIcon = 88,
 }
@@ -958,7 +958,7 @@ defineObject{
 	lightRange = 10,
 	lightColor = vec(1.00, 0.5, 0.25),
 	brightness = 11,
-	castShadow = true,
+	castShadow = false,
 	placement = "floor",
 	editorIcon = 88,
 }

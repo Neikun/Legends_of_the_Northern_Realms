@@ -17,3 +17,5 @@ import "mod_assets/sx_towntileset/scripts/sx_towntileset.lua"
 import "mod_assets/sx_autumn_forest/scripts/sx_autumn_forest_tileset.lua"
 import "mod_assets/grim_bed/grim_bed.lua"
 import "mod_assets/scripts/flooded_dungeon.lua"
+
+import "mod_assets/dx_sky_system/dx_sky_system.lua"
