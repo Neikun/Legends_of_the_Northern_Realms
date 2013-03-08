@@ -5,6 +5,7 @@ import "assets/scripts/standard_assets.lua"
 import "mod_assets/grimwidgets/grimwidgets.lua"
 
 -- import custom assets
+import "mod_assets/scripts/particles.lua"
 import "mod_assets/scripts/items.lua"
 import "mod_assets/scripts/monsters.lua"
 import "mod_assets/scripts/objects.lua"
@@ -17,5 +18,6 @@ import "mod_assets/sx_towntileset/scripts/sx_towntileset.lua"
 import "mod_assets/sx_autumn_forest/scripts/sx_autumn_forest_tileset.lua"
 import "mod_assets/grim_bed/grim_bed.lua"
 import "mod_assets/scripts/flooded_dungeon.lua"
+import "mod_assets/scripts/gravestone.lua"
 
 import "mod_assets/dx_sky_system/dx_sky_system.lua"

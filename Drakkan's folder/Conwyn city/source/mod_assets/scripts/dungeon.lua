@@ -95,8 +95,8 @@ spawn("gw_event", 16,12,2, "wounded_dwarf")
 \
 -- name of the imeage to show\
 image = \"mod_assets/images/example-image.dds\"\
-image_width = 177\
-image_hieght = 180\
+image_width = 140\
+image_hieght = 196\
 \
 \
 -- Defines states. Each entry must have exactly two columns:\
@@ -106,26 +106,16 @@ image_hieght = 180\
 -- to state \"end\", the whole event ends.\
 \
 states = {\
-  { \"init\",     \"An injured dwarf lies on the ground before\\nyou, nearly unconscious from his wounds.\" }, \
-  { \"fainting\", \"The dwarf gasps out, \\\"Drow... save the\\nking... Prince is gone\\\". He falls unconscious.\" },\
-  { \"fainted\",  \"And injured dwarf lies on the ground\\nbefore you. He is unconscious.\" },\
-  { \"healed\",   \"Having regained his strength, the dwarf\\nthanks you \\\"I thought I had met my death\\n\" ..\
-                \"at the blade of that drow. In battle our\\nking was grievously wounded, and the\\n\" ..\
-                \"young prince kidnapped. I tried to stop\\nthe drow, but alas, I was overcome.\\n\\n\" ..\
-                \"\\\"You have saved me from death! I wish\\nthere was some way to thank you, but \" ..\
-                \"I have nothing. I am alone,\\nseparate from my people during the battle. May I \" ..\
-                \"join you,\\nso that together we can search for my people?\" },\
-  { \"join\",     \"As Taghor joins your party he says,\\n\\\"During the battle, I chased my enemy up\\n\" ..\
-                \"a staircase, to this level. My people should\\nbe on the level just below us.\\\"\" },\
-  { \"nojoin\",   \"I thank you, but I will find my own way\\nback. A warning: beware the stone\\ndoorways \" ..\
-                \"set into these walls. They are\\nportal entrances, which become active with\\nthe \"..\
-                \"right key. My party encamped near\\nsuch a portal, and was easily ambushed.\\\"\\n\" ..\
-                \"Thanking you again, the dwarf wanders off.\"}\
+  { \"init\",     \"An cleric aproaches you from darkness. blablabla\\n What you wanna ?\"}, \
+  { \"jobask\",   \"Job ? Ok I have something to ask. As cleric\\n I am quite afraid going to graveyard.\\nI need some holy water from mausoleum.\\nCould you bring it to me?\" },\
+  { \"join\",     \"Cool. You will neeed two keys to enter\\n mausoleum.Here, take this one. Second is in the\\n alcove near garbage pile\\n\" },\
+  { \"nojoin\",   \"No ? GET OUT OF HERE\"}\
 }\
 \
-function onFaint()\
-\9hudPrint(\"Taghor faints\")\
-\9-- return \"nojoin\"\
+\
+function onJoin()\
+\9hudPrint(\"You have accepted the quest aaal\")\
+\9spawn(\"ornate_key\", 1, 16, 13, 0, \"ornatekeygrav\")\9\9\
 end\
 \
 -- defines possible actions in each state. Each entry has\
@@ -138,19 +128,16 @@ end\
 -- overriding default transition. One of the transitions must\
 -- transit to \"end\" state (a dummy state that concludes the whole\
 -- event).\
+\
+\
 actions = {\
-  { \"init\",      \"healed\",   \"Tend his wounds\"},\
-  { \"init\",      \"fainting\", \"Talk\", onFaint },\
+  { \"init\",      \"jobask\",   \"Ask about job\"},\
+  { \"jobask\",    \"join\",     \"Yes\" },\
+  { \"jobask\",    \"nojoin\",   \"No\" },\
   { \"init\",      \"abort\",    \"Leave\" },\
-  { \"fainting\",  \"fainted\",  \"Continue\"},\
-  { \"fainted\",   \"healed\",   \"Tend his wounds\"},\
-  { \"fainted\",   \"abort\",    \"Leave\" },\
-  { \"healed\",    \"join\",     \"Yes\" },\
-  { \"healed\",    \"nojoin\",   \"No\" },\
   { \"join\",      \"end\",      \"Continue\", onJoin},\
   { \"nojoin\",    \"end\",      \"Continue\", onNojoin}\
 }\
-\
 ")
 spawn("script_entity", 29,31,2, "spell_book")
 	:setSource("-- For testing/developement purposes\
@@ -1208,6 +1195,71 @@ setAmbiance(\"dark_night\")\
 party:getChampion(1):insertItem(29, spawn(\"scroll_day\"))\
 party:getChampion(1):insertItem(30, spawn(\"scroll_night\"))\
 party:getChampion(1):insertItem(31, spawn(\"scroll_dark_night\"))")
+spawn("script_entity", 4,11,2, "script_entity_31")
+	:setSource("-- is this event enabled?\
+--enabled = true\
+\
+-- name of the imeage to show\
+image = \"mod_assets/images/example-image.dds\"\
+image_width = 140\
+image_hieght = 196\
+\
+\
+-- Defines states. Each entry must have exactly two columns:\
+-- first is state, the second is description shown.\
+-- Event will start from the first state on the list.\
+-- There is also one special state called \"end\". Once moved\
+-- to state \"end\", the whole event ends.\
+\
+states = {\
+  { \"init\",     \"An Cleric approaches from the darkness.\\nHis voice is soft as sharp blade.\\n\\n\\\"Hello my friend. Welcome to my humble\\napartment. What can I do for you ?\\\" \"}, \
+  { \"fainting\", \"The dwarf gasps out, \\\"Drow... save the\\nking... Prince is gone\\\". He falls unconscious.\" },\
+  { \"fainted\",  \"And injured dwarf lies on the ground\\nbefore you. He is unconscious.\" },\
+  { \"healed\",   \"Having regained his strength, the dwarf\\nthanks you \\\"I thought I had met my death\\n\" ..\
+                \"at the blade of that drow. In battle our\\nking was grievously wounded, and the\\n\" ..\
+                \"young prince kidnapped. I tried to stop\\nthe drow, but alas, I was overcome.\\n\\n\" ..\
+                \"\\\"You have saved me from death! I wish\\nthere was some way to thank you, but \" ..\
+                \"I have nothing. I am alone,\\nseparate from my people during the battle. May I \" ..\
+                \"join you,\\nso that together we can search for my people?\" },\
+  { \"join\",     \"As Taghor joins your party he says,\\n\\\"During the battle, I chased my enemy up\\n\" ..\
+                \"a staircase, to this level. My people should\\nbe on the level just below us.\\\"\" },\
+  { \"nojoin\",   \"I thank you, but I will find my own way\\nback. A warning: beware the stone\\ndoorways \" ..\
+                \"set into these walls. They are\\nportal entrances, which become active with\\nthe \"..\
+                \"right key. My party encamped near\\nsuch a portal, and was easily ambushed.\\\"\\n\" ..\
+                \"Thanking you again, the dwarf wanders off.\"}\
+}\
+\
+function onFaint()\
+\9hudPrint(\"Taghor faints\")\
+\9-- return \"nojoin\"\
+end\
+\
+-- defines possible actions in each state. Each entry has\
+-- 4 values. First is a state in which you can take that action. \
+-- Second is a state name to which player will transition if that\
+-- action is taken. Third is a text printed on the action button.\
+-- Fourth defines function callback. It is optional. This function\
+-- may not return anything and the state specified in value 2 will \
+-- be used. The function may also return a name of the state, thus\
+-- overriding default transition. One of the transitions must\
+-- transit to \"end\" state (a dummy state that concludes the whole\
+-- event).\
+\
+\
+actions = {\
+  { \"init\",      \"healed\",   \"Tend his wounds\"},\
+  { \"init\",      \"fainting\", \"Talk\", onFaint },\
+  { \"init\",      \"abort\",    \"Leave\" },\
+  { \"fainting\",  \"fainted\",  \"Continue\"},\
+  { \"fainted\",   \"healed\",   \"Tend his wounds\"},\
+  { \"fainted\",   \"abort\",    \"Leave\" },\
+  { \"healed\",    \"join\",     \"Yes\" },\
+  { \"healed\",    \"nojoin\",   \"No\" },\
+  { \"join\",      \"end\",      \"Continue\", onJoin},\
+  { \"nojoin\",    \"end\",      \"Continue\", onNojoin}\
+}\
+\
+")
 
 --- level 2 ---
 
@@ -1221,24 +1273,24 @@ mapDesc([[
 ##.####.########################
 ##.###........##............####
 ##.#######...............#..####
-##.#######....#.########....####
-##.########.###.#.....##....####
-##...######.###.#....###.#.#####
-####........###......###.#.#...#
-####.######.###.########.#.#.#.#
+##.####..#....#.########....####
+##.####..##.###.#.....##....####
+##...######.#.#.#....###.#.#####
+####........#.#......###.#.#...#
+####.######.#.#.########.#.#.#.#
 #.....#####.###.##...........#.#
 #.######...........##########..#
 #.######.....#.....##.......#.##
 .............#.....#.#......#..#
 .#####.#######..............##.#
-.#####.#######.....#........##.#
-.#...#.###.........##########..#
-.#.....###..####.############.##
+.#####.#.#####.....#........##.#
+.#...#.#.#.........##########..#
+.#.....#.#..####.############.##
 .#...#.###.#####.###....##.#..##
 .#...#.......................###
 .#####.####.#....#######....####
 .......#..#.#....#....##....####
-######.#..#.###..#....##....####
+######....#.###..#....##....####
 ######.###..###.##....####.#####
 ######.....####.####.#####.#####
 ######...##............#.#.#####
@@ -1353,7 +1405,6 @@ spawn("sx_town_housewall", 11,22,3, "sx_town_housewall_39")
 spawn("sx_town_housewall", 11,23,3, "sx_town_housewall_40")
 spawn("sx_town_housewall", 10,24,0, "sx_town_housewall_41")
 spawn("sx_pillar_killer", 7,24,3, "sx_pillar_killer_15")
-spawn("sx_pillar_killer", 7,23,3, "sx_pillar_killer_16")
 spawn("sx_pillar_killer", 7,22,3, "sx_pillar_killer_17")
 spawn("sx_pillar_killer", 7,21,3, "sx_pillar_killer_18")
 spawn("sx_pillar_killer", 7,21,0, "sx_pillar_killer_19")
@@ -1568,12 +1619,12 @@ spawn("sx_town_wall_04", 4,8,0, "sx_town_wall_04_1")
 spawn("sx_town_wall_04", 4,9,3, "sx_town_wall_04_2")
 spawn("sx_town_wall_flowers", 0,16,3, "sx_town_wall_flowers_3")
 spawn("sx_town_wall_flowers", 1,22,2, "sx_town_wall_flowers_4")
-spawn("sx_town_lantern", 7,25,0, "sx_town_lantern_1")
-spawn("sx_town_lantern_fire", 7,25,0, "sx_town_lantern_fire_1")
-spawn("sx_town_lantern", 6,17,1, "sx_town_lantern_2")
-spawn("sx_town_lantern_fire", 6,17,1, "sx_town_lantern_fire_2")
-spawn("sx_town_lantern", 1,14,2, "sx_town_lantern_3")
-spawn("sx_town_lantern", 3,8,0, "sx_town_lantern_4")
+spawn("sx_town_lantern", 7,25,0, "sx_town_lantern1")
+spawn("sx_town_lantern_fire", 7,25,0, "sx_town_lantern_fire1")
+spawn("sx_town_lantern", 6,17,1, "sx_town_lantern2")
+spawn("sx_town_lantern_fire", 6,17,1, "sx_town_lantern_fire2")
+spawn("sx_town_lantern", 1,14,2, "sx_town_lantern3")
+spawn("sx_town_lantern", 3,8,0, "sx_town_lantern44")
 spawn("sx_town_stairs_up_indoor", 21,7,1, "sx_town_stairs_up_indoor_1")
 spawn("sx_town_sign_tailor", 15,9,3, "sx_town_sign_tailor_1")
 spawn("sx_town_wall_indoor", 19,7,0, "sx_town_wall_indoor_15")
@@ -1701,10 +1752,10 @@ spawn("sx_town_housewall", 20,5,2, "sx_town_housewall_109")
 spawn("sx_town_housewall", 21,5,2, "sx_town_housewall_110")
 spawn("sx_town_housewall", 22,5,2, "sx_town_housewall_111")
 spawn("sx_town_housewall", 18,14,1, "sx_town_housewall_112")
-spawn("sx_town_lantern", 18,14,1, "sx_town_lantern_5")
-spawn("sx_town_lantern_fire", 18,14,1, "sx_town_lantern_fire_3")
-spawn("sx_town_lantern", 14,15,3, "sx_town_lantern_6")
-spawn("sx_town_lantern_fire", 14,15,3, "sx_town_lantern_fire_4")
+spawn("sx_town_lantern", 18,14,1, "sx_town_lantern5")
+spawn("sx_town_lantern_fire", 18,14,1, "sx_town_lantern_fire3")
+spawn("sx_town_lantern", 14,15,3, "sx_town_lantern6")
+spawn("sx_town_lantern_fire", 14,15,3, "sx_town_lantern_fire4")
 spawn("sx_town_window_high", 14,16,3, "sx_town_window_high_41")
 spawn("sx_town_window_high", 14,14,3, "sx_town_window_high_43")
 spawn("sx_town_window_high", 14,13,3, "sx_town_window_high_44")
@@ -1912,10 +1963,10 @@ spawn("sx_town_table_01", 23,16,2, "sx_town_table_01_4")
 spawn("sx_town_table_01", 21,16,1, "sx_town_table_01_5")
 spawn("sx_autumn_tree_large_01", 20,18,3, "sx_autumn_tree_large_01_4")
 spawn("sx_town_window_light_S", 10,20,2, "sx_town_window_light_S_4")
-spawn("sx_town_lantern", 11,23,1, "sx_town_lantern_9")
-spawn("sx_town_lantern_fire", 11,23,1, "sx_town_lantern_fire_7")
-spawn("sx_town_lantern_fire", 6,22,1, "sx_town_lantern_fire_8")
-spawn("sx_town_lantern", 6,22,1, "sx_town_lantern_10")
+spawn("sx_town_lantern", 11,23,1, "sx_town_lantern9")
+spawn("sx_town_lantern_fire", 11,23,1, "sx_town_lantern_fire7")
+spawn("sx_town_lantern_fire", 6,22,1, "sx_town_lantern_fire8")
+spawn("sx_town_lantern", 6,22,1, "sx_town_lantern10")
 spawn("sx_autumn_tree_large_01", 1,24,2, "sx_autumn_tree_large_01_5")
 spawn("sx_town_roof_overhead", 8,20,0, "sx_town_roof_overhead_1")
 spawn("sx_town_roof_overhead", 7,20,0, "sx_town_roof_overhead_2")
@@ -1951,8 +2002,8 @@ spawn("sx_town_window_high", 12,20,0, "sx_town_window_high_62")
 spawn("sx_town_window_high", 15,20,0, "sx_town_window_high_63")
 spawn("sx_town_window_high", 13,20,0, "sx_town_window_high_64")
 spawn("sx_town_window_light_N", 12,20,0, "sx_town_window_light_N_5")
-spawn("sx_town_lantern", 10,18,3, "sx_town_lantern_11")
-spawn("sx_town_lantern_fire", 10,18,3, "sx_town_lantern_fire_9")
+spawn("sx_town_lantern", 10,18,3, "sx_town_lantern11")
+spawn("sx_town_lantern_fire", 10,18,3, "sx_town_lantern_fire9")
 spawn("sx_fountain_effect", 11,18,1, "sx_fountain_effect_2")
 spawn("sx_town_fountain_flowing", 11,18,1, "sx_town_fountain_flowing_2")
 spawn("sx_town_wall_high", 11,26,3, "sx_town_wall_high_1")
@@ -2014,8 +2065,8 @@ spawn("sx_pillar_killer", 12,25,2, "sx_pillar_killer_99")
 spawn("sx_pillar_killer", 13,25,2, "sx_pillar_killer_100")
 spawn("sx_pillar_killer", 14,25,3, "sx_pillar_killer_101")
 spawn("sx_pillar_killer", 13,25,3, "sx_pillar_killer_102")
-spawn("sx_town_lantern", 14,22,2, "sx_town_lantern_12")
-spawn("sx_town_lantern_fire", 14,22,2, "sx_town_lantern_fire_10")
+spawn("sx_town_lantern", 14,22,2, "sx_town_lantern12")
+spawn("sx_town_lantern_fire", 14,22,2, "sx_town_lantern_fire10")
 spawn("sx_town_pillar_flower_yellow", 14,23,0, "sx_town_pillar_flower_yellow_2")
 spawn("sx_pillar_killer", 14,19,3, "sx_pillar_killer_103")
 spawn("sx_pillar_killer", 14,19,1, "sx_pillar_killer_104")
@@ -2061,17 +2112,17 @@ spawn("sx_town_battlement", 19,30,2, "sx_town_battlement_40")
 spawn("sx_town_battlement", 20,30,2, "sx_town_battlement_41")
 spawn("sx_town_battlement", 21,30,2, "sx_town_battlement_42")
 spawn("sx_town_battlement", 22,30,2, "sx_town_battlement_43")
-spawn("gravestone_01", 14,30,2, "gravestone_01_1")
-spawn("gravestone_02", 16,30,2, "gravestone_02_1")
-spawn("gravestone_03", 19,30,2, "gravestone_03_1")
-spawn("gravestone_04", 22,30,2, "gravestone_04_1")
-spawn("gravestone_01", 21,30,2, "gravestone_01_2")
-spawn("sx_town_lantern", 14,30,2, "sx_town_lantern_13")
-spawn("sx_town_lantern", 22,30,2, "sx_town_lantern_14")
-spawn("sx_town_lantern_fire", 14,30,2, "sx_town_lantern_fire_11")
-spawn("sx_town_lantern_fire", 22,30,2, "sx_town_lantern_fire_12")
-spawn("sx_town_lantern", 18,30,2, "sx_town_lantern_15")
-spawn("sx_town_lantern_fire", 18,30,2, "sx_town_lantern_fire_13")
+spawn("gravestone_01", 14,30,2, "gravestone1")
+spawn("gravestone_02", 16,30,2, "gravestone_02")
+spawn("gravestone_03", 19,30,2, "gravestone_03")
+spawn("gravestone_04", 22,30,2, "gravestone5")
+spawn("gravestone_01", 21,30,2, "gravestone4")
+spawn("sx_town_lantern", 14,30,2, "sx_town_lantern13")
+spawn("sx_town_lantern", 22,30,2, "sx_town_lantern14")
+spawn("sx_town_lantern_fire", 14,30,2, "sx_town_lantern_fire11")
+spawn("sx_town_lantern_fire", 22,30,2, "sx_town_lantern_fire12")
+spawn("sx_town_lantern", 18,30,2, "sx_town_lantern15")
+spawn("sx_town_lantern_fire", 18,30,2, "sx_town_lantern_fire13")
 spawn("sx_town_pillar_flower_yellow", 16,29,2, "sx_town_pillar_flower_yellow_3")
 spawn("sx_town_pillar_flower_yellow", 18,29,2, "sx_town_pillar_flower_yellow_4")
 spawn("sx_town_pillar_flower_yellow", 21,29,2, "sx_town_pillar_flower_yellow_5")
@@ -2100,8 +2151,8 @@ spawn("sx_town_window_high", 19,26,0, "sx_town_window_high_69")
 spawn("sx_town_window_high", 21,26,0, "sx_town_window_high_70")
 spawn("sx_town_window_high", 22,26,0, "sx_town_window_high_71")
 spawn("sx_town_window_light_N", 22,26,0, "sx_town_window_light_N_8")
-spawn("sx_town_lantern", 19,26,2, "sx_town_lantern_16")
-spawn("sx_town_lantern_fire", 19,26,2, "sx_town_lantern_fire_14")
+spawn("sx_town_lantern", 19,26,2, "sx_town_lantern16")
+spawn("sx_town_lantern_fire", 19,26,2, "sx_town_lantern_fire14")
 spawn("sx_town_pillar_wood", 22,22,3, "sx_town_pillar_wood_61")
 spawn("sx_town_pillar_wood", 21,22,0, "sx_town_pillar_wood_62")
 spawn("sx_town_pillar_wood", 20,22,0, "sx_town_pillar_wood_63")
@@ -2130,8 +2181,8 @@ spawn("sx_town_wall_indoor", 19,24,2, "sx_town_wall_indoor_62")
 spawn("sx_town_wall_indoor", 18,24,2, "sx_town_wall_indoor_63")
 spawn("sx_town_wall_indoor", 18,24,3, "sx_town_wall_indoor_64")
 spawn("sx_town_wall_indoor", 18,22,3, "sx_town_wall_indoor_66")
-spawn("sx_town_lantern", 19,22,0, "sx_town_lantern_17")
-spawn("sx_town_lantern_fire", 19,22,0, "sx_town_lantern_fire_16")
+spawn("sx_town_lantern", 19,22,0, "sx_town_lantern17")
+spawn("sx_town_lantern_fire", 19,22,0, "sx_town_lantern_fire16")
 spawn("sx_town_table_02", 18,23,0, "sx_town_table_02_9")
 spawn("sx_town_table_02", 19,23,0, "sx_town_table_02_10")
 spawn("sx_town_table_02", 20,22,1, "sx_town_table_02_14")
@@ -2149,11 +2200,9 @@ spawn("sx_pillar_killer", 22,22,3, "sx_pillar_killer_111")
 spawn("sx_town_wall_indoor", 21,24,1, "sx_town_wall_indoor_35")
 spawn("sx_town_wall_indoor", 21,23,1, "sx_town_wall_indoor_50")
 spawn("sx_town_wall_indoor", 21,22,1, "sx_town_wall_indoor_54")
-spawn("sx_town_lantern", 21,23,1, "sx_town_lantern_18")
-spawn("sx_town_lantern_fire", 21,23,1, "sx_town_lantern_fire_15")
+spawn("sx_town_lantern", 21,23,1, "sx_town_lantern18")
+spawn("sx_town_lantern_fire", 21,23,1, "sx_town_lantern_fire15")
 spawn("sx_town_table_01", 21,24,2, "questdesk")
-spawn("script_entity", 9,22,0, "script_entity_3")
-	:setSource("--empty house, could be used for anything")
 spawn("torch_holder", 27,15,1, "torch_holder_3")
 	:addTorch()
 spawn("sx_town_housewall", 24,30,1, "sx_town_housewall_149")
@@ -2184,7 +2233,7 @@ spawn("sx_town_housewall", 24,21,3, "sx_town_housewall_168")
 spawn("sx_town_wall_halfsize", 23,29,3, "sx_town_wall_halfsize_13")
 spawn("sx_town_wall_halfsize", 23,28,2, "sx_town_wall_halfsize_14")
 spawn("sx_town_wall_halfsize", 24,29,3, "sx_town_wall_halfsize_15")
-spawn("sx_town_wall_chain", 24,31,0, "sx_town_wall_chain_1")
+spawn("sx_town_wall_chain", 24,31,0, "gravechain")
 spawn("sx_town_pillar_wood_halfsize", 23,29,1, "sx_town_pillar_wood_halfsize_1")
 spawn("sx_town_pillar_wood_halfsize", 24,29,0, "sx_town_pillar_wood_halfsize_2")
 spawn("sx_town_fountain_flowing", 23,29,2, "sx_town_fountain_flowing_5")
@@ -2198,10 +2247,10 @@ spawn("sx_autumn_tree_large_01", 24,27,2, "sx_autumn_tree_large_01_8")
 spawn("sx_autumn_tree_large_01", 25,27,0, "sx_autumn_tree_large_01_9")
 spawn("sx_town_window_high", 24,26,0, "sx_town_window_high_72")
 spawn("sx_town_window_light_N", 24,26,0, "sx_town_window_light_N_9")
-spawn("sx_town_lantern", 24,28,0, "sx_town_lantern_19")
-spawn("sx_town_lantern_fire", 24,28,0, "sx_town_lantern_fire_17")
-spawn("sx_town_lantern", 26,25,1, "sx_town_lantern_20")
-spawn("sx_town_lantern_fire", 26,25,1, "sx_town_lantern_fire_18")
+spawn("sx_town_lantern", 24,28,0, "sx_town_lantern19")
+spawn("sx_town_lantern_fire", 24,28,0, "sx_town_lantern_fire17")
+spawn("sx_town_lantern", 26,25,1, "sx_town_lantern20")
+spawn("sx_town_lantern_fire", 26,25,1, "sx_town_lantern_fire18")
 spawn("sx_town_window_high", 24,29,1, "sx_town_window_high_73")
 spawn("sx_town_window_high", 26,28,2, "sx_town_window_high_74")
 spawn("sx_town_window_high", 26,27,1, "sx_town_window_high_75")
@@ -2277,14 +2326,14 @@ spawn("sx_town_wall_05", 30,15,1, "sx_town_wall_05_6")
 spawn("sx_town_wall_05", 29,13,1, "sx_town_wall_05_7")
 spawn("sx_town_roof_overhead", 29,18,3, "sx_town_roof_overhead_7")
 spawn("sx_town_roof_overhead", 29,9,2, "sx_town_roof_overhead_8")
-spawn("sx_town_lantern", 29,18,1, "sx_town_lantern_8")
-spawn("sx_town_lantern_fire", 29,18,1, "sx_town_lantern_fire_6")
-spawn("sx_town_lantern_fire", 30,15,3, "sx_town_lantern_fire_19")
-spawn("sx_town_lantern", 30,15,3, "sx_town_lantern_21")
-spawn("sx_town_lantern", 29,12,0, "sx_town_lantern_22")
-spawn("sx_town_lantern_fire", 29,12,0, "sx_town_lantern_fire_20")
-spawn("sx_town_lantern", 30,9,0, "sx_town_lantern_23")
-spawn("sx_town_lantern_fire", 30,9,0, "sx_town_lantern_fire_21")
+spawn("sx_town_lantern", 29,18,1, "sx_town_lantern8")
+spawn("sx_town_lantern_fire", 29,18,1, "sx_town_lantern_fire6")
+spawn("sx_town_lantern_fire", 30,15,3, "sx_town_lantern_fire19")
+spawn("sx_town_lantern", 30,15,3, "sx_town_lantern21")
+spawn("sx_town_lantern", 29,12,0, "sx_town_lantern22")
+spawn("sx_town_lantern_fire", 29,12,0, "sx_town_lantern_fire20")
+spawn("sx_town_lantern", 30,9,0, "sx_town_lantern23")
+spawn("sx_town_lantern_fire", 30,9,0, "sx_town_lantern_fire21")
 spawn("sx_town_housewall", 30,9,0, "sx_town_housewall_172")
 spawn("sx_town_housewall", 29,9,0, "sx_town_housewall_173")
 spawn("sx_town_housewall", 28,9,0, "sx_town_housewall_174")
@@ -2328,12 +2377,12 @@ spawn("sx_town_window_high", 22,20,2, "sx_town_window_high_82")
 spawn("sx_town_window_high", 24,22,3, "sx_town_window_high_83")
 spawn("sx_town_window_light_E", 24,22,2, "sx_town_window_light_E_8")
 spawn("sx_town_window_light_N", 19,20,0, "sx_town_window_light_N_10")
-spawn("sx_town_lantern", 17,20,2, "sx_town_lantern_24")
-spawn("sx_town_lantern", 23,19,1, "sx_town_lantern_25")
-spawn("sx_town_lantern_fire", 17,20,2, "sx_town_lantern_fire_22")
-spawn("sx_town_lantern_fire", 23,19,1, "sx_town_lantern_fire_23")
-spawn("sx_town_lantern", 27,20,0, "sx_town_lantern_26")
-spawn("sx_town_lantern_fire", 27,20,0, "sx_town_lantern_fire_24")
+spawn("sx_town_lantern", 17,20,2, "sx_town_lantern24")
+spawn("sx_town_lantern", 23,19,1, "sx_town_lantern25")
+spawn("sx_town_lantern_fire", 17,20,2, "sx_town_lantern_fire22")
+spawn("sx_town_lantern_fire", 23,19,1, "sx_town_lantern_fire23")
+spawn("sx_town_lantern", 27,20,0, "sx_town_lantern26")
+spawn("sx_town_lantern_fire", 27,20,0, "sx_town_lantern_fire24")
 spawn("sx_town_wall_halfsize", 25,20,3, "sx_town_wall_halfsize_16")
 spawn("sx_town_wall_halfsize", 25,21,3, "sx_town_wall_halfsize_18")
 spawn("sx_town_wall_halfsize", 25,22,0, "sx_town_wall_halfsize_19")
@@ -2418,7 +2467,7 @@ spawn("sx_town_window_high", 6,16,1, "sx_town_window_high_90")
 spawn("sx_town_window_high", 8,14,2, "sx_town_window_high_91")
 spawn("sx_town_window_light_S", 8,14,0, "sx_town_window_light_S_5")
 spawn("sx_town_window_light_N", 8,20,0, "sx_town_window_light_N_12")
-spawn("sx_town_lantern_fire", 8,12,3, "sx_town_lantern_fire_25")
+spawn("sx_town_lantern_fire", 8,12,3, "sx_town_lantern_fire25")
 spawn("sx_town_wall_halfsize", 9,13,3, "sx_town_wall_halfsize_22")
 spawn("sx_town_wall_halfsize", 9,13,0, "sx_town_wall_halfsize_23")
 spawn("sx_town_wall_halfsize", 10,13,0, "sx_town_wall_halfsize_24")
@@ -2438,7 +2487,7 @@ spawn("sx_town_window_high", 12,13,1, "sx_town_window_high_94")
 spawn("sx_town_window_high", 13,12,2, "sx_town_window_high_95")
 spawn("sx_town_window_light_S", 10,14,0, "sx_town_window_light_S_6")
 spawn("sx_town_window_light_N", 12,12,0, "sx_town_window_light_N_13")
-spawn("sx_town_lantern", 8,12,3, "sx_town_lantern_27")
+spawn("sx_town_lantern", 8,12,3, "sx_town_lantern27")
 spawn("sx_town_window_high", 8,12,3, "sx_town_window_high_96")
 spawn("sx_town_battlement", 5,14,0, "sx_town_battlement_94")
 spawn("sx_town_battlement", 4,14,0, "sx_town_battlement_95")
@@ -2806,8 +2855,8 @@ spawn("sx_autumn_tree_large_01", 6,2,0, "sx_autumn_tree_large_01_11")
 spawn("sx_autumn_tree_large_01", 9,3,2, "sx_autumn_tree_large_01_12")
 spawn("sx_town_housewall", 12,3,3, "sx_town_housewall_279")
 spawn("sx_town_housewall", 12,2,3, "sx_town_housewall_280")
-spawn("sx_town_lantern", 11,9,1, "sx_town_lantern_28")
-spawn("sx_town_lantern_fire", 11,9,1, "sx_town_lantern_fire_26")
+spawn("sx_town_lantern", 11,9,1, "sx_town_lantern28")
+spawn("sx_town_lantern_fire", 11,9,1, "sx_town_lantern_fire26")
 spawn("sx_town_window_light_E", 6,9,0, "sx_town_window_light_E_9")
 spawn("sx_town_wall_05", 9,9,0, "sx_town_wall_05_8")
 spawn("sx_town_wall_05", 7,9,2, "sx_town_wall_05_9")
@@ -2968,8 +3017,8 @@ spawn("sx_town_housewall", 31,9,0, "sx_town_housewall_289")
 spawn("sx_town_window_high", 27,11,0, "sx_town_window_high_125")
 spawn("sx_town_window_high", 28,9,3, "sx_town_window_high_126")
 spawn("sx_town_window_high", 29,9,0, "sx_town_window_high_127")
-spawn("sx_town_lantern", 28,11,1, "sx_town_lantern_29")
-spawn("sx_town_lantern_fire", 28,11,1, "sx_town_lantern_fire_27")
+spawn("sx_town_lantern", 28,11,1, "sx_town_lantern29")
+spawn("sx_town_lantern_fire", 28,11,1, "sx_town_lantern_fire27")
 spawn("sx_town_window_high", 28,10,3, "sx_town_window_high_128")
 spawn("sx_town_window_light_E", 28,10,2, "sx_town_window_light_E_11")
 spawn("sx_town_window_light_N", 19,11,0, "sx_town_window_light_N_16")
@@ -3033,8 +3082,8 @@ spawn("sx_town_window_high", 15,7,3, "sx_town_window_high_139")
 spawn("sx_town_window_high", 15,6,1, "sx_town_window_high_140")
 spawn("sx_town_window_high", 15,8,1, "sx_town_window_high_141")
 spawn("sx_town_window_high", 15,10,1, "sx_town_window_high_142")
-spawn("sx_town_lantern", 15,8,3, "sx_town_lantern_30")
-spawn("sx_town_lantern_fire", 15,8,3, "sx_town_lantern_fire_28")
+spawn("sx_town_lantern", 15,8,3, "sx_town_lantern30")
+spawn("sx_town_lantern_fire", 15,8,3, "sx_town_lantern_fire28")
 spawn("pressure_plate_hidden", 6,30,0, "pressure_plate_hidden_1")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
@@ -3162,11 +3211,11 @@ spawn("torch_holder", 22,13,0, "t5")
 	:addTorch()
 	:addConnector("deactivate", "script_entity_11", "keepTorch5")
 spawn("sx_town_table_02", 27,14,0, "sx_town_table_02_4")
-spawn("sx_town_lantern", 7,0,1, "sx_town_lantern_7")
+spawn("sx_town_lantern", 7,0,1, "sx_town_lantern77")
 spawn("sx_town_lantern", 7,0,3, "sx_town_lantern_32")
-spawn("sx_town_lantern_fire", 7,0,1, "sx_town_lantern_fire_5")
+spawn("sx_town_lantern_fire", 7,0,1, "sx_town_lantern_fire5")
 spawn("sx_town_lantern_fire", 7,0,3, "sx_town_lantern_fire_30")
-spawn("sx_town_wall_chain", 7,0,2, "sx_town_wall_chain_5")
+spawn("sx_town_wall_chain", 7,0,2, "sx_town_wall_chain5")
 spawn("sx_town_doorway", 7,0,0, "sx_town_doorway_31")
 spawn("sx_town_wall_indoor", 23,13,0, "sx_town_wall_indoor_44")
 spawn("sx_pillar_killer", 12,7,2, "sx_pillar_killer_187")
@@ -3175,7 +3224,7 @@ spawn("sx_pillar_killer", 12,10,0, "sx_pillar_killer_189")
 spawn("sx_pillar_killer", 12,11,0, "sx_pillar_killer_190")
 spawn("dungeon_wall_text", 6,31,2, "dungeon_wall_text_1")
 	:setWallText("Forest path")
-spawn("pressure_plate_hidden", 24,30,3, "pressure_plate_hidden_5")
+spawn("pressure_plate_hidden", 24,30,3, "graveplate")
 	:setTriggeredByParty(true)
 	:setTriggeredByMonster(false)
 	:setTriggeredByItem(false)
@@ -3820,7 +3869,89 @@ function ogreCallBack(s_caption)\
 \9end\
 end")
 spawn("warden", 20,22,2, "warden_1")
-spawn("starting_location", 16,16,0, "starting_location_1")
+spawn("teleporter", 24,31,0, "teleporter_3")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setTeleportTarget(10,30,0,7)
+	:setInvisible(true)
+	:setSilent(true)
+	:setHideLight(true)
+	:setScreenFlash(false)
+spawn("script_entity", 13,8,0, "script_entity_32")
+	:setSource("--empty house, could be used for anything")
+spawn("script_entity", 8,6,0, "script_entity_33")
+	:setSource("--empty house, could be used for anything")
+spawn("script_entity", 8,18,0, "script_entity_34")
+	:setSource("--empty house, could be used for anything")
+spawn("gw_event", 8,23,2, "gw_event_2")
+	:setSource("-- is this event enabled?\
+--enabled = true\
+\
+-- name of the imeage to show\
+image = \"mod_assets/images/example-image.dds\"\
+image_width = 140\
+image_hieght = 196\
+\
+\
+-- Defines states. Each entry must have exactly two columns:\
+-- first is state, the second is description shown.\
+-- Event will start from the first state on the list.\
+-- There is also one special state called \"end\". Once moved\
+-- to state \"end\", the whole event ends.\
+\
+states = {\
+  { \"init\",     \"An cleric aproaches you from darkness.\\nHello brother. Call me Spidey...\\nblablabla\\n\\n\\n\\n What you wanna ?\"}, \
+  { \"jobask\",   \"Job ? Ok I have something to ask. As cleric\\n I am quite afraid going to graveyard.\\nI need some holy water from mausoleum.\\nCould you bring it to me?\" },\
+  { \"join\",     \"Cool. I open graveyard for you\\n To enter mausoleum you will need key\\nIt is hidden in graveyard\\nnearby the garbage pile\\n\" },\
+  { \"nojoin\",   \"No ? GET OUT OF HERE\"}\
+}\
+\
+\
+function onJoin()\
+\9hudPrint(\"You have accepted the quest \\\"Good vs Evil\\\"\")\
+\9gravechain:destroy()\
+\9graveplate:destroy()\9\9\
+end\
+\
+-- defines possible actions in each state. Each entry has\
+-- 4 values. First is a state in which you can take that action. \
+-- Second is a state name to which player will transition if that\
+-- action is taken. Third is a text printed on the action button.\
+-- Fourth defines function callback. It is optional. This function\
+-- may not return anything and the state specified in value 2 will \
+-- be used. The function may also return a name of the state, thus\
+-- overriding default transition. One of the transitions must\
+-- transit to \"end\" state (a dummy state that concludes the whole\
+-- event).\
+\
+\
+actions = {\
+  { \"init\",      \"jobask\",   \"Ask about job\"},\
+  { \"jobask\",    \"join\",     \"Yes\" },\
+  { \"jobask\",    \"nojoin\",   \"No\" },\
+  { \"init\",      \"abort\",    \"Leave\" },\
+  { \"join\",      \"end\",      \"Continue\", onJoin},\
+  { \"nojoin\",    \"end\",      \"Continue\", onNojoin}\
+}\
+")
+spawn("sx_town_doorframe_w_door", 6,23,1, "sx_town_doorframe_w_door_4")
+spawn("sx_town_floor_inside", 7,23,1, "sx_town_floor_inside_113")
+spawn("sx_town_floor_inside", 8,23,3, "sx_town_floor_inside_114")
+spawn("sx_town_floor_inside", 9,23,0, "sx_town_floor_inside_115")
+spawn("sx_town_floor_inside", 9,22,3, "sx_town_floor_inside_116")
+spawn("sx_town_floor_inside", 8,22,1, "sx_town_floor_inside_117")
+spawn("sx_town_ceiling_indoors", 8,22,1, "sx_town_ceiling_indoors_127")
+spawn("sx_town_ceiling_indoors", 9,22,3, "sx_town_ceiling_indoors_128")
+spawn("sx_town_ceiling_indoors", 9,23,0, "sx_town_ceiling_indoors_129")
+spawn("sx_town_ceiling_indoors", 8,23,1, "sx_town_ceiling_indoors_130")
+spawn("sx_town_ceiling_indoors", 7,23,1, "sx_town_ceiling_indoors_131")
+spawn("npc_spidey", 9,23,1, "npc_spidey_1")
+spawn("sx_town_table_01", 9,22,3, "sx_town_table_01_7")
+spawn("grim_bed", 8,22,2, "grim_bed_2")
+spawn("sx_town_lantern", 9,22,0, "sx_town_lantern_24")
+spawn("sx_town_lantern_fire", 9,22,0, "sx_town_lantern_fire_24")
+spawn("starting_location", 6,31,0, "starting_location_1")
 
 --- level 3 ---
 
@@ -4466,53 +4597,356 @@ mapDesc([[
 ################################
 ################################
 ]])
-spawn("sx_forest_housewall_01", 3,12,2, "sx_forest_housewall_01_5")
-spawn("sx_forest_housewall_01", 4,12,3, "sx_forest_housewall_01_6")
-spawn("sx_forest_housewall_01", 3,10,1, "sx_forest_housewall_01_8")
-spawn("sx_forest_housewall_01", 0,10,1, "sx_forest_housewall_01_9")
-spawn("sx_forest_housewall_01", 1,11,3, "sx_forest_housewall_01_10")
-spawn("sx_forest_housewall_01", 1,12,3, "sx_forest_housewall_01_11")
-spawn("sx_forest_housewall_01", 1,13,0, "sx_forest_housewall_01_12")
-spawn("sx_forest_housewall_01", 1,10,0, "sx_forest_housewall_01_13")
-spawn("sx_forest_housewall_01", 2,10,0, "sx_forest_housewall_01_14")
-spawn("sx_forest_housewall_01", 3,10,0, "sx_forest_housewall_01_15")
-spawn("sx_town_ceiling_indoors", 1,10,0, "sx_town_ceiling_indoors_127")
-spawn("sx_town_ceiling_indoors", 2,10,1, "sx_town_ceiling_indoors_128")
-spawn("sx_town_ceiling_indoors", 3,10,3, "sx_town_ceiling_indoors_129")
-spawn("sx_town_ceiling_indoors", 1,11,0, "sx_town_ceiling_indoors_130")
-spawn("sx_town_ceiling_indoors", 2,11,3, "sx_town_ceiling_indoors_131")
-spawn("sx_town_ceiling_indoors", 3,11,3, "sx_town_ceiling_indoors_132")
-spawn("sx_town_ceiling_indoors", 1,12,2, "sx_town_ceiling_indoors_133")
-spawn("sx_town_ceiling_indoors", 2,12,3, "sx_town_ceiling_indoors_134")
-spawn("sx_town_ceiling_indoors", 3,12,1, "sx_town_ceiling_indoors_135")
-spawn("sx_forest_housepillar_01", 4,10,3, "sx_forest_housepillar_01_1")
-spawn("sx_forest_housepillar_01", 3,10,1, "sx_forest_housepillar_01_2")
-spawn("sx_forest_housepillar_01", 4,11,0, "sx_forest_housepillar_01_3")
-spawn("sx_forest_housepillar_01", 4,12,0, "sx_forest_housepillar_01_4")
-spawn("sx_forest_housepillar_01", 4,13,3, "sx_forest_housepillar_01_5")
-spawn("sx_forest_housepillar_01", 1,13,2, "sx_forest_housepillar_01_6")
-spawn("sx_forest_housepillar_01", 1,12,1, "sx_forest_housepillar_01_7")
-spawn("sx_forest_housepillar_01", 1,11,1, "sx_forest_housepillar_01_8")
-spawn("sx_forest_housepillar_01", 1,10,0, "sx_forest_housepillar_01_9")
-spawn("sx_forest_housepillar_01", 2,10,1, "sx_forest_housepillar_01_10")
-spawn("sx_town_floor_inside", 1,10,0, "sx_town_floor_inside_113")
-spawn("sx_town_floor_inside", 2,10,3, "sx_town_floor_inside_114")
-spawn("sx_town_floor_inside", 3,10,3, "sx_town_floor_inside_115")
-spawn("sx_town_floor_inside", 1,11,0, "sx_town_floor_inside_116")
-spawn("sx_town_floor_inside", 2,11,3, "sx_town_floor_inside_117")
-spawn("sx_town_floor_inside", 3,11,3, "sx_town_floor_inside_118")
-spawn("sx_town_floor_inside", 1,12,0, "sx_town_floor_inside_119")
-spawn("sx_town_floor_inside", 2,12,3, "sx_town_floor_inside_120")
-spawn("sx_town_floor_inside", 3,12,0, "sx_town_floor_inside_121")
-spawn("sx_town_table_01", 1,12,3, "sx_town_table_01_7")
-spawn("sx_town_doorframe_w_door", 2,13,0, "sx_town_doorframe_w_door_4")
-spawn("sx_town_wall_lower", 2,11,1, "sx_town_wall_lower_1")
-spawn("sx_town_wall_lower", 3,12,0, "sx_town_wall_lower_2")
-spawn("sx_town_wall_lower", 3,10,2, "sx_town_wall_lower_3")
-spawn("sx_town_wall_fireplace_indoor", 3,11,1, "sx_town_wall_fireplace_indoor_7")
-spawn("sx_floor_fireplace_light", 3,11,1, "sx_floor_fireplace_light_7")
-spawn("sx_remove_wall", 3,11,1, "sx_remove_wall_1")
-spawn("sx_remove_wall", 3,10,1, "sx_remove_wall_2")
-spawn("sx_invisible_door", 4,10,3, "sx_invisible_door_4")
-spawn("sx_invisible_door", 4,11,3, "sx_invisible_door_5")
-spawn("sx_invisible_door", 4,12,3, "sx_invisible_door_6")
+
+--- level 7 ---
+
+mapName("Graveyard")
+setWallSet("sx_forest_autumn")
+playStream("assets/samples/music/dungeon_ambient.ogg")
+mapDesc([[
+################################
+################################
+################################
+################################
+###....#########################
+###....#######...#.....#########
+###....#######........##########
+####.####......#####..##########
+###..................###########
+###.#....#####.....#..##########
+######....####.####...##########
+######..#...........#.##########
+#####...#..........#############
+######..#.............##########
+######.............##..#########
+########......##..###..#########
+##########.......####.##########
+#######..####..###.##.##########
+###...................##########
+#######..####..######.##########
+##########.....##.#.#.......####
+#######.....#..#............####
+######.............#####.#.#####
+######..#...#......#####.#..####
+######......................####
+######............#...#.....####
+######..........################
+##########.#####################
+##########.#####################
+##########.#####################
+##########.#####################
+##########.#####################
+]])
+spawn("gravestone_01", 9,25,0, "gravestone_01_1")
+spawn("gravestone_02", 8,25,0, "gravestone_02_1")
+spawn("gravestone_02", 12,25,0, "gravestone_02_2")
+spawn("gravestone_03", 10,23,1, "gravestone_03_1")
+spawn("gravestone_03", 14,25,3, "gravestone_03_2")
+spawn("gravestone_04", 11,23,2, "gravestone_04_1")
+spawn("gravestone_04", 8,23,0, "gravestone_04_2")
+spawn("sx_autumn_tree_large_01", 9,25,1, "sx_autumn_tree_large1")
+spawn("sx_autumn_tree_large_01", 14,26,2, "sx_autumn_tree_large2")
+spawn("sx_town_lantern", 11,23,1, "sx_town_lantern_1")
+spawn("sx_town_lantern_fire", 11,23,1, "sx_town_lantern_fire_1")
+spawn("sx_town_lantern", 8,24,0, "sx_town_lantern_2")
+spawn("sx_town_lantern_fire", 8,24,0, "sx_town_lantern_fire_2")
+spawn("sx_town_starsky", 8,23,3, "sx_town_starsky_2")
+spawn("sx_town_starsky", 12,23,0, "sx_town_starsky_4")
+spawn("sx_town_wall_chain", 12,22,3, "sx_town_wall_chain11")
+spawn("gravestone_01", 13,19,2, "gravestone_01_2")
+spawn("gravestone_02", 11,21,1, "gravestone_02_3")
+spawn("gravestone_03", 9,22,2, "gravestone_03_3")
+spawn("gravestone_04", 13,23,0, "gravestone_04_3")
+spawn("gravestone_03", 14,23,2, "gravestone_03_4")
+spawn("gravestone_03", 15,23,1, "gravestone_03_5")
+spawn("gravestone_03", 17,23,3, "gravestone_03_6")
+spawn("gravestone_04", 16,21,2, "gravestone_04_4")
+spawn("gravestone_01", 17,20,0, "gravestone_01_3")
+spawn("gravestone_01", 19,20,2, "gravestone_01_4")
+spawn("gravestone_02", 19,25,1, "gravestone_02_4")
+spawn("gravestone_03", 21,25,3, "gravestone_03_7")
+spawn("gravestone_04", 16,25,0, "gravestone_04_5")
+spawn("gravestone_02", 17,25,0, "gravestone_02_5")
+spawn("ast_tombstone_broken", 9,21,1, "ast_tombstone_broken_3")
+spawn("ast_tombstone_broken", 16,23,2, "ast_tombstone_broken_4")
+spawn("ast_tombstone_marble_curved", 20,25,2, "ast_tombstone_marble_curved_2")
+spawn("ast_tombstone_marble_square", 10,25,2, "ast_tombstone_marble_square_2")
+spawn("ast_tombstone_marble_square", 7,25,0, "ast_tombstone_marble_square_3")
+spawn("ast_tombstone_obsidian_curved", 6,23,2, "ast_tombstone_obsidian_curved_2")
+spawn("ast_tombstone_broken", 14,21,1, "ast_tombstone_broken_2")
+spawn("ast_tombstone_marble_square", 6,26,3, "ast_tombstone_marble_square_4")
+spawn("sx_town_lantern", 15,22,0, "sx_town_lantern_3")
+spawn("sx_town_lantern_fire", 15,22,0, "sx_town_lantern_fire_3")
+spawn("sx_town_lantern", 13,17,3, "sx_town_lantern_4")
+spawn("sx_town_lantern", 13,19,3, "sx_town_lantern_5")
+spawn("sx_town_lantern_fire", 13,19,3, "sx_town_lantern_fire_4")
+spawn("sx_town_lantern_fire", 13,17,3, "sx_town_lantern_fire_5")
+spawn("sx_town_lantern", 7,17,3, "sx_town_lantern_6")
+spawn("sx_town_lantern", 7,19,3, "sx_town_lantern_7")
+spawn("sx_town_lantern_fire", 7,17,3, "sx_town_lantern_fire_6")
+spawn("sx_town_lantern_fire", 7,19,3, "sx_town_lantern_fire_7")
+spawn("sx_town_wall", 6,19,1, "sx_town_wall_111")
+spawn("sx_town_wall", 7,17,3, "sx_town_wall_17")
+spawn("sx_town_wall_high", 7,17,3, "ooo")
+spawn("sx_town_wall_high", 7,19,3, "sx_town_wall_high_211")
+spawn("sx_remove_wall", 7,17,3, "sx_remove_wall_5")
+spawn("sx_remove_wall", 7,19,3, "sx_remove_wall_6")
+spawn("gravestone_03", 8,19,0, "gravestone_03_8")
+spawn("ast_tombstone_obsidian_square", 8,17,0, "ast_tombstone_obsidian_square_2")
+spawn("sx_town_wall_high", 7,18,3, "sx_town_wall_high")
+spawn("sx_town_pillar", 7,19,1, "sx_town_pilla")
+spawn("sx_town_pillar", 7,18,1, "sx_town_pill")
+spawn("dungeon_door_ornament", 6,18,1, "dungeon_door_ornament_1")
+spawn("cityfog", 10,26,2, "cityfog_1")
+spawn("cityfog", 7,26,0, "cityfog_2")
+spawn("cityfog", 7,24,0, "cityfog_3")
+spawn("cityfog", 10,24,0, "cityfog_4")
+spawn("cityfog", 10,21,1, "cityfog_5")
+spawn("cityfog", 7,21,1, "cityfog_6")
+spawn("cityfog", 13,20,1, "cityfog_7")
+spawn("cityfog", 13,24,0, "cityfog_8")
+spawn("cityfog", 16,24,0, "cityfog_9")
+spawn("cityfog", 18,21,3, "cityfog_10")
+spawn("cityfog", 14,21,2, "cityfog_11")
+spawn("gravestone_02", 23,25,2, "gravestone_02_6")
+spawn("gravestone_03", 24,25,2, "gravestone_03_9")
+spawn("gravestone_01", 27,25,3, "gravestone_01_5")
+spawn("gravestone_02", 27,23,1, "gravestone_02_7")
+spawn("ast_tombstone_obsidian_square", 25,25,2, "ast_tombstone_obsidian_square_3")
+spawn("ast_tombstone_obsidian_curved", 26,25,0, "ast_tombstone_obsidian_curved_3")
+spawn("ast_tombstone_broken", 27,24,1, "ast_tombstone_broken_5")
+spawn("ast_tombstone_marble_curved", 22,20,0, "ast_tombstone_marble_curved_3")
+spawn("ast_tombstone_obsidian_square", 25,20,2, "ast_tombstone_obsidian_square_4")
+spawn("gravestone_01", 23,20,2, "gravestone_01_6")
+spawn("gravestone_02", 26,20,3, "gravestone_02_8")
+spawn("sx_town_lantern", 22,24,2, "sx_town_lantern_8")
+spawn("sx_town_lantern", 25,24,0, "sx_town_lantern_9")
+spawn("sx_town_lantern", 25,21,2, "sx_town_lantern_11")
+spawn("sx_town_lantern_fire", 25,21,2, "sx_town_lantern_fire_8")
+spawn("sx_town_lantern_fire", 25,24,0, "sx_town_lantern_fire_9")
+spawn("sx_town_lantern_fire", 22,24,2, "sx_town_lantern_fire_10")
+spawn("sx_town_lantern_fire", 21,20,3, "sx_town_lantern_fire_11")
+spawn("sx_town_lantern", 21,20,3, "sx_town_lantern_10")
+spawn("gravestone_01", 18,17,0, "gravestone_01_7")
+spawn("gravestone_01", 14,17,3, "gravestone_01_8")
+spawn("gravestone_02", 13,15,2, "gravestone_02_9")
+spawn("ast_tombstone_marble_curved", 10,13,0, "ast_tombstone_marble_curved_5")
+spawn("ast_tombstone_obsidian_curved", 13,13,0, "ast_tombstone_obsidian_curved_1")
+spawn("ast_tombstone_obsidian_square", 9,15,3, "ast_tombstone_obsidian_square_1")
+spawn("gravestone_03", 12,15,2, "gravestone_03_10")
+spawn("gravestone_04", 11,15,0, "gravestone_04_6")
+spawn("gravestone_01", 11,13,0, "gravestone_01_9")
+spawn("gravestone_01", 5,12,1, "gravestone_01_10")
+spawn("gravestone_01", 21,11,2, "gravestone_01_11")
+spawn("gravestone_02", 21,9,3, "gravestone_02_10")
+spawn("gravestone_03", 14,13,3, "gravestone_03_11")
+spawn("gravestone_03", 10,11,2, "gravestone_03_12")
+spawn("gravestone_02", 12,11,0, "gravestone_02_11")
+spawn("sx_town_lantern", 11,11,0, "sx_town_lantern_12")
+spawn("sx_town_lantern", 14,14,2, "sx_town_lantern_13")
+spawn("sx_town_lantern_fire", 11,11,0, "sx_town_lantern_fire_12")
+spawn("sx_town_lantern_fire", 14,14,2, "sx_town_lantern_fire_13")
+spawn("gravestone_02", 15,11,3, "gravestone_02_12")
+spawn("gravestone_01", 17,11,2, "gravestone_01_12")
+spawn("ast_tombstone_broken", 16,11,0, "ast_tombstone_broken_1")
+spawn("ast_tombstone_broken", 9,7,0, "ast_tombstone_broken_6")
+spawn("ast_tombstone_broken", 11,7,3, "ast_tombstone_broken_7")
+spawn("ast_tombstone_broken", 12,7,3, "ast_tombstone_broken_8")
+spawn("ast_tombstone_marble_curved", 10,7,0, "ast_tombstone_marble_curved_1")
+spawn("ast_tombstone_marble_curved", 14,5,1, "ast_tombstone_marble_curved_4")
+spawn("ast_tombstone_broken", 20,5,0, "ast_tombstone_broken_9")
+spawn("ast_tombstone_obsidian_square", 18,5,0, "ast_tombstone_obsidian_square_5")
+spawn("ast_tombstone_broken", 21,7,1, "ast_tombstone_broken_10")
+spawn("gravestone_03", 16,5,2, "gravestone_03_13")
+spawn("gravestone_03", 21,6,3, "gravestone_03_14")
+spawn("gravestone_03", 19,5,0, "gravestone_03_15")
+spawn("gravestone_01", 18,9,2, "gravestone_01_13")
+spawn("gravestone_02", 16,9,0, "gravestone_02_13")
+spawn("gravestone_03", 15,9,3, "gravestone_03_16")
+spawn("gravestone_02", 13,7,1, "gravestone_02_14")
+spawn("sx_town_lantern", 17,6,0, "sx_town_lantern_14")
+spawn("sx_town_lantern", 20,8,1, "sx_town_lantern_15")
+spawn("sx_town_lantern_fire", 17,6,0, "sx_town_lantern_fire_14")
+spawn("sx_town_lantern_fire", 20,8,1, "sx_town_lantern_fire_15")
+spawn("sx_town_lantern", 17,9,2, "sx_town_lantern_16")
+spawn("sx_town_lantern_fire", 17,9,2, "sx_town_lantern_fire_16")
+spawn("sx_town_lantern_fire", 14,10,1, "sx_town_lantern_fire_17")
+spawn("sx_town_lantern", 14,10,1, "sx_town_lantern_17")
+spawn("sx_town_lantern", 18,12,1, "sx_town_lantern_18")
+spawn("sx_town_lantern_fire", 18,12,1, "sx_town_lantern_fire_18")
+spawn("gravestone_02", 7,13,2, "gravestone_02_15")
+spawn("gravestone_03", 7,11,3, "gravestone_03_17")
+spawn("gravestone_04", 5,9,2, "gravestone_04_7")
+spawn("sx_autumn_tree_large_01", 7,10,1, "sx_autumn_tree_large5")
+spawn("sx_autumn_tree_large_01", 13,14,3, "sx_autumn_tree_large3")
+spawn("sx_autumn_tree_large_01", 17,13,0, "sx_autumn_tree_large4")
+spawn("sx_autumn_tree_large_01", 6,5,0, "sx_autumn_tree_large_")
+spawn("sx_town_fountain_flowing", 13,21,3, "sx_town_fount")
+spawn("sx_fountain_effect", 13,21,3, "sx_fountain_effe")
+spawn("sx_town_fountain_flowing", 5,6,2, "sx_town_founta")
+spawn("sx_fountain_effect", 5,6,2, "sx_fountain_ef")
+spawn("sx_town_fountain_flowing", 20,9,3, "sx_town_fountain_flo")
+spawn("sx_fountain_effect", 20,9,3, "sx_founta")
+spawn("ast_tombstone_marble_curved", 7,12,1, "ast_tombstone_marble_curved_6")
+spawn("ast_tombstone_marble_curved", 7,8,0, "ast_tombstone_marble_curved_7")
+spawn("sx_town_lantern", 9,13,3, "sx_town_lantern_19")
+spawn("sx_town_lantern", 8,9,1, "sx_town_lantern_20")
+spawn("sx_town_lantern_fire", 8,9,1, "sx_town_lantern_fire_19")
+spawn("sx_town_lantern_fire", 9,13,3, "sx_town_lantern_fire_20")
+spawn("sx_town_lantern", 6,13,3, "sx_town_lantern_21")
+spawn("sx_town_lantern_fire", 6,13,3, "sx_town_lantern_fire_21")
+spawn("sx_town_lantern", 3,6,3, "sx_town_lantern_22")
+spawn("sx_town_lantern_fire", 3,6,3, "sx_town_lantern_fire_22")
+spawn("sx_flooded_static", 3,4,1, "sss")
+spawn("sx_flooded_static", 4,4,3, "sx_floo")
+spawn("sx_flooded_static", 5,4,3, "sta")
+spawn("sx_flooded_static", 6,4,1, "stat")
+spawn("sx_town_wall_halfsize", 4,5,0, "sx_town_wall_halfsiz")
+spawn("sx_town_wall_halfsize", 5,5,0, "sx_town_wall_halfs")
+spawn("sx_town_wall_halfsize", 6,5,0, "sx_town_wall_hal")
+spawn("sx_town_pillar_wood_halfsize", 4,5,2, "ize_2")
+spawn("sx_town_pillar_wood_halfsize", 5,5,1, "sx_town_pillar_wood_h")
+spawn("sx_town_pillar_wood_halfsize", 6,5,0, "sx_town_pillar_wood_halfsize_4")
+spawn("sx_town_lantern", 6,5,1, "sx_town_lantern_23")
+spawn("sx_town_lantern_fire", 6,5,1, "sx_town_lantern_fire_23")
+spawn("sx_town_wall_alcove", 6,6,2, "sx_town_wall_alcove_1")
+	:addItem(spawn("gear_key"))
+spawn("sx_town_pillar", 6,7,2, "sx_town_pillar_")
+spawn("sx_remove_wall", 6,7,3, "sx_remove_wall_18")
+spawn("sx_town_wall_halfsize", 3,6,0, "sx_town_wall_halfsize")
+spawn("sx_town_wall_halfsize", 3,5,1, "sx_town_wall_halfsize_")
+spawn("sx_town_pillar_wood_halfsize", 4,6,0, "sx_town_pillar_wood_halfsize_5")
+spawn("sx_flooded_static", 3,5,1, "ssss")
+spawn("gravestone_01", 17,15,1, "gravestone_01_14")
+spawn("gravestone_04", 18,14,3, "gravestone_04_8")
+spawn("ast_tombstone_marble_curved", 17,13,3, "ast_tombstone_marble_curved_8")
+spawn("ast_tombstone_marble_square", 16,13,0, "ast_tombstone_marble_square_1")
+spawn("ast_tombstone_obsidian_square", 13,11,3, "ast_tombstone_obsidian_square_6")
+spawn("ast_tombstone_broken", 15,5,0, "ast_tombstone_broken_11")
+spawn("ast_tombstone_marble_curved", 22,15,1, "ast_tombstone_marble_curved_9")
+spawn("gravestone_03", 22,14,1, "gravestone_03_18")
+spawn("cityfog", 16,18,1, "cityfog_12")
+spawn("cityfog", 19,18,1, "cityfog_13")
+spawn("cityfog", 21,17,0, "cityfog_14")
+spawn("cityfog", 19,24,0, "cityfog_15")
+spawn("cityfog", 23,24,0, "cityfog_16")
+spawn("cityfog", 26,24,0, "cityfog_17")
+spawn("cityfog", 26,22,0, "cityfog_18")
+spawn("cityfog", 24,21,3, "cityfog_19")
+spawn("cityfog", 27,20,0, "cityfog_20")
+spawn("cityfog", 21,21,3, "cityfog_21")
+spawn("cityfog", 21,15,0, "cityfog_22")
+spawn("cityfog", 19,13,0, "cityfog_23")
+spawn("cityfog", 16,16,3, "cityfog_24")
+spawn("cityfog", 12,16,3, "cityfog_25")
+spawn("cityfog", 9,14,3, "cityfog_26")
+spawn("cityfog", 12,14,1, "cityfog_27")
+spawn("cityfog", 16,14,3, "cityfog_28")
+spawn("cityfog", 14,12,0, "cityfog_29")
+spawn("cityfog", 11,12,3, "cityfog_30")
+spawn("cityfog", 16,12,2, "cityfog_31")
+spawn("cityfog", 19,10,2, "cityfog_32")
+spawn("cityfog", 20,8,0, "cityfog_33")
+spawn("cityfog", 20,5,2, "cityfog_34")
+spawn("cityfog", 18,6,3, "cityfog_35")
+spawn("cityfog", 14,6,2, "cityfog_36")
+spawn("cityfog", 13,8,3, "cityfog_37")
+spawn("cityfog", 9,8,0, "cityfog_38")
+spawn("cityfog", 6,9,3, "cityfog_39")
+spawn("cityfog", 8,10,3, "cityfog_40")
+spawn("cityfog", 6,12,3, "cityfog_41")
+spawn("cityfog", 4,8,1, "cityfog_42")
+spawn("lock", 7,17,3, "lock_2")
+	:setOpenedBy("gear_key")
+	:addConnector("activate", "dungeon_door_ornament_1", "open")
+spawn("cityfog", 10,29,2, "cityfog_43")
+spawn("cityfog", 14,22,3, "cityfog_44")
+spawn("cityfog", 11,18,1, "cityfog_45")
+spawn("script_entity", 22,4,1, "script_entity_4")
+	:setSource("-- you will start here, when escaped from dungeon under the graveyard")
+spawn("blocker", 20,6,2, "blocker_7")
+spawn("spawner", 20,9,0, "spawner_3")
+	:setSpawnedEntity("skeleton_patrol")
+	:setCoolDown(0)
+spawn("spawner", 14,10,0, "spawner_4")
+	:setSpawnedEntity("skeleton_archer_patrol")
+	:setCoolDown(0)
+spawn("blocker", 20,10,0, "blocker_8")
+spawn("blocker", 14,11,0, "blocker_9")
+spawn("spawner", 9,10,3, "spawner_5")
+	:setSpawnedEntity("skeleton_warrior")
+	:setCoolDown(0)
+spawn("spawner", 11,16,3, "spawner_6")
+	:setSpawnedEntity("skeleton_patrol")
+	:setCoolDown(0)
+spawn("spawner", 21,15,0, "spawner_7")
+	:setSpawnedEntity("skeleton_patrol")
+	:setCoolDown(0)
+spawn("spawner", 14,20,0, "spawner_8")
+	:setSpawnedEntity("skeleton_patrol")
+	:setCoolDown(0)
+spawn("spawner", 19,21,1, "spawner_9")
+	:setSpawnedEntity("skeleton_archer")
+	:setCoolDown(0)
+spawn("spawner", 24,23,0, "spawner_10")
+	:setSpawnedEntity("skeleton_warrior")
+	:setCoolDown(0)
+spawn("spawner", 14,24,1, "spawner_11")
+	:setSpawnedEntity("skeleton_archer")
+	:setCoolDown(0)
+spawn("blocker", 12,16,0, "blocker_10")
+spawn("blocker", 21,16,1, "blocker_11")
+spawn("blocker", 24,24,0, "blocker_12")
+spawn("blocker", 18,21,0, "blocker_13")
+spawn("blocker", 14,21,1, "blocker_14")
+spawn("blocker", 13,20,2, "blocker_15")
+spawn("blocker", 13,24,2, "blocker_16")
+spawn("blocker", 9,11,0, "blocker_17")
+spawn("spawner", 15,13,0, "spawner_12")
+	:setSpawnedEntity("skeleton_warrior")
+	:setCoolDown(0)
+spawn("spawner", 9,23,2, "spawner_13")
+	:setSpawnedEntity("skeleton_warrior")
+	:setCoolDown(0)
+spawn("dungeon_stairs_down", 3,18,3, "dungeon_stairs_down_1")
+spawn("pressure_plate_hidden", 22,5,1, "pressure_plate_hidden_40")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setActivateOnce(true)
+	:setSilent(true)
+	:addConnector("activate", "spawner_3", "activate")
+	:addConnector("activate", "spawner_5", "activate")
+	:addConnector("activate", "spawner_4", "activate")
+	:addConnector("activate", "spawner_12", "activate")
+	:addConnector("activate", "spawner_7", "activate")
+	:addConnector("activate", "spawner_6", "activate")
+	:addConnector("activate", "spawner_8", "activate")
+	:addConnector("activate", "spawner_9", "activate")
+	:addConnector("activate", "spawner_10", "activate")
+	:addConnector("activate", "spawner_11", "activate")
+	:addConnector("activate", "spawner_13", "activate")
+	:addConnector("activate", "temple_secret_door_1", "open")
+spawn("temple_secret_door", 21,5,1, "temple_secret_door_1")
+spawn("blocker", 10,15,3, "blocker_18")
+spawn("blocker", 18,13,3, "blocker_19")
+spawn("blocker", 24,21,2, "blocker_20")
+spawn("blocker", 21,21,1, "blocker_21")
+spawn("blocker", 15,25,3, "blocker_22")
+spawn("blocker", 16,24,0, "blocker_23")
+spawn("blocker", 14,18,2, "blocker_24")
+spawn("blocker", 14,8,1, "blocker_25")
+spawn("blocker", 19,8,0, "blocker_26")
+spawn("cityfog", 13,26,2, "cityfog_46")
+spawn("cityfog", 16,25,0, "cityfog_47")
+spawn("sx_town_wall", 6,18,0, "sx_town_wall_11")
+spawn("sx_town_wall", 6,18,2, "sx_town_wall_12")
+spawn("teleporter", 10,31,0, "teleporter_4")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(false)
+	:setTriggeredByItem(false)
+	:setTeleportTarget(24,30,0,2)
+	:setInvisible(true)
+	:setSilent(true)
+	:setHideLight(true)
+	:setScreenFlash(false)

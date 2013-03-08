@@ -129,3 +129,86 @@ defineObject{
 	editorIcon = 52,
 }
 
+---------------------------------   TOMBSTONES
+defineObject{
+    name = "ast_tombstone_marble_curved",
+    class = "Decoration",
+    model = "mod_assets/models/ast_tombstone_curved.fbx",
+    placement = "floor",
+    replacesWall = true,
+	editorIcon = 8,
+}
+
+defineObject{
+    name = "ast_tombstone_obsidian_curved",
+    class = "Decoration",
+    model = "mod_assets/models/ast_obsidian_tombstone_curved.fbx",
+    placement = "floor",
+    replacesWall = true,
+	editorIcon = 8,
+}
+
+
+defineObject{
+    name = "ast_tombstone_marble_square",
+    class = "Decoration",
+    model = "mod_assets/models/ast_tombstone_square.fbx",
+    placement = "floor",
+    replacesWall = true,
+	editorIcon = 8,
+}
+
+defineObject{
+    name = "ast_tombstone_obsidian_square",
+    class = "Decoration",
+    model = "mod_assets/models/ast_obsidian_tombstone_square.fbx",
+    placement = "floor",
+    replacesWall = true,
+	editorIcon = 8,
+}
+
+defineObject{
+    name = "ast_tombstone_broken",
+    class = "Decoration",
+    model = "mod_assets/models/ast_tombstone_broken.fbx",
+    placement = "floor",
+    replacesWall = true,
+	editorIcon = 8,
+}
+
+defineObject{
+	name = "ast_rusty_cage",
+	class = "Blockage",
+	model = "mod_assets/models/ast_rusty_cage.fbx",
+        brokenModel = "assets/models/env/barrel_crate_block_broken.fbx",
+	placement = "floor",
+	editorIcon = 100,
+	hitSound = "impact_blade",
+}
+-----------------------
+defineObject{
+	name = "cityfog",
+	class = "LightSource",
+	lightPosition = vec(0, 0, 0),
+	lightRange = 0,
+	lightColor = vec(2.55, 2.55, 2.55),
+	brightness = 12,
+	castShadow = true,
+	particleSystem = "cityfog",
+	placement = "floor",
+	editorIcon = 88,
+}
+
+defineObject{
+	name = "msy_town_wall_quartersize",
+	class = "Door",
+	model = "mod_assets/models/msy_town_wall_quartersize.fbx",
+	openSound = "wall_sliding",
+	closeSound = "wall_sliding",
+	lockSound = "wall_sliding_lock",
+	openVelocity = 0.5,
+	closeVelocity = -0.5,
+	secretDoor = true,
+	placement = "wall",
+	editorIcon = 120,
+}

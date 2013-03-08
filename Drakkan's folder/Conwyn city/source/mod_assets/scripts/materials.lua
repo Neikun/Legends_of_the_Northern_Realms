@@ -597,7 +597,137 @@ defineMaterial{
 
 
 
+----------- TOMBSTON
 
+defineMaterial{
+
+	name = "ast_marble_tombstone",
+
+	diffuseMap = "mod_assets/textures/marble_tombstone_dif.tga",
+
+	specularMap = "mod_assets/textures/marble_tombstone_spec.tga",
+
+        normalMap = "assets/textures/env/marble_generic_normal.tga",
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = 35,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+
+	name = "ast_marble_tombstone_chipped",
+
+	diffuseMap = "mod_assets/textures/marble_tombstone_chipped_dif.tga",
+
+	specularMap = "mod_assets/textures/marble_tombstone_spec.tga",
+
+        normalMap = "assets/textures/env/marble_generic_normal.tga",
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = 35,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+
+	name = "ast_obsidian_tombstone",
+
+	diffuseMap = "mod_assets/textures/obsidian_tombstone_dif.tga",
+
+	specularMap = "mod_assets/textures/obsidian_tombstone_spec.tga",
+
+        normalMap = "assets/textures/env/marble_generic_normal.tga",
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = 35,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+
+	name = "ast_obsidian_tombstone_chipped",
+
+	diffuseMap = "mod_assets/textures/obsidian_tombstone_chipped_dif.tga",
+
+	specularMap = "mod_assets/textures/obsidian_tombstone_spec.tga",
+
+        normalMap = "assets/textures/env/marble_generic_normal.tga",
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = 35,
+
+	depthBias = 0,
+
+}
+
+defineMaterial{
+
+	name = "corrupt_metal_door",
+
+	diffuseMap = "mod_assets/textures/corrupt_metal_door_dif.tga",
+
+	specularMap = "mod_assets/textures/corrupt_metal_door_spec.tga",
+
+	normalMap = "assets/textures/env/metal_door_normal.tga",
+
+	doubleSided = false,
+
+	lighting = true,
+
+	alphaTest = false,
+
+	blendMode = "Opaque",
+
+	textureAddressMode = "Wrap",
+
+	glossiness = 70,
+
+	depthBias = 0,
+
+}
 
 
 
