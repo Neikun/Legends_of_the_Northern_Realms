@@ -13,7 +13,7 @@ cloneObject{
 	gfxAtlas = "mod_assets/textures/chitin_items.tga",
 	gfxIndex = 0,
 	protection = 9,
-	weight = 3,
+	weight = 1.5,
 	description = "These modified gloves have heavy bug carcasses on them. Ew.",
 
 }
