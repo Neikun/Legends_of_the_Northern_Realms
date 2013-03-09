@@ -451,7 +451,7 @@ defineObject{
 defineObject{
 	name = "scroll_dark_night",
 	class = "Item",
-	uiName = "Scroll of Night Ambiance",
+	uiName = "Scroll of Dark Night Ambiance",
 	model = "assets/models/items/scroll.fbx",
 	gfxIndex = 112,
 	scroll = true,
