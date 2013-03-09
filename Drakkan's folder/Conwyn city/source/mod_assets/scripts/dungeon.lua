@@ -753,6 +753,7 @@ skyLightId = nil\
 skyAmbiances = {}\
 skyClouds = {}\
 starsObjects = {}\
+weatherObjects = {}\
 \
 -- ***************************************************************************************\
 --                                       Party onMove hook\
@@ -782,6 +783,10 @@ function onMove(dir)\
 \9end\
 \
 \9moveSkyLight(dir)\
+\
+\9if getAmbiance().weather then\
+\9\9moveWeather(dir)\
+\9end\
 end\
 \
 \
@@ -995,6 +1000,79 @@ function destroyStars()\
 \
 end\
 \
+\
+-- ***************************************************************************************\
+--                                       Weather functions\
+-- ***************************************************************************************\
+\
+\
+function createWeather()\
+\
+\9for x = 0, 6 do\
+\
+\9\9for y = 0,6 do\
+\
+\9\9\9local weatherId = \"weather.\"..x..\".\"..y\
+\
+\9\9\9spawn(\"fx\", party.level, party.x + x - 3, party.y + y - 3, 0, weatherId)\
+\
+\9\9\9local weather = findEntity(weatherId)\
+\9\9\9weather:setParticleSystem(getAmbiance().weather)\
+\9\9\9weather:setLight(0, 0, 0, 1, 0, 1000000, false)\
+\9\9\9weather:translate(0,2,0)\
+\
+\9\9\9table.insert(weatherObjects, weatherId)\
+\
+\9\9end\
+\
+\9end\
+\
+end\
+\
+\
+function destroyWeather()\
+\
+\9for _, weatherId in ipairs(weatherObjects) do\
+\
+\9\9local weather = findEntity(weatherId)\
+\9\9if weather then\
+\9\9\9weather:destroy()\
+\9\9end\
+\
+\9end\
+\
+\9weatherObjects = {}\
+\
+end\
+\
+function moveWeather(dir)\
+\
+\9local dx, dy = getForward(dir)\
+\9local interval = 0.3\
+\
+\9dx = dx * interval\
+\9dy = dy * interval\
+\
+\9local fxTimer = timers:create(randomTimerId(\"weatherTimer\"))\
+\9fxTimer:setTimerInterval(0.05)\
+\9fxTimer:setTickLimit(10, true)\
+\9fxTimer:addCallback(\
+\9\9function(self, dx, dy)\
+\9\9\9for _, weatherId in ipairs(weatherObjects) do\
+\
+\9\9\9\9local weather = findEntity(weatherId)\
+\9\9\9\9if weather then\
+\9\9\9\9\9weather:translate(dx,0,-dy)\
+\9\9\9\9end\
+\
+\9\9\9end\
+\9\9end,\
+\9\9{dx, dy}\
+\9)\
+\9fxTimer:activate()\
+\
+end\
+\
 -- ***************************************************************************************\
 --                                       Ambiance functions\
 -- ***************************************************************************************\
@@ -1024,6 +1102,9 @@ function setAmbiance(newAmbiance)\
 \
 \9destroyStars()\
 \9if getAmbiance().stars then createStars() end\
+\
+\9destroyWeather()\
+\9if getAmbiance().weather then createWeather() end\
 \
 end\
 \
@@ -1185,14 +1266,26 @@ defineAmbiance{\
 \9cloudsFrequence = 5,\
 }\
 \
-setAmbiance(\"dark_night\")\
+defineAmbiance{\
+\9name = \"rainy_day\",\
+\9skySphere = \"dx_skysphere_grey\",\
+\9skyLightColor = {0.9, 0.9, 0.9},\
+\9skyLightBrightness = 8,\
+\9skyLightParticleSystem = \"dx_sun_clouds\",\
+\9weather = \"dx_rain\",\
+\9clouds = \"dx_clouds_grey\",\
+\9cloudsFrequence = 9,\
+}\
+\
+setAmbiance(\"rainy_day\")\
 \
 \
 -- ***************************************************************************************\
 --                                       Test scrolls\
 -- ***************************************************************************************\
 \
-party:getChampion(1):insertItem(29, spawn(\"scroll_day\"))\
+party:getChampion(1):insertItem(28, spawn(\"scroll_day\"))\
+party:getChampion(1):insertItem(29, spawn(\"scroll_rainy_day\"))\
 party:getChampion(1):insertItem(30, spawn(\"scroll_night\"))\
 party:getChampion(1):insertItem(31, spawn(\"scroll_dark_night\"))")
 spawn("script_entity", 4,11,2, "script_entity_31")
@@ -3951,7 +4044,7 @@ spawn("sx_town_table_01", 9,22,3, "sx_town_table_01_7")
 spawn("grim_bed", 8,22,2, "grim_bed_2")
 spawn("sx_town_lantern", 9,22,0, "sx_town_lantern_24")
 spawn("sx_town_lantern_fire", 9,22,0, "sx_town_lantern_fire_24")
-spawn("starting_location", 6,31,0, "starting_location_1")
+spawn("starting_location", 16,18,0, "starting_location_1")
 
 --- level 3 ---
 

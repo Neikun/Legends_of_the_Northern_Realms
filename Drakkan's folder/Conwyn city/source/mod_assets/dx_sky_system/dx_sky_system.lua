@@ -16,6 +16,19 @@ defineMaterial{
 }
 
 defineMaterial{
+   name = "dx_skysphere_grey",
+   diffuseMap = "mod_assets/dx_sky_system/dx_skysphere_grey.tga",
+   specularMap = "assets/textures/common/black.tga",
+   doubleSided = false,
+   lighting = false,
+   alphaTest = false,
+   blendMode = "Additive",
+   textureAddressMode = "Clamp",
+   glossiness = 0,
+   depthBias = 2,
+}
+
+defineMaterial{
    name = "dx_clouds_01",
    diffuseMap = "mod_assets/dx_sky_system/dx_clouds_01.tga",
    specularMap = "assets/textures/common/black.tga",
@@ -109,21 +122,20 @@ defineObject{
 }
 
 defineObject{
-   name = "dx_clouds_01",
+   name = "dx_skysphere_grey",
    class = "Item",
-   model = "mod_assets/dx_sky_system/dx_clouds_01.fbx",
+   model = "mod_assets/dx_sky_system/dx_skysphere_grey.fbx",
    gfxIndex = 1,
    uiName = "SkySphere",
    castShadow = false,
    weight = 0.1,
-   projectileRotationSpeed = 0.005,
-   projectileRotationY = 1,
+   projectileRotationSpeed = 0,
 }
 
 defineObject{
-   name = "dx_clouds_02",
+   name = "dx_clouds_01",
    class = "Item",
-   model = "mod_assets/dx_sky_system/dx_clouds_02.fbx",
+   model = "mod_assets/dx_sky_system/dx_clouds_01.fbx",
    gfxIndex = 1,
    uiName = "SkySphere",
    castShadow = false,
@@ -184,7 +196,7 @@ defineParticleSystem{
 			velocity = {0,0},
 			texture = "assets/textures/particles/glow.tga",
 			lifetime = {100000,100000},
-			color0 = {3,3,3},
+			color0 = {0.8,0.8,0.8},
 			opacity = 1.0,
 			fadeIn = 1,
 			fadeOut = 4,
@@ -230,7 +242,7 @@ defineParticleSystem{
 			velocity = {0,0},
 			texture = "mod_assets/dx_sky_system/star_blue.tga",
 			lifetime = {100000,100000},
-			color0 = {1,1,1},
+			color0 = {0.3,0.3,1},
 			opacity = 1.0,
 			fadeIn = 1,
 			fadeOut = 4,
@@ -253,7 +265,7 @@ defineParticleSystem{
 			velocity = {0,0},
 			texture = "mod_assets/dx_sky_system/star_pink.tga",
 			lifetime = {100000,100000},
-			color0 = {1,1,1},
+			color0 = {0.7,0,0.7},
 			opacity = 1.0,
 			fadeIn = 1,
 			fadeOut = 4,
@@ -395,6 +407,96 @@ defineParticleSystem{
 			rotationSpeed = 0,
 			blendMode = "Additive",
 			depthBias = 0.01
+		},
+	}
+}
+
+defineParticleSystem{
+	name = "dx_rain",
+	emitters = {
+		-- rain
+		{
+		emissionRate = 150,
+		emissionTime = 0,
+		spawnBurst = false,
+		maxParticles = 500,
+		boxMin = {-1.3,5,-1.3},
+		boxMax = {1.3,5,1.3},
+		objectSpace = true,
+		sprayAngle = {0,10},
+		velocity = {0,0},
+		texture = "assets/textures/particles/glitter_silver.tga",
+		lifetime = {1000000, 1000000},
+		colorAnimation = false,
+		color0 = {1, 1, 1},
+		opacity = 0.25,
+		fadeIn = 0.4,
+		fadeOut = 4.0,
+		size = {0.05, 0.1},
+		gravity = {0,-5,0},
+		airResistance = 2,
+		rotationSpeed = 1,
+		blendMode = "Additive",
+		},
+		
+		-- fog
+		{
+		emissionRate = 10,
+		emissionTime = 0,
+		spawnBurst = false,
+		maxParticles = 20,
+		boxMin = {-1.3,0,-1.3},
+		boxMax = {1.3,5,1.3},
+		objectSpace = true,
+		sprayAngle = {0,10},
+		velocity = {0,0},
+		texture = "assets/textures/particles/fog.tga",
+		lifetime = {1000000, 1000000},
+		colorAnimation = false,
+		color0 = {1, 1, 1},
+		opacity = 0.02,
+		fadeIn = 0.4,
+		fadeOut = 4.0,
+		size = {7, 7},
+		gravity = {0,-1,0},
+		airResistance = 2,
+		rotationSpeed = 1,
+		blendMode = "Additive",
+		}
+	}
+}
+
+defineParticleSystem{
+	name = "dx_rain_2",
+	emitters = {
+		-- flames
+		{
+			emissionRate = 50,
+			emissionTime = 0,
+			maxParticles = 100,
+			boxMin = {-0.03, -0.03, 0.03},
+			boxMax = { 0.03, 0.03,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.2, 1},
+			texture = "mod_assets/dx_sky_system/dx_rain.tga",
+			frameRate = 35,
+			frameSize = 64,
+			frameCount = 16,
+			lifetime = {0.25, 0.85},
+			colorAnimation = true,
+			color0 = {2, 2, 2},
+			color1 = {1.0, 1.0, 1.0},
+			color2 = {1.0, 0.5, 0.25},
+			color3 = {1.0, 0.3, 0.1},
+			opacity = 1,
+			fadeIn = 0.15,
+			fadeOut = 0.3,
+			size = {1, 1},
+			gravity = {0,0,0},
+			airResistance = 1.0,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = -0.002,
 		},
 	}
 }
