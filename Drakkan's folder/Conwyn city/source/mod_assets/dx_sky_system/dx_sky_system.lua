@@ -472,7 +472,7 @@ defineParticleSystem{
 		-- droplets
 		{
 			emissionRate = 100,
-			emissionTime = 99999999999,
+			emissionTime = 0,
 			maxParticles = 230,
 			boxMin = {-1, -1.5, 1},
 			boxMax = { 0.5, 3,  -0.5},
@@ -496,6 +496,7 @@ defineParticleSystem{
 			gravity = {0,-5,0},
 			airResistance = 3.0,
 			rotationSpeed = -1000000000,
+			spawnBurst = false,
 			blendMode = "Additive",
 			depthBias = -0.002,
 		},
