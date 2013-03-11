@@ -90,7 +90,7 @@ defineMaterial{
    blendMode = "Opaque",
    textureAddressMode = "Clamp",
    glossiness = 10,
-   depthBias = 1,
+   depthBias = 0,
 }
    
 
@@ -169,7 +169,7 @@ defineObject{
 }
 
 defineObject{
-	name = "dx_skyblocker",
+	name = "dx_skyblocker_black",
 	class = "Decoration",
 	model = "mod_assets/dx_sky_system/dx_skyblocker_black.fbx",
 	placement = "wall",
@@ -473,7 +473,7 @@ defineParticleSystem{
 		{
 			emissionRate = 100,
 			emissionTime = 0,
-			maxParticles = 230,
+			maxParticles = 280,
 			boxMin = {-1, -1.5, 1},
 			boxMax = { 0.5, 3,  -0.5},
 			sprayAngle = {90,-180},
@@ -489,10 +489,10 @@ defineParticleSystem{
 			color1 = {1.0, 1.0, 1.0},
 			color2 = {1, 1, 1},
 			color3 = {0.9, 0.9, 1.0923},
-			opacity = 1,
+			opacity = 0.5,
 			fadeIn = 0.15,
 			fadeOut = 0.3,
-			size = {0.5, 0.8},
+			size = {0.4, 0.7},
 			gravity = {0,-5,0},
 			airResistance = 3.0,
 			rotationSpeed = -1000000000,
