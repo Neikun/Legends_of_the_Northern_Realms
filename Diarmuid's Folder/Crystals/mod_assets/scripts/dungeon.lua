@@ -42,7 +42,18 @@ mapDesc([[
 spawn("torch_holder", 11,14,0, "torch_holder_1")
 	:addTorch()
 spawn("script_entity", 8,12,0, "crystalHandler")
-	:setSource("crystalObjects = {}\
+	:setSource("--[[\
+\
+#####    Crystal Handler Script, Version 1.0    #####\
+#####  Scripting & Design by Diarmuid & Neikun  #####\
+\
+Setup instructions:\
+Copy the contents of this file in your dungeon a script entity named crystalHandler.\
+\
+]]\
+\
+\
+crystalObjects = {}\
 \
 -- *****************************************************************************************\
 --                                    CRYSTAL FUNCTIONS\
@@ -60,87 +71,9 @@ function createCrystals()\
 \9\9\9\9\9\
 \9\9\9\9\9if string.find(i.name, \"dx_healing_crystal_object_\") then\
 \9\9\9\9\9\9\
-\9\9\9\9\9\9-- Create crystal lua object and IDs\
-\9\9\9\9\9\9crystalObjects[i.id] = {}\
-\9\9\9\9\9\9local crystal = crystalObjects[i.id]\
-\9\9\9\9\9\9if string.find(i.name, \"dx_healing_crystal_object_glass_\") then\
-\9\9\9\9\9\9\9crystal.glass = \"glass_\"\
-\9\9\9\9\9\9\9crystal.isGlass = true\
-\9\9\9\9\9\9\9crystal.color = string.sub(i.name, 33)\
-\9\9\9\9\9\9else\
-\9\9\9\9\9\9\9crystal.glass = \"\"\
-\9\9\9\9\9\9\9crystal.isGlass = false\
-\9\9\9\9\9\9\9crystal.color = string.sub(i.name, 27)\
-\9\9\9\9\9\9end\
-\9\9\9\9\9\9crystal.id = i.id\
-\9\9\9\9\9\9crystal.activated = crystal.id..\"_activated\"\
-\9\9\9\9\9\9crystal.deactivated = crystal.id..\"_deactivated\"\
-\9\9\9\9\9\9crystal.lights = {}\
-\9\9\9\9\9\9crystal.dimLights = {}\
-\9\9\9\9\9\9crystal.gratings = {}\
-\9\9\9\9\9\9for j = 0, 3 do\
-\9\9\9\9\9\9\9crystal.lights[j] = crystal.id..\"_light_\"..j\
-\9\9\9\9\9\9\9crystal.dimLights[j] = crystal.id..\"_dimLight_\"..j\
-\9\9\9\9\9\9\9crystal.gratings[j] = crystal.id..\"_grating_\"..j\
-\9\9\9\9\9\9end\
-\9\9\9\9\9\9crystal.topLight = crystal.id..\"_topLight\"\
-\9\9\9\9\9\9crystal.bottomLight = crystal.id..\"_bottomLight\"\
-\9\9\9\9\9\9crystal.particleSystem = crystal.id..\"_particleSystem\"\
-\9\9\9\9\9\9crystal.altar = crystal.id..\"_altar\"\
-\9\9\9\9\9\9crystal.timer = crystal.id..\"_timer\"\
-\9\9\9\9\9\9crystal.fakeItem = crystal.id..\"_fakeItem\"\
-\9\9\9\9\9\9crystal.animTimerActivated = crystal.id..\"_animTimer1\"\
-\9\9\9\9\9\9crystal.animTimerDeactivated = crystal.id..\"_animTimer2\"\
+\9\9\9\9\9\9local color = string.sub(i.name, 27)\
+\9\9\9\9\9\9spawnCrystal(color, level, x, y, i.id)\
 \9\9\9\9\9\9\
-\9\9\9\9\9\9-- Set it to active\
-\9\9\9\9\9\9crystal.active = true\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn activated state\
-\9\9\9\9\9\9spawn(\"_dx_healing_crystal_\"..crystal.glass..crystal.color, level, x, y, 0, crystal.activated)\
-\9\9\9\9\9\9\9:addTrapDoor()\
-\9\9\9\9\9\9\9:setPitState(\"open\")\
-\9\9\9\9\9\9\9:close()\
-\9\9\9\9\9\9\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Play crystal sounds\
-\9\9\9\9\9\9for j = 0, 3 do\
-\9\9\9\9\9\9\9local dx, dy = getForward(j)\
-\9\9\9\9\9\9\9playSoundAt(\"crystal_ambient\", level, x+dx, y+dy)\
-\9\9\9\9\9\9end\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn shader projectile and register ID\
-\9\9\9\9\9\9crystal.shader = shootProjectileWithId(\"_dx_healing_crystal_shader_\"..crystal.color,level,x,y,0,0,0,0,0,14,0,0,party,true)\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn lights & particles lightsources\
-\9\9\9\9\9\9for j = 0,3 do\
-\9\9\9\9\9\9\9spawn(\"_dx_healing_crystal_light_\"..crystal.color, level, x, y, j, crystal.lights[j])\
-\9\9\9\9\9\9\9spawn(\"_dx_healing_crystal_light_deactivated_\"..crystal.color, level, x, y, j, crystal.dimLights[j]):deactivate()\
-\9\9\9\9\9\9end\
-\9\9\9\9\9\9spawn(\"_dx_healing_crystal_top_light_\"..crystal.color, level, x, y, 0, crystal.topLight)\
-\9\9\9\9\9\9spawn(\"_dx_healing_crystal_bottom_light_\"..crystal.color, level, x, y, 0, crystal.bottomLight)\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9spawn(\"_dx_healing_crystal_particleSystem_\"..crystal.color, level, x, y, 0, crystal.particleSystem)\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn altar and fake item\
-\9\9\9\9\9\9spawn(\"_dx_healing_crystal_altar\", level, x, y, 0, crystal.altar)\
-\9\9\9\9\9\9\9:addItem(spawn(\"_dx_healing_crystal_fake_item\",nil,nil,nil,nil,crystal.fakeItem))\
-\9\9\9\9\9\9\9:addConnector(\"deactivate\", \"crystalHandler\", \"useCrystal\")\
-\9\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn crystal timers\
-\9\9\9\9\9\9spawn(\"timer\", level, x, y, 0, crystal.timer)\
-\9\9\9\9\9\9\9:setTimerInterval(120)\
-\9\9\9\9\9\9\9:addConnector(\"activate\", \"crystalHandler\", \"reactivateCrystal\")\
-\9\9\9\9\9\9spawn(\"timer\", level, x, y, 0, crystal.animTimerActivated)\
-\9\9\9\9\9\9\9:setTimerInterval(14)\
-\9\9\9\9\9\9\9:addConnector(\"activate\", \"crystalHandler\", \"crystalAnimation\")\
-\9\9\9\9\9\9\9:activate()\
-\9\9\9\9\9\9spawn(\"timer\", level, x, y, 0, crystal.animTimerDeactivated)\
-\9\9\9\9\9\9\9:setTimerInterval(40)\
-\9\9\9\9\9\9\9:addConnector(\"activate\", \"crystalHandler\", \"crystalAnimation\")\
-\9\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn gratings\
-\9\9\9\9\9\9for j = 0, 3 do\
-\9\9\9\9\9\9\9spawn(\"_dx_healing_crystal_grating\", level, x, y, j, crystal.gratings[j])\
-\9\9\9\9\9\9end\
 \9\9\9\9\9end\
 \9\9\9\9\
 \9\9\9\9end\
@@ -149,6 +82,120 @@ function createCrystals()\
 \9\9\
 \9\9end\
 \9\
+\9end\
+\9\
+end\
+\
+\
+function spawnCrystal(color, level, x, y, id)\
+\9\
+\9-- Create crystal lua object and IDs\
+\9crystalObjects[id] = {}\
+\9local crystal = crystalObjects[id]\
+\9crystal.color = color\
+\9crystal.id = id\
+\9crystal.level = level\
+\9crystal.x = x\
+\9crystal.y = y\
+\9crystal.activated = crystal.id..\"_activated\"\
+\9crystal.deactivated = crystal.id..\"_deactivated\"\
+\9crystal.lights = {}\
+\9crystal.dimLights = {}\
+\9crystal.gratings = {}\
+\9for j = 0, 3 do\
+\9\9crystal.lights[j] = crystal.id..\"_light_\"..j\
+\9\9crystal.dimLights[j] = crystal.id..\"_dimLight_\"..j\
+\9\9crystal.gratings[j] = crystal.id..\"_grating_\"..j\
+\9end\
+\9crystal.topLight = crystal.id..\"_topLight\"\
+\9crystal.bottomLight = crystal.id..\"_bottomLight\"\
+\9crystal.particleSystem = crystal.id..\"_particleSystem\"\
+\9crystal.altar = crystal.id..\"_altar\"\
+\9crystal.timer = crystal.id..\"_timer\"\
+\9crystal.fakeItem = crystal.id..\"_fakeItem\"\
+\9crystal.animTimerActivated = crystal.id..\"_animTimer1\"\
+\9crystal.animTimerDeactivated = crystal.id..\"_animTimer2\"\
+\9\
+\9-- Set it to active\
+\9crystal.active = true\
+\9\
+\9-- Spawn activated state\
+\9spawn(\"_dx_healing_crystal_\"..crystal.color, level, x, y, 0, crystal.activated)\
+\9\9:addTrapDoor()\
+\9\9:setPitState(\"open\")\
+\9\9:close()\
+\9\9\9\9\9\9\9\
+\9-- Play crystal sounds\
+\9for j = 0, 3 do\
+\9\9local dx, dy = getForward(j)\
+\9\9playSoundAt(\"crystal_ambient\", level, x+dx, y+dy)\
+\9end\
+\9\
+\9-- Spawn shader projectile and register ID\
+\9crystal.shader = shootProjectileWithId(\"_dx_healing_crystal_shader_\"..crystal.color,level,x,y,0,0,0,0,0,14,0,0,party,true)\
+\9\
+\9-- Spawn lights & particles lightsources\
+\9for j = 0,3 do\
+\9\9spawn(\"_dx_healing_crystal_light_\"..crystal.color, level, x, y, j, crystal.lights[j])\
+\9\9spawn(\"_dx_healing_crystal_light_deactivated_\"..crystal.color, level, x, y, j, crystal.dimLights[j]):deactivate()\
+\9end\
+\9spawn(\"_dx_healing_crystal_top_light_\"..crystal.color, level, x, y, 0, crystal.topLight)\
+\9spawn(\"_dx_healing_crystal_bottom_light_\"..crystal.color, level, x, y, 0, crystal.bottomLight)\
+\9\
+\9spawn(\"_dx_healing_crystal_particleSystem_\"..crystal.color, level, x, y, 0, crystal.particleSystem)\
+\9\
+\9-- Spawn altar and fake item\
+\9spawn(\"_dx_healing_crystal_altar\", level, x, y, 0, crystal.altar)\
+\9\9:addItem(spawn(\"_dx_healing_crystal_fake_item\",nil,nil,nil,nil,crystal.fakeItem))\
+\9\9:addConnector(\"deactivate\", \"crystalHandler\", \"useCrystal\")\
+\9\9\
+\9-- Spawn crystal timers\
+\9spawn(\"timer\", level, x, y, 0, crystal.timer)\
+\9\9:setTimerInterval(120)\
+\9\9:addConnector(\"activate\", \"crystalHandler\", \"reactivateCrystal\")\
+\9spawn(\"timer\", level, x, y, 0, crystal.animTimerActivated)\
+\9\9:setTimerInterval(14)\
+\9\9:addConnector(\"activate\", \"crystalHandler\", \"crystalAnimation\")\
+\9\9:activate()\
+\9spawn(\"timer\", level, x, y, 0, crystal.animTimerDeactivated)\
+\9\9:setTimerInterval(40)\
+\9\9:addConnector(\"activate\", \"crystalHandler\", \"crystalAnimation\")\
+\9\9\
+\9-- Spawn gratings\
+\9for j = 0, 3 do\
+\9\9spawn(\"_dx_healing_crystal_grating\", level, x, y, j, crystal.gratings[j])\
+\9end\
+\9\
+end\
+\
+function destroyCrystal(id)\
+\9\
+\9if crystalObjects[id] then\
+\9\
+\9\9local crystal = crystalObjects[id]\
+\9\9\
+\9\9if crystal.active then\
+\9\9\9findEntity(crystal.activated):destroy()\
+\9\9\9findEntity(crystal.shader):destroy()\
+\9\9else\
+\9\9\9findEntity(crystal.deactivated):destroy()\
+\9\9end\9\9\
+\9\9for i = 0,3 do\
+\9\9\9findEntity(crystal.lights[i]):destroy()\
+\9\9\9findEntity(crystal.dimLights[i]):destroy()\
+\9\9\9findEntity(crystal.gratings[i]):destroy()\
+\9\9end\
+\9\9findEntity(crystal.topLight):destroy()\
+\9\9findEntity(crystal.bottomLight):destroy()\
+\9\9findEntity(crystal.particleSystem):destroy()\
+\9\9findEntity(crystal.altar):destroy()\
+\9\9findEntity(crystal.fakeItem):destroy()\
+\9\9findEntity(crystal.timer):destroy()\
+\9\9findEntity(crystal.animTimerActivated):destroy()\
+\9\9findEntity(crystal.animTimerDeactivated):destroy()\
+\9\9\
+\9\9crystal = nil\
+\9\9\
 \9end\
 \9\
 end\
@@ -177,7 +224,7 @@ function crystalAnimation(timer)\
 \9\9\9findEntity(crystal.deactivated):destroy()\
 \9\9\9\
 \9\9\9-- Spawn deactivated state\
-\9\9\9spawn(\"_dx_healing_crystal_\"..crystal.glass..crystal.color, level, x, y, 0, crystal.activated)\
+\9\9\9spawn(\"_dx_healing_crystal_\"..crystal.color, level, x, y, 0, crystal.activated)\
 \9\9\9\9:addTrapDoor()\
 \9\9\9\9:setPitState(\"open\")\
 \9\9\9\9:close()\
@@ -194,7 +241,7 @@ function crystalAnimation(timer)\
 \9\9\9findEntity(crystal.activated):destroy()\
 \9\9\9\
 \9\9\9-- Spawn deactivated state\
-\9\9\9spawn(\"_dx_healing_crystal_deactivated_\"..crystal.glass..crystal.color, level, x, y, 0, crystal.deactivated)\
+\9\9\9spawn(\"_dx_healing_crystal_deactivated_\"..crystal.color, level, x, y, 0, crystal.deactivated)\
 \9\9\9\9:addTrapDoor()\
 \9\9\9\9:setPitState(\"open\")\
 \9\9\9\9:close()\
@@ -353,13 +400,7 @@ function onCrystalClick(crystal)\
 \9\9\
 \9end\
 \
-\9if crystal.color == \"red\" and crystal.glass then\
-\9\
-\9\9party:heal()\
-\9\9\
-\9end\
-\9\
-\9if crystal.color == \"red\" and not(crystal.glass) then\
+\9if crystal.color == \"red\" then\
 \9\
 \9\9party:heal()\
 \9\9\
@@ -376,13 +417,25 @@ function onCrystalClick(crystal)\
 \9\9party:heal()\
 \9\9\
 \9end\9\
+\9\
+\9if crystal.color == \"yellow\" then\
+\9\
+\9\9party:heal()\
+\9\9\
+\9end\9\
+\9\
+\9if crystal.color == \"white\" then\
+\9\
+\9\9party:heal()\
+\9\9\
+\9end\9\
 end\
 \
 ")
 spawn("healing_crystal", 16,18,0, "healing_crystal_1")
-spawn("dx_healing_crystal_object_green", 16,16,0, "dx_healing_crystal_object_green_1")
+spawn("dx_healing_crystal_object_green", 18,23,0, "dx_healing_crystal_object_green_1")
 	:setSource("")
-spawn("dx_healing_crystal_object_pink", 16,14,3, "dx_healing_crystal_object_pink_1")
+spawn("dx_healing_crystal_object_pink", 18,25,3, "dx_healing_crystal_object_pink_1")
 	:setSource("")
 spawn("dx_healing_crystal_object_red", 16,20,3, "dx_healing_crystal_object_red_1")
 	:setSource("")
@@ -391,3 +444,18 @@ spawn("dx_healing_crystal_object_black", 16,22,2, "dx_healing_crystal_object_bla
 spawn("dx_healing_crystal_object_orange", 16,24,2, "dx_healing_crystal_object_orange_1")
 	:setSource("")
 spawn("starting_location", 14,23,0, "starting_location")
+spawn("dx_healing_crystal_object_white", 17,21,2, "dx_healing_crystal_object_white_1")
+	:setSource("")
+spawn("dx_healing_crystal_object_yellow", 17,19,1, "dx_healing_crystal_object_yellow_1")
+	:setSource("")
+spawn("script_entity", 11,19,0, "script_entity_1")
+	:setSource("function testDestroy()\
+\
+\9crystalHandler.destroyCrystal(\"dx_healing_crystal_object_red_1\")\
+\
+end")
+spawn("dungeon_pressure_plate", 14,20,0, "dungeon_pressure_plate_1")
+	:setTriggeredByParty(true)
+	:setTriggeredByMonster(true)
+	:setTriggeredByItem(true)
+	:addConnector("activate", "script_entity_1", "testDestroy")
