@@ -23,31 +23,31 @@ function defineCrystal(defs)
 
 	-- Crystal, activated
 	defineObject{
-		name = "_dx_healing_crystal_"..defs.color,
+		name = "|dx_healing_crystal_"..defs.color,
 		class = "Pit",
 		model = "mod_assets/models/crystals/dx_healing_crystal_floor.fbx",
 		trapDoorModel = "mod_assets/models/crystals/dx_healing_crystal_"..defs.color..".fbx",		
 		openAnim = "assets/animations/env/healing_crystal_spin.fbx",
 		closeAnim = "assets/animations/env/healing_crystal_spin.fbx",
 		placement = "floor",
-		editorIcon = 60,
+		editorIcon = 96,
 	}
 
 	-- Crystal, deactivated
 	defineObject{
-		name = "_dx_healing_crystal_deactivated_"..defs.color,
+		name = "|dx_healing_crystal_deactivated_"..defs.color,
 		class = "Pit",
 		model = "mod_assets/models/crystals/dx_healing_crystal_floor.fbx",
 		trapDoorModel = "mod_assets/models/crystals/dx_healing_crystal_"..defs.color..".fbx",		
 		openAnim = "mod_assets/animations/crystals/healing_crystal_spin_slow.fbx",
 		closeAnim = "mod_assets/animations/crystals/healing_crystal_spin_slow.fbx",
 		placement = "floor",
-		editorIcon = 60,
+		editorIcon = 96,
 	}
 		
 	-- Projectile shader
 	defineObject{
-		name = "_dx_healing_crystal_shader_"..defs.color,
+		name = "|dx_healing_crystal_shader_"..defs.color,
 		class = "Item",
 		model = "mod_assets/models/crystals/dx_healing_crystal_shader_"..defs.color..".fbx",
 		gfxIndex = 1,
@@ -56,6 +56,7 @@ function defineCrystal(defs)
 		projectileRotationSpeed = -0.2,
 		projectileRotationY = 1,
 		fragile = true,
+		editorIcon = 96,
 	}
 
 	-- ***********************************************************************************
@@ -64,7 +65,7 @@ function defineCrystal(defs)
 
 	-- Activated state lightsources
 	defineObject{
-		name = "_dx_healing_crystal_light_"..defs.color,
+		name = "|dx_healing_crystal_light_"..defs.color,
 		class = "LightSource",
 		lightPosition = vec(1, 1.5, 1),
 		lightRange = 6.5,
@@ -73,12 +74,12 @@ function defineCrystal(defs)
 		castShadow = false,
 		flicker = true,
 		placement = "floor",
-		editorIcon = 88,
+		editorIcon = 96,
 	}
 
 	-- Activated state top lightsource
 	defineObject{
-		name = "_dx_healing_crystal_top_light_"..defs.color,
+		name = "|dx_healing_crystal_top_light_"..defs.color,
 		class = "LightSource",
 		lightPosition = vec(0, 3, 0),
 		lightRange = 6.5,
@@ -87,12 +88,12 @@ function defineCrystal(defs)
 		castShadow = false,
 		flicker = true,
 		placement = "floor",
-		editorIcon = 88,
+		editorIcon = 96,
 	}
 	
 	-- Activated state bottom lightsource
 	defineObject{
-		name = "_dx_healing_crystal_bottom_light_"..defs.color,
+		name = "|dx_healing_crystal_bottom_light_"..defs.color,
 		class = "LightSource",
 		lightPosition = vec(0, 0.3, 0),
 		lightRange = 6.5,
@@ -101,12 +102,12 @@ function defineCrystal(defs)
 		castShadow = false,
 		flicker = true,
 		placement = "floor",
-		editorIcon = 88,
+		editorIcon = 96,
 	}
 	
 	-- Dectivated state lightsources
 	defineObject{
-		name = "_dx_healing_crystal_light_deactivated_"..defs.color,
+		name = "|dx_healing_crystal_light_deactivated_"..defs.color,
 		class = "LightSource",
 		lightPosition = vec(1, 1.5, 1),
 		lightRange = 6.5,
@@ -115,12 +116,12 @@ function defineCrystal(defs)
 		castShadow = false,
 		flicker = false,
 		placement = "floor",
-		editorIcon = 88,
+		editorIcon = 96,
 	}
 	
 	-- Particle system lightsource
 	defineObject{
-		name = "_dx_healing_crystal_particleSystem_"..defs.color,
+		name = "|dx_healing_crystal_particleSystem_"..defs.color,
 		class = "LightSource",
 		particleSystem = "dx_healing_crystal_"..defs.color,
 		lightPosition = vec(0, 0, 0),
@@ -130,7 +131,7 @@ function defineCrystal(defs)
 		castShadow = false,
 		flicker = false,
 		placement = "floor",
-		editorIcon = 88,
+		editorIcon = 96,
 	}
 
 	-- ***********************************************************************************
@@ -281,29 +282,31 @@ end
 -- ***********************************************************************************
 
 defineObject{
-	name = "_dx_healing_crystal_altar",
+	name = "|dx_healing_crystal_altar",
 	class = "Altar",
 	model =  "mod_assets/models/crystals/dx_healing_crystal_altar.fbx",
 	anchorPos = vec(0, 0, 0),
 	targetPos = vec(0, 0, 0),
 	targetSize = vec(1.5, 3, 1.5),
 	placement = "floor",
-	editorIcon = 52,
+	editorIcon = 96,
 	onInsertItem = function (self,item)
 		crystalHandler.cancelAltar(self,item)
 	end
 }
 
 cloneObject{
-	name = "_dx_healing_crystal_fake_item",
+	name = "|dx_healing_crystal_fake_item",
 	baseObject = "heavy_shield",
-	model = "mod_assets/models/crystals/dx_healing_crystal_fake_item.fbx",	
+	model = "mod_assets/models/crystals/dx_healing_crystal_fake_item.fbx",
+	editorIcon = 96,	
 }
 
 cloneObject{
-	name = "_dx_healing_crystal_grating",
+	name = "|dx_healing_crystal_grating",
 	baseObject = "dungeon_wall_grating",
-	model = "mod_assets/models/crystals/dx_healing_crystal_grating.fbx",	
+	model = "mod_assets/models/crystals/dx_healing_crystal_grating.fbx",
+	editorIcon = 96,	
 }
 
 defineMaterial{

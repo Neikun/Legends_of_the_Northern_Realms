@@ -81,7 +81,7 @@ function spawnCrystal(color, level, x, y, id)
 	crystal.active = true
 	
 	-- Spawn activated state
-	spawn("_dx_healing_crystal_"..crystal.color, level, x, y, 0, crystal.activated)
+	spawn("|dx_healing_crystal_"..crystal.color, level, x, y, 0, crystal.activated)
 		:addTrapDoor()
 		:setPitState("open")
 		:close()
@@ -93,21 +93,21 @@ function spawnCrystal(color, level, x, y, id)
 	end
 	
 	-- Spawn shader projectile and register ID
-	crystal.shader = shootProjectileWithId("_dx_healing_crystal_shader_"..crystal.color,level,x,y,0,0,0,0,0,14,0,0,party,true)
+	crystal.shader = shootProjectileWithId("|dx_healing_crystal_shader_"..crystal.color,level,x,y,0,0,0,0,0,14,0,0,party,true)
 	
 	-- Spawn lights & particles lightsources
 	for j = 0,3 do
-		spawn("_dx_healing_crystal_light_"..crystal.color, level, x, y, j, crystal.lights[j])
-		spawn("_dx_healing_crystal_light_deactivated_"..crystal.color, level, x, y, j, crystal.dimLights[j]):deactivate()
+		spawn("|dx_healing_crystal_light_"..crystal.color, level, x, y, j, crystal.lights[j])
+		spawn("|dx_healing_crystal_light_deactivated_"..crystal.color, level, x, y, j, crystal.dimLights[j]):deactivate()
 	end
-	spawn("_dx_healing_crystal_top_light_"..crystal.color, level, x, y, 0, crystal.topLight)
-	spawn("_dx_healing_crystal_bottom_light_"..crystal.color, level, x, y, 0, crystal.bottomLight)
+	spawn("|dx_healing_crystal_top_light_"..crystal.color, level, x, y, 0, crystal.topLight)
+	spawn("|dx_healing_crystal_bottom_light_"..crystal.color, level, x, y, 0, crystal.bottomLight)
 	
-	spawn("_dx_healing_crystal_particleSystem_"..crystal.color, level, x, y, 0, crystal.particleSystem)
+	spawn("|dx_healing_crystal_particleSystem_"..crystal.color, level, x, y, 0, crystal.particleSystem)
 	
 	-- Spawn altar and fake item
-	spawn("_dx_healing_crystal_altar", level, x, y, 0, crystal.altar)
-		:addItem(spawn("_dx_healing_crystal_fake_item",nil,nil,nil,nil,crystal.fakeItem))
+	spawn("|dx_healing_crystal_altar", level, x, y, 0, crystal.altar)
+		:addItem(spawn("|dx_healing_crystal_fake_item",nil,nil,nil,nil,crystal.fakeItem))
 		:addConnector("deactivate", "crystalHandler", "useCrystal")
 		
 	-- Spawn crystal timers
@@ -124,7 +124,7 @@ function spawnCrystal(color, level, x, y, id)
 		
 	-- Spawn gratings
 	for j = 0, 3 do
-		spawn("_dx_healing_crystal_grating", level, x, y, j, crystal.gratings[j])
+		spawn("|dx_healing_crystal_grating", level, x, y, j, crystal.gratings[j])
 	end
 	
 end
@@ -185,7 +185,7 @@ function crystalAnimation(timer)
 			findEntity(crystal.deactivated):destroy()
 			
 			-- Spawn deactivated state
-			spawn("_dx_healing_crystal_"..crystal.color, level, x, y, 0, crystal.activated)
+			spawn("|dx_healing_crystal_"..crystal.color, level, x, y, 0, crystal.activated)
 				:addTrapDoor()
 				:setPitState("open")
 				:close()
@@ -202,7 +202,7 @@ function crystalAnimation(timer)
 			findEntity(crystal.activated):destroy()
 			
 			-- Spawn deactivated state
-			spawn("_dx_healing_crystal_deactivated_"..crystal.color, level, x, y, 0, crystal.deactivated)
+			spawn("|dx_healing_crystal_deactivated_"..crystal.color, level, x, y, 0, crystal.deactivated)
 				:addTrapDoor()
 				:setPitState("open")
 				:close()
@@ -230,7 +230,7 @@ function useCrystal(altar)
 	
 	-- Respawn item on altar
 	setMouseItem(nil)
-	altar:addItem(spawn("_dx_healing_crystal_fake_item",nil,nil,nil,nil,crystal.fakeItem))
+	altar:addItem(spawn("|dx_healing_crystal_fake_item",nil,nil,nil,nil,crystal.fakeItem))
 	
 	if crystal.active then
 	
@@ -289,7 +289,7 @@ function reactivateCrystal(timer)
 	findEntity(crystal.particleSystem):activate()
 
 	-- Spawn shader projectile and register ID
-	crystal.shader = shootProjectileWithId("_dx_healing_crystal_shader_"..crystal.color,level,x,y,0,0,0,0,0,14,0,0,party,true)
+	crystal.shader = shootProjectileWithId("|dx_healing_crystal_shader_"..crystal.color,level,x,y,0,0,0,0,0,14,0,0,party,true)
 
 	-- Stop timer
 	findEntity(crystal.id.."_timer"):deactivate()
@@ -303,7 +303,7 @@ function cancelAltar(altar)
 
 	for i in altar:containedItems() do
 	
-		if i.name ~= "_dx_healing_crystal_fake_item" then
+		if i.name ~= "|dx_healing_crystal_fake_item" then
 			setMouseItem(spawn(i.name))
 			i:destroy()
 		end

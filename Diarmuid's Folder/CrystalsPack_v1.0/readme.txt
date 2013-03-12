@@ -4,9 +4,11 @@
 
 [[[[[ SETUP INSTRUCTIONS: ]]]]]
 ----------------------------------------------------------------------------------
-	- copy models, scripts and textures folders to mod_assets
-	- add import "mod_assets/scripts/crystals.lua" to init.lua
-	- copy crystalHandler.lua to a crystalHandler script in the dungeon editor
+	1. copy animations, models, scripts and textures folders to your mod_assets folder
+	2. add the following line at the end of your init.lua:
+		import "mod_assets/scripts/crystals.lua"
+	3. create a script_entity named crystalHandler in the dungeon editor
+	4. copy the contents of crystalHandler.lua into this crystalHandler script entity.
 
 
 [[[[[ THIS PACK CONTAINS: ]]]]]]
@@ -25,9 +27,10 @@
 	Simply put the dx_healing_crystal_object_color object in the editor like a normal crystal. That's it!
 
 	### WARNING ###
-	!!! DO NOT use directly any of the crystal components that start with an underscore: "_dx...". 
-	Make sure you use the ones without underscore "dx_..."!!!
-
+	!!! DO NOT use directly any of the crystal components that start with the | character: "|dx...". 
+	Those objects have a red X icon and appear at the end of the objects list.
+	Make sure you use the ones starting with underscore "dx_..."!!!
+	### WARNING ###
 
 
 2. crystals.lua: 
@@ -37,7 +40,7 @@
 
 	### WARNING ###
 	!!! DO NOT change anything in this file except in the Define Crystals section in the end. !!!
-
+	### WARNING ###
 
 	If you wish to add custom colors, the crystals are defined with the following syntax:
 
@@ -80,6 +83,7 @@
 	### WARNING ###
 	!!! DO NOT set anything in the crystal object table, even if lua allows you to, to not break it. 
 	Treat them as read-only properties. !!!
+	### WARNING ###
 
 	if you return false from onCrystalClick, you will prevent the crystal from deactivating. This can 
 	be used to allow the crystal to be "used" only under certain conditions.
