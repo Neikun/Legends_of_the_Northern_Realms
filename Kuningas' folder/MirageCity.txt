@@ -1,0 +1,36 @@
+
+Grimrock Quest
+
+MIRAGE CITY
+
+Intro, a drunken merchant in a bar:
+
+"I tell you, I saw it! I was completely sober, albeit quite dehydrated, and even if the sun glared into my eye, I saw the towers and walls and domes of an opulent city, right there in the middle of the desert, a place where no city should be!
+
+I hear them nomads tell tales of a city of gold that a great warlock had built by his undead servants a long time ago, a city that phases in and out of existence, only rarely seen by people near death in the desert, and that the bodies of those who die are never found... Not even skeletons!
+
+Now I am not a brave man... But the city did look rich. If there were people who feared not the dead nor the desert, I bet they could pillage a fortune from there..."
+
+The mirage city is an old southern legend, it is said that people who die in the desert are occasionally raised by a powerful, ancient warlock to toil in a city he had built in the desert. The city itself will only appear to those who wander the desert and are near death from exhaustion and thirst. It is believed that great riches and great dangers lie within, and many people have wandered out in search of the fabled city.
+
+Those that return have never entered the gates, though...
+
+The party can find the city if they wander into the desert without provisions (any food items or water in their inventory), and will find themselves in a city populated by undead, rich in loot but scarce in food. The city is ruled by a mighty necromancer, the only living person within (albeit ancient).
+
+The adventure itself is quite straightforward, explore the city and get out alive. The party cannot leave until they have collected sufficient provisions for the trip out. The undead need no food, but the wizard does -- finding them won't be easy.
+
+Killing the wizard is optional, but bears rewards, and ends the tale of the Mirage City for all time.
+
+Maps/floors:
+
+-Streets (main hub)
+-Bazaar? (indoors, loot, inhabited by undead)
+-Palace? (wizards' lair, inhabited by magical beasts and undead)
+-Oasis/park (a food source, inhabited by some beasts and some undead)
+
+Other notes:
+
+-Not a too difficult quest since the party is trapped within if they enter, and can do this accidentally
+-Wizard's palace is an optional, harder area, perhaps only supposed for higher level parties
+-Bazaar and oasis are easier places, oasis being the only required place to visit to escape the city
+-What tileset to use?
