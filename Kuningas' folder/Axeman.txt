@@ -1,0 +1,23 @@
+
+The Axeman's Treasure
+
+There is an old folktale that tells of a terrible highwayman known by the name "Axeman", for his habit of using a common woodcutter's axe as his weapon of choice. Over the years he murdered dozens, if not hundreds of locals and travellers, amassing, the legend says, a great fortune which he kept in a great chest in his hideout.
+
+He was eventually caught, tried and hanged, but he never revealed the location of his treasure. Common belief has it that it is hidden within the mazelike caves of a remote hill deep within the woods -- a most fitting place for a bandit to hide. Many have sought the caverns for that chest, but no-one has found it yet -- and some have not returned. The deep woods are not the safest place to travel, old locals tell that ancient spirits still dwell within, and that the trees watch the travellers with malicious and primordial intelligence. Strange creatures have been seen skulking to and from the caves as well...
+
+But an adventuring party like you should be just fine, well armed and bristling with magic as you are...
+
+
+Objectives:
+
+Very straighforward --
+-Reach the caves through the old woods
+-Search the caves for the Axeman's Treasure
+
+Levels/areas:
+
+-Village (starting point, shops)
+-Woods (Natural enemies, herders, etc, also puzzles)
+-Caves (Hazards, cave-dwelling creatures, spiders, maybe even an ogre or some undead creature, the treasure is well hidden behind some puzzle,)
+
+All in all, a very traditional and straightforward quest. Implements forest and mine tilesets, so should be pretty much doable already. Any feedback or further ideas are appreciated as always.
