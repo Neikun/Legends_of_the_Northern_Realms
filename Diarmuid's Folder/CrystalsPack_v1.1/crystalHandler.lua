@@ -1,7 +1,7 @@
 --[[
 
-#####    Crystal Handler Script, Version 1.0    #####
-#####  Scripting & Design by Diarmuid & Neikun  #####
+#####    Crystal Handler Script, Version 1.1     #####
+#####  Scripting & Design by Diarmuid & Neikun   #####
 
 Setup instructions:
 Copy the contents of this file in your dungeon a script entity named crystalHandler.
@@ -76,9 +76,10 @@ function spawnCrystal(color, level, x, y, id)
 	crystal.fakeItem = crystal.id.."_fakeItem"
 	crystal.animTimerActivated = crystal.id.."_animTimer1"
 	crystal.animTimerDeactivated = crystal.id.."_animTimer2"
+	crystal.humTimer = crystal.id.."_humTimer"
 	
 	-- Set it to active
-	crystal.active = true
+	crystal.isActive = true
 	
 	-- Spawn activated state
 	spawn("|dx_healing_crystal_"..crystal.color, level, x, y, 0, crystal.activated)
@@ -89,7 +90,7 @@ function spawnCrystal(color, level, x, y, id)
 	-- Play crystal sounds
 	for j = 0, 3 do
 		local dx, dy = getForward(j)
-		playSoundAt("crystal_ambient", level, x+dx, y+dy)
+		playSoundAt("crystal_ambient_noloop", level, x+dx, y+dy)
 	end
 	
 	-- Spawn shader projectile and register ID
@@ -121,6 +122,10 @@ function spawnCrystal(color, level, x, y, id)
 	spawn("timer", level, x, y, 0, crystal.animTimerDeactivated)
 		:setTimerInterval(40)
 		:addConnector("activate", "crystalHandler", "crystalAnimation")
+	spawn("timer", level, x, y, 0, crystal.humTimer)
+		:setTimerInterval(5.3)
+		:addConnector("activate", "crystalHandler", "crystalSound")
+		:activate();
 		
 	-- Spawn gratings
 	for j = 0, 3 do
@@ -135,7 +140,7 @@ function destroyCrystal(id)
 	
 		local crystal = crystalObjects[id]
 		
-		if crystal.active then
+		if crystal.isActive then
 			findEntity(crystal.activated):destroy()
 			findEntity(crystal.shader):destroy()
 		else
@@ -161,6 +166,21 @@ function destroyCrystal(id)
 	
 end
 
+function crystalSound(timer)
+
+	-- Retrieve crystal lua object by extracting its id from the timer id
+	local crystal = crystalObjects[string.sub(timer.id,0,-10)]
+	local level, x, y = timer.level, timer.x, timer.y
+	
+	if crystal.isActive == true then
+		-- Play crystal sounds
+		for j = 0, 3 do
+			local dx, dy = getForward(j)
+			playSoundAt("crystal_ambient_noloop", level, x+dx, y+dy)
+		end
+	end
+
+end
 
 function crystalAnimation(timer)
 
@@ -168,17 +188,12 @@ function crystalAnimation(timer)
 	local crystal = crystalObjects[string.sub(timer.id,0,-12)]
 	local level, x, y = timer.level, timer.x, timer.y
 	
-	if crystal.active == true then
+	if crystal.isActive == true then
 	
 		if findEntity(crystal.activated) then
 		
 			findEntity(crystal.activated):setPitState("open")
 			findEntity(crystal.activated):close()
-			
-			for i = 0, 3 do
-				local dx, dy = getForward(i)
-				playSoundAt("crystal_ambient", level, x+dx, y+dy)
-			end
 			
 		else
 		
@@ -232,15 +247,15 @@ function useCrystal(altar)
 	setMouseItem(nil)
 	altar:addItem(spawn("|dx_healing_crystal_fake_item",nil,nil,nil,nil,crystal.fakeItem))
 	
-	if crystal.active then
+	-- Call Crystal Hook
+	local returnValue = onCrystalClick(crystal)
 	
-		-- Call Crystal Hook
-		local returnValue = onCrystalClick(crystal)
+	if returnValue == false then
+		return false
+	end
 		
-		if returnValue == false then
-			return false
-		end
-		
+	if crystal.isActive then
+			
 		-- Turn off activated state lights and turn on deactivated state lights
 		for i = 0,3 do
 			findEntity(crystal.lights[i]):deactivate()
@@ -264,7 +279,7 @@ function useCrystal(altar)
 		findEntity(crystal.id.."_timer"):activate()
 		
 		-- Deactivate crystal
-		crystal.active = false
+		crystal.isActive = false
 	
 	end
 	
@@ -295,7 +310,7 @@ function reactivateCrystal(timer)
 	findEntity(crystal.id.."_timer"):deactivate()
 	
 	-- Reactivate crystal
-	crystal.active = true
+	crystal.isActive = true
 	
 end
 
@@ -349,43 +364,43 @@ createCrystals()
 
 function onCrystalClick(crystal)
 	
-	if crystal.color == "green" then
+	if crystal.isActive and crystal.color == "green" then
 	
 		party:heal()
 		
 	end
 	
-	if crystal.color == "pink" then
-	
-		party:heal()
-		
-	end
-
-	if crystal.color == "red" then
+	if crystal.isActive and crystal.color == "pink" then
 	
 		party:heal()
 		
 	end
 
-	if crystal.color == "black" then
+	if crystal.isActive and crystal.color == "red" then
 	
 		party:heal()
 		
 	end
 
-	if crystal.color == "orange" then
+	if crystal.isActive and crystal.color == "black" then
+	
+		party:heal()
+		
+	end
+
+	if crystal.isActive and crystal.color == "orange" then
 	
 		party:heal()
 		
 	end	
 	
-	if crystal.color == "yellow" then
+	if crystal.isActive and crystal.color == "yellow" then
 	
 		party:heal()
 		
 	end	
 	
-	if crystal.color == "white" then
+	if crystal.isActive and crystal.color == "white" then
 	
 		party:heal()
 		

@@ -127,7 +127,7 @@ function createSkyLight(level, x, y)
 
 	local rColor, gColor, bColor = unpack(getAmbiance().skyLightColor)
 	local brightness = getAmbiance().skyLightBrightness
-	skyLight:setLight(rColor, gColor, bColor, brightness, 80, 1000000, false)
+	skyLight:setLight(rColor, gColor, bColor, brightness, 80, 1000000, true)
 	skyLight:translate(3,20,-3)
 
 end
@@ -615,20 +615,34 @@ defineAmbiance{
 	cloudsFrequence = 9,
 }
 
+defineAmbiance{
+	name = "rainy_night",
+	stars = "dx_dark_stars",
+	skyLightColor = {0.6, 0.7, 1.0},
+	skyLightBrightness = 0.3,
+	clouds = "dx_clouds_dark",
+	cloudsFrequence = 8,
+	weather = "dx_rain_2",
+	weatherRadius = 2,
+	thunder = "lightning_bolt_hit",
+	thunderFrequence = 0.08,
+}
+
 function autoexec()
 
 	createAmbianceTimer(0.5)
 
 end
 
-setAmbiance("rainy_day")
+setAmbiance("rainy_night")
 
 
 -- ***************************************************************************************
 --                                       Test scrolls
 -- ***************************************************************************************
 
-party:getChampion(1):insertItem(28, spawn("scroll_day"))
-party:getChampion(1):insertItem(29, spawn("scroll_rainy_day"))
-party:getChampion(1):insertItem(30, spawn("scroll_night"))
-party:getChampion(1):insertItem(31, spawn("scroll_dark_night"))
+party:getChampion(1):insertItem(27, spawn("scroll_day"))
+party:getChampion(1):insertItem(28, spawn("scroll_rainy_day"))
+party:getChampion(1):insertItem(29, spawn("scroll_night"))
+party:getChampion(1):insertItem(30, spawn("scroll_dark_night"))
+party:getChampion(1):insertItem(31, spawn("scroll_rainy_night"))

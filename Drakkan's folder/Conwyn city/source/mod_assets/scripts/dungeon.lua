@@ -1364,23 +1364,37 @@ defineAmbiance{\
 \9cloudsFrequence = 9,\
 }\
 \
+defineAmbiance{\
+\9name = \"rainy_night\",\
+\9stars = \"dx_dark_stars\",\
+\9skyLightColor = {0.6, 0.7, 1.0},\
+\9skyLightBrightness = 0.3,\
+\9clouds = \"dx_clouds_dark\",\
+\9cloudsFrequence = 8,\
+\9weather = \"dx_rain_2\",\
+\9weatherRadius = 2,\
+\9thunder = \"lightning_bolt_hit\",\
+\9thunderFrequence = 0.08,\
+}\
+\
 function autoexec()\
 \
 \9createAmbianceTimer(0.5)\
 \
 end\
 \
-setAmbiance(\"rainy_day\")\
+setAmbiance(\"rainy_night\")\
 \
 \
 -- ***************************************************************************************\
 --                                       Test scrolls\
 -- ***************************************************************************************\
 \
-party:getChampion(1):insertItem(28, spawn(\"scroll_day\"))\
-party:getChampion(1):insertItem(29, spawn(\"scroll_rainy_day\"))\
-party:getChampion(1):insertItem(30, spawn(\"scroll_night\"))\
-party:getChampion(1):insertItem(31, spawn(\"scroll_dark_night\"))\
+party:getChampion(1):insertItem(27, spawn(\"scroll_day\"))\
+party:getChampion(1):insertItem(28, spawn(\"scroll_rainy_day\"))\
+party:getChampion(1):insertItem(29, spawn(\"scroll_night\"))\
+party:getChampion(1):insertItem(30, spawn(\"scroll_dark_night\"))\
+party:getChampion(1):insertItem(31, spawn(\"scroll_rainy_night\"))\
 ")
 spawn("script_entity", 4,11,2, "script_entity_31")
 	:setSource("-- is this event enabled?\

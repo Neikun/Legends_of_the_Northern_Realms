@@ -1,4 +1,4 @@
-#####    Custom Crystals System, Version 1.0    #####
+#####    Custom Crystals System, Version 1.1    #####
 #####  Scripting & Design by Diarmuid & Neikun  #####
 
 
@@ -10,6 +10,11 @@
 	3. create a script_entity named crystalHandler in the dungeon editor
 	4. copy the contents of crystalHandler.lua into this crystalHandler script entity.
 
+[[[[[ CHANGELOG: ]]]]]
+----------------------------------------------------------------------------------
+	v1.1: Fixed bug that caused hum sound to accumulate
+	
+	
 
 [[[[[ THIS PACK CONTAINS: ]]]]]]
 
@@ -24,12 +29,12 @@
 	- white
 
 	TO USE THE CRYSTALS:
-	Simply put the dx_healing_crystal_object_color object in the editor like a normal crystal. That's it!
+	Simply put the dx_healing_crystal_object_"color" object in the editor like a normal crystal. That's it!
 
 	### WARNING ###
 	!!! DO NOT use directly any of the crystal components that start with the | character: "|dx...". 
 	Those objects have a red X icon and appear at the end of the objects list.
-	Make sure you use the ones starting with underscore "dx_..."!!!
+	Make sure you use the ones starting with "dx_..." !!!
 	### WARNING ###
 
 
@@ -51,7 +56,7 @@
 		particleStarsColor = {1.0,4.0,1.0},
 	}
 
-	for the defineCrystal function to work, you must create the following files, replacing "green" with the color you want to define:
+	For the defineCrystal function to work, you must create the following files, replacing "green" with the color you want to define:
 		- dx_healing_crystal_green.dds (texture)
 		- dx_healing_crystal_shader_green.dds (texture)
 		- dx_healing_crystal_green.model (model, which has dx_healing_crystal_crystal_green 
@@ -76,8 +81,10 @@
 
 		crystal.color : the color of the crystal
 		crystal.id : the id of the crystal entity
-		crystal.level, crystal.x, crystal.y : the position of the crystal
-		crystal.active : true/false, state of the crystal
+		crystal.level / 
+		crystal.x /
+		crystal.y : the position of the crystal
+		crystal.isActive : true/false, state of the crystal
 
 
 	### WARNING ###

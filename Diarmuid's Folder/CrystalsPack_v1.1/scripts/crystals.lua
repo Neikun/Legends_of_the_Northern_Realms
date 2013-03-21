@@ -1,6 +1,6 @@
 --[[
 
-#####      Crystals Lua Script, Version 1.0     #####
+#####      Crystals Lua Script, Version 1.1     #####
 #####  Scripting & Design by Diarmuid & Neikun  #####
 
 ]]
@@ -319,6 +319,24 @@ defineMaterial{
 	textureAddressMode = "Wrap",
 	glossiness = 5,
 	depthBias = 0,
+}
+
+defineSound{
+	name = "pit_close",
+	filename = "assets/samples/env/pit_close_01.wav",
+	loop = false,
+	volume = 0.1,
+	minDistance = 1,
+	maxDistance = 10,
+}
+
+defineSound{
+	name = "crystal_ambient_noloop",
+	filename = "assets/samples/env/crystal_ambient_01.wav",
+	loop = false,
+	volume = 0.5,
+	minDistance = 1,
+	maxDistance = 10,
 }
 
 -- ***********************************************************************************
