@@ -40,451 +40,451 @@ mapDesc([[
 ########.#.#######.####.########
 ]])
 spawn("script_entity", 15,10,0, "dungeonCompiler")
-	:setSource("-- ==========================================================================\
---                        MULTI-LEVEL DUNGEON COMPILER\
--- ==========================================================================\
+	:setSource("\9-- ==========================================================================\
+\9--                        MULTI-LEVEL DUNGEON COMPILER\
+\9-- ==========================================================================\
 \
 \
 \
--- ==========================================================================\
---                            WALLSET DEFINITIONS\
--- ==========================================================================\
+\9-- ==========================================================================\
+\9--                            WALLSET DEFINITIONS\
+\9-- ==========================================================================\
 \
 \
 \
-wallset = {\
-\9_wall  = {\"dx_temple_wall\",\"wall\",0,0,0},\
-\9--_wall_dxs = {\"dxs_castle_exterior_wall\",\"wall\",0,0,0},\
-\9--_pillar = {\"dx_castle_exterior_pillar_small\",\"pillar\",0,0,0},\
-\9_floor = {\"dx_temple_floor\",\"floor\",0,0,0},\
-\9_ceiling = {\"dx_temple_ceiling\",\"floor\",0,0,3},\
-\9_stairsUp = \"dx_temple_stairs_up\",\
-\9_stairsDown = \"dx_temple_stairs_down\",\
-\9_stairs = \"_dx_temple_stairs\",\
-\9_stairs_dxs = {\"dxs_castle_exterior_stairs\",\"floor\",0,0,0},\
+\9wallset = {\
+\9\9_wall  = {\"dx_temple_wall\",\"wall\",0,0,0},\
+\9\9--_wall_dxs = {\"dxs_castle_exterior_wall\",\"wall\",0,0,0},\
+\9\9--_pillar = {\"dx_castle_exterior_pillar_small\",\"pillar\",0,0,0},\
+\9\9_floor = {\"dx_temple_floor\",\"floor\",0,0,0},\
+\9\9_ceiling = {\"dx_temple_ceiling\",\"floor\",0,0,3},\
+\9\9_stairsUp = \"dx_temple_stairs_up\",\
+\9\9_stairsDown = \"dx_temple_stairs_down\",\
+\9\9_stairs = \"_dx_temple_stairs\",\
+\9\9_stairs_dxs = {\"dxs_castle_exterior_stairs\",\"floor\",0,0,0},\
 \
-\9torch_holder = {\"dx_torch_holder\",\"wall\",0,0,0},\
-\9_torch = {\"dx_torch_lit\",\"wall\",0,0,0},\
-}\
+\9\9torch_holder = {\"dx_torch_holder\",\"wall\",0,0,0},\
+\9\9_torch = {\"dx_torch_lit\",\"wall\",0,0,0},\
+\9}\
 \
 \
--- ==========================================================================\
---                           MAIN COMPILER INIT MODULE\
--- ==========================================================================\
-objects = {}\
+\9-- ==========================================================================\
+\9--                           MAIN COMPILER INIT MODULE\
+\9-- ==========================================================================\
+\9objects = {}\
 \
-function compileDungeon(firstLevel, lastLevel)\
-\9\
-\9-- SMART TILESET SCRIPTING\
-\9\
-\9for level = firstLevel,lastLevel do\
-\9\9for x = 10,20 do\
-\9\9\9for y = 10,20 do\
-\9\9\9\9-- -- Spawn stairs, teleporters and onLevelUp / onLevelDown / onLevelChange hooks\
-\9\9\9\9-- for i in entitiesAt(level, x, y) do\
-\9\9\9\9\
-\9\9\9\9\9-- -- Spawn solid wall elements\
-\9\9\9\9\9-- if i.name == \"dx_solid_wall\" then\
-\9\9\9\9\9\9-- for wallDir = 0, 3 do\
-\9\9\9\9\9\9\9-- local dx, dy = getForward(wallDir)\
-\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9-- if not(isWall_dx(level, x+dx, y+dy)) and not(isObjectByName(\"castle_exterior_wall_underbridge\", level, x+dx, y+dy, (wallDir+2)%4)) then\
-\9\9\9\9\9\9\9\9-- spawn(\"dx_castle_exterior_solid_wall\", level, x+dx, y+dy, (wallDir+2)%4)\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9-- end\
+\9function compileDungeon(firstLevel, lastLevel)\
+\9\9\
+\9\9-- SMART TILESET SCRIPTING\
+\9\9\
+\9\9for level = firstLevel,lastLevel do\
+\9\9\9for x = 10,20 do\
+\9\9\9\9for y = 10,20 do\
+\9\9\9\9\9-- -- Spawn stairs, teleporters and onLevelUp / onLevelDown / onLevelChange hooks\
+\9\9\9\9\9for i in entitiesAt(level, x, y) do\
 \9\9\9\9\9\
-\9\9\9\9\9-- -- Spawn sx_remove_floor elements where not already present\
-\9\9\9\9\9-- if level > firstLevel then\
-\9\9\9\9\9\9-- if i.name == \"sx_remove_ceiling\" then\
-\9\9\9\9\9\9\9-- if not(isObjectByName(\"sx_remove_floor\", level-1, x, y)) and not(isObjectByName(\"castle_exterior_bridge\", level, x, y)) then\
-\9\9\9\9\9\9\9\9-- spawn(\"sx_remove_floor\", level-1, x, y, 0)\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9-- end\
-\9\9\9\9\9\
-\9\9\9\9\9-- if i.name == \"castle_exterior_stairs_up\" then\
-\9\9\9\9\9\9-- spawn(\"_castle_exterior_stairs\", level, x, y, i.facing)\
-\9\9\9\9\9\9-- local levelTriggerFound = false\
-\9\9\9\9\9\9-- for j in entitiesAt(level, x, y) do\
-\9\9\9\9\9\9\9-- if string.find(j.id, \"levelTrigger\") then\
-\9\9\9\9\9\9\9\9-- levelTriggerFound = true\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- if not(levelTriggerFound) then\
-\9\9\9\9\9\9\9-- spawn(\"pressure_plate_hidden\", level, x, y, 0, randomId(\"levelTriggerUp.\"..level))\
-\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9-- :addConnector(\"activate\", \"dungeonCompiler\", \"onLevelUp\")\
-\9\9\9\9\9\9\9-- local dx, dy = getForward(i.facing)\
-\9\9\9\9\9\9\9-- spawn(\"teleporter\", level-1, x, y, i.facing)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9-- :setTeleportTarget(x+3*dx,y+3*dy,i.facing,level-1)\
-\9\9\9\9\9\9\9\9-- :setInvisible(true)\
-\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9-- :setHideLight(true)\
-\9\9\9\9\9\9\9\9-- :setScreenFlash(false)\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9-- end\
-\9\9\9\9\9-- if i.name == \"castle_exterior_stairs_down\" then\
-\9\9\9\9\9\9-- local levelTriggerFound = false\
-\9\9\9\9\9\9-- for j in entitiesAt(level, x, y) do\
-\9\9\9\9\9\9\9-- if string.find(j.id, \"levelTrigger\") then\
-\9\9\9\9\9\9\9\9-- levelTriggerFound = true\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- if not(levelTriggerFound) then\
-\9\9\9\9\9\9\9-- spawn(\"pressure_plate_hidden\", level, x, y, 0, randomId(\"levelTriggerDown.\"..level))\
-\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9-- :addConnector(\"activate\", \"dungeonCompiler\", \"onLevelDown\")\
-\9\9\9\9\9\9\9-- local dx, dy = getForward(i.facing)\
-\9\9\9\9\9\9\9-- spawn(\"teleporter\", level+1, x, y, i.facing)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9-- :setTeleportTarget(x+3*dx,y+3*dy,i.facing,level+1)\
-\9\9\9\9\9\9\9\9-- :setInvisible(true)\
-\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9-- :setHideLight(true)\
-\9\9\9\9\9\9\9\9-- :setScreenFlash(false)\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9-- end\
-\9\9\9\9-- end\
-\
-\9\9\9end\
-\9\9end\
-\9end\
-\9\
-\9-- MULTI-LEVEL SPAWNING\
-\9\
-\9for level = firstLevel, lastLevel do\
-\9\9for x = 10,20 do\
-\9\9\9for y = 10,20 do\
-\9\9\9\9\
-\9\9\9\9local topRange = level - 3\
-\9\9\9\9if topRange < firstLevel then topRange = firstLevel end\
-\9\9\9\9\
-\9\9\9\9local bottomRange = level + 3\
-\9\9\9\9if bottomRange > lastLevel then bottomRange = lastLevel end\
-\9\9\9\9\
-\9\9\9\9for l = topRange, bottomRange do\
-\9\9\9\9\
-\9\9\9\9\9--Create intermediate walls\
-\9\9\9\9\9if isObjectByName(\"sx_remove_floor\", l, x, y) then\
-\9\9\9\9\9\9for wallDir = 0, 3 do\
-\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
-\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l ,x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x, y, wallDir, nil, -3)\
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9end\
-\9\9\9\9\9end\
-\9\9\9\9\9\9\
-\9\9\9\9\9if l ~= level then\
-\9\9\9\9\9\9local stairsCheck = false\
-\9\9\9\9\9\9for i in entitiesAt(level,x,y) do\
-\9\9\9\9\9\9\9if i.name == wallset._stairsUp or i.name == wallset._stairsDown then\
-\9\9\9\9\9\9\9\9stairsCheck = true\
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9end\
-\9\9\9\9\9\9-- Create Objects\
-\9\9\9\9\9\9for i in entitiesAt(l, x, y) do\
-\9\9\9\9\9\9\9-- Spawn multi-level architecture\
-\9\9\9\9\9\9\9if wallset[i.name] then\
-\9\9\9\9\9\9\9\9if not(stairsCheck) then\
-\9\9\9\9\9\9\9\9\9if wallset[i.name][2] == \"pillar\" then\
-\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, 0)\
-\9\9\9\9\9\9\9\9\9else\9\
-\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9else\
-\9\9\9\9\9\9\9\9\9if i.name == wallset._stairs then\
-\9\9\9\9\9\9\9\9\9\9local dx, dy = getForward(i.facing)\
-\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_stairs_dxs\", level, l, x-dx, y-dy, i.facing)\
-\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9-- Spawn torchHolders\
-\9\9\9\9\9\9\9if i.class == \"TorchHolder\" and i:hasTorch() then\
-\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_torch\", level, l, x, y, i.facing)\
-\9\9\9\9\9\9\9\9local fxId = dungeonCompiler:playFx(\"torchLight\",level, x, y, i.facing)\
-\9\9\9\9\9\9\9\9findEntity(fxId):translate(0,(level - l)*6,0)\
-\9\9\9\9\9\9\9end\
-\
-\9\9\9\9\9\9end\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9-- Create Walls\
-\9\9\9\9\9\9if isWall_dx(l, x, y) then\
+\9\9\9\9\9\9-- Spawn solid wall elements\
+\9\9\9\9\9\9if i.name == \"dx_solid_wall\" then\
 \9\9\9\9\9\9\9for wallDir = 0, 3 do\
 \9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
-\9\9\9\9\9\9\9\9if not(isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+2)%4)) then\
-\9\9\9\9\9\9\9\9\9--if (l>level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) or (l == firstLevel or isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9\9\9if not(stairsCheck) then\
-\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x+dx, y+dy, (wallDir+2)%4)\
-\9\9\9\9\9\9\9\9\9\9else\
-\9\9\9\9\9\9\9\9\9\9\9local wx, wy = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_wall_dxs\", level, l, x+dx+wx, y+dy+wy, (wallDir+2)%4)\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9--end\
-\9\9\9\9\9\9\9\9end\
-\
 \9\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9\9local px, py = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9-- if not((isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+3)%4))) then\
-\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9\9\9-- -- Create small pillars\
-\9\9\9\9\9\9\9\9\9-- if l <= level or (l > level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9\9\9-- local p1x, p1y, p2x, p2y\
-\9\9\9\9\9\9\9\9\9\9-- local wx, wy = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9\9-- if wallDir == 0 then\
-\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
-\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+wx, y+wy\
-\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 1 then\
-\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
-\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx+wx, y+dy+wy\
-\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 2 then\
-\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
-\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx-wx, y+dy-wy\
-\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 3 then\
-\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
-\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x-wx, y-wy\
-\9\9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)) then\
-\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p1x, p1y, 0)\
-\9\9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)) then\
-\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p2x, p2y, 0)\
-\9\9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9if not(isWall_dx(level, x+dx, y+dy)) and not(isObjectByName(\"temple_stairs_up\", level, x+dx, y+dy)) and not(isObjectByName(\"temple_stairs_down\", level, x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9\9spawn(\"dx_temple_solid_wall\", level, x+dx, y+dy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9\9end\
 \9\9\9\9\9\9end\
 \9\9\9\9\9\9\
-\9\9\9\9\9\9--Create floors\
-\9\9\9\9\9\9if l > level then\
-\9\9\9\9\9\9\9if (l == lastLevel or not(isObjectByName(\"sx_remove_floor\", l, x, y))) and not(isWall_dx(l, x, y)) and isObjectByName(\"sx_remove_floor\", l-1, x, y) then\
-\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_floor\", level, l, x, y, 0)\
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9end\9\
+\9\9\9\9\9\9-- -- Spawn sx_remove_floor elements where not already present\
+\9\9\9\9\9\9-- if level > firstLevel then\
+\9\9\9\9\9\9\9-- if i.name == \"sx_remove_ceiling\" then\
+\9\9\9\9\9\9\9\9-- if not(isObjectByName(\"sx_remove_floor\", level-1, x, y)) and not(isObjectByName(\"castle_exterior_bridge\", level, x, y)) then\
+\9\9\9\9\9\9\9\9\9-- spawn(\"sx_remove_floor\", level-1, x, y, 0)\
+\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\
+\9\9\9\9\9\9-- if i.name == \"castle_exterior_stairs_up\" then\
+\9\9\9\9\9\9\9-- spawn(\"_castle_exterior_stairs\", level, x, y, i.facing)\
+\9\9\9\9\9\9\9-- local levelTriggerFound = false\
+\9\9\9\9\9\9\9-- for j in entitiesAt(level, x, y) do\
+\9\9\9\9\9\9\9\9-- if string.find(j.id, \"levelTrigger\") then\
+\9\9\9\9\9\9\9\9\9-- levelTriggerFound = true\
+\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9-- if not(levelTriggerFound) then\
+\9\9\9\9\9\9\9\9-- spawn(\"pressure_plate_hidden\", level, x, y, 0, randomId(\"levelTriggerUp.\"..level))\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
+\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
+\9\9\9\9\9\9\9\9\9-- :addConnector(\"activate\", \"dungeonCompiler\", \"onLevelUp\")\
+\9\9\9\9\9\9\9\9-- local dx, dy = getForward(i.facing)\
+\9\9\9\9\9\9\9\9-- spawn(\"teleporter\", level-1, x, y, i.facing)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
+\9\9\9\9\9\9\9\9\9-- :setTeleportTarget(x+3*dx,y+3*dy,i.facing,level-1)\
+\9\9\9\9\9\9\9\9\9-- :setInvisible(true)\
+\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
+\9\9\9\9\9\9\9\9\9-- :setHideLight(true)\
+\9\9\9\9\9\9\9\9\9-- :setScreenFlash(false)\
+\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9-- if i.name == \"castle_exterior_stairs_down\" then\
+\9\9\9\9\9\9\9-- local levelTriggerFound = false\
+\9\9\9\9\9\9\9-- for j in entitiesAt(level, x, y) do\
+\9\9\9\9\9\9\9\9-- if string.find(j.id, \"levelTrigger\") then\
+\9\9\9\9\9\9\9\9\9-- levelTriggerFound = true\
+\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9-- if not(levelTriggerFound) then\
+\9\9\9\9\9\9\9\9-- spawn(\"pressure_plate_hidden\", level, x, y, 0, randomId(\"levelTriggerDown.\"..level))\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
+\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
+\9\9\9\9\9\9\9\9\9-- :addConnector(\"activate\", \"dungeonCompiler\", \"onLevelDown\")\
+\9\9\9\9\9\9\9\9-- local dx, dy = getForward(i.facing)\
+\9\9\9\9\9\9\9\9-- spawn(\"teleporter\", level+1, x, y, i.facing)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
+\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
+\9\9\9\9\9\9\9\9\9-- :setTeleportTarget(x+3*dx,y+3*dy,i.facing,level+1)\
+\9\9\9\9\9\9\9\9\9-- :setInvisible(true)\
+\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
+\9\9\9\9\9\9\9\9\9-- :setHideLight(true)\
+\9\9\9\9\9\9\9\9\9-- :setScreenFlash(false)\
+\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9-- end\
+\9\9\9\9\9end\
 \
-\9\9\9\9\9\9--Create ceilings\
-\9\9\9\9\9\9if l < level then\
-\9\9\9\9\9\9\9if (l == firstLevel or not(isObjectByName(\"sx_remove_ceiling\", l, x, y))) and not(isWall_dx(l, x, y)) then\
-\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_ceiling\", level, l, x, y, 0)\
+\9\9\9\9end\
+\9\9\9end\
+\9\9end\
+\9\9\
+\9\9-- MULTI-LEVEL SPAWNING\
+\9\9\
+\9\9for level = firstLevel, lastLevel do\
+\9\9\9for x = 10,20 do\
+\9\9\9\9for y = 10,20 do\
+\9\9\9\9\9\
+\9\9\9\9\9local topRange = level - 2\
+\9\9\9\9\9if topRange < firstLevel then topRange = firstLevel end\
+\9\9\9\9\9\
+\9\9\9\9\9local bottomRange = level + 2\
+\9\9\9\9\9if bottomRange > lastLevel then bottomRange = lastLevel end\
+\9\9\9\9\9\
+\9\9\9\9\9for l = topRange, bottomRange do\
+\9\9\9\9\9\
+\9\9\9\9\9\9--Create intermediate walls\
+\9\9\9\9\9\9if isObjectByName(\"sx_remove_floor\", l, x, y) then\
+\9\9\9\9\9\9\9for wallDir = 0, 3 do\
+\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l ,x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x, y, wallDir, nil, -3)\
+\9\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9\9end\
-\9\9\9\9\9\9end\9\9\9\9\9\9\9\
+\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9if l ~= level then\
+\9\9\9\9\9\9\9local stairsCheck = false\
+\9\9\9\9\9\9\9for i in entitiesAt(level,x,y) do\
+\9\9\9\9\9\9\9\9if i.name == wallset._stairsUp or i.name == wallset._stairsDown then\
+\9\9\9\9\9\9\9\9\9stairsCheck = true\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9-- Create Objects\
+\9\9\9\9\9\9\9for i in entitiesAt(l, x, y) do\
+\9\9\9\9\9\9\9\9-- Spawn multi-level architecture\
+\9\9\9\9\9\9\9\9if wallset[i.name] then\
+\9\9\9\9\9\9\9\9\9if not(stairsCheck) then\
+\9\9\9\9\9\9\9\9\9\9if wallset[i.name][2] == \"pillar\" then\
+\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, 0)\
+\9\9\9\9\9\9\9\9\9\9else\9\
+\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, i.facing)\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9else\
+\9\9\9\9\9\9\9\9\9\9if i.name == wallset._stairs then\
+\9\9\9\9\9\9\9\9\9\9\9local dx, dy = getForward(i.facing)\
+\9\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_stairs_dxs\", level, l, x-dx, y-dy, i.facing)\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9-- Spawn torchHolders\
+\9\9\9\9\9\9\9\9if i.class == \"TorchHolder\" and i:hasTorch() then\
+\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_torch\", level, l, x, y, i.facing)\
+\9\9\9\9\9\9\9\9\9local fxId = dungeonCompiler:playFx(\"torchLight\",level, x, y, i.facing)\
+\9\9\9\9\9\9\9\9\9findEntity(fxId):translate(0,(level - l)*6,0)\
+\9\9\9\9\9\9\9\9end\
+\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9-- Create Walls\
+\9\9\9\9\9\9\9if isWall_dx(l, x, y) then\
+\9\9\9\9\9\9\9\9for wallDir = 0, 3 do\
+\9\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9\9\9\9if not(isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+2)%4)) then\
+\9\9\9\9\9\9\9\9\9\9--if (l>level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) or (l == firstLevel or isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9\9\9\9if not(stairsCheck) then\
+\9\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x+dx, y+dy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9\9\9\9else\
+\9\9\9\9\9\9\9\9\9\9\9\9local wx, wy = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_wall_dxs\", level, l, x+dx+wx, y+dy+wy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9\9--end\
+\9\9\9\9\9\9\9\9\9end\
+\
+\9\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9\9local px, py = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9-- if not((isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+3)%4))) then\
+\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9\9\9-- -- Create small pillars\
+\9\9\9\9\9\9\9\9\9\9-- if l <= level or (l > level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9\9\9\9-- local p1x, p1y, p2x, p2y\
+\9\9\9\9\9\9\9\9\9\9\9-- local wx, wy = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9\9\9-- if wallDir == 0 then\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+wx, y+wy\
+\9\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 1 then\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx+wx, y+dy+wy\
+\9\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 2 then\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx-wx, y+dy-wy\
+\9\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 3 then\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
+\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x-wx, y-wy\
+\9\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)) then\
+\9\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p1x, p1y, 0)\
+\9\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)) then\
+\9\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p2x, p2y, 0)\
+\9\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9--Create floors\
+\9\9\9\9\9\9\9if l > level then\
+\9\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l, x, y)) and not(isWall_dx(l, x, y)) then\
+\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_floor\", level, l, x, y, 0)\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\9\
+\
+\9\9\9\9\9\9\9--Create ceilings\
+\9\9\9\9\9\9\9if l < level then\
+\9\9\9\9\9\9\9\9if (l == firstLevel or not(isObjectByName(\"sx_remove_ceiling\", l, x, y))) and not(isWall_dx(l, x, y)) then\
+\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_ceiling\", level, l, x, y, 0)\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9end\9\9\9\9\9\9\9\
+\9\9\9\9\9\9end\
 \9\9\9\9\9end\
 \9\9\9\9end\
 \9\9\9end\
 \9\9end\
 \9end\
-end\
 \
-function isWall_dx(level, x, y)\
-\9if isWall(level, x, y) or isObjectByName(\"dx_solid_wall\", level, x, y) then\
-\9\9return true\
-\9else\
-\9\9return false\
-\9end\
-end\
-\
-function spawnMultiLevelObject(name, level, objectLevel, x, y, facing, id, vOffset)\
-\9\
-\9if vOffset == nil then\
-\9\9vOffset = 0\
-\9end\
-\
-\9if level < 1 or level > getMaxLevels() then\
-\9\9return false\
-\9end\
-\9local objData = dungeonCompiler.wallset[name]\
-\9\
-\9if objData then\
-\9\9local dx, dy = getForward(facing)\
-\9\9shootProjectile(objData[1], level, x, y, facing, 0, 0, 0, dx*objData[3], ((level - objectLevel) * 6) + objData[5] + 24 + vOffset, -dy*objData[3], 0, party, true)\
-\9end\
-\9for i in entitiesAt(level, x, y) do\
-\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
-\9\9\9objects[i.id] = i.name\
-\9\9end\
-\9end\
-\9\
-\9\
-end\
-\
-function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
-\9local pIds = {}\
-\9for i in entitiesAt(level, x, y) do\
-\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
-\9\9\9pIds[i.id] = i.name\
-\9\9end\
-\9end\
-\9shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
- \9for i in entitiesAt(level, x, y) do\
-\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") and not(pIds[i.id]) then\
-\9\9\9return i.id\
-\9\9end\
-\9end  \
-end\
-\
-function getObjectData(name)\
-\9local obj = {}\
-\9if dungeonCompiler.wallset[name] then\
-\9end\
-end\
-\
-function isObjectByName(name, objLevel, x, y, facing)\
-\9if objLevel < 1 or objLevel > getMaxLevels() then\
-\9\9return false\
-\9end\
-\9for i in entitiesAt(objLevel, x, y) do\
-\9\9if facing then\
-\9\9\9if i.name == name and i.facing == facing then\
-\9\9\9\9return true\
-\9\9\9end\
+\9function isWall_dx(level, x, y)\
+\9\9if isWall(level, x, y) or isObjectByName(\"dx_solid_wall\", level, x, y) then\
+\9\9\9return true\
 \9\9else\
-\9\9\9if i.name == name then\
-\9\9\9\9return true\
-\9\9\9end\
+\9\9\9return false\
 \9\9end\
 \9end\
-\9return false\
-end\
 \
-function isObjectById(id, level, x, y, facing)\
-\9if level < 1 or level > getMaxLevels() then\
+\9function spawnMultiLevelObject(name, level, objectLevel, x, y, facing, id, vOffset)\
+\9\9\
+\9\9if vOffset == nil then\
+\9\9\9vOffset = 0\
+\9\9end\
+\
+\9\9if level < 1 or level > getMaxLevels() then\
+\9\9\9return false\
+\9\9end\
+\9\9local objData = dungeonCompiler.wallset[name]\
+\9\9\
+\9\9if objData then\
+\9\9\9local dx, dy = getForward(facing)\
+\9\9\9shootProjectile(objData[1], level, x, y, facing, 0, 0, 0, dx*objData[3], ((level - objectLevel) * 6) + objData[5] + 24 + vOffset, -dy*objData[3], 0, party, true)\
+\9\9end\
+\9\9for i in entitiesAt(level, x, y) do\
+\9\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
+\9\9\9\9objects[i.id] = i.name\
+\9\9\9end\
+\9\9end\
+\9\9\
+\9\9\
+\9end\
+\
+\9function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
+\9\9local pIds = {}\
+\9\9for i in entitiesAt(level, x, y) do\
+\9\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
+\9\9\9\9pIds[i.id] = i.name\
+\9\9\9end\
+\9\9end\
+\9\9shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
+\9\9for i in entitiesAt(level, x, y) do\
+\9\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") and not(pIds[i.id]) then\
+\9\9\9\9return i.id\
+\9\9\9end\
+\9\9end  \
+\9end\
+\
+\9function getObjectData(name)\
+\9\9local obj = {}\
+\9\9if dungeonCompiler.wallset[name] then\
+\9\9end\
+\9end\
+\
+\9function isObjectByName(name, objLevel, x, y, facing)\
+\9\9if objLevel < 1 or objLevel > getMaxLevels() then\
+\9\9\9return false\
+\9\9end\
+\9\9for i in entitiesAt(objLevel, x, y) do\
+\9\9\9if facing then\
+\9\9\9\9if i.name == name and i.facing == facing then\
+\9\9\9\9\9return true\
+\9\9\9\9end\
+\9\9\9else\
+\9\9\9\9if i.name == name then\
+\9\9\9\9\9return true\
+\9\9\9\9end\
+\9\9\9end\
+\9\9end\
 \9\9return false\
 \9end\
-\9for i in entitiesAt(level, x, y) do\
-\9\9if facing then\
-\9\9\9if i.id == id and i.facing == facing then\
-\9\9\9\9return true\
+\
+\9function isObjectById(id, level, x, y, facing)\
+\9\9if level < 1 or level > getMaxLevels() then\
+\9\9\9return false\
+\9\9end\
+\9\9for i in entitiesAt(level, x, y) do\
+\9\9\9if facing then\
+\9\9\9\9if i.id == id and i.facing == facing then\
+\9\9\9\9\9return true\
+\9\9\9\9end\
+\9\9\9else\
+\9\9\9\9if i.id == id then\
+\9\9\9\9\9return true\
+\9\9\9\9end\
 \9\9\9end\
+\9\9end\
+\9\9return false\
+\9end\
+\
+\9function debugPrint(l, x, y, pl, px, py, data)\
+\9\9if l == pl and x == px and y == py then\
+\9\9\9print(data)\
+\9\9end\
+\9end\
+\9\9\
+\9-- ==========================================================================\
+\9--                            WALLSET DEFINITIONS\
+\9-- ==========================================================================\
+\
+\9function onLevelUp(trigger)\
+\9\9print(\"going up!\")\
+\9end\
+\
+\9function onLevelDown(trigger)\
+\9\9print(\"going down!\")\
+\9end\
+\
+\
+\9-- ==========================================================================\
+\9--                            EXSP FX FUNCTIONS\
+\9-- ==========================================================================\
+\
+\
+\9fxDefs = {}\
+\
+\9function defineFx(self, name, properties)\
+\9\9if not(self.fxDefs[name]) then \
+\9\9\9self.fxDefs[name] = {} \
 \9\9else\
-\9\9\9if i.id == id then\
-\9\9\9\9return true\
-\9\9\9end\
+\9\9\9return false\
+\9\9end\
+\9\9\
+\9\9-- populate Table\
+\9\9for k,v in pairs(properties) do\
+\9\9\9self.fxDefs[name][k] = v\
+\9\9end\
+\9\9\
+\9\9if debugDefinitions then\
+\9\9\9print(\"FX defined: \"..name)\
 \9\9end\
 \9end\
-\9return false\
-end\
 \
-function debugPrint(l, x, y, pl, px, py, data)\
-\9if l == pl and x == px and y == py then\
-\9\9print(data)\
-\9end\
-end\
-\9\
--- ==========================================================================\
---                            WALLSET DEFINITIONS\
--- ==========================================================================\
+\9function playFx(self, name, level, x, y, facing, properties)\
 \
-function onLevelUp(trigger)\
-\9print(\"going up!\")\
-end\
-\
-function onLevelDown(trigger)\
-\9print(\"going down!\")\
-end\
-\
-\
--- ==========================================================================\
---                            EXSP FX FUNCTIONS\
--- ==========================================================================\
-\
-\
-fxDefs = {}\
-\
-function defineFx(self, name, properties)\
-\9if not(self.fxDefs[name]) then \
-\9\9self.fxDefs[name] = {} \
-\9else\
-\9\9return false\
-\9end\
-\9\
-\9-- populate Table\
-\9for k,v in pairs(properties) do\
-\9\9self.fxDefs[name][k] = v\
-\9end\
-\9\
-\9if debugDefinitions then\
-\9\9print(\"FX defined: \"..name)\
-\9end\
-end\
-\
-function playFx(self, name, level, x, y, facing, properties)\
-\
-\9-- retreive fx definition\
-\9local fx = {}\
-\9for k, v in pairs(self.fxDefs[name]) do\
-\9\9fx[k] = v\
-\9end\
-\9if properties then\
-\9\9for k, v in pairs(properties) do\
+\9\9-- retreive fx definition\
+\9\9local fx = {}\
+\9\9for k, v in pairs(self.fxDefs[name]) do\
 \9\9\9fx[k] = v\
 \9\9end\
-\9end\
-\9local red, green, blue = unpack(fx.color)\
-\9\9\
-\9local particleSystem\
-\9local tx, ty, tz \
-\9if not(facing) then\
-\9\9particleSystem = fx.particleSystem\
-\9\9tx, ty, tz = unpack(fx.translation)\
-\9else\
-\9\9if type(fx.particleSystem) == \"table\" then\
-\9\9\9particleSystem = fx.particleSystem[facing+1]\
-\9\9else\
+\9\9if properties then\
+\9\9\9for k, v in pairs(properties) do\
+\9\9\9\9fx[k] = v\
+\9\9\9end\
+\9\9end\
+\9\9local red, green, blue = unpack(fx.color)\
+\9\9\9\
+\9\9local particleSystem\
+\9\9local tx, ty, tz \
+\9\9if not(facing) then\
 \9\9\9particleSystem = fx.particleSystem\
-\9\9end\
-\9\9if #fx.translation > 3 then\
-\9\9\9tx, ty, tz = unpack(fx.translation[facing+1])\
-\9\9else\
 \9\9\9tx, ty, tz = unpack(fx.translation)\
+\9\9else\
+\9\9\9if type(fx.particleSystem) == \"table\" then\
+\9\9\9\9particleSystem = fx.particleSystem[facing+1]\
+\9\9\9else\
+\9\9\9\9particleSystem = fx.particleSystem\
+\9\9\9end\
+\9\9\9if #fx.translation > 3 then\
+\9\9\9\9tx, ty, tz = unpack(fx.translation[facing+1])\
+\9\9\9else\
+\9\9\9\9tx, ty, tz = unpack(fx.translation)\
+\9\9\9end\
 \9\9end\
+\9\9\
+\9\9-- spawn fx\
+\9\9fxId = randomId(\"playFx\")\
+\9\9spawn(\"fx\", level, x, y, 0, fxId)\
+\9\9\9:setParticleSystem(particleSystem)\
+\9\9\9:setLight(red, green, blue, fx.brightness, fx.range, fx.time, fx.castShadow)\
+\9\9\9:translate(tx, ty, tz)\
+\9\9\
+\9\9return fxId\
 \9end\
-\9\
-\9-- spawn fx\
-\9fxId = randomId(\"playFx\")\
-\9spawn(\"fx\", level, x, y, 0, fxId)\
-\9\9:setParticleSystem(particleSystem)\
-\9\9:setLight(red, green, blue, fx.brightness, fx.range, fx.time, fx.castShadow)\
-\9\9:translate(tx, ty, tz)\
-\9\
-\9return fxId\
-end\
 \
-function randomId(prefix)\
-\9local numId = math.random(10000,99999)\
-\9while findEntity(prefix..\".\"..numId) do\
-\9\9numId = math.random(10000,99999)\
+\9function randomId(prefix)\
+\9\9local numId = math.random(10000,99999)\
+\9\9while findEntity(prefix..\".\"..numId) do\
+\9\9\9numId = math.random(10000,99999)\
+\9\9end\
+\9\9return prefix..\".\"..numId\
 \9end\
-\9return prefix..\".\"..numId\
-end\
 \
--- ==========================================================================\
---                            RUNTIME INIT\
--- ==========================================================================\
+\9-- ==========================================================================\
+\9--                            RUNTIME INIT\
+\9-- ==========================================================================\
 \
 \
-dungeonCompiler:defineFx(\"torchLight\",{\
-\9particleSystem = \"torch\",\
-\9color = {1, 0.5, 0.25},\
-\9brightness = 10,\
-\9range = 22,\
-\9time = 10000000,\
-\9castShadow = true,\
-\9translation = {{0,1.85,1.1},{1.1,1.85,0},{0,1.85,-1.1},{-1.1,1.85,0}}\
-\9}\
-)\
+\9dungeonCompiler:defineFx(\"torchLight\",{\
+\9\9particleSystem = \"torch\",\
+\9\9color = {1, 0.8, 0.45},\
+\9\9brightness = 10,\
+\9\9range = 15,\
+\9\9time = 10000000,\
+\9\9castShadow = true,\
+\9\9translation = {{0,1.85,1.1},{1.1,1.85,0},{0,1.85,-1.1},{-1.1,1.85,0}}\
+\9\9}\
+\9)\
 \
-compileDungeon(1,9)\
+\9compileDungeon(1,9)\
 ")
 spawn("sx_remove_floor", 11,11,1, "sx_remove_floor_352")
 spawn("sx_remove_floor", 11,12,2, "sx_remove_floor_354")
@@ -557,6 +557,10 @@ spawn("sx_remove_floor", 19,18,0, "sx_remove_floor_431")
 spawn("sx_remove_floor", 19,19,2, "sx_remove_floor_432")
 spawn("altar", 15,15,2, "altar_1")
 spawn("temple_stairs_down", 21,17,0, "temple_stairs_down_7")
+spawn("temple_pillar", 14,14,0, "temple_pillar_7")
+spawn("temple_pillar", 14,17,3, "temple_pillar_8")
+spawn("temple_pillar", 17,17,3, "temple_pillar_9")
+spawn("temple_pillar", 17,14,3, "temple_pillar_10")
 
 --- level 2 ---
 
@@ -583,7 +587,7 @@ mapDesc([[
 ##.###.#.##.........#.#.##.##.##
 ########.##.........#.#.#..#..##
 .........##.........###.#.###.##
-######.##.....#.......#.#..#..##
+######.##.............#.#..#..##
 ######.##..###.###.##.#.########
 ###.................#.#.........
 ###.#################.##########
@@ -734,6 +738,13 @@ spawn("lock_gear", 21,15,3, "lock_gear_18")
 spawn("temple_door_iron", 21,16,0, "temple_door_iron_6")
 spawn("temple_wall_text", 21,14,3, "temple_wall_text_7")
 	:setWallText("Three keys to pass")
+spawn("dx_solid_wall", 14,19,0, "dx_solid_wall_6")
+spawn("sx_outwall_pillarkiller", 16,11,0, "sx_outwall_pillarkiller_77")
+spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_82")
+spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_83")
+spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_84")
+spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_85")
+spawn("sx_outwall_pillarkiller", 12,19,2, "sx_outwall_pillarkiller_86")
 
 --- level 3 ---
 
@@ -790,7 +801,7 @@ spawn("sx_remove_floor", 14,12,3, "sx_remove_floor_286")
 spawn("sx_remove_floor", 14,13,3, "sx_remove_floor_287")
 spawn("sx_remove_floor", 15,17,2, "sx_remove_floor_293")
 spawn("sx_remove_floor", 15,18,2, "sx_remove_floor_294")
-spawn("sx_remove_ceiling", 12,18,1, "sx_remove_ceiling_355")
+spawn("sx_remove_ceiling", 12,19,1, "sx_remove_ceiling_355")
 spawn("sx_remove_ceiling", 13,18,0, "sx_remove_ceiling_322")
 spawn("sx_remove_ceiling", 13,17,0, "sx_remove_ceiling_326")
 spawn("sx_remove_ceiling", 12,17,0, "sx_remove_ceiling_327")
@@ -855,26 +866,20 @@ spawn("sx_remove_floor", 11,15,1, "sx_remove_floor_268")
 spawn("sx_remove_floor", 11,11,1, "sx_remove_floor_271")
 spawn("sx_remove_floor", 12,19,2, "sx_remove_floor_288")
 spawn("sx_remove_floor", 13,19,1, "sx_remove_floor_269")
-spawn("sx_remove_ceiling", 12,19,1, "sx_remove_ceiling_531")
-spawn("sx_remove_ceiling", 13,19,0, "sx_remove_ceiling_526")
+spawn("sx_remove_ceiling", 13,19,1, "sx_remove_ceiling_531")
 spawn("sx_remove_floor", 11,19,2, "sx_remove_floor_275")
 spawn("sx_remove_floor", 15,19,2, "sx_remove_floor_292")
 spawn("sx_remove_floor", 17,19,2, "sx_remove_floor_282")
 spawn("sx_remove_floor", 18,19,1, "sx_remove_floor_289")
-spawn("sx_remove_ceiling", 17,19,1, "sx_remove_ceiling_530")
-spawn("sx_remove_ceiling", 18,19,0, "sx_remove_ceiling_532")
 spawn("sx_remove_floor", 16,19,2, "sx_remove_floor_290")
-spawn("sx_remove_ceiling", 16,19,0, "sx_remove_ceiling_533")
 spawn("sx_remove_floor", 19,18,1, "sx_remove_floor_311")
 spawn("sx_remove_floor", 19,17,0, "sx_remove_floor_291")
 spawn("sx_remove_floor", 19,16,0, "sx_remove_floor_296")
-spawn("sx_remove_floor", 19,14,0, "sx_remove_floor_298")
 spawn("sx_remove_ceiling", 19,18,0, "sx_remove_ceiling_541")
 spawn("sx_remove_ceiling", 19,17,0, "sx_remove_ceiling_534")
 spawn("sx_remove_ceiling", 19,16,0, "sx_remove_ceiling_536")
 spawn("sx_remove_floor", 19,15,0, "sx_remove_floor_305")
 spawn("sx_remove_floor", 19,19,1, "sx_remove_floor_307")
-spawn("sx_remove_ceiling", 19,19,0, "sx_remove_ceiling_539")
 spawn("sx_remove_floor", 17,11,1, "sx_remove_floor_316")
 spawn("sx_remove_floor", 18,11,2, "sx_remove_floor_310")
 spawn("sx_remove_ceiling", 18,11,3, "sx_remove_ceiling_544")
@@ -894,9 +899,27 @@ spawn("sx_remove_ceiling", 14,16,0, "sx_remove_ceiling_554")
 spawn("sx_remove_ceiling", 14,15,1, "sx_remove_ceiling_555")
 spawn("sx_remove_ceiling", 14,17,1, "sx_remove_ceiling_556")
 spawn("sx_remove_ceiling", 14,18,1, "sx_remove_ceiling_557")
-spawn("sx_remove_ceiling", 14,19,2, "sx_remove_ceiling_558")
 spawn("temple_stairs_up", 14,20,2, "temple_stairs_up_6")
 spawn("temple_stairs_down", 21,14,2, "temple_stairs_down_8")
+spawn("torch_holder", 19,14,1, "torch_holder_3")
+	:addTorch()
+spawn("temple_pillar", 14,19,2, "temple_pillar_3")
+spawn("temple_pillar", 15,19,3, "temple_pillar_6")
+spawn("sx_remove_ceiling", 12,18,1, "sx_remove_ceiling_89")
+spawn("sx_outwall_pillarkiller", 11,15,3, "sx_outwall_pillarkiller_66")
+spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_62")
+spawn("sx_outwall_pillarkiller", 11,11,3, "sx_outwall_pillarkiller_63")
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_64")
+spawn("sx_outwall_pillarkiller", 11,19,3, "sx_outwall_pillarkiller_67")
+spawn("sx_outwall_pillarkiller", 12,19,2, "sx_outwall_pillarkiller_68")
+spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_69")
+spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_70")
+spawn("sx_outwall_pillarkiller", 19,19,1, "sx_outwall_pillarkiller_71")
+spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_72")
+spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_73")
+spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_74")
+spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_75")
+spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_76")
 
 --- level 4 ---
 
@@ -1069,6 +1092,17 @@ spawn("temple_stairs_up", 10,10,0, "temple_stairs_up_1")
 spawn("temple_stairs_up", 21,14,2, "temple_stairs_up_8")
 spawn("temple_wall_text_long", 21,15,1, "temple_wall_text_long_2")
 	:setWallText("To Bonus area")
+spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_55")
+spawn("sx_outwall_pillarkiller", 15,11,0, "sx_outwall_pillarkiller_14")
+spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_46")
+spawn("sx_outwall_pillarkiller", 19,11,0, "sx_outwall_pillarkiller_53")
+spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_59")
+spawn("sx_outwall_pillarkiller", 19,18,1, "sx_outwall_pillarkiller_54")
+spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_56")
+spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_57")
+spawn("sx_outwall_pillarkiller", 17,19,2, "sx_outwall_pillarkiller_60")
+spawn("sx_outwall_pillarkiller", 19,19,2, "sx_outwall_pillarkiller_61")
+spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_58")
 
 --- level 5 ---
 
@@ -1091,11 +1125,11 @@ mapDesc([[
 ##.#...#.##.........#.########.#
 ##.#.###............#.#.........
 ##.#...#.##.........#.#.########
-##.###.#.##....#...#..#.##.#.###
+##.###.#.##....#......#.##.#.###
 ##.#...#.##.........#.#.##.#.###
 ########.##.........#.#.##.#.###
 .........##.........#.#.##.#.###
-#########..#........#.#.##.#.###
+#########...........#.#.##.#.###
 ##...####.##.###.####.#.########
 ##.#..........#.......#.........
 ##.##########.#######.##########
@@ -1136,8 +1170,6 @@ spawn("sx_remove_floor", 14,18,3, "sx_remove_floor_139")
 spawn("sx_remove_floor", 13,18,0, "sx_remove_floor_140")
 spawn("sx_remove_floor", 12,17,2, "sx_remove_floor_142")
 spawn("sx_remove_floor", 12,16,1, "sx_remove_floor_143")
-spawn("torch_holder", 19,14,1, "torch_holder_4")
-	:addTorch()
 spawn("sx_remove_ceiling", 12,16,0, "sx_remove_ceiling_275")
 spawn("sx_remove_ceiling", 12,14,2, "sx_remove_ceiling_121")
 spawn("sx_remove_ceiling", 12,13,0, "sx_remove_ceiling_138")
@@ -1192,8 +1224,6 @@ spawn("sx_remove_ceiling", 18,11,3, "sx_remove_ceiling_200")
 spawn("sx_remove_ceiling", 19,11,0, "sx_remove_ceiling_201")
 spawn("sx_remove_ceiling", 19,12,2, "sx_remove_ceiling_202")
 spawn("sx_remove_ceiling", 19,13,2, "sx_remove_ceiling_203")
-spawn("sx_remove_ceiling", 19,14,2, "sx_remove_ceiling_204")
-spawn("sx_remove_ceiling", 19,16,3, "sx_remove_ceiling_206")
 spawn("sx_remove_ceiling", 19,17,3, "sx_remove_ceiling_207")
 spawn("sx_remove_ceiling", 19,18,3, "sx_remove_ceiling_208")
 spawn("sx_remove_ceiling", 19,19,3, "sx_remove_ceiling_209")
@@ -1219,8 +1249,6 @@ spawn("sx_remove_floor", 18,19,3, "sx_remove_floor_118")
 spawn("sx_remove_floor", 19,19,3, "sx_remove_floor_138")
 spawn("sx_remove_floor", 19,18,2, "sx_remove_floor_465")
 spawn("sx_remove_floor", 19,17,1, "sx_remove_floor_479")
-spawn("sx_remove_floor", 19,16,1, "sx_remove_floor_480")
-spawn("sx_remove_floor", 19,14,0, "sx_remove_floor_481")
 spawn("sx_remove_floor", 19,13,1, "sx_remove_floor_482")
 spawn("sx_remove_floor", 19,12,2, "sx_remove_floor_483")
 spawn("sx_remove_floor", 19,11,1, "sx_remove_floor_484")
@@ -1245,7 +1273,22 @@ spawn("lock_gear", 9,20,1, "lock_gear_11")
 spawn("lock_gear", 9,21,2, "lock_gear_12")
 spawn("temple_wall_text", 10,21,0, "temple_wall_text_5")
 	:setWallText("Three keys to pass")
-spawn("starting_location", 11,12,0, "starting_location")
+spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_1")
+spawn("sx_outwall_pillarkiller", 15,11,0, "sx_outwall_pillarkiller_3")
+spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_4")
+spawn("sx_outwall_pillarkiller", 19,11,0, "sx_outwall_pillarkiller_5")
+spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_6")
+spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_7")
+spawn("sx_outwall_pillarkiller", 18,15,1, "sx_outwall_pillarkiller_8")
+spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_9")
+spawn("sx_outwall_pillarkiller", 19,18,1, "sx_outwall_pillarkiller_10")
+spawn("sx_outwall_pillarkiller", 19,19,2, "sx_outwall_pillarkiller_11")
+spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_12")
+spawn("sx_outwall_pillarkiller", 14,19,2, "sx_outwall_pillarkiller_13")
+spawn("dx_solid_wall", 19,15,3, "dx_solid_wall_1")
+spawn("dx_solid_wall", 11,19,3, "dx_solid_wall_3")
+spawn("dx_solid_wall", 19,16,3, "dx_solid_wall_4")
+spawn("dx_solid_wall", 19,14,3, "dx_solid_wall_5")
 
 --- level 6 ---
 
@@ -1406,8 +1449,6 @@ spawn("sx_remove_ceiling", 18,19,1, "sx_remove_ceiling_205")
 spawn("sx_remove_ceiling", 19,19,1, "sx_remove_ceiling_235")
 spawn("sx_remove_ceiling", 19,18,1, "sx_remove_ceiling_246")
 spawn("sx_remove_ceiling", 19,17,1, "sx_remove_ceiling_440")
-spawn("sx_remove_ceiling", 19,16,1, "sx_remove_ceiling_444")
-spawn("sx_remove_ceiling", 19,14,1, "sx_remove_ceiling_454")
 spawn("sx_remove_ceiling", 19,13,1, "sx_remove_ceiling_455")
 spawn("sx_remove_ceiling", 19,12,1, "sx_remove_ceiling_456")
 spawn("sx_remove_ceiling", 19,11,1, "sx_remove_ceiling_457")
@@ -1415,6 +1456,29 @@ spawn("sx_remove_ceiling", 18,11,1, "sx_remove_ceiling_458")
 spawn("sx_remove_ceiling", 17,11,1, "sx_remove_ceiling_460")
 spawn("sx_remove_ceiling", 16,11,1, "sx_remove_ceiling_461")
 spawn("temple_stairs_down", 15,20,2, "temple_stairs_down_4")
+spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_18")
+spawn("sx_outwall_pillarkiller", 19,13,1, "sx_outwall_pillarkiller_2")
+spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_15")
+spawn("sx_outwall_pillarkiller", 19,19,1, "sx_outwall_pillarkiller_16")
+spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_20")
+spawn("sx_outwall_pillarkiller", 17,19,2, "sx_outwall_pillarkiller_17")
+spawn("sx_outwall_pillarkiller", 13,19,2, "sx_outwall_pillarkiller_22")
+spawn("sx_outwall_pillarkiller", 11,19,2, "sx_outwall_pillarkiller_19")
+spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_24")
+spawn("sx_outwall_pillarkiller", 11,19,3, "sx_outwall_pillarkiller_21")
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_26")
+spawn("sx_outwall_pillarkiller", 11,15,3, "sx_outwall_pillarkiller_23")
+spawn("sx_outwall_pillarkiller", 11,11,3, "sx_outwall_pillarkiller_27")
+spawn("sx_outwall_pillarkiller", 12,11,0, "sx_outwall_pillarkiller_28")
+spawn("sx_outwall_pillarkiller", 14,11,0, "sx_outwall_pillarkiller_29")
+spawn("sx_outwall_pillarkiller", 16,11,0, "sx_outwall_pillarkiller_30")
+spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_31")
+spawn("temple_pillar_hub", 19,15,1, "temple_pillar_hub_1")
+spawn("temple_pillar_hub", 19,16,3, "temple_pillar_hub_2")
+spawn("temple_pillar_hub", 20,15,1, "temple_pillar_hub_3")
+spawn("temple_pillar_hub", 20,16,2, "temple_pillar_hub_4")
+spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_78")
+spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_79")
 
 --- level 7 ---
 
@@ -1432,18 +1496,18 @@ mapDesc([[
 ########.####.#######.#.########
 .........####.........#.........
 ################################
-.........#######################
-########.##........#..##########
-########.##.........#.##########
-########.##.........#.#.........
-########.##.........#.#.########
-########.##....#....#.#.########
-########.##.........#.#.########
-########.##.........#.#.########
-.........##.........#.#.########
-###########....#....#.#.########
-###############.#####.#.########
-###############.......#.........
+.........######.......##########
+########.##.........############
+########.##.........############
+########.##.........###.........
+########.##.........###.########
+########.##....#....###.########
+########.##.........###.########
+########.##.........###.########
+.........##.........###.########
+###########.........###.########
+###########.###.#######.########
+###########.....#######.........
 ################################
 .........#.........####.........
 ########.#.#######.####.########
@@ -1456,21 +1520,19 @@ mapDesc([[
 ########.#.#######.####.########
 ]])
 spawn("sx_remove_floor", 12,12,1, "sx_remove_floor_33")
-spawn("sx_remove_floor", 12,13,0, "sx_remove_floor_34")
-spawn("sx_remove_floor", 12,14,1, "sx_remove_floor_35")
+spawn("sx_remove_floor", 12,13,1, "sx_remove_floor_35")
 spawn("sx_remove_floor", 12,16,1, "sx_remove_floor_37")
 spawn("sx_remove_floor", 12,17,2, "sx_remove_floor_38")
 spawn("sx_remove_floor", 12,18,2, "sx_remove_floor_39")
 spawn("sx_remove_floor", 13,18,1, "sx_remove_floor_40")
 spawn("sx_remove_floor", 13,17,0, "sx_remove_floor_41")
 spawn("sx_remove_floor", 13,16,0, "sx_remove_floor_42")
-spawn("sx_remove_floor", 13,14,0, "sx_remove_floor_44")
-spawn("sx_remove_floor", 13,13,0, "sx_remove_floor_45")
+spawn("sx_remove_floor", 13,13,0, "sx_remove_floor_44")
+spawn("sx_remove_floor", 16,13,0, "sx_remove_floor_45")
 spawn("sx_remove_floor", 13,12,2, "sx_remove_floor_46")
 spawn("sx_remove_floor", 14,12,3, "sx_remove_floor_47")
-spawn("sx_remove_floor", 14,13,3, "sx_remove_floor_48")
-spawn("sx_remove_floor", 15,14,0, "sx_remove_floor_49")
-spawn("sx_remove_floor", 14,14,0, "sx_remove_floor_51")
+spawn("sx_remove_floor", 17,14,3, "sx_remove_floor_48")
+spawn("sx_remove_floor", 14,13,0, "sx_remove_floor_51")
 spawn("sx_remove_floor", 14,17,2, "sx_remove_floor_54")
 spawn("sx_remove_floor", 14,18,2, "sx_remove_floor_55")
 spawn("sx_remove_ceiling", 12,18,1, "sx_remove_ceiling_9")
@@ -1481,27 +1543,23 @@ spawn("sx_remove_ceiling", 13,17,0, "sx_remove_ceiling_13")
 spawn("sx_remove_ceiling", 12,17,0, "sx_remove_ceiling_14")
 spawn("sx_remove_ceiling", 12,16,0, "sx_remove_ceiling_15")
 spawn("sx_remove_ceiling", 13,16,0, "sx_remove_ceiling_16")
-spawn("sx_remove_ceiling", 13,14,0, "sx_remove_ceiling_18")
-spawn("sx_remove_ceiling", 12,14,0, "sx_remove_ceiling_19")
-spawn("sx_remove_ceiling", 12,13,0, "sx_remove_ceiling_20")
-spawn("sx_remove_ceiling", 13,13,3, "sx_remove_ceiling_21")
-spawn("sx_remove_ceiling", 14,13,0, "sx_remove_ceiling_22")
+spawn("sx_remove_ceiling", 13,13,0, "sx_remove_ceiling_18")
+spawn("sx_remove_ceiling", 12,13,0, "sx_remove_ceiling_19")
+spawn("sx_remove_ceiling", 12,14,0, "sx_remove_ceiling_20")
+spawn("sx_remove_ceiling", 13,14,3, "sx_remove_ceiling_21")
+spawn("sx_remove_ceiling", 14,14,0, "sx_remove_ceiling_22")
 spawn("sx_remove_ceiling", 14,12,2, "sx_remove_ceiling_23")
 spawn("sx_remove_ceiling", 13,12,3, "sx_remove_ceiling_24")
 spawn("sx_remove_ceiling", 12,12,0, "sx_remove_ceiling_25")
 spawn("sx_remove_floor", 17,12,1, "sx_remove_floor_70")
-spawn("sx_remove_floor", 17,13,0, "sx_remove_floor_56")
-spawn("sx_remove_floor", 17,14,1, "sx_remove_floor_57")
-spawn("sx_remove_floor", 17,15,1, "sx_remove_floor_58")
+spawn("sx_remove_floor", 17,13,1, "sx_remove_floor_57")
 spawn("sx_remove_floor", 17,16,1, "sx_remove_floor_59")
 spawn("sx_remove_floor", 17,17,2, "sx_remove_floor_60")
 spawn("sx_remove_floor", 17,18,2, "sx_remove_floor_61")
 spawn("sx_remove_floor", 18,18,1, "sx_remove_floor_62")
 spawn("sx_remove_floor", 18,17,0, "sx_remove_floor_63")
 spawn("sx_remove_floor", 18,16,0, "sx_remove_floor_64")
-spawn("sx_remove_floor", 18,15,0, "sx_remove_floor_65")
-spawn("sx_remove_floor", 18,14,0, "sx_remove_floor_66")
-spawn("sx_remove_floor", 18,13,0, "sx_remove_floor_67")
+spawn("sx_remove_floor", 18,13,0, "sx_remove_floor_66")
 spawn("sx_remove_floor", 18,12,2, "sx_remove_floor_68")
 spawn("sx_remove_ceiling", 17,18,1, "sx_remove_ceiling_37")
 spawn("sx_remove_ceiling", 18,18,0, "sx_remove_ceiling_17")
@@ -1509,67 +1567,48 @@ spawn("sx_remove_ceiling", 18,17,0, "sx_remove_ceiling_26")
 spawn("sx_remove_ceiling", 17,17,0, "sx_remove_ceiling_27")
 spawn("sx_remove_ceiling", 17,16,0, "sx_remove_ceiling_28")
 spawn("sx_remove_ceiling", 18,16,0, "sx_remove_ceiling_29")
-spawn("sx_remove_ceiling", 18,14,0, "sx_remove_ceiling_30")
-spawn("sx_remove_ceiling", 17,14,0, "sx_remove_ceiling_31")
-spawn("sx_remove_ceiling", 17,13,0, "sx_remove_ceiling_32")
-spawn("sx_remove_ceiling", 18,13,3, "sx_remove_ceiling_33")
+spawn("sx_remove_ceiling", 18,13,0, "sx_remove_ceiling_30")
+spawn("sx_remove_ceiling", 17,13,0, "sx_remove_ceiling_31")
+spawn("sx_remove_ceiling", 17,14,0, "sx_remove_ceiling_32")
+spawn("sx_remove_ceiling", 18,14,3, "sx_remove_ceiling_33")
 spawn("sx_remove_ceiling", 18,12,3, "sx_remove_ceiling_34")
 spawn("sx_remove_ceiling", 17,12,0, "sx_remove_ceiling_35")
 spawn("sx_remove_floor", 16,12,3, "sx_remove_floor_79")
-spawn("sx_remove_floor", 16,13,3, "sx_remove_floor_69")
-spawn("sx_remove_floor", 16,15,3, "sx_remove_floor_72")
-spawn("sx_remove_floor", 16,14,0, "sx_remove_floor_73")
 spawn("sx_remove_floor", 16,16,1, "sx_remove_floor_74")
 spawn("sx_remove_floor", 16,17,2, "sx_remove_floor_76")
 spawn("sx_remove_floor", 16,18,2, "sx_remove_floor_77")
 spawn("sx_remove_ceiling", 16,18,0, "sx_remove_ceiling_41")
 spawn("sx_remove_ceiling", 16,17,0, "sx_remove_ceiling_36")
-spawn("sx_remove_ceiling", 16,13,0, "sx_remove_ceiling_38")
+spawn("sx_remove_ceiling", 16,14,0, "sx_remove_ceiling_38")
 spawn("sx_remove_ceiling", 16,12,2, "sx_remove_ceiling_39")
-spawn("sx_remove_floor", 15,13,0, "sx_remove_floor_80")
-spawn("sx_remove_floor", 15,12,0, "sx_remove_floor_81")
-spawn("sx_remove_ceiling", 14,14,0, "sx_remove_ceiling_126")
-spawn("sx_remove_ceiling", 15,14,0, "sx_remove_ceiling_127")
-spawn("sx_remove_ceiling", 15,13,0, "sx_remove_ceiling_128")
+spawn("sx_remove_ceiling", 14,13,0, "sx_remove_ceiling_126")
+spawn("sx_remove_ceiling", 15,13,0, "sx_remove_ceiling_127")
+spawn("sx_remove_ceiling", 15,14,0, "sx_remove_ceiling_128")
 spawn("sx_remove_ceiling", 15,12,0, "sx_remove_ceiling_129")
-spawn("sx_remove_ceiling", 16,14,0, "sx_remove_ceiling_130")
+spawn("sx_remove_ceiling", 16,13,0, "sx_remove_ceiling_130")
 spawn("sx_remove_floor", 11,12,1, "sx_remove_floor_456")
-spawn("sx_remove_floor", 11,13,0, "sx_remove_floor_183")
-spawn("sx_remove_floor", 11,14,1, "sx_remove_floor_185")
-spawn("sx_remove_floor", 11,16,1, "sx_remove_floor_187")
-spawn("sx_remove_floor", 11,17,2, "sx_remove_floor_188")
-spawn("sx_remove_floor", 11,18,2, "sx_remove_floor_189")
 spawn("sx_remove_ceiling", 11,18,1, "sx_remove_ceiling_474")
 spawn("sx_remove_ceiling", 11,17,0, "sx_remove_ceiling_184")
 spawn("sx_remove_ceiling", 11,16,0, "sx_remove_ceiling_446")
 spawn("sx_remove_ceiling", 11,14,0, "sx_remove_ceiling_447")
 spawn("sx_remove_ceiling", 11,13,0, "sx_remove_ceiling_448")
 spawn("sx_remove_ceiling", 11,12,0, "sx_remove_ceiling_449")
-spawn("sx_remove_floor", 11,19,2, "sx_remove_floor_191")
 spawn("sx_remove_ceiling", 11,19,1, "sx_remove_ceiling_451")
-spawn("sx_remove_floor", 11,11,3, "sx_remove_floor_193")
 spawn("sx_remove_ceiling", 11,11,2, "sx_remove_ceiling_453")
-spawn("sx_remove_floor", 12,15,1, "sx_remove_floor_453")
-spawn("sx_remove_floor", 13,15,1, "sx_remove_floor_457")
-spawn("sx_remove_floor", 14,15,1, "sx_remove_floor_458")
+spawn("sx_remove_floor", 12,14,1, "sx_remove_floor_453")
+spawn("sx_remove_floor", 13,14,1, "sx_remove_floor_457")
 spawn("sx_remove_floor", 14,16,1, "sx_remove_floor_459")
 spawn("sx_remove_floor", 15,16,1, "sx_remove_floor_460")
 spawn("sx_remove_floor", 15,17,1, "sx_remove_floor_461")
 spawn("sx_remove_floor", 15,18,1, "sx_remove_floor_462")
-spawn("sx_remove_floor", 11,15,1, "sx_remove_floor_463")
-spawn("sx_remove_floor", 12,11,1, "sx_remove_floor_190")
 spawn("sx_remove_floor", 13,11,2, "sx_remove_floor_160")
 spawn("sx_remove_floor", 14,11,3, "sx_remove_floor_162")
 spawn("sx_remove_ceiling", 14,11,2, "sx_remove_ceiling_482")
 spawn("sx_remove_ceiling", 13,11,3, "sx_remove_ceiling_459")
 spawn("sx_remove_ceiling", 12,11,0, "sx_remove_ceiling_476")
-spawn("sx_remove_floor", 17,11,1, "sx_remove_floor_163")
-spawn("sx_remove_floor", 18,11,2, "sx_remove_floor_164")
 spawn("sx_remove_ceiling", 18,11,3, "sx_remove_ceiling_477")
 spawn("sx_remove_ceiling", 17,11,0, "sx_remove_ceiling_478")
-spawn("sx_remove_floor", 16,11,3, "sx_remove_floor_165")
 spawn("sx_remove_ceiling", 16,11,2, "sx_remove_ceiling_479")
-spawn("sx_remove_floor", 15,11,0, "sx_remove_floor_166")
 spawn("sx_remove_ceiling", 15,11,0, "sx_remove_ceiling_480")
 spawn("sx_remove_floor", 12,19,2, "sx_remove_floor_175")
 spawn("sx_remove_floor", 13,19,1, "sx_remove_floor_167")
@@ -1586,25 +1625,65 @@ spawn("sx_remove_ceiling", 16,19,0, "sx_remove_ceiling_486")
 spawn("sx_remove_floor", 19,18,1, "sx_remove_floor_184")
 spawn("sx_remove_floor", 19,17,0, "sx_remove_floor_173")
 spawn("sx_remove_floor", 19,16,0, "sx_remove_floor_174")
-spawn("sx_remove_floor", 19,15,0, "sx_remove_floor_176")
-spawn("sx_remove_floor", 19,14,0, "sx_remove_floor_177")
-spawn("sx_remove_floor", 19,13,0, "sx_remove_floor_178")
-spawn("sx_remove_floor", 19,12,2, "sx_remove_floor_179")
 spawn("sx_remove_ceiling", 19,18,0, "sx_remove_ceiling_498")
 spawn("sx_remove_ceiling", 19,17,0, "sx_remove_ceiling_488")
 spawn("sx_remove_ceiling", 19,16,0, "sx_remove_ceiling_490")
-spawn("sx_remove_ceiling", 19,14,0, "sx_remove_ceiling_491")
-spawn("sx_remove_ceiling", 19,13,3, "sx_remove_ceiling_492")
+spawn("sx_remove_ceiling", 19,13,0, "sx_remove_ceiling_491")
+spawn("sx_remove_ceiling", 19,14,3, "sx_remove_ceiling_492")
 spawn("sx_remove_ceiling", 19,12,3, "sx_remove_ceiling_493")
 spawn("sx_remove_floor", 19,19,1, "sx_remove_floor_181")
 spawn("sx_remove_ceiling", 19,19,0, "sx_remove_ceiling_496")
-spawn("temple_stairs_down", 20,11,3, "temple_stairs_down_1")
+spawn("temple_stairs_down", 21,10,1, "temple_stairs_down_1")
 spawn("temple_stairs_up", 15,20,0, "temple_stairs_up_4")
 spawn("sx_remove_ceiling", 11,15,1, "sx_remove_ceiling_62")
 spawn("sx_remove_ceiling", 12,15,1, "sx_remove_ceiling_131")
 spawn("sx_remove_ceiling", 13,15,2, "sx_remove_ceiling_132")
 spawn("sx_remove_ceiling", 14,15,3, "sx_remove_ceiling_133")
 spawn("sx_remove_ceiling", 14,16,2, "sx_remove_ceiling_136")
+spawn("sx_remove_floor", 16,14,3, "sx_remove_floor_56")
+spawn("sx_remove_floor", 16,11,3, "sx_remove_floor_58")
+spawn("sx_remove_floor", 19,14,3, "sx_remove_floor_65")
+spawn("sx_remove_floor", 19,13,3, "sx_remove_floor_67")
+spawn("sx_remove_floor", 19,12,3, "sx_remove_floor_69")
+spawn("sx_remove_ceiling", 19,11,3, "sx_remove_ceiling_185")
+spawn("sx_remove_floor", 16,15,1, "sx_remove_floor_73")
+spawn("sx_remove_floor", 17,15,1, "sx_remove_floor_80")
+spawn("sx_remove_floor", 18,15,1, "sx_remove_floor_81")
+spawn("sx_remove_floor", 19,15,1, "sx_remove_floor_163")
+spawn("temple_door_iron", 11,19,2, "temple_door_iron_7")
+spawn("lock_gear", 11,17,3, "lock_gear_19")
+	:setOpenedBy("")
+spawn("lock_gear", 11,19,3, "lock_gear_4")
+	:setOpenedBy("")
+spawn("lock_gear", 11,18,3, "lock_gear_5")
+	:setOpenedBy("")
+spawn("temple_wall_text", 11,16,3, "temple_wall_text_3")
+	:setWallText("Three keys to pass")
+spawn("dx_solid_wall", 15,19,0, "dx_solid_wall_2")
+spawn("sx_remove_floor", 11,13,1, "sx_remove_floor_522")
+spawn("sx_remove_floor", 11,14,1, "sx_remove_floor_563")
+spawn("torch_holder", 15,14,2, "torch_holder_6")
+	:addTorch()
+spawn("sx_remove_floor", 17,11,3, "sx_remove_floor_458")
+spawn("sx_remove_floor", 18,11,3, "sx_remove_floor_564")
+spawn("sx_remove_floor", 19,11,3, "sx_remove_floor_565")
+spawn("sx_remove_floor", 18,14,3, "sx_remove_floor_566")
+spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_43")
+spawn("sx_outwall_pillarkiller", 19,18,1, "sx_outwall_pillarkiller_38")
+spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_40")
+spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_41")
+spawn("sx_outwall_pillarkiller", 11,12,3, "sx_outwall_pillarkiller_45")
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_42")
+spawn("sx_outwall_pillarkiller", 11,11,0, "sx_outwall_pillarkiller_47")
+spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_44")
+spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_48")
+spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_49")
+spawn("sx_outwall_pillarkiller", 14,19,2, "sx_outwall_pillarkiller_50")
+spawn("sx_outwall_pillarkiller", 13,19,2, "sx_outwall_pillarkiller_51")
+spawn("sx_outwall_pillarkiller", 19,19,2, "sx_outwall_pillarkiller_52")
+spawn("temple_alcove", 11,11,3, "temple_alcove_1")
+spawn("torch_holder", 12,11,0, "torch_holder_8")
+	:addTorch()
 
 --- level 8 ---
 
@@ -1622,12 +1701,12 @@ mapDesc([[
 ########....#.#######.#.########
 .........#..#.........#.........
 ###########.##############.#####
-.........##.##############..####
-########.##..........#.......###
+.........##.#########...##..####
+########.##.........##.......###
 ##...###.##.........#..#########
 ####.###.##.........#.#.........
 ##...###.##.........#.#.########
-####.###.##....#......#.###...##
+####.###.##....#....#.#.###...##
 ##...###............#.#.#####.##
 ########.##.........#...#####.##
 .........##.........#.#.#####.##
@@ -1645,28 +1724,27 @@ mapDesc([[
 ####.###.#.##...##...##.###...##
 ########.#.#######.####.########
 ]])
-spawn("sx_remove_floor", 13,14,3, "sx_remove_floor_1")
-spawn("sx_remove_floor", 14,13,3, "sx_remove_floor_3")
-spawn("sx_remove_floor", 13,13,3, "sx_remove_floor_4")
+spawn("sx_remove_floor", 13,13,3, "sx_remove_floor_1")
+spawn("sx_remove_floor", 14,14,3, "sx_remove_floor_3")
 spawn("sx_remove_floor", 13,16,0, "sx_remove_floor_5")
 spawn("sx_remove_floor", 13,17,1, "sx_remove_floor_7")
 spawn("sx_remove_floor", 14,17,0, "sx_remove_floor_8")
 spawn("sx_remove_floor", 16,17,0, "sx_remove_floor_10")
 spawn("sx_remove_floor", 17,17,0, "sx_remove_floor_11")
 spawn("sx_remove_floor", 17,16,2, "sx_remove_floor_12")
-spawn("sx_remove_floor", 16,13,1, "sx_remove_floor_14")
-spawn("sx_remove_floor", 17,13,3, "sx_remove_floor_15")
-spawn("sx_remove_floor", 17,14,0, "sx_remove_floor_16")
-spawn("sx_remove_floor", 12,14,2, "sx_remove_floor_2")
-spawn("sx_remove_floor", 12,13,2, "sx_remove_floor_6")
+spawn("sx_remove_floor", 16,14,1, "sx_remove_floor_14")
+spawn("sx_remove_floor", 17,14,3, "sx_remove_floor_15")
+spawn("sx_remove_floor", 17,13,0, "sx_remove_floor_16")
+spawn("sx_remove_floor", 12,13,2, "sx_remove_floor_2")
+spawn("sx_remove_floor", 12,14,2, "sx_remove_floor_6")
 spawn("sx_remove_floor", 16,12,0, "sx_remove_floor_9")
 spawn("sx_remove_floor", 12,12,1, "sx_remove_floor_13")
 spawn("sx_remove_floor", 14,12,3, "sx_remove_floor_17")
 spawn("sx_remove_floor", 13,12,1, "sx_remove_floor_18")
 spawn("sx_remove_floor", 17,12,1, "sx_remove_floor_19")
 spawn("sx_remove_floor", 18,12,3, "sx_remove_floor_20")
-spawn("sx_remove_floor", 18,13,0, "sx_remove_floor_21")
-spawn("sx_remove_floor", 18,14,0, "sx_remove_floor_22")
+spawn("sx_remove_floor", 18,14,0, "sx_remove_floor_21")
+spawn("sx_remove_floor", 18,13,0, "sx_remove_floor_22")
 spawn("sx_remove_floor", 18,16,2, "sx_remove_floor_23")
 spawn("sx_remove_floor", 18,17,2, "sx_remove_floor_24")
 spawn("sx_remove_floor", 18,18,0, "sx_remove_floor_25")
@@ -1677,68 +1755,53 @@ spawn("sx_remove_floor", 13,18,0, "sx_remove_floor_29")
 spawn("sx_remove_floor", 12,18,1, "sx_remove_floor_30")
 spawn("sx_remove_floor", 12,17,2, "sx_remove_floor_31")
 spawn("sx_remove_floor", 12,16,1, "sx_remove_floor_32")
-spawn("torch_holder", 15,14,2, "torch_holder_2")
+spawn("torch_holder", 14,15,1, "torch_holder_2")
 	:addTorch()
 spawn("sx_remove_ceiling", 12,16,0, "sx_remove_ceiling_40")
-spawn("sx_remove_ceiling", 12,15,0, "sx_remove_ceiling_42")
-spawn("sx_remove_ceiling", 12,14,2, "sx_remove_ceiling_43")
-spawn("sx_remove_ceiling", 12,13,0, "sx_remove_ceiling_44")
+spawn("sx_remove_ceiling", 12,14,0, "sx_remove_ceiling_42")
+spawn("sx_remove_ceiling", 12,13,2, "sx_remove_ceiling_43")
 spawn("sx_remove_ceiling", 12,12,2, "sx_remove_ceiling_45")
 spawn("sx_remove_ceiling", 12,17,1, "sx_remove_ceiling_46")
 spawn("sx_remove_ceiling", 12,18,1, "sx_remove_ceiling_47")
-spawn("sx_remove_ceiling", 18,13,2, "sx_remove_ceiling_55")
-spawn("sx_remove_ceiling", 18,14,1, "sx_remove_ceiling_56")
+spawn("sx_remove_ceiling", 18,13,1, "sx_remove_ceiling_56")
 spawn("sx_remove_ceiling", 18,15,1, "sx_remove_ceiling_57")
 spawn("sx_remove_ceiling", 18,16,1, "sx_remove_ceiling_58")
 spawn("sx_remove_ceiling", 18,17,2, "sx_remove_ceiling_59")
 spawn("sx_remove_ceiling", 18,18,1, "sx_remove_ceiling_60")
 spawn("sx_remove_ceiling", 17,12,2, "sx_remove_ceiling_69")
-spawn("sx_remove_ceiling", 17,13,2, "sx_remove_ceiling_61")
-spawn("sx_remove_ceiling", 17,14,1, "sx_remove_ceiling_63")
+spawn("sx_remove_ceiling", 17,13,1, "sx_remove_ceiling_63")
 spawn("sx_remove_ceiling", 17,15,1, "sx_remove_ceiling_64")
 spawn("sx_remove_ceiling", 17,16,1, "sx_remove_ceiling_65")
 spawn("sx_remove_ceiling", 17,17,2, "sx_remove_ceiling_66")
 spawn("sx_remove_ceiling", 17,18,1, "sx_remove_ceiling_67")
 spawn("sx_remove_ceiling", 16,12,2, "sx_remove_ceiling_76")
-spawn("sx_remove_ceiling", 16,13,2, "sx_remove_ceiling_68")
-spawn("sx_remove_ceiling", 16,14,1, "sx_remove_ceiling_70")
+spawn("sx_remove_ceiling", 16,13,1, "sx_remove_ceiling_70")
 spawn("sx_remove_ceiling", 16,15,1, "sx_remove_ceiling_71")
 spawn("sx_remove_ceiling", 16,16,1, "sx_remove_ceiling_72")
 spawn("sx_remove_ceiling", 16,17,2, "sx_remove_ceiling_73")
 spawn("sx_remove_ceiling", 16,18,1, "sx_remove_ceiling_74")
 spawn("sx_remove_ceiling", 14,12,2, "sx_remove_ceiling_83")
-spawn("sx_remove_ceiling", 14,13,2, "sx_remove_ceiling_75")
-spawn("sx_remove_ceiling", 14,14,1, "sx_remove_ceiling_77")
-spawn("sx_remove_ceiling", 14,15,1, "sx_remove_ceiling_78")
+spawn("sx_remove_ceiling", 14,13,1, "sx_remove_ceiling_77")
+spawn("sx_remove_ceiling", 13,14,1, "sx_remove_ceiling_78")
 spawn("sx_remove_ceiling", 14,16,1, "sx_remove_ceiling_79")
 spawn("sx_remove_ceiling", 14,17,2, "sx_remove_ceiling_80")
 spawn("sx_remove_ceiling", 14,18,1, "sx_remove_ceiling_81")
 spawn("sx_remove_ceiling", 13,12,2, "sx_remove_ceiling_90")
-spawn("sx_remove_ceiling", 13,13,2, "sx_remove_ceiling_82")
-spawn("sx_remove_ceiling", 13,14,1, "sx_remove_ceiling_84")
-spawn("sx_remove_ceiling", 13,15,1, "sx_remove_ceiling_85")
+spawn("sx_remove_ceiling", 13,13,1, "sx_remove_ceiling_84")
 spawn("sx_remove_ceiling", 13,16,1, "sx_remove_ceiling_86")
 spawn("sx_remove_ceiling", 13,17,2, "sx_remove_ceiling_87")
 spawn("sx_remove_ceiling", 13,18,1, "sx_remove_ceiling_88")
-spawn("sx_remove_ceiling", 15,12,2, "sx_remove_ceiling_93")
-spawn("sx_remove_ceiling", 15,13,2, "sx_remove_ceiling_89")
-spawn("sx_remove_ceiling", 15,14,1, "sx_remove_ceiling_91")
+spawn("sx_remove_ceiling", 17,14,0, "sx_remove_ceiling_93")
+spawn("sx_remove_ceiling", 16,14,2, "sx_remove_ceiling_91")
 spawn("sx_remove_ceiling", 15,16,2, "sx_remove_ceiling_96")
 spawn("sx_remove_ceiling", 15,17,2, "sx_remove_ceiling_92")
 spawn("sx_remove_ceiling", 15,18,1, "sx_remove_ceiling_94")
 spawn("sx_remove_ceiling", 11,12,2, "sx_remove_ceiling_220")
-spawn("sx_remove_ceiling", 11,13,2, "sx_remove_ceiling_216")
-spawn("sx_remove_ceiling", 11,14,1, "sx_remove_ceiling_218")
-spawn("sx_remove_ceiling", 11,16,2, "sx_remove_ceiling_223")
-spawn("sx_remove_ceiling", 11,17,2, "sx_remove_ceiling_219")
-spawn("sx_remove_ceiling", 11,18,1, "sx_remove_ceiling_221")
-spawn("sx_remove_ceiling", 11,15,2, "sx_remove_ceiling_224")
-spawn("sx_remove_ceiling", 11,19,1, "sx_remove_ceiling_225")
 spawn("sx_remove_ceiling", 11,11,2, "sx_remove_ceiling_226")
 spawn("sx_remove_ceiling", 12,11,0, "sx_remove_ceiling_222")
 spawn("sx_remove_ceiling", 13,11,1, "sx_remove_ceiling_227")
 spawn("sx_remove_ceiling", 14,11,3, "sx_remove_ceiling_228")
-spawn("sx_remove_ceiling", 15,11,1, "sx_remove_ceiling_229")
+spawn("sx_remove_ceiling", 18,14,0, "sx_remove_ceiling_229")
 spawn("sx_remove_ceiling", 16,11,1, "sx_remove_ceiling_230")
 spawn("sx_remove_ceiling", 18,12,0, "sx_remove_ceiling_231")
 spawn("sx_remove_ceiling", 19,15,3, "sx_remove_ceiling_238")
@@ -1752,45 +1815,71 @@ spawn("sx_remove_ceiling", 16,19,1, "sx_remove_ceiling_245")
 spawn("sx_remove_ceiling", 14,19,2, "sx_remove_ceiling_247")
 spawn("sx_remove_ceiling", 13,19,3, "sx_remove_ceiling_248")
 spawn("sx_remove_ceiling", 12,19,2, "sx_remove_ceiling_249")
-spawn("sx_remove_floor", 19,12,3, "sx_remove_floor_468")
-spawn("sx_remove_floor", 19,13,0, "sx_remove_floor_437")
-spawn("sx_remove_floor", 19,14,0, "sx_remove_floor_466")
-spawn("sx_remove_ceiling", 19,13,2, "sx_remove_ceiling_123")
-spawn("sx_remove_ceiling", 19,14,1, "sx_remove_ceiling_124")
-spawn("sx_remove_ceiling", 19,12,0, "sx_remove_ceiling_125")
 spawn("sx_remove_ceiling", 18,11,0, "sx_remove_ceiling_135")
 spawn("sx_remove_ceiling", 17,11,1, "sx_remove_ceiling_450")
-spawn("torch_holder", 15,16,0, "torch_holder_6")
-	:addTorch()
 spawn("sx_remove_floor", 14,11,3, "sx_remove_floor_469")
 spawn("sx_remove_floor", 13,11,3, "sx_remove_floor_470")
 spawn("sx_remove_floor", 12,11,3, "sx_remove_floor_474")
 spawn("sx_remove_floor", 14,19,3, "sx_remove_floor_475")
-spawn("sx_remove_floor", 14,14,3, "sx_remove_floor_476")
+spawn("sx_remove_floor", 14,13,3, "sx_remove_floor_476")
 spawn("sx_remove_floor", 16,16,3, "sx_remove_floor_477")
 spawn("sx_remove_floor", 16,19,0, "sx_remove_floor_478")
 spawn("temple_door_iron", 17,21,0, "temple_door_iron_1")
-spawn("temple_door_iron", 20,15,3, "temple_door_iron_2")
 spawn("lock_gear", 18,21,2, "lock_gear_1")
 	:setOpenedBy("")
 spawn("lock_gear", 16,21,2, "lock_gear_2")
 spawn("lock_gear", 17,21,2, "lock_gear_3")
 spawn("temple_wall_text", 16,21,0, "temple_wall_text_1")
 	:setWallText("Three keys to pass")
-spawn("lock_gear", 20,15,0, "lock_gear_4")
-spawn("lock_gear", 20,15,2, "lock_gear_5")
-spawn("lock_gear", 21,15,1, "lock_gear_6")
-spawn("temple_wall_text", 21,16,3, "temple_wall_text_3")
-	:setWallText("Three keys to pass")
-spawn("temple_stairs_up", 20,11,1, "temple_stairs_up_2")
+spawn("temple_stairs_up", 21,10,3, "temple_stairs_up_2")
 spawn("temple_wall_text_long", 10,1,0, "temple_wall_text_long_1")
 	:setWallText("Starting point")
-spawn("temple_pillar", 15,19,2, "temple_pillar_1")
-spawn("temple_pillar", 16,19,2, "temple_pillar_2")
-spawn("temple_pillar", 19,12,2, "temple_pillar_3")
 spawn("sx_remove_floor", 19,17,0, "sx_remove_floor_472")
 spawn("sx_remove_floor", 19,16,0, "sx_remove_floor_473")
 spawn("sx_remove_floor", 19,18,0, "sx_remove_floor_490")
+spawn("sx_remove_floor", 16,11,0, "sx_remove_floor_49")
+spawn("sx_remove_floor", 17,11,0, "sx_remove_floor_164")
+spawn("sx_remove_floor", 18,11,0, "sx_remove_floor_165")
+spawn("sx_remove_floor", 15,12,0, "sx_remove_floor_166")
+spawn("sx_remove_floor", 15,13,0, "sx_remove_floor_178")
+spawn("sx_remove_floor", 16,13,0, "sx_remove_floor_183")
+spawn("sx_remove_floor", 16,15,0, "sx_remove_floor_185")
+spawn("sx_remove_floor", 17,15,0, "sx_remove_floor_187")
+spawn("sx_remove_floor", 18,15,0, "sx_remove_floor_188")
+spawn("sx_remove_floor", 19,15,0, "sx_remove_floor_189")
+spawn("sx_remove_floor", 19,11,0, "sx_remove_floor_191")
+spawn("sx_remove_floor", 15,14,3, "sx_remove_floor_176")
+spawn("sx_remove_floor", 15,11,3, "sx_remove_floor_557")
+spawn("sx_remove_floor", 13,14,3, "sx_remove_floor_559")
+spawn("sx_remove_floor", 19,14,0, "sx_remove_floor_560")
+spawn("sx_remove_floor", 19,13,0, "sx_remove_floor_561")
+spawn("sx_remove_floor", 19,12,0, "sx_remove_floor_562")
+spawn("sx_outwall_pillarkiller", 19,15,1, "sx_outwall_pillarkiller_35")
+spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_25")
+spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_32")
+spawn("sx_outwall_pillarkiller", 19,13,1, "sx_outwall_pillarkiller_33")
+spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_39")
+spawn("sx_outwall_pillarkiller", 15,11,0, "sx_outwall_pillarkiller_34")
+spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_36")
+spawn("sx_outwall_pillarkiller", 19,11,0, "sx_outwall_pillarkiller_37")
+spawn("sx_remove_ceiling", 11,13,2, "sx_remove_ceiling_55")
+spawn("sx_remove_ceiling", 11,14,2, "sx_remove_ceiling_61")
+spawn("sx_remove_ceiling", 19,14,0, "sx_remove_ceiling_68")
+spawn("sx_remove_ceiling", 19,13,0, "sx_remove_ceiling_75")
+spawn("sx_remove_ceiling", 19,12,0, "sx_remove_ceiling_82")
+spawn("sx_remove_ceiling", 19,11,0, "sx_remove_ceiling_85")
+spawn("temple_pillar_hub", 15,15,0, "temple_pillar_hub_5")
+spawn("temple_pillar_hub", 16,19,2, "temple_pillar_hub_6")
+spawn("temple_pillar_hub", 15,20,0, "temple_pillar_hub_8")
+spawn("temple_pillar_hub", 16,20,0, "temple_pillar_hub_9")
+spawn("sx_outwall_pillarkiller", 15,20,0, "sx_outwall_pillarkiller_80")
+spawn("starting_location", 12,15,1, "starting_location")
+spawn("temple_pillar_hub", 15,19,0, "temple_pillar_hub_10")
+spawn("temple_pillar_hub", 16,15,0, "temple_pillar_hub_11")
+spawn("temple_pillar_hub", 16,16,0, "temple_pillar_hub_12")
+spawn("temple_pillar_hub", 15,16,0, "temple_pillar_hub_13")
+spawn("sx_outwall_pillarkiller", 15,15,0, "sx_outwall_pillarkiller_81")
+spawn("sx_outwall_pillarkiller", 15,16,0, "sx_outwall_pillarkiller_87")
 
 --- level 9 ---
 
@@ -1809,15 +1898,15 @@ mapDesc([[
 .........####.........#.........
 ################################
 .........#######################
-########.#########..############
+########.###........############
 ########.###........############
 ########.###........###.........
 ########.###........###.########
-########.###.......####.########
-########.###.......####.########
-########.###.......####.########
-.........###.......####.########
-#######################.########
+########.###...#....###.########
+########.###........###.########
+########.###........###.########
+.........###........###.########
+############........###.########
 #######################.########
 #######################.........
 ################################
@@ -1868,3 +1957,82 @@ spawn("sx_remove_ceiling", 19,12,3, "sx_remove_ceiling_234")
 spawn("sx_remove_ceiling", 19,13,2, "sx_remove_ceiling_236")
 spawn("sx_remove_ceiling", 18,11,3, "sx_remove_ceiling_452")
 spawn("sx_remove_ceiling", 19,11,3, "sx_remove_ceiling_237")
+spawn("sx_remove_ceiling", 12,11,2, "sx_remove_ceiling_167")
+spawn("sx_remove_ceiling", 14,11,2, "sx_remove_ceiling_119")
+spawn("sx_remove_ceiling", 13,11,2, "sx_remove_ceiling_122")
+spawn("sx_remove_ceiling", 19,17,0, "sx_remove_ceiling_181")
+spawn("sx_remove_ceiling", 19,18,0, "sx_remove_ceiling_166")
+spawn("sx_remove_ceiling", 19,16,0, "sx_remove_ceiling_173")
+spawn("sx_remove_ceiling", 14,19,0, "sx_remove_ceiling_182")
+spawn("sx_remove_ceiling", 16,19,0, "sx_remove_ceiling_183")
+spawn("sx_remove_floor", 12,15,3, "sx_remove_floor_393")
+spawn("sx_remove_floor", 12,12,1, "sx_remove_floor_34")
+spawn("sx_remove_floor", 12,13,0, "sx_remove_floor_72")
+spawn("sx_remove_floor", 12,14,1, "sx_remove_floor_177")
+spawn("sx_remove_floor", 12,11,3, "sx_remove_floor_179")
+spawn("sx_remove_floor", 12,16,1, "sx_remove_floor_298")
+spawn("sx_remove_floor", 12,17,2, "sx_remove_floor_382")
+spawn("sx_remove_floor", 12,18,2, "sx_remove_floor_383")
+spawn("sx_remove_floor", 12,19,2, "sx_remove_floor_384")
+spawn("sx_remove_floor", 13,15,3, "sx_remove_floor_466")
+spawn("sx_remove_floor", 13,12,1, "sx_remove_floor_391")
+spawn("sx_remove_floor", 13,13,0, "sx_remove_floor_394")
+spawn("sx_remove_floor", 13,14,1, "sx_remove_floor_395")
+spawn("sx_remove_floor", 13,11,3, "sx_remove_floor_396")
+spawn("sx_remove_floor", 13,16,1, "sx_remove_floor_400")
+spawn("sx_remove_floor", 13,17,2, "sx_remove_floor_401")
+spawn("sx_remove_floor", 13,18,2, "sx_remove_floor_402")
+spawn("sx_remove_floor", 13,19,2, "sx_remove_floor_437")
+spawn("sx_remove_floor", 14,15,3, "sx_remove_floor_513")
+spawn("sx_remove_floor", 14,12,1, "sx_remove_floor_463")
+spawn("sx_remove_floor", 14,13,0, "sx_remove_floor_468")
+spawn("sx_remove_floor", 14,14,1, "sx_remove_floor_480")
+spawn("sx_remove_floor", 14,11,3, "sx_remove_floor_481")
+spawn("sx_remove_floor", 14,16,1, "sx_remove_floor_501")
+spawn("sx_remove_floor", 14,17,2, "sx_remove_floor_509")
+spawn("sx_remove_floor", 14,18,2, "sx_remove_floor_510")
+spawn("sx_remove_floor", 14,19,2, "sx_remove_floor_511")
+spawn("sx_remove_floor", 15,12,1, "sx_remove_floor_512")
+spawn("sx_remove_floor", 15,13,0, "sx_remove_floor_514")
+spawn("sx_remove_floor", 15,14,1, "sx_remove_floor_515")
+spawn("sx_remove_floor", 15,11,3, "sx_remove_floor_516")
+spawn("sx_remove_floor", 15,16,1, "sx_remove_floor_517")
+spawn("sx_remove_floor", 15,17,2, "sx_remove_floor_518")
+spawn("sx_remove_floor", 15,18,2, "sx_remove_floor_519")
+spawn("sx_remove_floor", 15,19,2, "sx_remove_floor_520")
+spawn("sx_remove_floor", 16,15,3, "sx_remove_floor_531")
+spawn("sx_remove_floor", 16,12,1, "sx_remove_floor_521")
+spawn("sx_remove_floor", 16,13,0, "sx_remove_floor_523")
+spawn("sx_remove_floor", 16,14,1, "sx_remove_floor_524")
+spawn("sx_remove_floor", 16,11,3, "sx_remove_floor_525")
+spawn("sx_remove_floor", 16,16,1, "sx_remove_floor_526")
+spawn("sx_remove_floor", 16,17,2, "sx_remove_floor_527")
+spawn("sx_remove_floor", 16,18,2, "sx_remove_floor_528")
+spawn("sx_remove_floor", 16,19,2, "sx_remove_floor_529")
+spawn("sx_remove_floor", 17,15,3, "sx_remove_floor_540")
+spawn("sx_remove_floor", 17,12,1, "sx_remove_floor_530")
+spawn("sx_remove_floor", 17,13,0, "sx_remove_floor_532")
+spawn("sx_remove_floor", 17,14,1, "sx_remove_floor_533")
+spawn("sx_remove_floor", 17,11,3, "sx_remove_floor_534")
+spawn("sx_remove_floor", 17,16,1, "sx_remove_floor_535")
+spawn("sx_remove_floor", 17,17,2, "sx_remove_floor_536")
+spawn("sx_remove_floor", 17,18,2, "sx_remove_floor_537")
+spawn("sx_remove_floor", 17,19,2, "sx_remove_floor_538")
+spawn("sx_remove_floor", 18,15,3, "sx_remove_floor_549")
+spawn("sx_remove_floor", 18,12,1, "sx_remove_floor_539")
+spawn("sx_remove_floor", 18,13,0, "sx_remove_floor_541")
+spawn("sx_remove_floor", 18,14,1, "sx_remove_floor_542")
+spawn("sx_remove_floor", 18,11,3, "sx_remove_floor_543")
+spawn("sx_remove_floor", 18,16,1, "sx_remove_floor_544")
+spawn("sx_remove_floor", 18,17,2, "sx_remove_floor_545")
+spawn("sx_remove_floor", 18,18,2, "sx_remove_floor_546")
+spawn("sx_remove_floor", 18,19,2, "sx_remove_floor_547")
+spawn("sx_remove_floor", 19,15,3, "sx_remove_floor_558")
+spawn("sx_remove_floor", 19,12,1, "sx_remove_floor_548")
+spawn("sx_remove_floor", 19,13,0, "sx_remove_floor_550")
+spawn("sx_remove_floor", 19,14,1, "sx_remove_floor_551")
+spawn("sx_remove_floor", 19,11,3, "sx_remove_floor_552")
+spawn("sx_remove_floor", 19,16,1, "sx_remove_floor_553")
+spawn("sx_remove_floor", 19,17,2, "sx_remove_floor_554")
+spawn("sx_remove_floor", 19,18,2, "sx_remove_floor_555")
+spawn("sx_remove_floor", 19,19,2, "sx_remove_floor_556")

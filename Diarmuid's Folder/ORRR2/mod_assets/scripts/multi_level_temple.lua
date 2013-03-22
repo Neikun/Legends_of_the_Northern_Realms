@@ -14,6 +14,20 @@ defineMaterial{
 	depthBias = 0,
 }
 
+defineMaterial{
+	name = "temple_wall_tileable",
+	diffuseMap = "mod_assets/textures/env/temple_wall_tileable_dif.tga",
+	specularMap = "assets/textures/env/temple_wall_spec.tga",
+	normalMap = "assets/textures/env/temple_wall_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 30,
+	depthBias = 0,
+}
+
 -- **************************************************************************************
 --                                         OBJECTS
 -- **************************************************************************************
@@ -30,10 +44,12 @@ defineObject{
 	editorIcon = 120,
 }
 
-cloneObject{
+defineObject{
 	name = "dx_temple_solid_wall",
-	baseObject = "temple_secret_door",
-	model = "assets/models/env/temple_wall_01.fbx",
+	class = "Decoration",
+	model = "mod_assets/models/env/temple_wall_dx_decor.fbx",
+	placement = "wall",
+	editorIcon = 120,
 }
 
 defineObject{
@@ -42,6 +58,22 @@ defineObject{
 	model = "mod_assets/models/sx_blocker.fbx",
 	placement = "ceiling",
 	editorIcon = 144,
+}
+
+defineObject{
+	name = "temple_pillar_reversed",
+	class = "Decoration",
+	model = "mod_assets/models/env/temple_pillar_reversed.fbx",
+	placement = "pillar",
+	editorIcon = 108,
+}
+
+defineObject{
+	name = "temple_pillar_hub",
+	class = "Decoration",
+	model = "mod_assets/models/env/temple_pillar_hub.fbx",
+	placement = "pillar",
+	editorIcon = 108,
 }
 
 -- Stairs
