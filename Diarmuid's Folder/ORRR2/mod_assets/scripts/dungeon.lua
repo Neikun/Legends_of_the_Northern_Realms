@@ -40,451 +40,475 @@ mapDesc([[
 ########.#.#######.####.########
 ]])
 spawn("script_entity", 15,10,0, "dungeonCompiler")
-	:setSource("\9-- ==========================================================================\
-\9--                        MULTI-LEVEL DUNGEON COMPILER\
-\9-- ==========================================================================\
+	:setSource("-- ==========================================================================\
+--                        MULTI-LEVEL DUNGEON COMPILER\
+-- ==========================================================================\
 \
 \
 \
-\9-- ==========================================================================\
-\9--                            WALLSET DEFINITIONS\
-\9-- ==========================================================================\
+-- ==========================================================================\
+--                            WALLSET DEFINITIONS\
+-- ==========================================================================\
 \
 \
 \
-\9wallset = {\
-\9\9_wall  = {\"dx_temple_wall\",\"wall\",0,0,0},\
-\9\9--_wall_dxs = {\"dxs_castle_exterior_wall\",\"wall\",0,0,0},\
-\9\9--_pillar = {\"dx_castle_exterior_pillar_small\",\"pillar\",0,0,0},\
-\9\9_floor = {\"dx_temple_floor\",\"floor\",0,0,0},\
-\9\9_ceiling = {\"dx_temple_ceiling\",\"floor\",0,0,3},\
-\9\9_stairsUp = \"dx_temple_stairs_up\",\
-\9\9_stairsDown = \"dx_temple_stairs_down\",\
-\9\9_stairs = \"_dx_temple_stairs\",\
-\9\9_stairs_dxs = {\"dxs_castle_exterior_stairs\",\"floor\",0,0,0},\
+wallset = {\
+\9_wall  = {\"dx_temple_wall\",\"wall\",0,0,0},\
+\9_wall_x2  = {\"dx_temple_wall_x2\",\"wall\",0,0,0},\
+\9_wall_x3  = {\"dx_temple_wall_x3\",\"wall\",0,0,0},\
+\9--_wall_dxs = {\"dxs_castle_exterior_wall\",\"wall\",0,0,0},\
+\9--_pillar = {\"dx_castle_exterior_pillar_small\",\"pillar\",0,0,0},\
+\9_floor = {\"dx_temple_floor\",\"floor\",0,0,0},\
+\9_ceiling = {\"dx_temple_ceiling\",\"floor\",0,0,3},\
+\9_stairsUp = \"dx_temple_stairs_up\",\
+\9_stairsDown = \"dx_temple_stairs_down\",\
+\9_stairs = \"_dx_temple_stairs\",\
+\9_stairs_dxs = {\"dxs_castle_exterior_stairs\",\"floor\",0,0,0},\
 \
-\9\9torch_holder = {\"dx_torch_holder\",\"wall\",0,0,0},\
-\9\9_torch = {\"dx_torch_lit\",\"wall\",0,0,0},\
-\9}\
+\9torch_holder = {\"dx_torch_holder\",\"wall\",0,0,0},\
+\9_torch = {\"dx_torch_lit\",\"wall\",0,0,0},\
+}\
 \
+wallData = {}\
 \
-\9-- ==========================================================================\
-\9--                           MAIN COMPILER INIT MODULE\
-\9-- ==========================================================================\
-\9objects = {}\
+wallObjects = {}\
 \
-\9function compileDungeon(firstLevel, lastLevel)\
+-- ==========================================================================\
+--                           MAIN COMPILER INIT MODULE\
+-- ==========================================================================\
+objects = {}\
+\
+function compileDungeon(firstLevel, lastLevel)\
+\9\
+\9-- SMART TILESET SCRIPTING\
+\9\
+\9for level = firstLevel,lastLevel do\
+\9\
+\9\9for y = 10,20 do\
 \9\9\
-\9\9-- SMART TILESET SCRIPTING\
-\9\9\
-\9\9for level = firstLevel,lastLevel do\
 \9\9\9for x = 10,20 do\
-\9\9\9\9for y = 10,20 do\
-\9\9\9\9\9-- -- Spawn stairs, teleporters and onLevelUp / onLevelDown / onLevelChange hooks\
-\9\9\9\9\9for i in entitiesAt(level, x, y) do\
+\9\9\9\
+\9\9\9\9-- Scan walls\
+\9\9\9\9if isWall_dx(level, x, y) then\
+\9\9\9\9\
+\9\9\9\9\9for facing = 0, 3 do\
 \9\9\9\9\9\
-\9\9\9\9\9\9-- Spawn solid wall elements\
-\9\9\9\9\9\9if i.name == \"dx_solid_wall\" then\
-\9\9\9\9\9\9\9for wallDir = 0, 3 do\
-\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9local dx, dy = getForward(facing)\
+\9\9\9\9\9\
+\9\9\9\9\9\9if getWallData(level, x, y, facing) == nil and not(isWall_dx(level, x + dx, y + dy)) then\
+\9\9\9\9\9\9\
+\9\9\9\9\9\9\9local sideFacing = (facing + 3) % 4\
+\9\9\9\9\9\9\9local sx, sy = getForward(sideFacing)\
+\9\9\9\9\9\9\9local panelSize = 1\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9if facing == 0 or facing == 1 then\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9for i = 1, 10 do\
 \9\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9\9if not(isWall_dx(level, x+dx, y+dy)) and not(isObjectByName(\"temple_stairs_up\", level, x+dx, y+dy)) and not(isObjectByName(\"temple_stairs_down\", level, x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9\9spawn(\"dx_temple_solid_wall\", level, x+dx, y+dy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9\9if isWall_dx(level, x - sx * i, y - sy * i) and not(isWall_dx(level, x - sx * i + dx, y - sy * i + dy)) then\
+\9\9\9\9\9\9\9\9\9\9setWallData(level, x - sx * i, y - sy * i, facing, 0)\
+\9\9\9\9\9\9\9\9\9\9panelSize = panelSize + 1\
+\9\9\9\9\9\9\9\9\9else\
+\9\9\9\9\9\9\9\9\9\9break\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\
 \9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9setWallData(level, x, y, facing, 0)\
+\9\9\9\9\9\9\9\9setWallData(level, x - sx * (panelSize - 1), y - sy * (panelSize - 1), facing, panelSize)\
+\9\9\9\9\9\9\9\
 \9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9if facing == 2 or facing == 3 then\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9for i = 1, 10 do\
+\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9\9if isWall_dx(level, x + sx * i, y + sy * i) and not(isWall_dx(level, x + sx * i + dx, y + sy * i + dy)) then\
+\9\9\9\9\9\9\9\9\9\9setWallData(level, x + sx * i, y + sy * i, facing, 0)\
+\9\9\9\9\9\9\9\9\9\9panelSize = panelSize + 1\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9setWallData(level, x, y, facing, panelSize)\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\
+\9\9\9\9\9\9end\
+\9\9\9\9\9\
+\9\9\9\9\9end\
+\9\9\9\9\
+\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9\
+\9\9\9\
+\9\9\9\9-- -- Spawn stairs, teleporters and onLevelUp / onLevelDown / onLevelChange hooks\
+\9\9\9\9for i in entitiesAt(level, x, y) do\
+\9\9\9\9\
+\9\9\9\9\9-- Spawn solid wall elements\
+\9\9\9\9\9if i.name == \"dx_solid_wall\" then\
+\9\9\9\9\9\
+\9\9\9\9\9\9for wallDir = 0, 3 do\
+\9\9\9\9\9\9\
+\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9if not(isWall_dx(level, x+dx, y+dy)) and not(isObjectByName(\"temple_stairs_up\", level, x+dx, y+dy)) and not(isObjectByName(\"temple_stairs_down\", level, x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9spawn(\"dx_temple_solid_wall\", level, x+dx, y+dy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\
 \9\9\9\9\9\9end\
 \9\9\9\9\9\9\
-\9\9\9\9\9\9-- -- Spawn sx_remove_floor elements where not already present\
-\9\9\9\9\9\9-- if level > firstLevel then\
-\9\9\9\9\9\9\9-- if i.name == \"sx_remove_ceiling\" then\
-\9\9\9\9\9\9\9\9-- if not(isObjectByName(\"sx_remove_floor\", level-1, x, y)) and not(isObjectByName(\"castle_exterior_bridge\", level, x, y)) then\
-\9\9\9\9\9\9\9\9\9-- spawn(\"sx_remove_floor\", level-1, x, y, 0)\
-\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\
-\9\9\9\9\9\9-- if i.name == \"castle_exterior_stairs_up\" then\
-\9\9\9\9\9\9\9-- spawn(\"_castle_exterior_stairs\", level, x, y, i.facing)\
-\9\9\9\9\9\9\9-- local levelTriggerFound = false\
-\9\9\9\9\9\9\9-- for j in entitiesAt(level, x, y) do\
-\9\9\9\9\9\9\9\9-- if string.find(j.id, \"levelTrigger\") then\
-\9\9\9\9\9\9\9\9\9-- levelTriggerFound = true\
-\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9-- if not(levelTriggerFound) then\
-\9\9\9\9\9\9\9\9-- spawn(\"pressure_plate_hidden\", level, x, y, 0, randomId(\"levelTriggerUp.\"..level))\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9\9-- :addConnector(\"activate\", \"dungeonCompiler\", \"onLevelUp\")\
-\9\9\9\9\9\9\9\9-- local dx, dy = getForward(i.facing)\
-\9\9\9\9\9\9\9\9-- spawn(\"teleporter\", level-1, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9\9-- :setTeleportTarget(x+3*dx,y+3*dy,i.facing,level-1)\
-\9\9\9\9\9\9\9\9\9-- :setInvisible(true)\
-\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9\9-- :setHideLight(true)\
-\9\9\9\9\9\9\9\9\9-- :setScreenFlash(false)\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- if i.name == \"castle_exterior_stairs_down\" then\
-\9\9\9\9\9\9\9-- local levelTriggerFound = false\
-\9\9\9\9\9\9\9-- for j in entitiesAt(level, x, y) do\
-\9\9\9\9\9\9\9\9-- if string.find(j.id, \"levelTrigger\") then\
-\9\9\9\9\9\9\9\9\9-- levelTriggerFound = true\
-\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9-- if not(levelTriggerFound) then\
-\9\9\9\9\9\9\9\9-- spawn(\"pressure_plate_hidden\", level, x, y, 0, randomId(\"levelTriggerDown.\"..level))\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9\9-- :addConnector(\"activate\", \"dungeonCompiler\", \"onLevelDown\")\
-\9\9\9\9\9\9\9\9-- local dx, dy = getForward(i.facing)\
-\9\9\9\9\9\9\9\9-- spawn(\"teleporter\", level+1, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByParty(true)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByMonster(false)\
-\9\9\9\9\9\9\9\9\9-- :setTriggeredByItem(false)\
-\9\9\9\9\9\9\9\9\9-- :setTeleportTarget(x+3*dx,y+3*dy,i.facing,level+1)\
-\9\9\9\9\9\9\9\9\9-- :setInvisible(true)\
-\9\9\9\9\9\9\9\9\9-- :setSilent(true)\
-\9\9\9\9\9\9\9\9\9-- :setHideLight(true)\
-\9\9\9\9\9\9\9\9\9-- :setScreenFlash(false)\
-\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9-- end\
 \9\9\9\9\9end\
 \
 \9\9\9\9end\
+\
 \9\9\9end\
+\9\9\9\
 \9\9end\
 \9\9\
-\9\9-- MULTI-LEVEL SPAWNING\
-\9\9\
-\9\9for level = firstLevel, lastLevel do\
-\9\9\9for x = 10,20 do\
-\9\9\9\9for y = 10,20 do\
-\9\9\9\9\9\
-\9\9\9\9\9local topRange = level - 2\
-\9\9\9\9\9if topRange < firstLevel then topRange = firstLevel end\
-\9\9\9\9\9\
-\9\9\9\9\9local bottomRange = level + 2\
-\9\9\9\9\9if bottomRange > lastLevel then bottomRange = lastLevel end\
-\9\9\9\9\9\
-\9\9\9\9\9for l = topRange, bottomRange do\
-\9\9\9\9\9\
-\9\9\9\9\9\9--Create intermediate walls\
-\9\9\9\9\9\9if isObjectByName(\"sx_remove_floor\", l, x, y) then\
-\9\9\9\9\9\9\9for wallDir = 0, 3 do\
-\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
-\9\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l ,x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x, y, wallDir, nil, -3)\
-\9\9\9\9\9\9\9\9end\
+\9end\
+\9\
+\9-- MULTI-LEVEL SPAWNING\
+\9\
+\9for level = firstLevel, lastLevel do\
+\9\9for x = 10,20 do\
+\9\9\9for y = 10,20 do\
+\9\9\9\9\
+\9\9\9\9local topRange = level - 2\
+\9\9\9\9if topRange < firstLevel then topRange = firstLevel end\
+\9\9\9\9\
+\9\9\9\9local bottomRange = level + 1\
+\9\9\9\9if bottomRange > lastLevel then bottomRange = lastLevel end\
+\9\9\9\9\
+\9\9\9\9for l = topRange, bottomRange do\
+\9\9\9\9\
+\9\9\9\9\9--Create intermediate walls\
+\9\9\9\9\9if isObjectByName(\"sx_remove_floor\", l, x, y) then\
+\9\9\9\9\9\9for wallDir = 0, 3 do\
+\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l ,x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x, y, wallDir, nil, -3)\
 \9\9\9\9\9\9\9end\
 \9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\
-\9\9\9\9\9\9if l ~= level then\
-\9\9\9\9\9\9\9local stairsCheck = false\
-\9\9\9\9\9\9\9for i in entitiesAt(level,x,y) do\
-\9\9\9\9\9\9\9\9if i.name == wallset._stairsUp or i.name == wallset._stairsDown then\
-\9\9\9\9\9\9\9\9\9stairsCheck = true\
-\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9end\
+\9\9\9\9\9\9\
+\9\9\9\9\9if l ~= level then\
+\9\9\9\9\9\9local stairsCheck = false\
+\9\9\9\9\9\9for i in entitiesAt(level,x,y) do\
+\9\9\9\9\9\9\9if i.name == wallset._stairsUp or i.name == wallset._stairsDown then\
+\9\9\9\9\9\9\9\9stairsCheck = true\
 \9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9-- Create Objects\
-\9\9\9\9\9\9\9for i in entitiesAt(l, x, y) do\
-\9\9\9\9\9\9\9\9-- Spawn multi-level architecture\
-\9\9\9\9\9\9\9\9if wallset[i.name] then\
-\9\9\9\9\9\9\9\9\9if not(stairsCheck) then\
-\9\9\9\9\9\9\9\9\9\9if wallset[i.name][2] == \"pillar\" then\
-\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, 0)\
-\9\9\9\9\9\9\9\9\9\9else\9\
-\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9else\
-\9\9\9\9\9\9\9\9\9\9if i.name == wallset._stairs then\
-\9\9\9\9\9\9\9\9\9\9\9local dx, dy = getForward(i.facing)\
-\9\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_stairs_dxs\", level, l, x-dx, y-dy, i.facing)\
-\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9end\
+\9\9\9\9\9\9-- Create Objects\
+\9\9\9\9\9\9for i in entitiesAt(l, x, y) do\
+\9\9\9\9\9\9\9-- Spawn multi-level architecture\
+\9\9\9\9\9\9\9if wallset[i.name] then\
+\9\9\9\9\9\9\9\9if not(stairsCheck) then\
+\9\9\9\9\9\9\9\9\9if wallset[i.name][2] == \"pillar\" then\
+\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, 0)\
+\9\9\9\9\9\9\9\9\9else\9\
+\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(i.name, level, l, x, y, i.facing)\
+\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9else\
+\9\9\9\9\9\9\9\9\9if i.name == wallset._stairs then\
+\9\9\9\9\9\9\9\9\9\9local dx, dy = getForward(i.facing)\
+\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_stairs_dxs\", level, l, x-dx, y-dy, i.facing)\
 \9\9\9\9\9\9\9\9\9end\
 \9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9-- Spawn torchHolders\
-\9\9\9\9\9\9\9\9if i.class == \"TorchHolder\" and i:hasTorch() then\
-\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_torch\", level, l, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9local fxId = dungeonCompiler:playFx(\"torchLight\",level, x, y, i.facing)\
-\9\9\9\9\9\9\9\9\9findEntity(fxId):translate(0,(level - l)*6,0)\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9-- Spawn torchHolders\
+\9\9\9\9\9\9\9if i.class == \"TorchHolder\" and i:hasTorch() then\
+\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_torch\", level, l, x, y, i.facing)\
+\9\9\9\9\9\9\9\9local fxId = dungeonCompiler:playFx(\"torchLight\",level, x, y, i.facing)\
+\9\9\9\9\9\9\9\9findEntity(fxId):translate(0,(level - l)*6,0)\
+\9\9\9\9\9\9\9end\
+\
+\9\9\9\9\9\9end\
+\9\9\9\9\9\9\
+\9\9\9\9\9\9-- Create Walls\
+\9\9\9\9\9\9if isWall_dx(l, x, y) then\
+\9\9\9\9\9\9\9for wallDir = 0, 3 do\
+\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
+\9\9\9\9\9\9\9\9if not(isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+2)%4)) then\
+\9\9\9\9\9\9\9\9\9--if (l>level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) or (l == firstLevel or isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9\9\9if not(stairsCheck) then\
+\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x+dx, y+dy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9\9\9else\
+\9\9\9\9\9\9\9\9\9\9\9local wx, wy = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_wall_dxs\", level, l, x+dx+wx, y+dy+wy, (wallDir+2)%4)\
+\9\9\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9\9--end\
 \9\9\9\9\9\9\9\9end\
 \
-\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9-- Create Walls\
-\9\9\9\9\9\9\9if isWall_dx(l, x, y) then\
-\9\9\9\9\9\9\9\9for wallDir = 0, 3 do\
-\9\9\9\9\9\9\9\9\9local dx, dy = getForward(wallDir)\
-\9\9\9\9\9\9\9\9\9if not(isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+2)%4)) then\
-\9\9\9\9\9\9\9\9\9\9--if (l>level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) or (l == firstLevel or isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9\9\9\9if not(stairsCheck) then\
-\9\9\9\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_wall\", level, l, x+dx, y+dy, (wallDir+2)%4)\
-\9\9\9\9\9\9\9\9\9\9\9else\
-\9\9\9\9\9\9\9\9\9\9\9\9local wx, wy = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9\9\9\9--spawnMultiLevelObject(\"_wall_dxs\", level, l, x+dx+wx, y+dy+wy, (wallDir+2)%4)\
-\9\9\9\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\9\9\9--end\
-\9\9\9\9\9\9\9\9\9end\
-\
-\9\9\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9\9\9local px, py = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9-- if not((isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+3)%4))) then\
-\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9\9\9\9-- -- Create small pillars\
-\9\9\9\9\9\9\9\9\9\9-- if l <= level or (l > level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
-\9\9\9\9\9\9\9\9\9\9\9-- local p1x, p1y, p2x, p2y\
-\9\9\9\9\9\9\9\9\9\9\9-- local wx, wy = getForward((wallDir+1)%4)\
-\9\9\9\9\9\9\9\9\9\9\9-- if wallDir == 0 then\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+wx, y+wy\
-\9\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 1 then\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx+wx, y+dy+wy\
-\9\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 2 then\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx-wx, y+dy-wy\
-\9\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 3 then\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
-\9\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x-wx, y-wy\
-\9\9\9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)) then\
-\9\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p1x, p1y, 0)\
-\9\9\9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)) then\
-\9\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p2x, p2y, 0)\
-\9\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9local px, py = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9-- if not((isWall_dx(l, x+dx, y+dy)) and not(isObjectByName(\"sx_remove_wall\", l, x+dx, y+dy, (wallDir+3)%4))) then\
+\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\9\
+\9\9\9\9\9\9\9\9\9-- -- Create small pillars\
+\9\9\9\9\9\9\9\9\9-- if l <= level or (l > level and isObjectByName(\"sx_remove_floor\", l-1, x+dx, y+dy)) then\
+\9\9\9\9\9\9\9\9\9\9-- local p1x, p1y, p2x, p2y\
+\9\9\9\9\9\9\9\9\9\9-- local wx, wy = getForward((wallDir+1)%4)\
+\9\9\9\9\9\9\9\9\9\9-- if wallDir == 0 then\
+\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
+\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+wx, y+wy\
+\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 1 then\
+\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
+\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx+wx, y+dy+wy\
+\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 2 then\
+\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x+dx, y+dy\
+\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x+dx-wx, y+dy-wy\
+\9\9\9\9\9\9\9\9\9\9-- elseif wallDir == 3 then\
+\9\9\9\9\9\9\9\9\9\9\9-- p1x, p1y = x, y\
+\9\9\9\9\9\9\9\9\9\9\9-- p2x, p2y = x-wx, y-wy\
+\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p1x..\".\"..p1y)) then\
+\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p1x, p1y, 0)\
+\9\9\9\9\9\9\9\9\9\9-- end\
+\9\9\9\9\9\9\9\9\9\9-- if not(findEntity(\"pillar.\"..level..\".\"..l..\".\"..p2x..\".\"..p2y)) then\
+\9\9\9\9\9\9\9\9\9\9\9-- spawnMultiLevelObject(\"_pillar\", level, l, p2x, p2y, 0)\
 \9\9\9\9\9\9\9\9\9\9-- end\
 \9\9\9\9\9\9\9\9\9-- end\
-\9\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9\9\9-- end\
 \9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9\
-\9\9\9\9\9\9\9--Create floors\
-\9\9\9\9\9\9\9if l > level then\
-\9\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l, x, y)) and not(isWall_dx(l, x, y)) then\
-\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_floor\", level, l, x, y, 0)\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9end\9\
-\
-\9\9\9\9\9\9\9--Create ceilings\
-\9\9\9\9\9\9\9if l < level then\
-\9\9\9\9\9\9\9\9if (l == firstLevel or not(isObjectByName(\"sx_remove_ceiling\", l, x, y))) and not(isWall_dx(l, x, y)) then\
-\9\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_ceiling\", level, l, x, y, 0)\
-\9\9\9\9\9\9\9\9end\
-\9\9\9\9\9\9\9end\9\9\9\9\9\9\9\
 \9\9\9\9\9\9end\
+\9\9\9\9\9\9\
+\9\9\9\9\9\9--Create floors\
+\9\9\9\9\9\9if l > level then\
+\9\9\9\9\9\9\9if not(isObjectByName(\"sx_remove_floor\", l, x, y)) and not(isWall_dx(l, x, y)) then\
+\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_floor\", level, l, x, y, 0)\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9end\9\
+\
+\9\9\9\9\9\9--Create ceilings\
+\9\9\9\9\9\9if l < level then\
+\9\9\9\9\9\9\9if (l == firstLevel or not(isObjectByName(\"sx_remove_ceiling\", l, x, y))) and not(isWall_dx(l, x, y)) then\
+\9\9\9\9\9\9\9\9spawnMultiLevelObject(\"_ceiling\", level, l, x, y, 0)\
+\9\9\9\9\9\9\9end\
+\9\9\9\9\9\9end\9\9\9\9\9\9\9\
 \9\9\9\9\9end\
 \9\9\9\9end\
 \9\9\9end\
 \9\9end\
 \9end\
+end\
 \
-\9function isWall_dx(level, x, y)\
-\9\9if isWall(level, x, y) or isObjectByName(\"dx_solid_wall\", level, x, y) then\
-\9\9\9return true\
-\9\9else\
-\9\9\9return false\
-\9\9end\
-\9end\
-\
-\9function spawnMultiLevelObject(name, level, objectLevel, x, y, facing, id, vOffset)\
-\9\9\
-\9\9if vOffset == nil then\
-\9\9\9vOffset = 0\
-\9\9end\
-\
-\9\9if level < 1 or level > getMaxLevels() then\
-\9\9\9return false\
-\9\9end\
-\9\9local objData = dungeonCompiler.wallset[name]\
-\9\9\
-\9\9if objData then\
-\9\9\9local dx, dy = getForward(facing)\
-\9\9\9shootProjectile(objData[1], level, x, y, facing, 0, 0, 0, dx*objData[3], ((level - objectLevel) * 6) + objData[5] + 24 + vOffset, -dy*objData[3], 0, party, true)\
-\9\9end\
-\9\9for i in entitiesAt(level, x, y) do\
-\9\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
-\9\9\9\9objects[i.id] = i.name\
-\9\9\9end\
-\9\9end\
-\9\9\
-\9\9\
-\9end\
-\
-\9function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
-\9\9local pIds = {}\
-\9\9for i in entitiesAt(level, x, y) do\
-\9\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
-\9\9\9\9pIds[i.id] = i.name\
-\9\9\9end\
-\9\9end\
-\9\9shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
-\9\9for i in entitiesAt(level, x, y) do\
-\9\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") and not(pIds[i.id]) then\
-\9\9\9\9return i.id\
-\9\9\9end\
-\9\9end  \
-\9end\
-\
-\9function getObjectData(name)\
-\9\9local obj = {}\
-\9\9if dungeonCompiler.wallset[name] then\
-\9\9end\
-\9end\
-\
-\9function isObjectByName(name, objLevel, x, y, facing)\
-\9\9if objLevel < 1 or objLevel > getMaxLevels() then\
-\9\9\9return false\
-\9\9end\
-\9\9for i in entitiesAt(objLevel, x, y) do\
-\9\9\9if facing then\
-\9\9\9\9if i.name == name and i.facing == facing then\
-\9\9\9\9\9return true\
-\9\9\9\9end\
-\9\9\9else\
-\9\9\9\9if i.name == name then\
-\9\9\9\9\9return true\
-\9\9\9\9end\
-\9\9\9end\
-\9\9end\
+function isWall_dx(level, x, y)\
+\9if (isWall(level, x, y) or isObjectByName(\"dx_solid_wall\", level, x, y)) and not(isObjectByName(\"temple_stairs_up\", level, x, y)) and not(isObjectByName(\"temple_stairs_down\", level, x, y)) then\
+\9\9return true\
+\9else\
 \9\9return false\
 \9end\
+end\
 \
-\9function isObjectById(id, level, x, y, facing)\
-\9\9if level < 1 or level > getMaxLevels() then\
-\9\9\9return false\
-\9\9end\
-\9\9for i in entitiesAt(level, x, y) do\
-\9\9\9if facing then\
-\9\9\9\9if i.id == id and i.facing == facing then\
-\9\9\9\9\9return true\
-\9\9\9\9end\
-\9\9\9else\
-\9\9\9\9if i.id == id then\
-\9\9\9\9\9return true\
-\9\9\9\9end\
-\9\9\9end\
-\9\9end\
+function spawnMultiLevelObject(name, level, objectLevel, x, y, facing, id, vOffset)\
+\9\
+\9if vOffset == nil then\
+\9\9vOffset = 0\
+\9end\
+\
+\9if level < 1 or level > getMaxLevels() then\
 \9\9return false\
 \9end\
+\9local objData = dungeonCompiler.wallset[name]\
+\9\
+\9local id\
+\9\
+\9if objData then\
+\9\9local dx, dy = getForward(facing)\
+\9\9id = shootProjectileWithId(objData[1], level, x, y, facing, 0, 0, 0, dx*objData[3], ((level - objectLevel) * 6) + objData[5] + 24 + vOffset, -dy*objData[3], 0, party, true)\
+\9\9if name == \"_wall\" then\9\
+\9\9\9table.insert(wallObjects, id);\
+\9\9end\
+\9\9table.insert(objects, id)\
+\9end\
+\9\
+end\
 \
-\9function debugPrint(l, x, y, pl, px, py, data)\
-\9\9if l == pl and x == px and y == py then\
-\9\9\9print(data)\
+function shootProjectileWithId(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
+\9local pIds = {}\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") then\
+\9\9\9pIds[i.id] = i.name\
 \9\9end\
 \9end\
-\9\9\
-\9-- ==========================================================================\
-\9--                            WALLSET DEFINITIONS\
-\9-- ==========================================================================\
+\9shootProjectile(projName,level,x,y,dir,speed,gravity,velocityUp,offsetX,offsetY,offsetZ,attackPower, ignoreEntity,fragile,championOrdinal)\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if i.class == \"Item\" and string.find(i.id, \"^%d+$\") and not(pIds[i.id]) then\
+\9\9\9return i.id\
+\9\9end\
+\9end  \
+end\
 \
-\9function onLevelUp(trigger)\
-\9\9print(\"going up!\")\
+function getObjectData(name)\
+\9local obj = {}\
+\9if dungeonCompiler.wallset[name] then\
 \9end\
+end\
 \
-\9function onLevelDown(trigger)\
-\9\9print(\"going down!\")\
+function isObjectByName(name, objLevel, x, y, facing)\
+\9if objLevel < 1 or objLevel > getMaxLevels() then\
+\9\9return false\
 \9end\
-\
-\
-\9-- ==========================================================================\
-\9--                            EXSP FX FUNCTIONS\
-\9-- ==========================================================================\
-\
-\
-\9fxDefs = {}\
-\
-\9function defineFx(self, name, properties)\
-\9\9if not(self.fxDefs[name]) then \
-\9\9\9self.fxDefs[name] = {} \
+\9for i in entitiesAt(objLevel, x, y) do\
+\9\9if facing then\
+\9\9\9if i.name == name and i.facing == facing then\
+\9\9\9\9return true\
+\9\9\9end\
 \9\9else\
-\9\9\9return false\
-\9\9end\
-\9\9\
-\9\9-- populate Table\
-\9\9for k,v in pairs(properties) do\
-\9\9\9self.fxDefs[name][k] = v\
-\9\9end\
-\9\9\
-\9\9if debugDefinitions then\
-\9\9\9print(\"FX defined: \"..name)\
+\9\9\9if i.name == name then\
+\9\9\9\9return true\
+\9\9\9end\
 \9\9end\
 \9end\
+\9return false\
+end\
 \
-\9function playFx(self, name, level, x, y, facing, properties)\
+function isObjectById(id, level, x, y, facing)\
+\9if level < 1 or level > getMaxLevels() then\
+\9\9return false\
+\9end\
+\9for i in entitiesAt(level, x, y) do\
+\9\9if facing then\
+\9\9\9if i.id == id and i.facing == facing then\
+\9\9\9\9return true\
+\9\9\9end\
+\9\9else\
+\9\9\9if i.id == id then\
+\9\9\9\9return true\
+\9\9\9end\
+\9\9end\
+\9end\
+\9return false\
+end\
 \
-\9\9-- retreive fx definition\
-\9\9local fx = {}\
-\9\9for k, v in pairs(self.fxDefs[name]) do\
+function debugPrint(l, x, y, pl, px, py, data)\
+\
+\9if l == pl and x == px and y == py then\
+\9\9print(data)\
+\9end\
+\9\
+end\
+\
+function setWallData(level, x, y, facing, value)\
+\9\
+\9wallData[level..\".\"..x..\".\"..y..\".\"..facing] = value\
+\9\
+end\
+\
+function getWallData(level, x, y, facing)\
+\
+\9return wallData[level..\".\"..x..\".\"..y..\".\"..facing]\
+\9\
+end\
+\9\
+-- ==========================================================================\
+--                            WALLSET DEFINITIONS\
+-- ==========================================================================\
+\
+function onLevelUp(trigger)\
+\9print(\"going up!\")\
+end\
+\
+function onLevelDown(trigger)\
+\9print(\"going down!\")\
+end\
+\
+\
+-- ==========================================================================\
+--                            EXSP FX FUNCTIONS\
+-- ==========================================================================\
+\
+\
+fxDefs = {}\
+\
+function defineFx(self, name, properties)\
+\9if not(self.fxDefs[name]) then \
+\9\9self.fxDefs[name] = {} \
+\9else\
+\9\9return false\
+\9end\
+\9\
+\9-- populate Table\
+\9for k,v in pairs(properties) do\
+\9\9self.fxDefs[name][k] = v\
+\9end\
+\9\
+\9if debugDefinitions then\
+\9\9print(\"FX defined: \"..name)\
+\9end\
+end\
+\
+function playFx(self, name, level, x, y, facing, properties)\
+\
+\9-- retreive fx definition\
+\9local fx = {}\
+\9for k, v in pairs(self.fxDefs[name]) do\
+\9\9fx[k] = v\
+\9end\
+\9if properties then\
+\9\9for k, v in pairs(properties) do\
 \9\9\9fx[k] = v\
 \9\9end\
-\9\9if properties then\
-\9\9\9for k, v in pairs(properties) do\
-\9\9\9\9fx[k] = v\
-\9\9\9end\
-\9\9end\
-\9\9local red, green, blue = unpack(fx.color)\
-\9\9\9\
-\9\9local particleSystem\
-\9\9local tx, ty, tz \
-\9\9if not(facing) then\
-\9\9\9particleSystem = fx.particleSystem\
-\9\9\9tx, ty, tz = unpack(fx.translation)\
+\9end\
+\9local red, green, blue = unpack(fx.color)\
+\9\9\
+\9local particleSystem\
+\9local tx, ty, tz \
+\9if not(facing) then\
+\9\9particleSystem = fx.particleSystem\
+\9\9tx, ty, tz = unpack(fx.translation)\
+\9else\
+\9\9if type(fx.particleSystem) == \"table\" then\
+\9\9\9particleSystem = fx.particleSystem[facing+1]\
 \9\9else\
-\9\9\9if type(fx.particleSystem) == \"table\" then\
-\9\9\9\9particleSystem = fx.particleSystem[facing+1]\
-\9\9\9else\
-\9\9\9\9particleSystem = fx.particleSystem\
-\9\9\9end\
-\9\9\9if #fx.translation > 3 then\
-\9\9\9\9tx, ty, tz = unpack(fx.translation[facing+1])\
-\9\9\9else\
-\9\9\9\9tx, ty, tz = unpack(fx.translation)\
-\9\9\9end\
+\9\9\9particleSystem = fx.particleSystem\
 \9\9end\
-\9\9\
-\9\9-- spawn fx\
-\9\9fxId = randomId(\"playFx\")\
-\9\9spawn(\"fx\", level, x, y, 0, fxId)\
-\9\9\9:setParticleSystem(particleSystem)\
-\9\9\9:setLight(red, green, blue, fx.brightness, fx.range, fx.time, fx.castShadow)\
-\9\9\9:translate(tx, ty, tz)\
-\9\9\
-\9\9return fxId\
-\9end\
-\
-\9function randomId(prefix)\
-\9\9local numId = math.random(10000,99999)\
-\9\9while findEntity(prefix..\".\"..numId) do\
-\9\9\9numId = math.random(10000,99999)\
+\9\9if #fx.translation > 3 then\
+\9\9\9tx, ty, tz = unpack(fx.translation[facing+1])\
+\9\9else\
+\9\9\9tx, ty, tz = unpack(fx.translation)\
 \9\9end\
-\9\9return prefix..\".\"..numId\
 \9end\
+\9\
+\9-- spawn fx\
+\9fxId = randomId(\"playFx\")\
+\9spawn(\"fx\", level, x, y, 0, fxId)\
+\9\9:setParticleSystem(particleSystem)\
+\9\9:setLight(red, green, blue, fx.brightness, fx.range, fx.time, fx.castShadow)\
+\9\9:translate(tx, ty, tz)\
+\9\
+\9return fxId\
+end\
 \
-\9-- ==========================================================================\
-\9--                            RUNTIME INIT\
-\9-- ==========================================================================\
+function randomId(prefix)\
+\9local numId = math.random(10000,99999)\
+\9while findEntity(prefix..\".\"..numId) do\
+\9\9numId = math.random(10000,99999)\
+\9end\
+\9return prefix..\".\"..numId\
+end\
+\
+-- ==========================================================================\
+--                            RUNTIME INIT\
+-- ==========================================================================\
 \
 \
-\9dungeonCompiler:defineFx(\"torchLight\",{\
-\9\9particleSystem = \"torch\",\
-\9\9color = {1, 0.8, 0.45},\
-\9\9brightness = 10,\
-\9\9range = 15,\
-\9\9time = 10000000,\
-\9\9castShadow = true,\
-\9\9translation = {{0,1.85,1.1},{1.1,1.85,0},{0,1.85,-1.1},{-1.1,1.85,0}}\
-\9\9}\
-\9)\
+dungeonCompiler:defineFx(\"torchLight\",{\
+\9particleSystem = \"torch\",\
+\9color = {1, 0.8, 0.45},\
+\9brightness = 4,\
+\9range = 10,\
+\9time = 10000000,\
+\9castShadow = false,\
+\9translation = {{0,1.85,1.1},{1.1,1.85,0},{0,1.85,-1.1},{-1.1,1.85,0}}\
+\9}\
+)\
 \
-\9compileDungeon(1,9)\
+compileDungeon(1,9)\
+\
+--print(\"Objects:\",#objects)\
+--print(\"Wall Objects:\",#wallObjects)\
+\
+--spawnMultiLevelObject(\"_wall_x3\", 8, 8, 13, 13, 1)\
 ")
 spawn("sx_remove_floor", 11,11,1, "sx_remove_floor_352")
 spawn("sx_remove_floor", 11,12,2, "sx_remove_floor_354")
@@ -518,7 +542,6 @@ spawn("sx_remove_floor", 14,12,2, "sx_remove_floor_379")
 spawn("sx_remove_floor", 14,13,2, "sx_remove_floor_381")
 spawn("sx_remove_floor", 14,17,2, "sx_remove_floor_385")
 spawn("sx_remove_floor", 14,18,0, "sx_remove_floor_386")
-spawn("sx_remove_floor", 14,19,2, "sx_remove_floor_387")
 spawn("sx_remove_floor", 15,11,1, "sx_remove_floor_398")
 spawn("sx_remove_floor", 15,12,2, "sx_remove_floor_388")
 spawn("sx_remove_floor", 15,13,2, "sx_remove_floor_390")
@@ -561,6 +584,72 @@ spawn("temple_pillar", 14,14,0, "temple_pillar_7")
 spawn("temple_pillar", 14,17,3, "temple_pillar_8")
 spawn("temple_pillar", 17,17,3, "temple_pillar_9")
 spawn("temple_pillar", 17,14,3, "temple_pillar_10")
+spawn("temple_pillar_reversed", 14,17,1, "temple_pillar_reversed_25")
+spawn("temple_pillar_reversed", 14,14,0, "temple_pillar_reversed_26")
+spawn("temple_pillar_reversed", 17,14,1, "temple_pillar_reversed_27")
+spawn("temple_pillar_reversed", 17,17,3, "temple_pillar_reversed_28")
+spawn("temple_pillar_hub", 16,20,0, "temple_pillar_hub_60")
+spawn("torch_holder", 15,21,3, "torch_holder_11")
+	:addTorch()
+spawn("sx_outwall_pillarkiller", 11,15,3, "sx_outwall_pillarkiller_118")
+spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_110")
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_115")
+spawn("sx_outwall_pillarkiller", 11,11,3, "sx_outwall_pillarkiller_116")
+spawn("sx_outwall_pillarkiller", 11,19,3, "sx_outwall_pillarkiller_119")
+spawn("sx_outwall_pillarkiller", 12,19,2, "sx_outwall_pillarkiller_120")
+spawn("sx_outwall_pillarkiller", 13,19,2, "sx_outwall_pillarkiller_121")
+spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_122")
+spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_123")
+spawn("sx_outwall_pillarkiller", 19,19,1, "sx_outwall_pillarkiller_124")
+spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_125")
+spawn("sx_outwall_pillarkiller", 19,15,1, "sx_outwall_pillarkiller_126")
+spawn("sx_outwall_pillarkiller", 19,13,1, "sx_outwall_pillarkiller_127")
+spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_128")
+spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_129")
+spawn("sx_outwall_pillarkiller", 16,11,0, "sx_outwall_pillarkiller_130")
+spawn("sx_outwall_pillarkiller", 14,11,0, "sx_outwall_pillarkiller_131")
+spawn("sx_outwall_pillarkiller", 12,11,0, "sx_outwall_pillarkiller_132")
+spawn("temple_pillar_hub", 14,20,0, "temple_pillar_hub_61")
+spawn("temple_pillar_hub", 13,20,3, "temple_pillar_hub_62")
+spawn("temple_pillar_hub", 12,20,2, "temple_pillar_hub_63")
+spawn("temple_pillar_hub", 11,20,3, "temple_pillar_hub_64")
+spawn("temple_pillar_hub", 11,19,1, "temple_pillar_hub_65")
+spawn("temple_pillar_hub", 11,18,0, "temple_pillar_hub_66")
+spawn("temple_pillar_hub", 11,17,3, "temple_pillar_hub_67")
+spawn("temple_pillar_hub", 11,16,1, "temple_pillar_hub_68")
+spawn("temple_pillar_hub", 11,15,3, "temple_pillar_hub_69")
+spawn("temple_pillar_hub", 11,14,0, "temple_pillar_hub_70")
+spawn("temple_pillar_hub", 11,13,2, "temple_pillar_hub_71")
+spawn("temple_pillar_hub", 11,12,3, "temple_pillar_hub_72")
+spawn("temple_pillar_hub", 11,11,2, "temple_pillar_hub_73")
+spawn("temple_pillar_hub", 12,11,2, "temple_pillar_hub_74")
+spawn("temple_pillar_hub", 13,11,1, "temple_pillar_hub_75")
+spawn("temple_pillar_hub", 14,11,1, "temple_pillar_hub_76")
+spawn("temple_pillar_hub", 15,11,2, "temple_pillar_hub_77")
+spawn("temple_pillar_hub", 16,11,2, "temple_pillar_hub_78")
+spawn("temple_pillar_hub", 17,11,2, "temple_pillar_hub_79")
+spawn("temple_pillar_hub", 18,11,3, "temple_pillar_hub_80")
+spawn("temple_pillar_hub", 19,11,1, "temple_pillar_hub_81")
+spawn("temple_pillar_hub", 20,11,2, "temple_pillar_hub_82")
+spawn("temple_pillar_hub", 20,12,1, "temple_pillar_hub_83")
+spawn("temple_pillar_hub", 20,13,2, "temple_pillar_hub_84")
+spawn("temple_pillar_hub", 20,14,2, "temple_pillar_hub_85")
+spawn("temple_pillar_hub", 20,15,1, "temple_pillar_hub_86")
+spawn("temple_pillar_hub", 20,16,0, "temple_pillar_hub_87")
+spawn("temple_pillar_hub", 20,17,2, "temple_pillar_hub_88")
+spawn("temple_pillar_hub", 20,18,1, "temple_pillar_hub_89")
+spawn("temple_pillar_hub", 20,19,0, "temple_pillar_hub_90")
+spawn("temple_pillar_hub", 20,20,0, "temple_pillar_hub_91")
+spawn("temple_pillar_hub", 19,20,2, "temple_pillar_hub_92")
+spawn("temple_pillar_hub", 18,20,2, "temple_pillar_hub_93")
+spawn("temple_pillar_hub", 17,20,0, "temple_pillar_hub_94")
+spawn("temple_ceiling_shaft", 15,15,1, "temple_ceiling_shaft_1")
+spawn("temple_ceiling_lamp", 15,15,2, "temple_ceiling_lamp_1")
+spawn("lock_gear", 21,20,1, "lock_gear_16")
+spawn("temple_door_iron", 21,21,0, "temple_door_iron_16")
+spawn("lock_gear", 17,20,2, "lock_gear_18")
+	:setOpenedBy("")
+spawn("temple_door_iron", 16,21,1, "temple_door_iron_17")
 
 --- level 2 ---
 
@@ -589,7 +678,7 @@ mapDesc([[
 .........##.........###.#.###.##
 ######.##.............#.#..#..##
 ######.##..###.###.##.#.########
-###.................#.#.........
+###................##.#.........
 ###.#################.##########
 .........#.........##.#.........
 ########.#.#######.##...########
@@ -705,12 +794,12 @@ spawn("sx_remove_ceiling", 12,19,2, "sx_remove_ceiling_434")
 spawn("torch_holder", 11,17,3, "torch_holder_1")
 	:addTorch()
 spawn("temple_stairs_down", 14,20,0, "temple_stairs_down_6")
-spawn("temple_door_iron", 18,20,2, "temple_door_iron_5")
+spawn("temple_door_iron", 18,19,2, "temple_door_iron_5")
 spawn("lock_gear", 17,21,2, "lock_gear_13")
-spawn("lock_gear", 18,21,2, "lock_gear_14")
-spawn("lock_gear", 19,21,2, "lock_gear_15")
-spawn("temple_wall_text", 19,21,0, "temple_wall_text_6")
-	:setWallText("Three keys to pass")
+spawn("lock_gear", 18,20,3, "lock_gear_14")
+	:setOpenedBy("")
+spawn("lock_gear", 15,21,2, "lock_gear_15")
+	:setOpenedBy("")
 spawn("sx_remove_floor", 12,15,1, "sx_remove_floor_317")
 spawn("sx_remove_floor", 13,15,3, "sx_remove_floor_319")
 spawn("sx_remove_floor", 12,19,1, "sx_remove_floor_471")
@@ -732,19 +821,31 @@ spawn("sx_remove_floor", 14,14,2, "sx_remove_floor_506")
 spawn("sx_remove_floor", 15,14,3, "sx_remove_floor_507")
 spawn("sx_remove_floor", 16,14,3, "sx_remove_floor_508")
 spawn("temple_stairs_up", 21,17,2, "temple_stairs_up_7")
-spawn("lock_gear", 21,14,1, "lock_gear_16")
 spawn("lock_gear", 21,15,1, "lock_gear_17")
-spawn("lock_gear", 21,15,3, "lock_gear_18")
 spawn("temple_door_iron", 21,16,0, "temple_door_iron_6")
-spawn("temple_wall_text", 21,14,3, "temple_wall_text_7")
-	:setWallText("Three keys to pass")
 spawn("dx_solid_wall", 14,19,0, "dx_solid_wall_6")
 spawn("sx_outwall_pillarkiller", 16,11,0, "sx_outwall_pillarkiller_77")
 spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_82")
 spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_83")
 spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_84")
-spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_85")
+spawn("sx_outwall_pillarkiller", 16,19,1, "sx_outwall_pillarkiller_85")
 spawn("sx_outwall_pillarkiller", 12,19,2, "sx_outwall_pillarkiller_86")
+spawn("sx_outwall_pillarkiller", 11,15,3, "sx_outwall_pillarkiller_111")
+spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_5")
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_108")
+spawn("sx_outwall_pillarkiller", 11,12,3, "sx_outwall_pillarkiller_109")
+spawn("temple_pillar", 14,20,3, "temple_pillar_3")
+spawn("temple_pillar", 15,20,1, "temple_pillar_5")
+spawn("temple_pillar_reversed", 15,15,0, "temple_pillar_reversed_22")
+spawn("temple_pillar_reversed", 15,16,0, "temple_pillar_reversed_23")
+spawn("temple_pillar_reversed", 16,15,0, "temple_pillar_reversed_24")
+spawn("sx_outwall_pillarkiller", 12,10,1, "sx_outwall_pillarkiller_112")
+spawn("sx_outwall_pillarkiller", 19,15,1, "sx_outwall_pillarkiller_113")
+spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_114")
+spawn("temple_pillar_hub", 20,13,0, "temple_pillar_hub_58")
+spawn("temple_door_iron", 18,21,3, "temple_door_iron_18")
+spawn("temple_door_iron", 16,21,3, "temple_door_iron_19")
+spawn("starting_location", 13,21,1, "starting_location")
 
 --- level 3 ---
 
@@ -903,8 +1004,6 @@ spawn("temple_stairs_up", 14,20,2, "temple_stairs_up_6")
 spawn("temple_stairs_down", 21,14,2, "temple_stairs_down_8")
 spawn("torch_holder", 19,14,1, "torch_holder_3")
 	:addTorch()
-spawn("temple_pillar", 14,19,2, "temple_pillar_3")
-spawn("temple_pillar", 15,19,3, "temple_pillar_6")
 spawn("sx_remove_ceiling", 12,18,1, "sx_remove_ceiling_89")
 spawn("sx_outwall_pillarkiller", 11,15,3, "sx_outwall_pillarkiller_66")
 spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_62")
@@ -916,10 +1015,40 @@ spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_69")
 spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_70")
 spawn("sx_outwall_pillarkiller", 19,19,1, "sx_outwall_pillarkiller_71")
 spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_72")
-spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_73")
+spawn("sx_outwall_pillarkiller", 19,15,1, "sx_outwall_pillarkiller_73")
 spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_74")
 spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_75")
-spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_76")
+spawn("temple_pillar", 11,11,3, "temple_pillar_4")
+spawn("temple_pillar_hub", 12,11,3, "temple_pillar_hub_36")
+spawn("sx_outwall_pillarkiller", 11,11,0, "sx_outwall_pillarkiller_106")
+spawn("sx_outwall_pillarkiller", 16,11,0, "sx_outwall_pillarkiller_107")
+spawn("temple_pillar_reversed", 16,15,3, "temple_pillar_reversed_17")
+spawn("temple_pillar_reversed", 16,16,1, "temple_pillar_reversed_18")
+spawn("temple_pillar_reversed", 15,16,2, "temple_pillar_reversed_19")
+spawn("temple_pillar_hub", 20,13,3, "temple_pillar_hub_37")
+spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_76")
+spawn("temple_pillar_hub", 20,15,1, "temple_pillar_hub_38")
+spawn("temple_pillar_hub", 20,16,0, "temple_pillar_hub_39")
+spawn("temple_pillar_hub", 11,12,0, "temple_pillar_hub_40")
+spawn("temple_pillar_hub", 11,13,2, "temple_pillar_hub_41")
+spawn("temple_pillar_hub", 11,14,0, "temple_pillar_hub_42")
+spawn("temple_pillar_hub", 11,15,3, "temple_pillar_hub_43")
+spawn("temple_pillar_hub", 11,16,0, "temple_pillar_hub_44")
+spawn("temple_pillar_hub", 11,17,3, "temple_pillar_hub_45")
+spawn("temple_pillar_hub", 11,18,3, "temple_pillar_hub_46")
+spawn("temple_pillar_hub", 11,19,3, "temple_pillar_hub_47")
+spawn("temple_pillar_hub", 12,20,3, "temple_pillar_hub_48")
+spawn("temple_pillar_hub", 11,20,2, "temple_pillar_hub_49")
+spawn("temple_pillar_hub", 20,20,0, "temple_pillar_hub_50")
+spawn("temple_pillar_hub", 20,19,0, "temple_pillar_hub_51")
+spawn("temple_pillar_hub", 19,20,2, "temple_pillar_hub_52")
+spawn("temple_pillar_hub", 18,20,2, "temple_pillar_hub_53")
+spawn("temple_pillar_hub", 17,20,0, "temple_pillar_hub_54")
+spawn("temple_pillar_hub", 16,20,1, "temple_pillar_hub_55")
+spawn("temple_pillar_hub", 14,19,2, "temple_pillar_hub_56")
+spawn("temple_pillar_hub", 15,19,1, "temple_pillar_hub_57")
+spawn("temple_pillar_reversed", 14,20,2, "temple_pillar_reversed_20")
+spawn("temple_pillar_reversed", 15,20,2, "temple_pillar_reversed_21")
 
 --- level 4 ---
 
@@ -947,8 +1076,8 @@ mapDesc([[
 ########.##.........#.#.########
 .........##.........#.#.########
 ##########..........###.########
-#######################.########
-#######################.........
+#############.#.#######.########
+#############...#######.........
 ################################
 .........#.........####.........
 ########.#.#######.####.########
@@ -1053,7 +1182,6 @@ spawn("sx_remove_floor", 19,18,1, "sx_remove_floor_254")
 spawn("sx_remove_floor", 19,17,0, "sx_remove_floor_255")
 spawn("sx_remove_floor", 19,16,0, "sx_remove_floor_256")
 spawn("sx_remove_floor", 19,15,0, "sx_remove_floor_257")
-spawn("sx_remove_floor", 19,14,0, "sx_remove_floor_258")
 spawn("sx_remove_floor", 19,13,0, "sx_remove_floor_259")
 spawn("sx_remove_floor", 19,12,2, "sx_remove_floor_260")
 spawn("sx_remove_floor", 19,11,2, "sx_remove_floor_261")
@@ -1074,7 +1202,6 @@ spawn("sx_remove_ceiling", 19,18,0, "sx_remove_ceiling_470")
 spawn("sx_remove_ceiling", 19,17,0, "sx_remove_ceiling_471")
 spawn("sx_remove_ceiling", 19,16,0, "sx_remove_ceiling_472")
 spawn("sx_remove_ceiling", 19,15,0, "sx_remove_ceiling_473")
-spawn("sx_remove_ceiling", 19,14,0, "sx_remove_ceiling_475")
 spawn("sx_remove_ceiling", 19,12,0, "sx_remove_ceiling_494")
 spawn("sx_remove_ceiling", 19,11,0, "sx_remove_ceiling_495")
 spawn("sx_remove_ceiling", 18,11,0, "sx_remove_ceiling_497")
@@ -1102,7 +1229,36 @@ spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_56")
 spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_57")
 spawn("sx_outwall_pillarkiller", 17,19,2, "sx_outwall_pillarkiller_60")
 spawn("sx_outwall_pillarkiller", 19,19,2, "sx_outwall_pillarkiller_61")
-spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_58")
+spawn("sx_outwall_pillarkiller", 11,16,3, "sx_outwall_pillarkiller_58")
+spawn("dx_solid_wall", 19,14,0, "dx_solid_wall_7")
+spawn("dx_solid_wall", 14,19,1, "dx_solid_wall_8")
+spawn("temple_door_iron", 13,21,0, "temple_door_iron_2")
+spawn("temple_door_iron", 15,21,0, "temple_door_iron_14")
+spawn("lock_gear", 13,20,3, "lock_gear_6")
+	:setOpenedBy("")
+spawn("lock_gear", 16,21,3, "lock_gear_11")
+	:setOpenedBy("")
+spawn("temple_pillar_hub", 14,19,3, "temple_pillar_hub_7")
+spawn("temple_pillar_hub", 15,19,0, "temple_pillar_hub_14")
+spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_7")
+spawn("temple_pillar_hub", 16,20,3, "temple_pillar_hub_15")
+spawn("temple_pillar_hub", 11,19,2, "temple_pillar_hub_16")
+spawn("sx_outwall_pillarkiller", 11,18,3, "sx_outwall_pillarkiller_47")
+spawn("temple_pillar_reversed", 16,16,0, "temple_pillar_reversed_13")
+spawn("temple_pillar_reversed", 16,15,3, "temple_pillar_reversed_14")
+spawn("temple_pillar_reversed", 15,15,0, "temple_pillar_reversed_16")
+spawn("torch_holder", 14,15,1, "torch_holder_8")
+	:addTorch()
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_103")
+spawn("sx_outwall_pillarkiller", 11,14,3, "sx_outwall_pillarkiller_104")
+spawn("sx_outwall_pillarkiller", 12,11,0, "sx_outwall_pillarkiller_105")
+spawn("temple_pillar_hub", 12,11,1, "temple_pillar_hub_17")
+spawn("temple_pillar_hub", 13,11,2, "temple_pillar_hub_30")
+spawn("temple_pillar_hub", 14,11,0, "temple_pillar_hub_31")
+spawn("temple_pillar_hub", 15,11,1, "temple_pillar_hub_32")
+spawn("temple_pillar_hub", 16,11,2, "temple_pillar_hub_33")
+spawn("temple_pillar_hub", 20,13,3, "temple_pillar_hub_34")
+spawn("temple_pillar_hub", 20,14,1, "temple_pillar_hub_35")
 
 --- level 5 ---
 
@@ -1120,10 +1276,10 @@ mapDesc([[
 ########...##.#######.#.########
 .........#.##.........#.........
 ##########.##########.####.#####
-.........#..#########.####.....#
-########.##.........#.......##.#
-##.#...#.##.........#.########.#
-##.#.###............#.#.........
+.........#..########..####.....#
+########.##.................##.#
+##.#...#.##...........########.#
+##.#.###..............#.........
 ##.#...#.##.........#.#.########
 ##.###.#.##....#......#.##.#.###
 ##.#...#.##.........#.#.##.#.###
@@ -1131,7 +1287,7 @@ mapDesc([[
 .........##.........#.#.##.#.###
 #########...........#.#.##.#.###
 ##...####.##.###.####.#.########
-##.#..........#.......#.........
+##.#..........##......#.........
 ##.##########.#######.##########
 .........#.........##.#.........
 ########.#.#######.##.#.########
@@ -1238,7 +1394,7 @@ spawn("sx_remove_floor", 14,14,2, "sx_remove_floor_449")
 spawn("sx_remove_floor", 15,16,2, "sx_remove_floor_451")
 spawn("sx_remove_floor", 15,17,2, "sx_remove_floor_455")
 spawn("sx_remove_floor", 15,18,2, "sx_remove_floor_464")
-spawn("torch_holder", 14,15,1, "torch_holder_7")
+spawn("torch_holder", 11,12,3, "torch_holder_7")
 	:addTorch()
 spawn("temple_stairs_down", 20,15,3, "temple_stairs_down_2")
 spawn("sx_remove_floor", 17,15,0, "sx_remove_floor_172")
@@ -1258,37 +1414,55 @@ spawn("sx_remove_floor", 16,12,1, "sx_remove_floor_487")
 spawn("sx_remove_floor", 16,13,1, "sx_remove_floor_488")
 spawn("sx_remove_floor", 16,11,1, "sx_remove_floor_489")
 spawn("temple_door_iron", 16,20,2, "temple_door_iron_3")
-spawn("lock_gear", 16,21,2, "lock_gear_7")
-spawn("lock_gear", 17,21,2, "lock_gear_8")
-spawn("lock_gear", 15,21,2, "lock_gear_9")
-spawn("temple_wall_text", 15,21,0, "temple_wall_text_4")
-	:setWallText("Three keys to pass")
+spawn("lock_gear", 16,21,3, "lock_gear_7")
+	:setOpenedBy("")
+spawn("lock_gear", 18,21,2, "lock_gear_8")
+	:setOpenedBy("")
+spawn("lock_gear", 20,21,2, "lock_gear_9")
+	:setOpenedBy("")
 spawn("sx_remove_floor", 13,19,3, "sx_remove_floor_121")
 spawn("sx_remove_floor", 14,19,2, "sx_remove_floor_126")
 spawn("sx_remove_floor", 15,19,2, "sx_remove_floor_141")
 spawn("temple_stairs_up", 10,19,1, "temple_stairs_up_5")
 spawn("temple_door_iron", 9,20,0, "temple_door_iron_4")
 spawn("lock_gear", 9,20,3, "lock_gear_10")
-spawn("lock_gear", 9,20,1, "lock_gear_11")
-spawn("lock_gear", 9,21,2, "lock_gear_12")
-spawn("temple_wall_text", 10,21,0, "temple_wall_text_5")
-	:setWallText("Three keys to pass")
 spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_1")
 spawn("sx_outwall_pillarkiller", 15,11,0, "sx_outwall_pillarkiller_3")
 spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_4")
-spawn("sx_outwall_pillarkiller", 19,11,0, "sx_outwall_pillarkiller_5")
-spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_6")
-spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_7")
 spawn("sx_outwall_pillarkiller", 18,15,1, "sx_outwall_pillarkiller_8")
 spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_9")
 spawn("sx_outwall_pillarkiller", 19,18,1, "sx_outwall_pillarkiller_10")
 spawn("sx_outwall_pillarkiller", 19,19,2, "sx_outwall_pillarkiller_11")
-spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_12")
-spawn("sx_outwall_pillarkiller", 14,19,2, "sx_outwall_pillarkiller_13")
+spawn("sx_outwall_pillarkiller", 17,19,2, "sx_outwall_pillarkiller_12")
+spawn("sx_outwall_pillarkiller", 13,19,2, "sx_outwall_pillarkiller_13")
 spawn("dx_solid_wall", 19,15,3, "dx_solid_wall_1")
 spawn("dx_solid_wall", 11,19,3, "dx_solid_wall_3")
 spawn("dx_solid_wall", 19,16,3, "dx_solid_wall_4")
 spawn("dx_solid_wall", 19,14,3, "dx_solid_wall_5")
+spawn("torch_holder", 21,12,1, "torch_holder_4")
+	:addTorch()
+spawn("temple_pillar", 12,19,1, "temple_pillar_1")
+spawn("temple_pillar", 11,19,1, "temple_pillar_2")
+spawn("temple_door_iron", 17,21,1, "temple_door_iron_12")
+spawn("temple_door_iron", 19,21,1, "temple_door_iron_13")
+spawn("torch_holder", 16,20,3, "torch_holder_9")
+	:addTorch()
+spawn("sx_outwall_pillarkiller", 19,11,0, "sx_outwall_pillarkiller_79")
+spawn("sx_outwall_pillarkiller", 19,14,0, "sx_outwall_pillarkiller_6")
+spawn("temple_pillar_hub", 20,11,3, "temple_pillar_hub_3")
+spawn("temple_pillar_hub", 20,14,3, "temple_pillar_hub_4")
+spawn("temple_pillar_reversed", 15,15,3, "temple_pillar_reversed_7")
+spawn("temple_pillar_reversed", 15,16,1, "temple_pillar_reversed_8")
+spawn("temple_pillar_reversed", 16,16,1, "temple_pillar_reversed_11")
+spawn("temple_pillar_hub", 12,11,3, "temple_pillar_hub_25")
+spawn("sx_outwall_pillarkiller", 12,11,0, "sx_outwall_pillarkiller_100")
+spawn("sx_outwall_pillarkiller", 15,19,2, "sx_outwall_pillarkiller_101")
+spawn("temple_pillar_hub", 13,20,0, "temple_pillar_hub_11")
+spawn("temple_pillar_hub", 16,20,3, "temple_pillar_hub_26")
+spawn("temple_pillar_hub", 17,20,0, "temple_pillar_hub_27")
+spawn("sx_outwall_pillarkiller", 11,17,3, "sx_outwall_pillarkiller_102")
+spawn("temple_pillar_hub", 14,20,1, "temple_pillar_hub_28")
+spawn("temple_pillar_hub", 15,20,2, "temple_pillar_hub_29")
 
 --- level 6 ---
 
@@ -1417,11 +1591,9 @@ spawn("sx_remove_floor", 19,16,0, "sx_remove_floor_441")
 spawn("sx_remove_floor", 19,19,1, "sx_remove_floor_442")
 spawn("sx_remove_floor", 13,11,1, "sx_remove_floor_454")
 spawn("sx_remove_floor", 14,11,2, "sx_remove_floor_450")
-spawn("sx_remove_floor", 12,11,3, "sx_remove_floor_452")
 spawn("sx_remove_floor", 11,12,1, "sx_remove_floor_53")
 spawn("sx_remove_floor", 11,13,0, "sx_remove_floor_36")
 spawn("sx_remove_floor", 11,14,1, "sx_remove_floor_43")
-spawn("sx_remove_floor", 11,11,3, "sx_remove_floor_50")
 spawn("sx_remove_floor", 11,16,1, "sx_remove_floor_97")
 spawn("sx_remove_floor", 11,17,2, "sx_remove_floor_52")
 spawn("sx_remove_floor", 11,18,2, "sx_remove_floor_78")
@@ -1475,10 +1647,20 @@ spawn("sx_outwall_pillarkiller", 16,11,0, "sx_outwall_pillarkiller_30")
 spawn("sx_outwall_pillarkiller", 18,11,0, "sx_outwall_pillarkiller_31")
 spawn("temple_pillar_hub", 19,15,1, "temple_pillar_hub_1")
 spawn("temple_pillar_hub", 19,16,3, "temple_pillar_hub_2")
-spawn("temple_pillar_hub", 20,15,1, "temple_pillar_hub_3")
-spawn("temple_pillar_hub", 20,16,2, "temple_pillar_hub_4")
 spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_78")
-spawn("sx_outwall_pillarkiller", 19,16,1, "sx_outwall_pillarkiller_79")
+spawn("sx_remove_floor", 13,11,1, "sx_remove_floor_50")
+spawn("sx_remove_floor", 11,11,1, "sx_remove_floor_452")
+spawn("sx_remove_floor", 12,11,1, "sx_remove_floor_568")
+spawn("sx_remove_floor", 12,11,1, "sx_remove_floor_4")
+spawn("sx_outwall_pillarkiller", 14,19,2, "sx_outwall_pillarkiller_98")
+spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_99")
+spawn("temple_pillar_reversed", 15,16,0, "temple_pillar_reversed_1")
+spawn("temple_pillar_reversed", 15,15,3, "temple_pillar_reversed_5")
+spawn("temple_pillar_reversed", 16,15,1, "temple_pillar_reversed_6")
+spawn("temple_pillar_reversed", 15,20,3, "temple_pillar_reversed_9")
+spawn("temple_pillar_reversed", 16,20,2, "temple_pillar_reversed_10")
+spawn("temple_pillar_reversed", 20,15,2, "temple_pillar_reversed_12")
+spawn("temple_pillar_reversed", 20,16,2, "temple_pillar_reversed_15")
 
 --- level 7 ---
 
@@ -1651,14 +1833,12 @@ spawn("sx_remove_floor", 17,15,1, "sx_remove_floor_80")
 spawn("sx_remove_floor", 18,15,1, "sx_remove_floor_81")
 spawn("sx_remove_floor", 19,15,1, "sx_remove_floor_163")
 spawn("temple_door_iron", 11,19,2, "temple_door_iron_7")
-spawn("lock_gear", 11,17,3, "lock_gear_19")
+spawn("lock_gear", 13,21,2, "lock_gear_19")
 	:setOpenedBy("")
 spawn("lock_gear", 11,19,3, "lock_gear_4")
 	:setOpenedBy("")
-spawn("lock_gear", 11,18,3, "lock_gear_5")
+spawn("lock_gear", 11,21,2, "lock_gear_5")
 	:setOpenedBy("")
-spawn("temple_wall_text", 11,16,3, "temple_wall_text_3")
-	:setWallText("Three keys to pass")
 spawn("dx_solid_wall", 15,19,0, "dx_solid_wall_2")
 spawn("sx_remove_floor", 11,13,1, "sx_remove_floor_522")
 spawn("sx_remove_floor", 11,14,1, "sx_remove_floor_563")
@@ -1673,17 +1853,28 @@ spawn("sx_outwall_pillarkiller", 19,18,1, "sx_outwall_pillarkiller_38")
 spawn("sx_outwall_pillarkiller", 19,12,1, "sx_outwall_pillarkiller_40")
 spawn("sx_outwall_pillarkiller", 19,14,1, "sx_outwall_pillarkiller_41")
 spawn("sx_outwall_pillarkiller", 11,12,3, "sx_outwall_pillarkiller_45")
-spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_42")
-spawn("sx_outwall_pillarkiller", 11,11,0, "sx_outwall_pillarkiller_47")
-spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_44")
+spawn("sx_outwall_pillarkiller", 11,14,3, "sx_outwall_pillarkiller_42")
+spawn("sx_outwall_pillarkiller", 12,11,0, "sx_outwall_pillarkiller_44")
 spawn("sx_outwall_pillarkiller", 18,19,2, "sx_outwall_pillarkiller_48")
 spawn("sx_outwall_pillarkiller", 16,19,2, "sx_outwall_pillarkiller_49")
 spawn("sx_outwall_pillarkiller", 14,19,2, "sx_outwall_pillarkiller_50")
-spawn("sx_outwall_pillarkiller", 13,19,2, "sx_outwall_pillarkiller_51")
+spawn("sx_outwall_pillarkiller", 12,19,2, "sx_outwall_pillarkiller_51")
 spawn("sx_outwall_pillarkiller", 19,19,2, "sx_outwall_pillarkiller_52")
-spawn("temple_alcove", 11,11,3, "temple_alcove_1")
-spawn("torch_holder", 12,11,0, "torch_holder_8")
-	:addTorch()
+spawn("sx_remove_floor", 12,11,2, "sx_remove_floor_190")
+spawn("sx_remove_floor", 11,11,2, "sx_remove_floor_193")
+spawn("temple_door_iron", 11,21,1, "temple_door_iron_10")
+spawn("temple_door_iron", 13,21,1, "temple_door_iron_11")
+spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_93")
+spawn("sx_outwall_pillarkiller", 14,11,0, "sx_outwall_pillarkiller_94")
+spawn("sx_outwall_pillarkiller", 11,11,0, "sx_outwall_pillarkiller_95")
+spawn("temple_pillar_hub", 20,11,2, "temple_pillar_hub_18")
+spawn("temple_pillar_hub", 15,11,3, "temple_pillar_hub_23")
+spawn("temple_pillar_hub", 12,20,2, "temple_pillar_hub_24")
+spawn("temple_pillar_reversed", 15,16,2, "temple_pillar_reversed_2")
+spawn("temple_pillar_reversed", 16,16,1, "temple_pillar_reversed_3")
+spawn("temple_pillar_reversed", 16,15,1, "temple_pillar_reversed_4")
+spawn("sx_outwall_pillarkiller", 11,16,3, "sx_outwall_pillarkiller_96")
+spawn("sx_outwall_pillarkiller", 11,18,3, "sx_outwall_pillarkiller_97")
 
 --- level 8 ---
 
@@ -1712,7 +1903,7 @@ mapDesc([[
 .........##.........#.#.#####.##
 ###########...........#.#####.##
 ######....###.#.#.##.##.########
-######.##.....#....#.##.........
+######.##.....#...##.##.........
 ######.#############.###########
 .........#.........#.##.........
 ########.#.#######.#.##.########
@@ -1824,13 +2015,12 @@ spawn("sx_remove_floor", 14,19,3, "sx_remove_floor_475")
 spawn("sx_remove_floor", 14,13,3, "sx_remove_floor_476")
 spawn("sx_remove_floor", 16,16,3, "sx_remove_floor_477")
 spawn("sx_remove_floor", 16,19,0, "sx_remove_floor_478")
-spawn("temple_door_iron", 17,21,0, "temple_door_iron_1")
-spawn("lock_gear", 18,21,2, "lock_gear_1")
+spawn("temple_door_iron", 17,19,2, "temple_door_iron_1")
+spawn("lock_gear", 17,20,1, "lock_gear_1")
 	:setOpenedBy("")
 spawn("lock_gear", 16,21,2, "lock_gear_2")
-spawn("lock_gear", 17,21,2, "lock_gear_3")
-spawn("temple_wall_text", 16,21,0, "temple_wall_text_1")
-	:setWallText("Three keys to pass")
+spawn("lock_gear", 15,20,3, "lock_gear_3")
+	:setOpenedBy("")
 spawn("temple_stairs_up", 21,10,3, "temple_stairs_up_2")
 spawn("temple_wall_text_long", 10,1,0, "temple_wall_text_long_1")
 	:setWallText("Starting point")
@@ -1858,7 +2048,7 @@ spawn("sx_outwall_pillarkiller", 19,15,1, "sx_outwall_pillarkiller_35")
 spawn("sx_outwall_pillarkiller", 19,17,1, "sx_outwall_pillarkiller_25")
 spawn("sx_outwall_pillarkiller", 19,11,1, "sx_outwall_pillarkiller_32")
 spawn("sx_outwall_pillarkiller", 19,13,1, "sx_outwall_pillarkiller_33")
-spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_39")
+spawn("sx_outwall_pillarkiller", 12,11,0, "sx_outwall_pillarkiller_39")
 spawn("sx_outwall_pillarkiller", 15,11,0, "sx_outwall_pillarkiller_34")
 spawn("sx_outwall_pillarkiller", 17,11,0, "sx_outwall_pillarkiller_36")
 spawn("sx_outwall_pillarkiller", 19,11,0, "sx_outwall_pillarkiller_37")
@@ -1872,14 +2062,24 @@ spawn("temple_pillar_hub", 15,15,0, "temple_pillar_hub_5")
 spawn("temple_pillar_hub", 16,19,2, "temple_pillar_hub_6")
 spawn("temple_pillar_hub", 15,20,0, "temple_pillar_hub_8")
 spawn("temple_pillar_hub", 16,20,0, "temple_pillar_hub_9")
-spawn("sx_outwall_pillarkiller", 15,20,0, "sx_outwall_pillarkiller_80")
-spawn("starting_location", 12,15,1, "starting_location")
+spawn("sx_outwall_pillarkiller", 16,20,0, "sx_outwall_pillarkiller_80")
 spawn("temple_pillar_hub", 15,19,0, "temple_pillar_hub_10")
-spawn("temple_pillar_hub", 16,15,0, "temple_pillar_hub_11")
 spawn("temple_pillar_hub", 16,16,0, "temple_pillar_hub_12")
-spawn("temple_pillar_hub", 15,16,0, "temple_pillar_hub_13")
 spawn("sx_outwall_pillarkiller", 15,15,0, "sx_outwall_pillarkiller_81")
-spawn("sx_outwall_pillarkiller", 15,16,0, "sx_outwall_pillarkiller_87")
+spawn("sx_outwall_pillarkiller", 15,15,1, "sx_outwall_pillarkiller_87")
+spawn("sx_outwall_pillarkiller", 11,12,3, "sx_outwall_pillarkiller_65")
+spawn("sx_outwall_pillarkiller", 11,13,3, "sx_outwall_pillarkiller_88")
+spawn("temple_door_iron", 15,21,0, "temple_door_iron_8")
+spawn("temple_door_iron", 16,21,1, "temple_door_iron_9")
+spawn("sx_outwall_pillarkiller", 13,11,0, "sx_outwall_pillarkiller_89")
+spawn("temple_pillar_hub", 12,11,0, "temple_pillar_hub_19")
+spawn("sx_outwall_pillarkiller", 14,20,0, "sx_outwall_pillarkiller_90")
+spawn("temple_pillar_hub", 14,20,0, "temple_pillar_hub_20")
+spawn("temple_pillar_hub", 17,20,0, "temple_pillar_hub_21")
+spawn("sx_outwall_pillarkiller", 18,20,1, "sx_outwall_pillarkiller_91")
+spawn("temple_pillar_hub", 20,19,0, "temple_pillar_hub_22")
+spawn("sx_outwall_pillarkiller", 19,18,1, "sx_outwall_pillarkiller_92")
+spawn("temple_pillar_hub", 16,15,0, "temple_pillar_hub_13")
 
 --- level 9 ---
 

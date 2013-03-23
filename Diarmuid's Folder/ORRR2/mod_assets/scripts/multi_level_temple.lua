@@ -107,6 +107,8 @@ defineObject{
 -- =================================================================================
 local dxObjects = {
 	"temple_wall",
+	"temple_wall_x2",
+	"temple_wall_x3",
 	"temple_floor",
 	"temple_ceiling",
 }
