@@ -88,6 +88,7 @@ function moveSkySphere(dir)
 		function(self, newX, newY)
 
 			if skySphereId then
+			if skySphereId and findEntity(skySphereId) then
 				findEntity(skySphereId):destroy()
 				skyScript.setSkySphereId(nil)
 			end
