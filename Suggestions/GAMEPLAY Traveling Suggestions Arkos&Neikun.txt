@@ -1,0 +1,21 @@
+ What are your thoughts on at least 1 outside level separating major towns/forests/dungeons etc.?  So there would be an outside level between Grotto.. and Uttermost and then his map would come up
+
+Arkos: to simulate more travel
+
+Neikun: I think that the outside levels should be levels. we could uses them as a hub. Lets say you level the town, enter a little wilderness. That wilderness would have a goal to it, but it could also have 2 or more exits that would be quick travels to other places.
+So there would be secrets to unlock and possible a little story. Something corrupting the forest outside the town, halting trade routes.
+
+Arkos: so no open travel feel?  I think there should be a few of those. Like I would like to travel through the jungles of Xae over the mountains experiencing adventures along the way
+
+Neikun: Well there would be in a sense, but it would be hard to keep the player's attention if we opened it up like skyrim or the like. 
+Now for places that lend themselves to sparseness, there is room to make long travel. Example, walking long bearingless desert
+But like I said, all that would be best suited for being incorporated into the level it's designed for.
+Part of this is to not bore players who will backtrack.
+
+Arkos: do you think with that long walk in the desert my travel_lvl with Mahrics teleporters could work?
+
+ Neikun: Absolutely it would work, but let me suggest an alternative way about it.
+Instead of lanes, do boxes. Perhaps 4x4 or 5x5 boxes. Each outermost square would be a teleporter. This should give the player a less "boxed in" feeling. With this solution the player can natively move in all directions. I don't want to limit the idea of travel, but when I think of the movement mechanic in game, it just does not seem right to put it in an area as open as, say skyrim.
+So one kind of compromise is to have as I said, the town, leave the town enter the forest. 
+The forest has some winding pathway exits (teleporters), some kinda little slope exit (Beach/hill exit) Or perhaps a little rockiness exit (Mountain side wallset exit/ dungeon exit)
+It is also concieveable to do a ladder entrance. The eye of the beholder guys released a ladder to the public.

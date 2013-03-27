@@ -9,7 +9,7 @@ might be worth looking into for added party/player connection.
 
 [Replayability]
 This is usually the make or break of buying a game for me. I love games like Morrowind
-and Skyrim that allow for virtually infinite posiibilities on each time through. I propose
+and Skyrim that allow for virtually infinite posibilities on each time through. I propose
 that we implement random and procedural generation of content whenever it is expedient to and
 aligns with the mod creation goals.
 

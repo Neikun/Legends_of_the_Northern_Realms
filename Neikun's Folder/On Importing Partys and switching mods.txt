@@ -1,4 +1,0 @@
-With multiple dats I picture mod changes to work like this:
-
-When leaving an area from one mod that is continued in another, you enter a room and a gui comes up and says: "Please save your game and load <Name of .dat file>  to continue"
-The player would be able to leave if they do not want to change mods.  If the player decides to change mods, when he loads the .dat  specified, he is in an identical room inside the next mod. If he leaves and re-enters that room, a gui pops up asking him to save and load <the previous mod's .dat> to continue

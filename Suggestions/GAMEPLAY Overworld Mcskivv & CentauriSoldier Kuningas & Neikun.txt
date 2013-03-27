@@ -1,0 +1,59 @@
+ Eric Krauss: Looking at the discussion of how a single .dat file has the problem of being too large, I have this to suggest:
+What if we went with a scaled-down overworld? By scaled down I mean that a town would take up a single tile, a mountain range would only be two-three tiles thick, entire forests would be only a couple tiles, etc.
+We'd need a lot of custom tiles, but it would also enable us to get around the fact that the over world would be flat.
+
+Centauri Soldier: That's a really good idea! I see no reason why we couldn't do that. And then each tile represents a level in the dungeon. We could even have "Random Encounter" levels that would allow random encounters in the big map and teleport the player to the appropriate level (considering terrain for example) to conclude combat, then return. The tile could, additionally be "entered" by the player at which point the player would be teleoprted to the appropriate level for th at tile.
+
+Eric Krauss: I like the random encounter idea, but I feel it would be irritating
+
+ Centauri Soldier: We could make it optional
+
+Eric Krauss: instead, why not have roaming enemies? Except, when they collide with you it teleports you to the battlefield/level/thing?
+Eric Krauss: You could try to run, or you could fight them head on
+
+Centauri Soldier: Whatever's clever. Either way is fine by me. I just like the solution for the big file. We could make the overworld as big as we want by having it occupy more than one level of the dungeon.
+
+Eric Krauss: Sure. Entrances to other "floors" of the overworld could be through mountain passes, dungeons, towns, etc.
+For instance you could head through X dungeon and when you exited it it would spit you out on another part of overworld entirely.
+
+Centauri Soldier: Links are fun.
+
+Eric Krauss: Yup. I think the idea is feasible enough
+
+Centauri Soldier: One question...how does limit the the number of resources in the game? Thinking about it again, doesn't it just as alter the way the player moves through the overmap? Because if each tile represents a level, we still need to use those resource to create the actual level.
+
+Eric Krauss: Yes, but we can avoid creating open-feeling overworld resources. For instance a forest tileset is easy enough to make/get, but how would you make a hills environment? What about grasslands or plains?  Lakes? Other than one overworld tileset, the only other tilesets will be for points of interest
+
+Centauri Soldier: I see, so you're attempting to exclude most of the overworld tileset.
+
+Eric Krauss: Yes
+
+Centauri Soldier: I wonder how much that would reduce the size of the resource folder..
+
+Eric Krauss: This will cut down on the amount of tilesets while increasing terrain variety and decreasing the amount of floors the .dat file encompasses
+
+Eric Krauss: Perhaps it will only decrease the size of the mod by a couple hundred megs, but it is a place to start
+
+Centauri Soldier: I agree. Plus, I really like the idea in gerneral, despite its capacity to reduce size.
+
+Eric Krauss: I like the idea because we can cover far more terrain with far less time and effort
+
+-------------------------------------------------------------------------------------------------------------------------
+Neikun: I don't know about all that, but I would like to note that we can create a sort of slope by having the player walk on the back end of stairs. Random encounters, roaming monsters on game-board style world is not what I'd like to see.
+
+Kuningas: How about routes? Not an open plain but a route through the said plain. I don't know how I'd put it, but the closest example I can give is how it is dealt with in the Pokemon  series of games.
+It'd still need a heck of a lot resources, though.
+
+Neikun: I want to keep true to the grimrock feel of tile-based one to one perspective.
+We simply cannot do the whole realms at once. But we can do a series of large mods that all fit in with the common lore. And if we decide for the plot to be handled in the same order chronologically as the release order, we could make reference to plot events out of previous mods that players who played the series from the start would understand the reference
+
+Kuningas: Hub areas are another choice, but I'm not sure I like the idea of teleporters taking the players to places. It would be the easiest, maybe laziest way around.
+
+Neikun: Kuningas, do you mean as in, the exit of a map takes you to the destination rather than you walk all the way there? I think it is imperitive that we do it that way as well.
+ You can use teleporters that do not flash and are invisible to take you to new levels to serve as transition from place to place
+
+Kuningas: It depends where the exit is. I think we should map towns, caves, dungeons, forests, places of adventure. Plains or hills or a long road are not very interesting in general.
+
+Neikun: Well we would definitely use these sets, but not for travel. They'd be fullly fledged levels. Each level might have mulitple exits or just two.
+What I mean is, we would only map where interesting things can happen. Places of interest and what not
+...Attacked by caravan looters not forgotten. I'm sure we could script a random chance that you get stopped in the middle of your journey or something.
